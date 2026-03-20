@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Directorio de Negocios LIFE TIMES - Servicios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f5f7fa;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(to bottom, #3EAA4C, #2D8A3A);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 20px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            transition: transform 0.3s;
+        }
+
+        .logo h1:hover {
+            transform: scale(1.05);
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        .logo p {
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .menu-categorias {
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        .categoria-item {
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            text-decoration: none;
+            color: white;
+        }
+
+        .categoria-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .categoria-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #ffffff;
+        }
+
+        .categoria-item i {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* ================================ */
+        /* CONTENEDOR PARA BOTONES LATERALES */
+        /* ================================ */
+        .botones-lateral {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 15px;
+            gap: 15px;
+        }
+
+        /* Botón "Publicar mi Servicio aquí" - FONDO NEGRO CON LETRAS BLANCAS */
+        .btn-subir-negocio {
+            margin: 0;
+            padding: 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-subir-negocio:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-subir-negocio i {
+            font-size: 18px;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .top-nav {
+            background-color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: #3EAA4C;
+        }
+
+        .negocios-container {
+            padding: 30px;
+            flex: 1;
+            background: white;
+        }
+
+        .titulo-banner {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eaeaea;
+            position: relative;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .titulo-banner h2 {
+            color: #000000;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .titulo-banner p {
+            color: #444;
+            font-size: 16px;
+            font-weight: 500;
+            padding-left: 5px;
+        }
+
+        .menu-desplazamiento {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .pagina-btn {
+            width: 35px;
+            height: 35px;
+            background: #f8f9fa;
+            color: #555;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pagina-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+            border-color: #ccc;
+        }
+
+        .pagina-btn.active {
+            background: #3EAA4C;
+            color: white;
+            border-color: #3EAA4C;
+        }
+
+        .pagina-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f8f9fa;
+            border-color: #e0e0e0;
+            color: #999;
+        }
+
+        .pagina-info {
+            font-size: 13px;
+            color: #777;
+            font-weight: 500;
+            margin-left: 8px;
+            padding-left: 8px;
+            border-left: 1px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        .pagina-actual {
+            font-size: 14px;
+            font-weight: 600;
+            color: #3EAA4C;
+            margin-right: 5px;
+        }
+
+        /* ================================ */
+        /* TÍTULOS DE SECCIÓN (COMO EN EL PRIMER CÓDIGO) */
+        /* ================================ */
+        .fila-titulo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #3EAA4C;
+            margin: 30px 0 15px 0;
+            padding-left: 15px;
+            border-left: 5px solid #3EAA4C;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(to right, rgba(62, 170, 76, 0.05), transparent);
+            padding: 12px 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .fila-titulo i {
+            font-size: 24px;
+            color: #3EAA4C;
+            background: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 3px 10px rgba(62, 170, 76, 0.2);
+        }
+
+        .fila-titulo span {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .fila-titulo strong {
+            color: #3EAA4C;
+            font-weight: 800;
+        }
+
+        .fila-titulo:first-of-type {
+            margin-top: 10px;
+        }
+
+        /* ================================ */
+        /* CONTENEDORES DE SCROLL HORIZONTAL */
+        /* ================================ */
+        .servicios-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .servicios-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .servicios-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .servicios-container::-webkit-scrollbar-thumb {
+            background: #3EAA4C;
+            border-radius: 10px;
+        }
+
+        /* ================================ */
+        /* TARJETA CON ANCHO FIJO */
+        /* ================================ */
+        .servicio-card {
+            min-width: 300px;
+            width: 300px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInCard 0.4s ease forwards;
+        }
+
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-imagen {
+            height: 180px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-imagen.loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .card-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-imagen img.loaded {
+            opacity: 1;
+        }
+
+        .servicio-card:hover .card-imagen img {
+            transform: scale(1.05);
+        }
+
+        .card-header {
+            padding: 20px 20px 10px;
+            background-color: white;
+        }
+
+        .card-header h3 {
+            color: #000000;
+            font-size: 18px;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .card-categoria {
+            color: #3EAA4C;
+            font-size: 13px;
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: #E0F2E2;
+            border-radius: 20px;
+        }
+
+        .card-body {
+            padding: 0 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================================ */
+        /* DESCRIPCIÓN CORTA */
+        /* ================================ */
+        .card-descripcion-corta {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ================================ */
+        /* BOTÓN VER MÁS - VERDE */
+        /* ================================ */
+        .btn-ver-mas-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .btn-ver-mas {
+            background-color: #3EAA4C;
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: auto;
+            min-width: 130px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(62, 170, 76, 0.3);
+        }
+
+        .btn-ver-mas:hover {
+            background-color: #2D8A3A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(62, 170, 76, 0.4);
+        }
+
+        .btn-ver-mas i {
+            font-size: 14px;
+        }
+
+        /* ================================ */
+        /* RESPONSIVE */
+        /* ================================ */
+        @media (max-width: 1200px) {            
+            .menu-desplazamiento {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .servicio-card {
+                min-width: 280px;
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            body {
+                flex-direction: column;
+            }
+            
+            /* OCULTAR COMPLETAMENTE LA BARRA SUPERIOR EN MÓVIL */
+            .top-nav {
+                display: none;
+            }
+            
+            .botones-lateral {
+                margin: 15px 15px;
+                gap: 12px;
+            }
+            
+            .btn-subir-negocio {
+                padding: 14px;
+                font-size: 15px;
+            }
+            
+            .servicio-card {
+                min-width: 260px;
+                width: 260px;
+            }
+
+            .titulo-banner {
+                padding: 20px;
+                min-height: 120px;
+                margin-top: 0; /* Eliminar cualquier margen superior */
+            }
+
+            .titulo-banner h2 {
+                font-size: 26px;
+            }
+
+            .menu-desplazamiento {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 15px;
+                width: fit-content;
+                align-self: center;
+            }
+
+            .btn-ver-mas {
+                min-width: 120px;
+                padding: 10px 20px;
+            }
+            
+            .fila-titulo {
+                font-size: 18px;
+                margin: 20px 0 10px 0;
+                padding: 10px 15px;
+            }
+            
+            .fila-titulo i {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            
+            .fila-titulo span {
+                font-size: 16px;
+            }
+            
+            .negocios-container {
+                padding-top: 15px; /* Reducir el padding superior */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .titulo-banner {
+                padding: 15px;
+                min-height: 110px;
+            }
+
+            .titulo-banner h2 {
+                font-size: 22px;
+            }
+
+            .pagina-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+            
+            .pagina-info {
+                font-size: 11px;
+            }
+            
+            .card-header h3 {
+                font-size: 16px;
+            }
+
+            .card-descripcion-corta {
+                font-size: 13px;
+            }
+
+            .btn-ver-mas {
+                min-width: 110px;
+                padding: 8px 18px;
+                font-size: 13px;
+            }
+            
+            .servicio-card {
+                min-width: 240px;
+                width: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="Index.html" style="text-decoration: none; color: inherit;">
+                <h1>LIFE <span>TIMES</span></h1>
+            </a>
+            <p>Directorio de Negocios</p>
+        </div>
+        
+        <div class="menu-categorias">
+            <a href="General.html" class="categoria-item">
+                <i class="fas fa-home"></i>
+                <span>General</span>
+            </a>
+            <a href="Servicio Minoritario.html" class="categoria-item">
+                <i class="fas fa-handshake"></i>
+                <span>Servicio minoritario</span>
+            </a>
+            <a href="Comercio.html" class="categoria-item">
+                <i class="fas fa-store"></i>
+                <span>Comercio</span>
+            </a>
+            <a href="Alimentos y bebidas.html" class="categoria-item">
+                <i class="fas fa-utensils"></i>
+                <span>Alimentos</span>
+            </a>
+            <a href="Servicios-general.html" class="categoria-item active">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Servicios</span>
+            </a>
+        </div>
+        
+        <!-- CONTENEDOR PARA EL BOTÓN LATERAL (AHORA SOLO UNO) -->
+        <div class="botones-lateral">
+            <a href="Subir-servicio.html" target="_blank" style="text-decoration: none;">
+                <button class="btn-subir-negocio">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Publicar mi Servicio aquí</span>
+                </button>
+            </a>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="Terminos y condiciones.html" id="terminos-link">Términos y Condiciones</a></li>
+                <li><a href="Index.html" id="historia-link">La Historia</a></li>
+                <li><a href="Servicios.html" id="servicios-link">Servicios</a></li>
+            </ul>
+        </nav>
+
+        <section class="negocios-container">
+            <div class="titulo-banner" id="titulo-banner">
+                <h2>Servicios Profesionales y Personales</h2>
+                <p>Encuentra servicios especializados para tus necesidades: consultoría, mantenimiento, asesoría y más</p>
+                
+                <div class="menu-desplazamiento" id="menu-desplazamiento">
+                </div>
+            </div>
+            
+            <!-- SOLO UNA FILA: Servicios Destacados -->
+            <div class="fila-titulo" id="titulo-fila-1">
+                <i class="fas fa-star"></i>
+                <span>Servicios <strong>Destacados</strong></span>
+            </div>
+            <div class="servicios-container" id="servicios-container-1"></div>
+            
+            <div style="text-align: center; color: #666; font-size: 14px; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <i class="fas fa-concierge-bell" style="color: #3EAA4C; margin-right: 8px;"></i>
+                Mostrando <span id="contador-negocios">0</span> servicios profesionales en total
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // ==============================================
+        // DATOS DE NEGOCIOS PARA LA FILA
+        // ==============================================
+        
+        // FILA ÚNICA: Servicios Destacados
+        const negociosServicios = [
+            {
+                id: 1,
+                nombre: "Consultoría de Marketing Digital Avanzada",
+                categoria: "Consultoría",
+                imagen: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Estrategias digitales personalizadas para PYMES. Análisis de mercado, campañas en redes sociales y SEO para maximizar tu ROI.",
+                enlace: "Servicio-Marketing.html"
+            },
+            {
+                id: 2,
+                nombre: "Servicios de Plomería Integral y Emergencias",
+                categoria: "Mantenimiento",
+                imagen: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Reparación de fugas, instalación de tuberías y emergencias 24/7. Tecnología de detección sin obra y servicio garantizado.",
+                enlace: "Servicio-Plomeria.html"
+            },
+            {
+                id: 3,
+                nombre: "Asesoría Legal Empresarial Especializada",
+                categoria: "Legal",
+                imagen: "https://images.unsplash.com/photo-1589391886085-8b6b0ac72a1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Derecho corporativo, contratos mercantiles y propiedad intelectual. Asesoría personalizada para startups y pymes.",
+                enlace: "Servicio-Legal.html"
+            },
+            {
+                id: 4,
+                nombre: "Diseño Gráfico y Branding Corporativo",
+                categoria: "Diseño",
+                imagen: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Identidad visual completa: logotipos, manuales de marca y diseño web. Soluciones que comunican los valores de tu empresa.",
+                enlace: "Servicio-Diseno.html"
+            },
+            {
+                id: 5,
+                nombre: "Limpieza Profesional de Oficinas",
+                categoria: "Limpieza",
+                imagen: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Servicio de limpieza profunda y mantenimiento para oficinas y espacios comerciales. Productos ecológicos y personal capacitado.",
+                enlace: "Servicio-Limpieza.html"
+            },
+            {
+                id: 6,
+                nombre: "Desarrollo de Software a Medida",
+                categoria: "Tecnología",
+                imagen: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Creamos aplicaciones web y móviles personalizadas para optimizar tus procesos de negocio. Tecnologías de última generación.",
+                enlace: "Servicio-Software.html"
+            },
+            {
+                id: 7,
+                nombre: "Servicios de Electricidad Residencial",
+                categoria: "Electricidad",
+                imagen: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Instalaciones eléctricas, reparaciones y mantenimiento preventivo para hogares y oficinas. Certificación y garantía.",
+                enlace: "Servicio-Electricidad.html"
+            },
+            {
+                id: 8,
+                nombre: "Clases de Yoga y Meditación",
+                categoria: "Bienestar",
+                imagen: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                descripcion_corta: "Clases personalizadas de yoga, meditación y mindfulness para reducir estrés y mejorar tu calidad de vida.",
+                enlace: "Servicio-Yoga.html"
+            }
+        ];
+
+        // ==============================================
+        // ELEMENTOS DOM
+        // ==============================================
+        const serviciosContainer = document.getElementById('servicios-container-1');
+        const contadorNegocios = document.getElementById('contador-negocios');
+        
+        // ==============================================
+        // FUNCIONES
+        // ==============================================
+
+        function cargarTarjetas() {
+            serviciosContainer.innerHTML = '';
+            
+            negociosServicios.forEach((negocio, index) => {
+                const tarjeta = document.createElement('div');
+                tarjeta.className = `servicio-card`;
+                tarjeta.style.animationDelay = `${index * 0.05}s`;
+                
+                tarjeta.innerHTML = `
+                    <div class="card-imagen loading">
+                        <img data-src="${negocio.imagen}" alt="${negocio.nombre}">
+                    </div>
+                    <div class="card-header">
+                        <h3>${negocio.nombre}</h3>
+                        <span class="card-categoria">${negocio.categoria}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-descripcion-corta">
+                            ${negocio.descripcion_corta}
+                        </div>
+                        <div class="btn-ver-mas-container">
+                            <a href="${negocio.enlace}" class="btn-ver-mas" data-negocio-id="${negocio.id}">
+                                <i class="fas fa-chevron-right"></i> Ver más
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                serviciosContainer.appendChild(tarjeta);
+                
+                // Cargar imagen con efecto
+                const imgElement = tarjeta.querySelector('img');
+                if (imgElement) {
+                    setTimeout(() => {
+                        imgElement.src = imgElement.getAttribute('data-src');
+                        imgElement.classList.add('loaded');
+                        imgElement.parentElement.classList.remove('loading');
+                    }, 100 + (index * 50));
+                }
+            });
+            
+            // Actualizar contador total
+            contadorNegocios.textContent = negociosServicios.length;
+        }
+
+        // ==============================================
+        // INICIALIZACIÓN
+        // ==============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarTarjetas();
+            
+            // Ocultar el menú de paginación
+            const menuDesplazamiento = document.getElementById('menu-desplazamiento');
+            if (menuDesplazamiento) {
+                menuDesplazamiento.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

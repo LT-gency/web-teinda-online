@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES para Negocios | Gestiona tu Stock, Vende Más</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #0F52C9;        /* Cambiado de rojo a azul */
+            --primary-dark: #0A3C8C;    /* Azul más oscuro */
+            --primary-light: rgba(15, 82, 201, 0.1);  /* Azul claro translúcido */
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --success-dark: #21867a;
+            --whatsapp-green: #25D366;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, #0F52C9 0%, #4A7FE0 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9e00 0%, #ffd166 100%);
+            
+            /* Color azul para todos los botones */
+            --web-color: #0c6ba0;
+            --web-color-light: #2d8fd1;
+            --web-color-dark: #0a4f7a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO PERSONALIZADA ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .logo{
+            font-weight:900;
+            letter-spacing:.02em;
+            font-size:1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        .logo span{
+            color: var(--primary);
+        }
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-links{
+            display:flex;
+            gap:1.8rem;
+            align-items:center;
+        }
+        .nav-links a{
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta{
+            display:flex;
+            gap:.8rem;
+            align-items:center;
+        }
+        
+        .btn{
+            display:inline-flex;
+            gap:.6rem;
+            align-items:center;
+            font-weight:600;
+            border: 2px solid var(--primary);
+            padding:.85rem 1.8rem;
+            border-radius:8px;
+            transition:all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 5px 15px rgba(15, 82, 201, 0.2);
+        }
+        
+        .btn.fill{
+            background: var(--primary);
+            color:#fff;
+        }
+        
+        .btn.fill:hover{
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn.ghost{
+            background:transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn.ghost:hover{
+            background: var(--primary);
+            color:#fff;
+            border-color: var(--primary);
+        }
+        
+        .mobile-toggle{
+            display:none;
+            background: var(--primary);
+            color:#fff;
+            border:none;
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu{
+            position:fixed;
+            inset:0 0 auto 0;
+            top:72px;
+            background:#fff;
+            border-top:1px solid #eee;
+            display:none;
+            padding: 1rem 0;
+            z-index: 999;
+        }
+        
+        .mobile-menu.open{display:block}
+        
+        .mobile-menu a{
+            display:block;
+            padding:16px 24px;
+            border-bottom:1px solid #f5f5f5;
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: all 0.2s;
+        }
+        
+        .mobile-menu a:hover{
+            background-color: rgba(15, 82, 201, 0.05);
+            color: var(--primary);
+        }
+
+        /* Estilo especial para el enlace "Volver al catálogo" */
+        .mobile-menu a.catalogo-link {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            font-weight: 700;
+        }
+        
+        .mobile-menu a.catalogo-link:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .mobile-menu a.catalogo-link i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .mobile-menu a.catalogo-link:hover i {
+            color: white;
+        }
+        
+        @media (max-width: 960px){
+            .nav-links{display:none}
+            .mobile-toggle{display:inline-grid;place-items:center}
+            .nav-inner {
+                padding: 0 24px;
+            }
+        }
+        
+        /* ====== ESTILOS PARA LAS SECCIONES CON IMAGEN DE FONDO ====== */
+        .full-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .full-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .section-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+        }
+        
+        .section-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            line-height: 1.7;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+        }
+        
+        .section-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 1.2rem 3.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+        
+        .section-button:hover {
+            background: white;
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        .section-button i {
+            font-size: 1.4rem;
+        }
+        
+        /* ====== BOTONES EN AZUL #0c6ba0 ====== */
+        .webs-intro {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 400;
+            text-transform: uppercase;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(3px);
+            display: inline-block;
+            padding: 0.4rem 1.5rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            opacity: 0.8;
+        }
+        
+        .webs-intro i {
+            margin-right: 6px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+        }
+        
+        .webs-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .web-btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(12, 107, 160, 0.3);
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: #0c6ba0;
+            color: white;
+        }
+        
+        .web-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .web-btn:hover::before {
+            left: 100%;
+        }
+        
+        .web-btn:hover {
+            background: #0a4f7a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(12, 107, 160, 0.5);
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .web-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .web-btn:hover i {
+            transform: translateX(3px);
+        }
+        
+        /* Nota descriptiva más discreta y difuminada */
+        .webs-note {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(2px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            flex-wrap: wrap;
+        }
+        
+        .webs-note:hover {
+            opacity: 0.9;
+        }
+        
+        .webs-note i {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        
+        .webs-note span {
+            font-weight: 400;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.3px;
+        }
+        
+        @media (max-width: 768px) {
+            .webs-grid {
+                gap: 1rem;
+            }
+            .web-btn {
+                min-width: 180px;
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+            }
+            .webs-intro {
+                font-size: 0.8rem;
+                padding: 0.3rem 1.2rem;
+            }
+            .webs-note {
+                font-size: 0.8rem;
+                padding: 0.4rem 1.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .webs-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .web-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            border-top: 1px solid #eee;
+            padding: 3rem 0 3rem;
+            color: #444;
+            background-color: #f8f9fa;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 32px;
+        }
+        
+        .footer h4 {
+            margin: 0 0 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .footer a {
+            display: block;
+            padding: 0.35rem 0;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        .footer .muted {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .socials a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #000;
+            transition: color 0.2s;
+        }
+
+        .socials a:hover {
+            color: var(--primary);
+        }
+
+        .socials i {
+            font-size: 1.3rem;
+            width: 24px;
+        }
+
+        /* Estilos para iconos de redes sociales */
+        .fa-whatsapp { color: var(--whatsapp-green); }
+        .fa-instagram { color: #C13584; }
+        .fa-tiktok { color: #000000; }
+        
+        /* Estilo para Gmail (gris informativo) */
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #6b7280; /* Gris */
+            cursor: default; /* Cambia el cursor para indicar que no es interactivo */
+        }
+        
+        .info-item i {
+            font-size: 1.3rem;
+            width: 24px;
+            color: #9ca3af; /* Gris más claro para el icono */
+        }
+        
+        .info-item span {
+            color: #6b7280;
+        }
+        
+        .info-item:hover {
+            color: #6b7280; /* Mantiene el gris al hacer hover */
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            width: 100%;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding: 2rem 32px 0;
+        }
+        
+        /* ====== RESPONSIVE STYLES ====== */
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 3.5rem;
+            }
+            .section-subtitle {
+                font-size: 1.3rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .full-section {
+                padding: 4rem 1.5rem;
+            }
+            .section-title {
+                font-size: 2.8rem;
+            }
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-inner {
+                padding: 0 20px;
+            }
+        }
+        
+        /* Estilo especial para LIFETIMES en negritas */
+        .lifetimes-bold {
+            font-weight: 900 !important;
+        }
+        
+        .brand-name {
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        /* Estilo para el icono de mundo en azul claro */
+        .world-icon {
+            color: #87CEEB !important; /* Azul claro */
+        }
+
+        /* Estilo para el icono de paquetería */
+        .package-icon {
+            color: #FFD700 !important; /* Dorado */
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">≡</button>
+            <a class="logo" href="#" aria-label="Inicio" title="Inicio">
+                <i class="fas fa-boxes logo-icon"></i>
+                <strong class="lifetimes-bold">LIFETIMES</strong> <span>para Negocios</span>
+            </a>
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#section1">Para tu Stock</a>
+                <a href="#section3">Paquetería</a>
+                <a href="#section4">Mi Logística</a>
+            </nav>
+            <div class="nav-cta">
+                <!-- Botón modificado: ahora dice "Volver" con flecha y redirige a Comercio.html -->
+                <a class="btn fill" href="Comercio.html" aria-label="Volver">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="#section1">Para tu Stock</a>
+            <a href="#section3">Paquetería</a>
+            <a href="#section4">Mi Logística</a>
+            <a href="#" class="catalogo-link" id="volverCatalogo">
+                <i class="fas fa-arrow-left"></i> Volver al catálogo
+            </a>
+        </div>
+    </header>
+
+    <!-- ====== SECCIÓN 1 - Presentación para negocios con stock (SIN BOTONES) ====== -->
+    <section id="section1" class="full-section" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <h1 class="section-title">¿Quieres que tus productos lleguen a más personas?</h1>
+            <p class="section-subtitle">Ideal para microempresarios, pymes y negocios con inventario. Nosotros te ayudamos a darle salida de forma inteligente.</p>
+            <a href="#contact" class="section-button">
+                <i class="fas fa-chart-line"></i> Quiero optimizar mi stock
+            </a>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN 3 - Paquetería Incluida ====== -->
+    <section id="section3" class="full-section" style="background-image: url('https://images.unsplash.com/photo-1566577134770-3d85bb3a9cc4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <h2 class="section-title">Paquetería incluida</h2>
+            <p class="section-subtitle">Coordinamos el envío de tus productos. Tú preparas el pedido y nosotros nos aseguramos de que llegue a tus clientes.</p>
+            <a href="Paqueteria-Comercio.html" class="section-button" id="paqueteriaBtn">
+                <i class="fas fa-truck package-icon"></i> Ver opciones de envío
+            </a>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN 4 - Logística Propia (MODIFICADA) ====== -->
+    <section id="section4" class="full-section" style="background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <h2 class="section-title">"Tengo mi propia logística"</h2>
+            <p class="section-subtitle">No te preocupes. Si ya cuentas con tus propios métodos de entrega, no estás obligado a usar la paquetería incluida. El servicio se adapta a ti.</p>
+            <a href="Sin-Paqueteria-Comercio.html" class="section-button" id="logisticaPropiaBtn">
+                <i class="fas fa-truck-moving"></i> Prefiero usar mi logística
+            </a>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE CONTACTO OCULTA PARA ANCLAS ====== -->
+    <div id="contact" style="display: none;"></div>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>Acerca de <strong class="lifetimes-bold">LIFETIMES</strong> para Negocios</h4>
+                <p class="muted">Plataforma que conecta microempresarios, pymes y negocios con stock grande con compradores inteligentes. Te ayudamos a mover tu inventario con marketing, web personalizada, paquetería incluida y sin compromisos de logística propia. Modelo justo y transparente para todos.</p>
+            </div>
+
+            <div>
+                <h4>Para tu Negocio</h4>
+                <a href="#section1">Optimizar Stock</a>
+                <a href="#section3">Paquetería Incluida</a>
+                <a href="#section4">Mi Propia Logística</a>
+                <a href="#contact">Vender Ahora</a>
+            </div>
+
+            <div>
+                <h4>Recursos</h4>
+                <a href="#section1">Casos de Éxito</a>
+                <a href="#section3">Preguntas Frecuentes</a>
+                <a href="#section4">Soporte Técnico</a>
+                <a href="#contact">Blog para Negocios</a>
+            </div>
+
+            <div>
+                <h4>Contáctanos</h4>
+                <p class="muted">Email: socios@lifetimes.com</p>
+                <p class="muted">Teléfono: +52 55 1234 5678</p>
+                <div class="socials">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>socios@lifetimes.com</span>
+                    </div>
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong> para Negocios. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            const volverCatalogo = document.getElementById('volverCatalogo');
+            if (volverCatalogo) {
+                volverCatalogo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.reload();
+                    if (mobileMenu) {
+                        mobileMenu.classList.remove('open');
+                    }
+                });
+            }
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                                mobileMenu.classList.remove('open');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.full-section').forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                section.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(section);
+            });
+            
+            document.querySelectorAll('h1, h2, h3, p, .section-title, .section-subtitle').forEach(element => {
+                if (element.textContent.includes('LIFETIMES')) {
+                    const newHTML = element.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                    element.innerHTML = newHTML;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

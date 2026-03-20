@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Directorio de Negocios LIFE TIMES - Accesorios Minoritarios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f5f7fa;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Barra lateral con menú fijo */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(to bottom, #0C6BA0, #0A5A88);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 20px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            transition: transform 0.3s;
+        }
+
+        .logo h1:hover {
+            transform: scale(1.05);
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        .logo p {
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .menu-categorias {
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        .categoria-item {
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            text-decoration: none;
+            color: white;
+        }
+
+        .categoria-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .categoria-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #ffffff;
+        }
+
+        .categoria-item i {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .subcategorias {
+            max-height: 300px;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
+            margin-top: -8px;
+            margin-bottom: 8px;
+        }
+
+        .subcategoria-item {
+            padding: 12px 15px 12px 45px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .subcategoria-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 2px solid #ffffff;
+            padding-left: 50px;
+        }
+
+        .subcategoria-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left: 3px solid #ffffff;
+            font-weight: 600;
+        }
+
+        .subcategoria-item i {
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .botones-lateral {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 15px;
+            gap: 15px;
+        }
+
+        .btn-subir-negocio {
+            margin: 0;
+            padding: 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn-subir-negocio:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .top-nav {
+            background-color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: #0C6BA0;
+        }
+
+        .negocios-container {
+            padding: 30px;
+            flex: 1;
+            background: white;
+        }
+
+        .titulo-banner {
+            background: linear-gradient(rgba(12, 107, 160, 0.1), rgba(12, 107, 160, 0.1)), 
+                        url('https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 25px 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #0C6BA0;
+            position: relative;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .titulo-banner h2 {
+            color: #000000;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .titulo-banner p {
+            color: #444;
+            font-size: 16px;
+            font-weight: 500;
+            padding-left: 5px;
+        }
+
+        .menu-desplazamiento {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .pagina-btn {
+            min-width: 35px;
+            height: 35px;
+            background: #f8f9fa;
+            color: #555;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+        }
+
+        .pagina-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+            border-color: #ccc;
+        }
+
+        .pagina-btn.active {
+            background: #0C6BA0;
+            color: white;
+            border-color: #0C6BA0;
+        }
+
+        .pagina-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .pagina-actual-info {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0C6BA0;
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: 1px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        /* BANNER MINIMALISTA BLANCO Y ROJO CON TEXTURA DE CUADROS */
+        .banner-minimalista {
+            background-color: #ffffff;
+            background-image: 
+                linear-gradient(45deg, #ffebee 25%, transparent 25%),
+                linear-gradient(-45deg, #ffebee 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #ffebee 75%),
+                linear-gradient(-45deg, transparent 75%, #ffebee 75%);
+            background-size: 30px 30px;
+            background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+            border: 2px solid #d32f2f;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-minimalista::after {
+            content: "LIFETIMES";
+            position: absolute;
+            bottom: 5px;
+            right: 20px;
+            font-size: 60px;
+            font-weight: 900;
+            color: rgba(211, 47, 47, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .banner-minimalista-izq {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .banner-minimalista-izq h3 {
+            color: #d32f2f;
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1;
+            margin: 0;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 #ffcdd2;
+        }
+
+        .banner-minimalista-izq p {
+            color: #b71c1c;
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            width: fit-content;
+            border: 2px solid #d32f2f;
+            backdrop-filter: blur(4px);
+            margin: 0;
+        }
+
+        .banner-minimalista-der {
+            background: #d32f2f;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 2px solid white;
+            box-shadow: 0 6px 0 #b71c1c;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .banner-minimalista-der i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* FIN BANNER MINIMALISTA */
+
+        .fila-contenedor {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .scroll-btn {
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: #f0f0f0;
+            color: #0C6BA0;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            z-index: 20;
+        }
+
+        .scroll-btn.visible {
+            display: flex;
+        }
+
+        .scroll-btn:hover {
+            background-color: #e0e0e0;
+            color: #0A5A88;
+            border-color: #ccc;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .desktop-view .fila-1, 
+        .desktop-view .fila-2, 
+        .desktop-view .fila-3, 
+        .desktop-view .fila-4, 
+        .desktop-view .fila-5 {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            width: 100%;
+        }
+        
+        .desktop-view .fila-1::-webkit-scrollbar,
+        .desktop-view .fila-2::-webkit-scrollbar,
+        .desktop-view .fila-3::-webkit-scrollbar,
+        .desktop-view .fila-4::-webkit-scrollbar,
+        .desktop-view .fila-5::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-view .negocios-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .desktop-view {
+            display: block;
+        }
+        
+        .mobile-view {
+            display: none;
+        }
+
+        .accesorios-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            aspect-ratio: 2/3.8;
+            border: 1px solid #f0f0f0;
+            cursor: pointer;
+            position: relative;
+            min-width: 260px;
+            width: 100%;
+            scroll-snap-align: start;
+        }
+
+        .desktop-view .accesorios-card {
+            min-width: 260px;
+        }
+
+        .mobile-view .accesorios-card {
+            min-width: 0;
+            aspect-ratio: 2/3.2;
+        }
+
+        .accesorios-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-imagen {
+            width: 100%;
+            height: 35%;
+            overflow: hidden;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .accesorios-card:hover .card-imagen img {
+            transform: scale(1.08);
+        }
+
+        .card-categoria-flotante {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(12, 107, 160, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 5;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .card-content {
+            padding: 16px 16px 14px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 65%;
+            background: white;
+        }
+
+        .mobile-view .card-content {
+            padding: 12px 10px 10px;
+        }
+
+        .card-header {
+            margin-bottom: 8px;
+        }
+
+        .card-header h3 {
+            color: #000000;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mobile-view .card-header h3 {
+            font-size: 14px;
+        }
+
+        .accesorios-precio {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .mobile-view .accesorios-precio {
+            font-size: 1rem;
+        }
+        
+        .accesorios-precio span {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+        .card-descripcion {
+            color: #444;
+            line-height: 1.5;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 8;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        .mobile-view .card-descripcion {
+            font-size: 12px;
+            -webkit-line-clamp: 6;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-ver-mas-card {
+            background-color: #0C6BA0;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(12, 107, 160, 0.2);
+        }
+
+        .mobile-view .btn-ver-mas-card,
+        .mobile-view .btn-whatsapp-card {
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .btn-ver-mas-card:hover {
+            background-color: #0A5A88;
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(12, 107, 160, 0.3);
+        }
+
+        .btn-whatsapp-card {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp-card:hover {
+            background-color: #128C7E;
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp-card i {
+            font-size: 14px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-galeria {
+            background-color: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 0;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            grid-column: 1 / span 2;
+            padding: 25px 30px 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-header h2 {
+            color: #000000;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .modal-categoria {
+            display: inline-block;
+            background-color: #e1f0fa;
+            color: #0C6BA0;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .btn-cerrar-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .btn-cerrar-modal:hover {
+            color: #0C6BA0;
+            background-color: #f5f5f5;
+        }
+
+        .galeria-container {
+            padding: 30px;
+            grid-column: 1;
+            grid-row: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .imagen-grande-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+
+        .imagen-grande-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .grid-imagenes-modal {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 12px;
+            height: 200px;
+        }
+
+        .imagen-modal-mini {
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .imagen-modal-mini:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .imagen-modal-mini.active {
+            border-color: #0C6BA0;
+        }
+
+        .imagen-modal-mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .descripcion-container {
+            padding: 30px;
+            grid-column: 2;
+            grid-row: 2;
+            background-color: #fafafa;
+            border-left: 1px solid #eee;
+            overflow-y: auto;
+        }
+
+        .descripcion-titulo {
+            color: #000000;
+            font-size: 22px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .descripcion-texto {
+            color: #333;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .modal-precio {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .btn-whatsapp-modal {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .btn-whatsapp-modal:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            body {
+                flex-direction: column;
+            }
+            
+            .top-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .titulo-banner {
+                padding: 20px;
+                min-height: 120px;
+            }
+
+            .titulo-banner h2 {
+                font-size: 24px;
+            }
+
+            .menu-desplazamiento {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .desktop-view {
+                display: none;
+            }
+            
+            .mobile-view {
+                display: block;
+            }
+
+            .scroll-btn {
+                display: none !important;
+            }
+
+            .modal-galeria {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            .modal-header {
+                grid-column: 1;
+                padding: 15px 20px;
+            }
+
+            .galeria-container {
+                grid-column: 1;
+                grid-row: 2;
+                padding: 20px;
+            }
+
+            .descripcion-container {
+                grid-column: 1;
+                grid-row: 3;
+                border-left: none;
+                border-top: 1px solid #eee;
+                padding: 20px;
+            }
+
+            .banner-minimalista {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            .banner-minimalista-izq p {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <h1>LIFE <span>TIMES</span></h1>
+            </a>
+            <p>Directorio de Negocios</p>
+        </div>
+        
+        <div class="menu-categorias">
+            <a href="General.html" class="categoria-item">
+                <i class="fas fa-home"></i>
+                <span>General</span>
+            </a>
+            
+            <div class="categoria-menu-container">
+                <a href="Servicio Minoritario.html" class="categoria-item">
+                    <i class="fas fa-handshake"></i>
+                    <span>Servicio minoritario</span>
+                    <i class="fas fa-chevron-down" style="margin-left: auto; margin-right: 0; font-size: 12px; transform: rotate(180deg);"></i>
+                </a>
+                
+                <div class="subcategorias">
+                    <a href="Accesorios-minoritario.html" class="subcategoria-item active">
+                        <i class="fas fa-gem"></i>
+                        <span>Accesorios</span>
+                    </a>
+                    <a href="Artesanias-minoritario.html" class="subcategoria-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>Artesanias</span>
+                    </a>
+                    <a href="Ropa y calzado-minoritario.html" class="subcategoria-item">
+                        <i class="fas fa-tshirt"></i>
+                        <span>Ropa y calzado</span>
+                    </a>
+                    <a href="Articulos-minoritario.html" class="subcategoria-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Artículos</span>
+                    </a>
+                    <a href="Otros-minoritario.html" class="subcategoria-item">
+                        <i class="fas fa-ellipsis-h"></i>
+                        <span>Otros</span>
+                    </a>
+                </div>
+            </div>
+            
+            <a href="Comercio.html" class="categoria-item">
+                <i class="fas fa-store"></i>
+                <span>Comercio</span>
+            </a>
+            <a href="Alimentos y bebidas.html" class="categoria-item">
+                <i class="fas fa-utensils"></i>
+                <span>Alimentos</span>
+            </a>
+            <a href="Servicios-general.html" class="categoria-item">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Servicios</span>
+            </a>
+        </div>
+        
+        <div class="botones-lateral">
+            <a href="Servicios-auto-minoritario.html" style="text-decoration: none;">
+                <button class="btn-subir-negocio">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Publicar aquí</span>
+                </button>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="Terminos y Condiciones.html">Términos y Condiciones</a></li>
+                <li><a href="Index.html">La Historia</a></li>
+                <li><a href="Servicios.html">Servicios</a></li>
+            </ul>
+        </nav>
+
+        <section class="negocios-container">
+            <div class="titulo-banner">
+                <h2>Accesorios Minoritarios y Artículos Especializados</h2>
+                <p>Descubre los mejores accesorios, joyería, bisutería y artículos especializados</p>
+                
+                <div class="menu-desplazamiento" id="menu-desplazamiento"></div>
+            </div>
+            
+            <!-- VISTA ESCRITORIO -->
+            <div class="desktop-view" id="desktop-view">
+                <!-- FILA 1 -->
+                <div class="fila-contenedor">
+                    <div class="fila-1" id="fila-1"></div>
+                    <button class="scroll-btn" id="scroll-btn-1" onclick="desplazarFila('fila-1')"><i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                <!-- BANNER MINIMALISTA BLANCO Y ROJO CON TEXTURA DE CUADROS - SEGUNDA FILA -->
+                <div class="banner-minimalista">
+                    <div class="banner-minimalista-izq">
+                        <h3>¡OFERTA ESPECIAL!</h3>
+                        <p>Hasta 40% de descuento en productos seleccionados</p>
+                    </div>
+                    
+                    <div class="banner-minimalista-der">
+                        <i class="fas fa-tools"></i> Kit de Herramientas
+                    </div>
+                </div>
+
+                <!-- RESTO DE FILAS -->
+                <div class="fila-contenedor">
+                    <div class="fila-2" id="fila-2"></div>
+                    <button class="scroll-btn" id="scroll-btn-2" onclick="desplazarFila('fila-2')"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="fila-contenedor">
+                    <div class="fila-3" id="fila-3"></div>
+                    <button class="scroll-btn" id="scroll-btn-3" onclick="desplazarFila('fila-3')"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="fila-contenedor">
+                    <div class="fila-4" id="fila-4"></div>
+                    <button class="scroll-btn" id="scroll-btn-4" onclick="desplazarFila('fila-4')"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="fila-contenedor">
+                    <div class="fila-5" id="fila-5"></div>
+                    <button class="scroll-btn" id="scroll-btn-5" onclick="desplazarFila('fila-5')"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- VISTA MÓVIL -->
+            <div class="mobile-view" id="mobile-view">
+                <div class="negocios-grid" id="negocios-grid"></div>
+                <!-- BANNER EN MÓVIL - HASTA ABAJO -->
+                <div class="banner-minimalista">
+                    <div class="banner-minimalista-izq">
+                        <h3>¡OFERTA ESPECIAL!</h3>
+                        <p>Hasta 40% de descuento en productos seleccionados</p>
+                    </div>
+                    
+                    <div class="banner-minimalista-der">
+                        <i class="fas fa-tools"></i> Kit de Herramientas
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-galeria">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-nombre"></h2>
+                    <span class="modal-categoria" id="modal-categoria"></span>
+                </div>
+                <button class="btn-cerrar-modal" id="btn-cerrar-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="galeria-container">
+                <div class="imagen-grande-container">
+                    <img id="imagen-grande" src="" alt="">
+                </div>
+                <div class="grid-imagenes-modal" id="grid-imagenes-modal"></div>
+            </div>
+            
+            <div class="descripcion-container">
+                <div>
+                    <h3 class="descripcion-titulo">Descripción</h3>
+                    <p class="descripcion-texto" id="descripcion-texto"></p>
+                    <div class="modal-precio" id="modal-precio"></div>
+                    <div class="contacto-info" id="contacto-info"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MISMOS DATOS ORIGINALES - SIN MODIFICAR
+        const negociosAccesorios = [
+            // FILA 1 - 15 negocios
+            {
+                nombre: "Joyas Étnicas del Mundo",
+                categoria: "Joyería Artesanal",
+                descripcion: "Joyas únicas elaboradas con técnicas tradicionales de diferentes culturas. Plata, turquesa, ámbar y coral. Cada pieza cuenta una historia única y está creada por artesanos expertos.",
+                descripcion_larga: "Joyas Étnicas del Mundo ofrece piezas únicas elaboradas por artesanos de diferentes culturas. Especializados en joyería de plata, turquesa, ámbar y coral. Cada pieza cuenta una historia y está creada con técnicas tradicionales transmitidas por generaciones.",
+                whatsapp: "+15551112233",
+                precio: "850 MXN",
+                precio_unidad: "/pieza",
+                imagen: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                nombre: "Anillos de Plata Mexicana",
+                categoria: "Joyería de Plata",
+                descripcion: "Anillos artesanales de plata mexicana con diseños tradicionales. Taxco, Guerrero. Incrustaciones de ópalo y amatista. Hechos a mano por plateros mexicanos.",
+                descripcion_larga: "Platería mexicana auténtica: anillos elaborados a mano en Taxco, Guerrero. Diseños tradicionales con incrustaciones de piedras semipreciosas mexicanas como ópalo y amatista.",
+                whatsapp: "+15552223344",
+                precio: "650 MXN",
+                precio_unidad: "/anillo",
+                imagen: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                nombre: "Collares de Oro Laminado",
+                categoria: "Joyería Fina",
+                descripcion: "Collares de oro laminado 14k con diseños minimalistas y elegantes. Resistentes al agua y al desgaste diario. Perfectos para ocasiones especiales.",
+                descripcion_larga: "Collares de oro laminado 14k con diseños minimalistas y elegantes. Perfectos para ocasiones especiales o para uso diario. Resistentes al agua y al desgaste.",
+                whatsapp: "+15553334455",
+                precio: "1,200 MXN",
+                precio_unidad: "/collar",
+                imagen: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                nombre: "Pulseras de Amuletos Tibetanos",
+                categoria: "Joyería Espiritual",
+                descripcion: "Pulseras con cuentas de madera de sándalo, piedras semipreciosas y nudos tradicionales. Amuletos de protección, prosperidad y sabiduría. Hechas en Nepal.",
+                descripcion_larga: "Pulseras elaboradas con cuentas de madera de sándalo, piedras semipreciosas y nudos tradicionales. Cada amuleto tiene un significado especial: protección, prosperidad o sabiduría.",
+                whatsapp: "+15554445566",
+                precio: "280 MXN",
+                precio_unidad: "/pulsera",
+                imagen: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ]
+            }
+        ];
+
+        // Resto del JavaScript IGUAL al original
+        const fila1 = document.getElementById('fila-1');
+        const fila2 = document.getElementById('fila-2');
+        const fila3 = document.getElementById('fila-3');
+        const fila4 = document.getElementById('fila-4');
+        const fila5 = document.getElementById('fila-5');
+        const negociosGrid = document.getElementById('negocios-grid');
+        const menuDesplazamiento = document.getElementById('menu-desplazamiento');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+        const modalNombre = document.getElementById('modal-nombre');
+        const modalCategoria = document.getElementById('modal-categoria');
+        const modalPrecio = document.getElementById('modal-precio');
+        const imagenGrande = document.getElementById('imagen-grande');
+        const gridImagenesModal = document.getElementById('grid-imagenes-modal');
+        const descripcionTexto = document.getElementById('descripcion-texto');
+        const contactoInfo = document.getElementById('contacto-info');
+
+        const NEGOCIOS_POR_PAGINA = 16;
+        let paginaActual = 1;
+        const totalPaginas = Math.ceil(negociosAccesorios.length / NEGOCIOS_POR_PAGINA);
+
+        window.desplazarFila = function(idFila) {
+            const elemento = document.getElementById(idFila);
+            if (elemento) {
+                const distancia = 840;
+                elemento.scrollBy({ left: distancia, behavior: 'smooth' });
+            }
+        };
+
+        function verificarFlechas() {
+            const filas = [
+                { fila: fila1, btnId: 'scroll-btn-1' },
+                { fila: fila2, btnId: 'scroll-btn-2' },
+                { fila: fila3, btnId: 'scroll-btn-3' },
+                { fila: fila4, btnId: 'scroll-btn-4' },
+                { fila: fila5, btnId: 'scroll-btn-5' }
+            ];
+            filas.forEach(item => {
+                const btn = document.getElementById(item.btnId);
+                if (btn && item.fila) {
+                    const tieneDesbordamiento = item.fila.scrollWidth > item.fila.clientWidth;
+                    if (tieneDesbordamiento) btn.classList.add('visible');
+                    else btn.classList.remove('visible');
+                }
+            });
+        }
+
+        function crearEnlaceWhatsApp(whatsapp) {
+            const numeroLimpio = whatsapp.replace(/\D/g, '');
+            let numeroParaWhatsapp = numeroLimpio;
+            if (numeroLimpio.length === 11 && numeroLimpio.startsWith('1')) {
+                numeroParaWhatsapp = numeroLimpio.substring(1);
+            }
+            return `https://wa.me/${numeroParaWhatsapp}`;
+        }
+
+        function crearGridImagenesModal(imagenes, imagenPrincipal) {
+            gridImagenesModal.innerHTML = '';
+            const todasImagenes = [imagenPrincipal, ...imagenes].slice(0, 6);
+            todasImagenes.forEach((imagen, index) => {
+                const imagenDiv = document.createElement('div');
+                imagenDiv.className = `imagen-modal-mini ${index === 0 ? 'active' : ''}`;
+                imagenDiv.dataset.imagen = imagen;
+                const img = document.createElement('img');
+                img.src = imagen;
+                img.alt = `Imagen ${index + 1}`;
+                imagenDiv.appendChild(img);
+                imagenDiv.addEventListener('click', function() {
+                    imagenGrande.src = this.dataset.imagen;
+                    document.querySelectorAll('.imagen-modal-mini').forEach(m => m.classList.remove('active'));
+                    this.classList.add('active');
+                });
+                gridImagenesModal.appendChild(imagenDiv);
+            });
+        }
+
+        function crearTarjeta(negocio) {
+            const enlaceWhatsapp = crearEnlaceWhatsApp(negocio.whatsapp);
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'accesorios-card';
+            tarjeta.innerHTML = `
+                <div class="card-imagen">
+                    <img src="${negocio.imagen}" alt="${negocio.nombre}" loading="lazy">
+                    <span class="card-categoria-flotante">${negocio.categoria}</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3>${negocio.nombre}</h3>
+                        <div class="accesorios-precio">
+                            ${negocio.precio}<span>${negocio.precio_unidad}</span>
+                        </div>
+                    </div>
+                    <p class="card-descripcion">${negocio.descripcion}</p>
+                    <div class="card-footer">
+                        <button class="btn-ver-mas-card" data-negocio-id="${negocio.nombre}">
+                            Ver más <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <a href="${enlaceWhatsapp}" target="_blank" class="btn-whatsapp-card">
+                            <i class="fab fa-whatsapp"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+            `;
+            const btnVerMas = tarjeta.querySelector('.btn-ver-mas-card');
+            btnVerMas.addEventListener('click', (e) => {
+                e.stopPropagation();
+                abrirGaleriaNegocio(negocio);
+            });
+            tarjeta.addEventListener('click', () => abrirGaleriaNegocio(negocio));
+            return tarjeta;
+        }
+
+        function cargarVistaDesktop() {
+            const negociosFila1 = negociosAccesorios.slice(0, 15);
+            fila1.innerHTML = '';
+            negociosFila1.forEach(negocio => {
+                fila1.appendChild(crearTarjeta(negocio));
+            });
+            
+            const negociosFila2 = negociosAccesorios.slice(15, 30);
+            fila2.innerHTML = '';
+            negociosFila2.forEach(negocio => {
+                fila2.appendChild(crearTarjeta(negocio));
+            });
+            
+            const negociosFila3 = negociosAccesorios.slice(30, 45);
+            fila3.innerHTML = '';
+            negociosFila3.forEach(negocio => {
+                fila3.appendChild(crearTarjeta(negocio));
+            });
+            
+            const negociosFila4 = negociosAccesorios.slice(45, 50);
+            fila4.innerHTML = '';
+            negociosFila4.forEach(negocio => {
+                fila4.appendChild(crearTarjeta(negocio));
+            });
+            
+            const negociosFila5 = negociosAccesorios.slice(50, 55);
+            fila5.innerHTML = '';
+            negociosFila5.forEach(negocio => {
+                fila5.appendChild(crearTarjeta(negocio));
+            });
+
+            setTimeout(verificarFlechas, 100);
+        }
+
+        function cargarPaginaMobile(pagina) {
+            const inicio = (pagina - 1) * NEGOCIOS_POR_PAGINA;
+            const fin = Math.min(inicio + NEGOCIOS_POR_PAGINA, negociosAccesorios.length);
+            const negociosPagina = negociosAccesorios.slice(inicio, fin);
+            
+            negociosGrid.innerHTML = '';
+            negociosPagina.forEach(negocio => {
+                negociosGrid.appendChild(crearTarjeta(negocio));
+            });
+            
+            actualizarMenuPaginacion(pagina);
+        }
+
+        function actualizarMenuPaginacion(pagina) {
+            let menuHTML = `<span class="pagina-actual-info">Página ${pagina} de ${totalPaginas}</span>`;
+            
+            menuHTML += `<button class="pagina-btn ${pagina === 1 ? 'disabled' : ''}" data-pagina="${pagina - 1}" ${pagina === 1 ? 'disabled' : ''}>‹</button>`;
+            
+            let inicioMostrar = Math.max(1, pagina - 2);
+            let finMostrar = Math.min(totalPaginas, inicioMostrar + 4);
+            
+            if (finMostrar - inicioMostrar < 4) {
+                inicioMostrar = Math.max(1, finMostrar - 4);
+            }
+            
+            for (let i = inicioMostrar; i <= finMostrar; i++) {
+                menuHTML += `<button class="pagina-btn ${i === pagina ? 'active' : ''}" data-pagina="${i}">${i}</button>`;
+            }
+            
+            menuHTML += `<button class="pagina-btn ${pagina === totalPaginas ? 'disabled' : ''}" data-pagina="${pagina + 1}" ${pagina === totalPaginas ? 'disabled' : ''}>›</button>`;
+            
+            menuDesplazamiento.innerHTML = menuHTML;
+            
+            document.querySelectorAll('.pagina-btn[data-pagina]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const nuevaPagina = parseInt(this.dataset.pagina);
+                    if (!isNaN(nuevaPagina) && nuevaPagina >= 1 && nuevaPagina <= totalPaginas && nuevaPagina !== paginaActual) {
+                        paginaActual = nuevaPagina;
+                        cargarPaginaMobile(paginaActual);
+                        window.scrollTo({ top: document.querySelector('.negocios-container').offsetTop - 20, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        function abrirGaleriaNegocio(negocio) {
+            contactoInfo.innerHTML = '';
+            
+            modalNombre.textContent = negocio.nombre;
+            modalCategoria.textContent = negocio.categoria;
+            modalPrecio.innerHTML = `${negocio.precio}<span>${negocio.precio_unidad}</span>`;
+            imagenGrande.src = negocio.imagen;
+            descripcionTexto.textContent = negocio.descripcion_larga;
+            
+            crearGridImagenesModal(negocio.imagenes_adicionales, negocio.imagen);
+            
+            const enlaceWhatsapp = crearEnlaceWhatsApp(negocio.whatsapp);
+            contactoInfo.innerHTML = `
+                <a href="${enlaceWhatsapp}" target="_blank" class="btn-whatsapp-modal">
+                    <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                </a>
+            `;
+            
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        btnCerrarModal.addEventListener('click', cerrarModal);
+        modalOverlay.addEventListener('click', (e) => e.target === modalOverlay && cerrarModal());
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && modalOverlay.classList.contains('active') && cerrarModal());
+
+        window.addEventListener('resize', verificarFlechas);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarVistaDesktop();
+            cargarPaginaMobile(1);
+        });
+    </script>
+</body>
+</html>

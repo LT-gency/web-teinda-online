@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LIFE TIMES - General</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== MISMOS ESTILOS QUE EN COMERCIO ===== */
+        /* Copia todos los estilos de la versión de Comercio aquí */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #000;
+            color: #333;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(to bottom, #C90F0F, #A00C0C);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 20px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            transition: transform 0.3s;
+        }
+
+        .logo h1:hover {
+            transform: scale(1.05);
+        }
+
+        .logo h1 a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        .logo p {
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .menu-categorias {
+            padding: 0 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Estilo base para todos los items del menú - ADAPTADO DEL PRIMER CÓDIGO */
+        .categoria-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+        }
+
+        .categoria-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .categoria-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #ffffff;
+        }
+
+        .categoria-item i {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        /* Contenedor especial para Alimentos (enlace + botón) */
+        .alimentos-container {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        /* Fila que contiene el enlace y el botón */
+        .alimentos-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background-color: transparent;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .alimentos-row:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        /* Enlace de Alimentos - ADAPTADO DEL PRIMER CÓDIGO */
+        .alimentos-link {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+            border-radius: 8px 0 0 8px;
+        }
+
+        .alimentos-link i {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        /* Botón de la flecha */
+        .alimentos-toggle {
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 15px 0;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+            color: white;
+            background-color: transparent;
+            border: none;
+            font-size: 14px;
+        }
+
+        .alimentos-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .alimentos-toggle.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Submenú de zonas */
+        .submenu-zonas {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .submenu-zonas.active {
+            max-height: 300px;
+            opacity: 1;
+            padding: 10px 0;
+        }
+
+        .submenu-item {
+            display: block;
+            padding: 12px 15px 12px 40px;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .submenu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding-left: 45px;
+        }
+
+        .submenu-item:before {
+            content: "-";
+            position: absolute;
+            left: 25px;
+            color: white;
+            font-size: 16px;
+        }
+
+        /* Botones laterales - ADAPTADOS DEL PRIMER CÓDIGO */
+        .botones-lateral {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 15px;
+            gap: 15px;
+            width: calc(100% - 30px);
+        }
+
+        .btn-subir-negocio {
+            margin: 0;
+            padding: 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .btn-subir-negocio:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-subir-negocio i,
+        .btn-incrementar-ventas i {
+            font-size: 18px;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            background-color: #000;
+        }
+
+        .top-nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            font-size: 16px; /* AJUSTADO DEL PRIMER CÓDIGO */
+        }
+
+        .nav-links a:hover {
+            color: #C90F0F;
+        }
+
+        /* VISOR DE NEGOCIOS */
+        .visor-container {
+            flex: 1;
+            position: relative;
+            height: calc(100vh - 73px);
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .negocio-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .negocio-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .imagenes-negocio {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .imagen-negocio {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .imagen-negocio.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .negocio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(125deg, 
+                rgba(0,0,0,0.7) 0%, 
+                rgba(0,0,0,0.3) 30%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.3) 70%,
+                rgba(0,0,0,0.7) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .negocio-info {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            z-index: 3;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            pointer-events: none;
+            max-width: 60%;
+            animation: slideInLeft 0.8s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .negocio-titulo {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .negocio-slide.active .negocio-titulo {
+            animation: textGlow 3s infinite;
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 3px 3px 10px rgba(0,0,0,0.8); }
+            50% { text-shadow: 3px 3px 20px rgba(201, 15, 15, 0.6); }
+            100% { text-shadow: 3px 3px 10px rgba(0,0,0,0.8); }
+        }
+
+        .negocio-subtitulo {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: rgba(255,255,255,0.95);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            animation: slideInUp 0.6s ease 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .negocio-categoria {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            animation: slideInUp 0.6s ease 0.4s both;
+        }
+
+        .negocio-categoria i {
+            margin-right: 6px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Botón VER MÁS */
+        .btn-ver-mas-negocio {
+            position: absolute;
+            bottom: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            background: rgba(201, 15, 15, 0.75);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 60px;
+            padding: 16px 45px;
+            font-size: 22px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            animation: bounceIn 1s ease;
+            min-width: 260px;
+            backdrop-filter: blur(5px);
+            border: none;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.3);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1.05);
+            }
+            70% {
+                transform: translateX(-50%) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        .btn-ver-mas-negocio:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #C90F0F;
+            transform: translateX(-50%) translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(201, 15, 15, 0.5);
+            border: 1px solid #C90F0F;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-ver-mas-negocio i {
+            font-size: 22px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-ver-mas-negocio:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Botón MIRAR MÁS */
+        .btn-mirar-mas {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(201, 15, 15, 0.4);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 40px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            min-width: 90px;
+            text-align: center;
+            line-height: 1.2;
+            border: none;
+            animation: softPulse 3s infinite;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes softPulse {
+            0% {
+                box-shadow: 0 5px 15px rgba(201, 15, 15, 0.3);
+                background: rgba(201, 15, 15, 0.4);
+            }
+            50% {
+                box-shadow: 0 10px 25px rgba(201, 15, 15, 0.6);
+                background: rgba(201, 15, 15, 0.6);
+            }
+            100% {
+                box-shadow: 0 5px 15px rgba(201, 15, 15, 0.3);
+                background: rgba(201, 15, 15, 0.4);
+            }
+        }
+
+        .btn-mirar-mas:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #C90F0F;
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: 0 15px 30px rgba(201, 15, 15, 0.6);
+            border: 2px solid #C90F0F;
+            animation: none;
+        }
+
+        .btn-mirar-mas i {
+            font-size: 22px;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .btn-mirar-mas span {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* ===== NUEVO NAVBAR INFERIOR PARA MÓVIL ===== */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to bottom, #C90F0F, #A00C0C);
+            color: white;
+            z-index: 200;
+            padding: 8px 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            list-style: none;
+            padding: 0 10px;
+        }
+
+        .mobile-nav-links li {
+            text-align: center;
+            flex: 1;
+        }
+
+        .mobile-nav-links a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 5px 0;
+            transition: opacity 0.3s;
+            gap: 2px;
+        }
+
+        .mobile-nav-links a i {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+
+        .mobile-nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* ===== VERSIÓN MÓVIL ===== */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+                padding-bottom: 60px; /* Espacio para el navbar inferior */
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                overflow-y: visible;
+                flex-shrink: 0;
+            }
+            
+            .logo {
+                padding: 20px 15px;
+                margin-bottom: 10px;
+            }
+            
+            .logo h1 {
+                font-size: 26px;
+            }
+            
+            .logo p {
+                font-size: 13px;
+                margin-top: 5px;
+            }
+            
+            .menu-categorias {
+                padding: 0 15px;
+            }
+            
+            .categoria-item {
+                padding: 16px 18px;
+                margin: 0 0 8px 0;
+                font-size: 17px;
+                font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+            }
+            
+            .categoria-item i {
+                margin-right: 12px;
+                font-size: 18px;
+            }
+            
+            .alimentos-container {
+                margin-bottom: 8px;
+            }
+            
+            .alimentos-link {
+                padding: 16px 18px;
+                font-size: 17px;
+                font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+            }
+            
+            .alimentos-link i {
+                margin-right: 12px;
+                font-size: 18px;
+            }
+            
+            .alimentos-toggle {
+                padding: 16px 0;
+            }
+            
+            .submenu-zonas {
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+            
+            .submenu-zonas.active {
+                padding: 8px 0;
+                margin-top: 2px;
+            }
+            
+            .submenu-item {
+                padding: 14px 15px 14px 45px;
+                font-size: 16px;
+            }
+            
+            .submenu-item:before {
+                left: 25px;
+            }
+            
+            .botones-lateral {
+                margin: 20px 15px;
+                gap: 15px;
+                width: calc(100% - 30px);
+            }
+            
+            .btn-subir-negocio {
+                padding: 16px;
+                font-size: 16px;
+                font-weight: 600; /* AÑADIDO DEL PRIMER CÓDIGO */
+            }
+            
+            .main-content {
+                margin-left: 0;
+                height: auto;
+                min-height: 100vh;
+                overflow: visible;
+            }
+            
+            .top-nav {
+                display: none;
+            }
+            
+            .visor-container {
+                height: 100vh;
+                min-height: 100vh;
+                overflow: visible;
+            }
+            
+            .negocio-slide {
+                position: relative;
+                height: 100vh;
+                min-height: 100vh;
+                display: none;
+            }
+            
+            .negocio-slide.active {
+                display: block;
+            }
+            
+            .imagenes-negocio {
+                height: 100vh;
+                min-height: 100vh;
+            }
+            
+            .imagen-negocio {
+                height: 100vh;
+                min-height: 100vh;
+            }
+            
+            .negocio-overlay {
+                height: 100vh;
+                min-height: 100vh;
+            }
+            
+            .negocio-info {
+                top: 40px;
+                left: 20px;
+                max-width: 85%;
+            }
+            
+            .negocio-titulo {
+                font-size: 38px;
+            }
+            
+            .negocio-subtitulo {
+                font-size: 18px;
+            }
+            
+            .negocio-categoria {
+                font-size: 16px;
+            }
+            
+            .btn-ver-mas-negocio {
+                bottom: 100px;
+                padding: 15px 35px;
+                font-size: 20px;
+                min-width: 220px;
+            }
+            
+            .btn-mirar-mas {
+                right: 15px;
+                padding: 8px 14px;
+                min-width: 70px;
+            }
+            
+            .btn-mirar-mas i {
+                font-size: 18px;
+            }
+            
+            .btn-mirar-mas span {
+                font-size: 11px;
+            }
+
+            /* Mostrar navbar inferior en móvil */
+            .mobile-bottom-nav {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .categoria-item, .alimentos-link {
+                padding: 15px 16px;
+                font-size: 16px;
+                font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+            }
+            
+            .negocio-titulo {
+                font-size: 32px;
+            }
+            
+            .negocio-subtitulo {
+                font-size: 16px;
+            }
+            
+            .negocio-categoria {
+                font-size: 14px;
+            }
+            
+            .btn-ver-mas-negocio {
+                bottom: 80px;
+                padding: 12px 28px;
+                font-size: 18px;
+                min-width: 200px;
+            }
+            
+            .btn-subir-negocio {
+                padding: 15px;
+                font-size: 15px;
+                font-weight: 600; /* AÑADIDO DEL PRIMER CÓDIGO */
+            }
+            
+            .btn-mirar-mas {
+                right: 10px;
+                padding: 6px 12px;
+                min-width: 60px;
+            }
+            
+            .btn-mirar-mas i {
+                font-size: 16px;
+            }
+            
+            .btn-mirar-mas span {
+                font-size: 10px;
+            }
+
+            .mobile-nav-links a {
+                font-size: 10px;
+            }
+            
+            .mobile-nav-links a i {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="Index.html" style="text-decoration: none; color: inherit;">
+                <h1>LIFE <span>TIMES</span></h1>
+            </a>
+            <p>Directorio de Negocios</p>
+        </div>
+        
+        <div class="menu-categorias">
+            <!-- General (ACTIVO) -->
+            <a href="General.html" class="categoria-item active">
+                <i class="fas fa-home"></i>
+                <span>General</span>
+            </a>
+            
+            <!-- Servicio minoritario -->
+            <a href="Servicio Minoritario.html" class="categoria-item">
+                <i class="fas fa-handshake"></i>
+                <span>Serv. minoritario</span>
+            </a>
+            
+            <!-- Comercio -->
+            <a href="Comercio.html" class="categoria-item">
+                <i class="fas fa-store"></i>
+                <span>Comercio</span>
+            </a>
+            
+            <!-- ALIMENTOS Y BEBIDAS CON SUBMENÚ -->
+            <div class="alimentos-container">
+                <div class="alimentos-row">
+                    <a href="Alimentos y bebidas.html" class="alimentos-link">
+                        <i class="fas fa-utensils"></i>
+                        <span>Alimentos</span>
+                    </a>
+                    <button class="alimentos-toggle" id="alimentos-toggle">
+                        <i class="fas fa-chevron-down submenu-arrow"></i>
+                    </button>
+                </div>
+                
+                <div class="submenu-zonas" id="submenu-zonas">
+                    <a href="alimentos y bebidas-zona centro.html" class="submenu-item">Zona Centro</a>
+                    <a href="alimentos y bebidas-zona norte.html" class="submenu-item">Zona Norte</a>
+                    <a href="alimentos y bebidas-zona oriente.html" class="submenu-item">Zona Oriente</a>
+                    <a href="alimentos y bebidas-zona poniente.html" class="submenu-item">Zona Poniente</a>
+                    <a href="alimentos y bebidas-zona sur.html" class="submenu-item">Zona Sur</a>
+                </div>
+            </div>
+            
+            <!-- Servicios -->
+            <a href="Servicios-general.html" class="categoria-item">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Servicios</span>
+            </a>
+        </div>
+        
+        <!-- BOTONES LATERALES -->
+        <div class="botones-lateral">
+            <a href="Subir-general.html" style="text-decoration: none; width: 100%;">
+                <button class="btn-subir-negocio">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Cómo publicar</span>
+                </button>
+            </a>
+            
+            <!-- Botón Incrementar ventas eliminado -->
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- NAVBAR SUPERIOR (SOLO ESCRITORIO) -->
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="Terminos y Condiciones.html">Términos y Condiciones</a></li>
+                <li><a href="Index.html">P. principal</a></li>
+                <li><a href="Soporte y reclamos.html">Soporte y reclamos</a></li>
+            </ul>
+        </nav>
+
+        <!-- VISOR DE NEGOCIOS -->
+        <div class="visor-container" id="visor-container">
+            <!-- Los negocios se cargarán aquí dinámicamente -->
+            <button class="btn-mirar-mas" id="btn-mirar-mas">
+                <i class="fas fa-arrow-right"></i>
+                <span>MIRAR MÁS</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- NAVBAR INFERIOR PARA MÓVIL -->
+    <nav class="mobile-bottom-nav">
+        <ul class="mobile-nav-links">
+            <li><a href="Terminos y Condiciones.html"><i class="fas fa-file-contract"></i><span>Términos</span></a></li>
+            <li><a href="Index.html"><i class="fas fa-home"></i><span>P. principal</span></a></li>
+            <li><a href="Soporte y reclamos.html"><i class="fas fa-headset"></i><span>Soporte</span></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        // ============================================
+        // CONFIGURACIÓN DEL SUBMENÚ DE ALIMENTOS
+        // ============================================
+        const alimentosToggle = document.getElementById('alimentos-toggle');
+        const submenuZonas = document.getElementById('submenu-zonas');
+        
+        if (alimentosToggle && submenuZonas) {
+            // Al hacer clic en el botón de la flecha, se abre/cierra el submenú
+            alimentosToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Alternar clases active
+                submenuZonas.classList.toggle('active');
+                alimentosToggle.classList.toggle('active');
+            });
+            
+            // Cerrar el submenú si se hace clic fuera de él
+            document.addEventListener('click', function(e) {
+                const alimentosContainer = document.querySelector('.alimentos-container');
+                if (alimentosContainer && !alimentosContainer.contains(e.target)) {
+                    submenuZonas.classList.remove('active');
+                    alimentosToggle.classList.remove('active');
+                }
+            });
+        }
+
+        // ============================================
+        // DATOS DE LOS NEGOCIOS - SOLO UN NEGOCIO
+        // ============================================
+        const negocios = [
+            { 
+                nombre: "MUEBLES ESTILO MODERNO", 
+                categoria: "Mobiliario",
+                descripcion: "Diseño, calidad y comodidad para tu hogar",
+                imagenes: [
+                    "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+                    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+                    "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+                    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                ],
+                url_destino: "suplementos/suplementos.html"
+            }
+        ];
+
+        // Variables de estado
+        let negocioActual = 0;
+        let imagenActualPorNegocio = {};
+
+        // Inicializar el estado de imágenes
+        negocios.forEach((_, index) => {
+            imagenActualPorNegocio[index] = 0;
+        });
+
+        // Elementos DOM
+        const visorContainer = document.getElementById('visor-container');
+        const btnMirarMas = document.getElementById('btn-mirar-mas');
+
+        // Función para cargar todos los negocios
+        function cargarNegocios() {
+            // Limpiar el contenedor pero conservar el botón
+            const botonMirarMas = document.getElementById('btn-mirar-mas');
+            visorContainer.innerHTML = '';
+            
+            negocios.forEach((negocio, index) => {
+                const negocioSlide = document.createElement('div');
+                negocioSlide.className = `negocio-slide ${index === 0 ? 'active' : ''}`;
+                negocioSlide.id = `negocio-${index}`;
+                
+                // Crear contenedor de imágenes
+                const imagenesDiv = document.createElement('div');
+                imagenesDiv.className = 'imagenes-negocio';
+                
+                // Añadir cada imagen
+                negocio.imagenes.forEach((imgSrc, imgIndex) => {
+                    const img = document.createElement('img');
+                    img.src = imgSrc;
+                    img.alt = `${negocio.nombre} - Imagen ${imgIndex + 1}`;
+                    img.className = `imagen-negocio ${imgIndex === 0 ? 'active' : ''}`;
+                    img.dataset.negocioIndex = index;
+                    img.dataset.imagenIndex = imgIndex;
+                    imagenesDiv.appendChild(img);
+                });
+                
+                // Añadir overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'negocio-overlay';
+                imagenesDiv.appendChild(overlay);
+                
+                // Crear info del negocio
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'negocio-info';
+                infoDiv.innerHTML = `
+                    <h2 class="negocio-titulo">${negocio.nombre}</h2>
+                    <div class="negocio-subtitulo">${negocio.descripcion}</div>
+                    <div class="negocio-categoria"><i class="fas fa-tag"></i> ${negocio.categoria}</div>
+                `;
+                
+                // Crear botón "Ver más"
+                const btnVerMas = document.createElement('a');
+                btnVerMas.href = negocio.url_destino;
+                btnVerMas.className = 'btn-ver-mas-negocio';
+                btnVerMas.innerHTML = `
+                    <i class="fas fa-eye"></i>
+                    VER MÁS
+                `;
+                
+                // Ensamblar slide
+                negocioSlide.appendChild(imagenesDiv);
+                negocioSlide.appendChild(infoDiv);
+                negocioSlide.appendChild(btnVerMas);
+                
+                visorContainer.appendChild(negocioSlide);
+            });
+            
+            // Volvemos a agregar el botón después de los slides
+            visorContainer.appendChild(botonMirarMas);
+        }
+
+        // Función para cambiar a la siguiente imagen del negocio actual
+        function cambiarImagen() {
+            const slideActual = document.querySelector(`#negocio-${negocioActual}`);
+            if (!slideActual) return;
+            
+            const imagenes = slideActual.querySelectorAll('.imagen-negocio');
+            const imagenActualIndex = imagenActualPorNegocio[negocioActual];
+            
+            // Quitar clase active de la imagen actual
+            imagenes[imagenActualIndex].classList.remove('active');
+            
+            // Calcular siguiente imagen
+            const siguienteIndex = (imagenActualIndex + 1) % imagenes.length;
+            
+            // Añadir clase active a la nueva imagen
+            imagenes[siguienteIndex].classList.add('active');
+            
+            // Actualizar estado
+            imagenActualPorNegocio[negocioActual] = siguienteIndex;
+        }
+
+        // Event Listeners
+        btnMirarMas.addEventListener('click', (e) => {
+            e.preventDefault();
+            cambiarImagen();
+        });
+
+        // Soporte para teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                cambiarImagen();
+            }
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', cargarNegocios);
+    </script>
+</body>
+</html>

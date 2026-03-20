@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LIFETIMES AGENCY - Arquitectos de Marcas y Estrategias</title>
+  <meta name="description" content="LIFETIMES AGENCY - Arquitectos de marcas y estrategias de impacto" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== NUEVA INTRO ANIMATION MEJORADA Y MÁS FLUIDA ===== */
+    #intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    
+    .intro-fullscreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #c90f0f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease;
+      opacity: 0;
+      animation: fadeInIntro 0.8s ease forwards 0.3s;
+    }
+    
+    @keyframes fadeInIntro {
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .intro-fullscreen.active {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    
+    .intro-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #c90f0f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(100%);
+      transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s;
+      opacity: 0;
+      animation: fadeInContent 0.8s ease forwards 0.8s;
+    }
+    
+    @keyframes fadeInContent {
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .intro-content.active {
+      transform: translateY(0);
+    }
+    
+    .intro-logo {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      font-family: 'Inter', sans-serif;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUpLogo 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards;
+    }
+    
+    @keyframes fadeInUpLogo {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .intro-tagline {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-align: center;
+      max-width: 500px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUpTagline 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+    }
+    
+    @keyframes fadeInUpTagline {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== VARIABLES Y ESTILOS GENERALES ===== */
+    :root{
+      --bg:#ffffff;
+      --fg:#111111;
+      --muted:#6b7280;
+      --accent:#000000;
+      --accent-2:#f5f5f5;
+      --ring:#11111133;
+      --success:#2da316;
+      --primary: #1a1a1a;
+      --secondary: #4a4a4a;
+      --accent-color: #e72525;
+      --light-bg: #f8f9fa;
+      --border: #e0e0e0;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin-inline:auto;padding-inline:20px}
+    
+    /* ===== BOTONES MEJORADOS ===== */
+    .btn{
+      display:inline-flex;
+      gap:.6rem;
+      align-items:center;
+      font-weight:600;
+      border:1px solid var(--primary);
+      padding:.85rem 1.5rem;
+      border-radius:8px;
+      transition:all 0.3s ease;
+      font-size: 0.95rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    }
+    .btn.fill{
+      background:var(--primary);
+      color:#fff;
+    }
+    .btn.fill:hover{
+      background:var(--secondary);
+      border-color:var(--secondary);
+    }
+    .btn.ghost{
+      background:transparent;
+      color:var(--primary);
+    }
+    .btn.ghost:hover{
+      background:var(--primary);
+      color:#fff;
+    }
+    .btn.outline{
+      background:transparent;
+      border:2px solid var(--accent-color);
+      color:var(--accent-color);
+    }
+    .btn.outline:hover{
+      background:var(--accent-color);
+      color:#fff;
+    }
+    
+    /* ===== BOTÓN LEER MÁS MEJORADO ===== */
+    .btn-read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #000;
+      color: #fff;
+      border: 2px solid #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-read-more:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.1);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-read-more:hover:before {
+      left: 100%;
+    }
+    
+    .btn-read-more:hover {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      border:1px solid var(--fg);
+      border-radius:999px;
+      padding:.25rem .6rem;
+      font-size:.75rem;
+      background: var(--light-bg);
+    }
+   
+    /* ===== NAV RESTAURADO AL ESTILO ORIGINAL ===== */
+    .nav{
+      position:sticky;
+      top:0;
+      background:rgba(255,255,255,.9);
+      backdrop-filter:saturate(180%) blur(10px);
+      border-bottom:1px solid #eee;
+      z-index:50;
+    }
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .logo{
+      font-weight:900;
+      letter-spacing:.02em;
+      font-size:1.25rem;
+    }
+    .nav-links{
+      display:flex;
+      gap:1.2rem;
+      align-items:center;
+    }
+    .nav-links a{
+      font-weight:600;
+    }
+    .nav-cta{
+      display:flex;
+      gap:.6rem;
+      align-items:center;
+    }
+    .mobile-toggle{
+      display:none;
+      background:#000;
+      color:#fff;
+      border:none;
+      width:40px;
+      height:40px;
+      border-radius:10px;
+    }
+    @media (max-width: 960px){
+      .nav-links{display:none}
+      .mobile-toggle{display:inline-grid;place-items:center}
+    }
+    .mobile-menu{
+      position:fixed;
+      inset:0 0 auto 0;
+      top:64px;
+      background:#fff;
+      border-top:1px solid #eee;
+      display:none;
+    }
+    .mobile-menu.open{display:block}
+    .mobile-menu a{
+      display:block;
+      padding:16px 20px;
+      border-bottom:1px solid #eee;
+      font-weight:600;
+    }
+   
+    /* ===== HERO CON IMAGEN ORIGINAL (SIN CAPA NEGRA) ===== */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: url('https://foodandpleasure.com/wp-content/uploads/2018/06/restaurantes-bonitos-cdmx-aromas-.jpg') no-repeat center center;
+      background-size: cover;
+      color: white;
+      padding: 0;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 8px 16px;
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .hero-badge .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      display: inline-block;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin: 0 0 30px;
+      font-weight: 800;
+      max-width: 800px;
+    }
+    
+    .hero-description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    
+    .hero-btn.primary {
+      background: var(--accent-color);
+      color: white;
+      border: 2px solid var(--accent-color);
+    }
+    
+    .hero-btn.primary:hover {
+      background: transparent;
+      border-color: white;
+    }
+    
+    .hero-btn.secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+    
+    .hero-btn.secondary:hover {
+      background: white;
+      color: var(--primary);
+    }
+    
+    .hero-scroll {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      animation: bounce 2s infinite;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+    
+    /* ===== NUEVAS SECCIONES CON IMAGEN DE FONDO ===== */
+    .image-section {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      text-align: center;
+      padding: 60px 0;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .image-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+    
+    .image-section .container {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .image-section h2 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      letter-spacing: -0.02em;
+    }
+    
+    .image-section p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      opacity: 0.95;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    
+    .image-section .btn {
+      font-size: 1.1rem;
+      padding: 15px 40px;
+      background: var(--accent-color);
+      border: 2px solid var(--accent-color);
+      color: white;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .image-section .btn:hover {
+      background: transparent;
+      border-color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    /* ===== NUEVO ESTILO DE TARJETAS DINÁMICAS (COMO LA DE SERVICIOS DESTACADOS) ===== */
+    .dynamic-showcase {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    .dynamic-showcase .service-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .dynamic-showcase .service-content-left {
+      padding: 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+      border-left: 5px solid var(--accent-color);
+    }
+    
+    .dynamic-showcase .service-content-left h3 {
+      font-size: 1.8rem;
+      margin: 0 0 20px;
+      color: var(--primary);
+      line-height: 1.3;
+    }
+    
+    .dynamic-showcase .service-content-left p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin: 0 0 25px;
+    }
+    
+    .dynamic-showcase .service-highlights {
+      margin: 30px 0;
+    }
+    
+    .dynamic-showcase .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .dynamic-showcase .highlight-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #e72525 0%, #c41c1c 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    
+    .dynamic-showcase .highlight-text h4 {
+      margin: 0 0 5px;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    
+    .dynamic-showcase .highlight-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    /* SERVICIO CARD DERECHA - ÚNICA BOX */
+    .dynamic-showcase .service-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+    }
+    
+    .dynamic-showcase .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    }
+    
+    .dynamic-showcase .service-image {
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .dynamic-showcase .service-image:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+      z-index: 1;
+    }
+    
+    .dynamic-showcase .service-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    
+    .dynamic-showcase .service-card:hover .service-image img {
+      transform: scale(1.1);
+    }
+    
+    .dynamic-showcase .service-content {
+      padding: 35px;
+    }
+    
+    .dynamic-showcase .service-category {
+      display: inline-block;
+      background: #fff0f0;
+      color: var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    
+    .dynamic-showcase .service-card h4 {
+      font-size: 1.5rem;
+      margin: 0 0 15px;
+      color: var(--primary);
+      line-height: 1.3;
+    }
+    
+    .dynamic-showcase .service-card .service-description {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+    
+    .dynamic-showcase .service-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 25px;
+      border-top: 1px solid #f0f0f0;
+    }
+    
+    .dynamic-showcase .service-price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .dynamic-showcase .service-price span {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    
+    .dynamic-showcase .service-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent-color);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      z-index: 2;
+    }
+    
+    @media (max-width: 1024px) {
+      .dynamic-showcase .service-showcase {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .dynamic-showcase .service-content-left {
+        padding: 30px;
+      }
+      
+      .dynamic-showcase .service-content-left h3 {
+        font-size: 1.6rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .dynamic-showcase {
+        padding: 60px 0;
+      }
+      
+      .dynamic-showcase .service-image {
+        height: 200px;
+      }
+      
+      .dynamic-showcase .service-content {
+        padding: 25px;
+      }
+    }
+    
+    /* SERVICIOS DESTACADOS - REDISEÑADO CON 1 BOX Y 2 COLUMNAS */
+    .featured-services {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin: 0 0 15px;
+      font-weight: 800;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-header h2:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--accent-color);
+    }
+    
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* NUEVO DISEÑO DE 2 COLUMNAS PARA SERVICIOS POPULARES */
+    .service-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .service-content-left {
+      padding: 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+      border-left: 5px solid var(--accent-color);
+    }
+    
+    .service-content-left h3 {
+      font-size: 1.8rem;
+      margin: 0 0 20px;
+      color: var(--primary);
+      line-height: 1.3;
+    }
+    
+    .service-highlights {
+      margin: 30px 0;
+    }
+    
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .highlight-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #e72525 0%, #c41c1c 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    
+    .highlight-text h4 {
+      margin: 0 0 5px;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    
+    .highlight-text p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    /* SERVICIO CARD DERECHA - ÚNICA BOX */
+    .service-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    }
+    
+    .service-image {
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .service-image:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+      z-index: 1;
+    }
+    
+    .service-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    
+    .service-card:hover .service-image img {
+      transform: scale(1.1);
+    }
+    
+    .service-content {
+      padding: 35px;
+    }
+    
+    .service-category {
+      display: inline-block;
+      background: #fff0f0;
+      color: var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    
+    .service-card h4 {
+      font-size: 1.5rem;
+      margin: 0 0 15px;
+      color: var(--primary);
+      line-height: 1.3;
+    }
+    
+    .service-card .service-description {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+    
+    .service-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 25px;
+      border-top: 1px solid #f0f0f0;
+    }
+    
+    .service-price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .service-price span {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    
+    .service-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #ff9900;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .service-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent-color);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      z-index: 2;
+    }
+    
+    @media (max-width: 1024px) {
+      .service-showcase {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .service-content-left {
+        padding: 30px;
+      }
+      
+      .service-content-left h3 {
+        font-size: 1.6rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .featured-services {
+        padding: 60px 0;
+      }
+      
+      .section-header h2 {
+        font-size: 2rem;
+      }
+      
+      .service-image {
+        height: 200px;
+      }
+      
+      .service-content {
+        padding: 25px;
+      }
+    }
+    
+    /* CTA DESPUÉS DE SERVICIO MÁS POPULAR (AHORA ESTARÁ AL FINAL) */
+    .service-cta {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      color: white;
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    .service-cta h2 {
+      font-size: 2.8rem;
+      margin: 0 0 25px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    
+    .service-cta p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 50px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    
+    .service-cta-buttons {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    /* CATEGORÍAS SECTION */
+    .categories-section {
+      padding: 60px 0;
+      background: white;
+    }
+    
+    .categories-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .categories-header h2 {
+      font-size: 2.2rem;
+      margin: 0 0 15px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .categories-header p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+    
+    .category-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px 20px;
+      text-align: center;
+      border: 2px solid #f0f0f0;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent-color);
+      box-shadow: 0 15px 30px rgba(231, 37, 37, 0.1);
+    }
+    
+    .category-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #fff0f0 0%, #ffeaea 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--accent-color);
+      font-size: 1.8rem;
+      border: 2px solid #ffeaea;
+    }
+    
+    .category-card h3 {
+      font-size: 1.2rem;
+      margin: 0 0 10px;
+      color: var(--primary);
+    }
+    
+    .category-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0 0 15px;
+    }
+    
+    .category-count {
+      display: inline-block;
+      background: #f0f0f0;
+      color: var(--muted);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 1024px) {
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* CÓMO FUNCIONA - AHORA CON 6 PASOS */
+    .how-it-works {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 25px;
+      position: relative;
+    }
+    
+    .step-card {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: var(--accent-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 2;
+      border: 4px solid white;
+      box-shadow: 0 5px 15px rgba(231, 37, 37, 0.2);
+    }
+    
+    .step-card h3 {
+      font-size: 1.1rem;
+      margin: 0 0 15px;
+      color: var(--primary);
+      line-height: 1.3;
+    }
+    
+    .step-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .steps-connector {
+      position: absolute;
+      top: 30px;
+      left: 8%;
+      right: 8%;
+      height: 3px;
+      background: #f0f0f0;
+      z-index: 1;
+    }
+    
+    @media (max-width: 1200px) {
+      .steps-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+      }
+      
+      .steps-connector {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+      
+      .steps-connector {
+        display: none;
+      }
+    }
+    
+    /* CTA DESPUÉS DE CÓMO FUNCIONA (ANTES ESTABA AQUÍ) */
+    .how-it-works-cta {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #fff0f0 0%, #ffeaea 100%);
+      color: var(--primary);
+      text-align: center;
+    }
+    
+    .how-it-works-cta h2 {
+      font-size: 2.5rem;
+      margin: 0 0 20px;
+      font-weight: 800;
+    }
+    
+    .how-it-works-cta p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      opacity: 0.9;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    
+    .how-it-works-cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    /* TESTIMONIOS */
+    .testimonials-section {
+      padding: 60px 0;
+      background: linear-gradient(135deg, #fff0f0 0%, #ffeaea 100%);
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    
+    .testimonial-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      border: 1px solid #ffeaea;
+    }
+    
+    .testimonial-rating {
+      color: #ff9900;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+    
+    .testimonial-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: var(--primary);
+      font-style: italic;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+    
+    .author-info h4 {
+      margin: 0 0 5px;
+      font-size: 1rem;
+      color: var(--primary);
+    }
+    
+    .author-info p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* SLIDER DE VALORES (MANTENIDO) */
+    .values-slider-section {
+      padding: 60px 0;
+      background: white;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .values-slider-container {
+      overflow: hidden;
+      padding: 10px 0;
+      position: relative;
+    }
+    
+    .values-track {
+      display: flex;
+      gap: 25px;
+      animation: scrollValues 40s linear infinite;
+      width: max-content;
+      padding: 5px 0;
+    }
+    
+    @keyframes scrollValues {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    .value-item {
+      min-width: 300px;
+      height: 150px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 20px 15px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .value-item.type-red {
+      background: linear-gradient(135deg, #e72525 0%, #c41c1c 100%);
+      color: white;
+    }
+    
+    .value-item.type-black {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      color: white;
+    }
+    
+    .value-item.type-white {
+      background: #ffffff;
+      color: var(--primary);
+      border: 2px solid rgba(0,0,0,0.1);
+    }
+    
+    .value-item.type-blue {
+      background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .value-item:hover {
+      transform: translateY(-10px) scale(1.03);
+    }
+    
+    .value-item.type-red:hover {
+      box-shadow: 0 15px 35px rgba(231, 37, 37, 0.3);
+      background: linear-gradient(135deg, #d32020 0%, #a81818 100%);
+    }
+    
+    .value-icon-container {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+      margin-bottom: 15px;
+    }
+    
+    .value-item.type-red .value-icon-container {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+    
+    .value-icon {
+      font-size: 1.6rem;
+      transition: all 0.3s ease;
+    }
+    
+    .value-text {
+      font-weight: 800;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      padding: 0 10px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .values-track.paused {
+      animation-play-state: paused;
+    }
+    
+    /* ===== FOOTER ===== */
+    .footer{border-top:1px solid #eee;padding:28px 0 48px;color:#444}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:16px}
+    .footer h4{margin:0 0 8px}
+    .footer a{display:block;padding:4px 0;color:#444}
+    @media (max-width: 900px){.footer-grid{grid-template-columns:1fr 1fr}}
+    @media (max-width: 560px){.footer-grid{grid-template-columns:1fr}}
+   
+    /* ===== UTILIDADES ===== */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    
+    /* SOCIAL ICONS */
+    .fa-instagram { color: #C13584; }
+    .fa-youtube { color: #FF0000; }
+    .fa-tiktok { color: #000000; }
+
+    /* MAIN CONTENT - inicialmente oculto */
+    #main-content {
+      display: none;
+      opacity: 0;
+      animation: fadeInMain 1s ease forwards;
+    }
+    
+    @keyframes fadeInMain {
+      to {
+        opacity: 1;
+      }
+    }
+    
+    /* RESPONSIVE GENERAL */
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 80vh;
+        text-align: center;
+      }
+      .hero-content {
+        padding: 0 15px;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .intro-logo {
+        font-size: 3rem;
+      }
+      .service-cta h2 {
+        font-size: 2rem;
+      }
+      .service-cta p {
+        font-size: 1rem;
+        padding: 0 15px;
+      }
+      .service-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .how-it-works-cta h2 {
+        font-size: 2rem;
+      }
+      .how-it-works-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .how-it-works-cta p {
+        font-size: 1rem;
+        padding: 0 15px;
+      }
+      .image-section {
+        min-height: 60vh;
+      }
+      .image-section h2 {
+        font-size: 2rem;
+      }
+      .image-section p {
+        font-size: 1rem;
+        padding: 0 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NUEVA INTRO ANIMATION MEJORADA Y MÁS FLUIDA -->
+  <div id="intro">
+    <div class="intro-fullscreen" id="introFullscreen"></div>
+    <div class="intro-content" id="introContent">
+      <div class="intro-logo">LIFETIMES</div>
+      <div class="intro-tagline">Te ayudamos a crecer tu Negocio, alcanzando nuevas metas y objetivos que tu desees.</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT (hidden initially) -->
+  <div id="main-content">
+    <header class="nav">
+      <div class="container nav-inner">
+        <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">≡</button>
+        <a class="logo" href="#" aria-label="Inicio" title="Inicio">
+          LIFETIMES<span style="font-weight:300"> </span>
+        </a>
+        <nav class="nav-links" aria-label="Principal">
+          <a href="General.html">Novedades</a>
+          <a href="Terminos y Condiciones.html">Terminos y Condiciones</a>
+          <a href="Soporte y reclamos.html">Soporte y reclamos</a>
+        </nav>
+        <div class="nav-cta">
+          <a class="btn ghost" href="portal.html" aria-label="Buscar">Portal</a>
+        </div>
+      </div>
+      <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <a href="Servicios.html">Servicios</a>
+        <a href="General.html">Novedades</a>
+        <a href="Terminos y Condiciones.html">Terminos y Condiciones</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO CON IMAGEN ORIGINAL -->
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="dot"></span> Agencia Certificada
+          </div>
+          <h1>Tu Marketing en un solo lugar</h1>
+          <div class="hero-description">
+            <p>En LIFETIMES transformamos la manera de contratar servicios de marketing. Como un Amazon especializado, ofrecemos cientos de servicios profesionales de branding, diseño y estrategia digital en un solo lugar.</p>
+            <p>Explora, compara y contrata servicios con total confianza. Calificaciones verificadas, precios transparentes y garantía de calidad.</p>
+          </div>
+          <div class="hero-actions">
+            <a href="General.html" class="hero-btn primary">Ver Catálogo Completo</a>
+            <a href="Servicios.html" class="hero-btn secondary">Explorar Servicios</a>
+          </div>
+        </div>
+        <div class="hero-scroll">
+          <span>Desplázate para descubrir</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </section>
+
+      <!-- CÓMO FUNCIONA (AHORA CON 6 PASOS) -->
+      <section class="how-it-works">
+        <div class="container">
+          <div class="section-header">
+            <h2>Cómo Funciona Nuestro Marketplace</h2>
+            <p class="section-subtitle">Contrata servicios profesionales en 6 simples pasos</p>
+          </div>
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <h3>Explora el Catálogo</h3>
+              <p>Navega por nuestro catálogo de servicios organizado por categorías y filtros.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <h3>Compara Opciones</h3>
+              <p>Analiza diferentes proveedores, precios y valoraciones para tomar la mejor decisión.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <h3>Personaliza tu Servicio</h3>
+              <p>Adaptamos el servicio a tus necesidades específicas y objetivos de negocio.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <h3>Selecciona y Contrata</h3>
+              <p>Elige el servicio ideal y realiza la contratación con términos claros y transparentes.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">5</div>
+              <h3>Pago Seguro</h3>
+              <p>Realiza el pago de forma segura a través de nuestro sistema protegido.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-number">6</div>
+              <h3>Recibe Resultados</h3>
+              <p>Recibe tu servicio terminado, revisa la calidad y califica la experiencia.</p>
+            </div>
+            <div class="steps-connector"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICIOS DESTACADOS (REDISEÑADO CON 1 BOX Y 2 COLUMNAS) -->
+      <section class="featured-services">
+        <div class="container">
+          <div class="section-header">
+            <h2>Servicio Más Popular</h2>
+            <p class="section-subtitle">El servicio mejor valorado por nuestra comunidad</p>
+          </div>
+          
+          <div class="service-showcase">
+            <!-- COLUMNA IZQUIERDA: TITULO Y EXPLICACIÓN -->
+            <div class="service-content-left">
+              <h3>Así se vería tu negocio con nuestro servicio de Sitio Web Profesional</h3>
+              <p>Transformamos tu presencia digital en una experiencia memorable que refleja la esencia de tu marca y conecta con tu audiencia ideal.</p>
+              
+              <div class="service-highlights">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-laptop-code"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Diseño Moderno y Responsivo</h4>
+                    <p>Tu sitio se verá perfecto en todos los dispositivos: móviles, tablets y computadoras, garantizando una experiencia de usuario excepcional.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-bolt"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Optimización de Velocidad</h4>
+                    <p>Tendrás tiempos de carga rápidos que mejoran el posicionamiento SEO y reducen la tasa de rebote, manteniendo a los visitantes comprometidos.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-chart-line"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Integración de Analytics</h4>
+                    <p>Podrás medir el rendimiento de tu sitio con herramientas avanzadas que te mostrarán datos clave sobre el comportamiento de tus visitantes.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="margin-top: 30px;">
+                <a href="Servicios.html" class="btn-read-more" style="width: 100%; text-align: center; justify-content: center;">
+                  <i class="fas fa-rocket"></i> Ver Todos los Servicios
+                </a>
+              </div>
+            </div>
+            
+            <!-- COLUMNA DERECHA: ÚNICA BOX DE SERVICIO -->
+            <div class="service-card">
+              <div class="service-badge">MÁS POPULAR</div>
+              <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sitio Web Profesional">
+              </div>
+              <div class="service-content">
+                <span class="service-category">Desarrollo Web</span>
+                <h4>Sitio Web Profesional</h4>
+                <p class="service-description">Diseñamos tu sitio web con una interfaz moderna y atractiva que refleje la esencia de tu marca. Tu negocio lucirá profesional y confiable, con una navegación intuitiva que guiará a tus clientes desde el primer clic.</p>
+                <div class="service-footer">
+                  <div class="service-price">$1,299<span>/sitio</span></div>
+                  <div class="service-rating">
+                    <i class="fas fa-star"></i> 4.9
+                    <span style="color: var(--muted); font-size: 0.9rem; margin-left: 5px;">(124 reseñas)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDER DE VALORES Y ASOCIACIONES REDISEÑADO - AHORA DESPUÉS DE SERVICIO MÁS POPULAR -->
+      <section class="values-slider-section">
+        <div class="container">
+          <div class="values-slider-container">
+            <div class="values-track" id="valuesTrack">
+              <!-- 1. Estrategias Personalizadas (ROJO) -->
+              <div class="value-item type-red">
+                <div class="value-icon-container">
+                  <i class="fas fa-chess value-icon"></i>
+                </div>
+                <div class="value-text">Estrategias Personalizadas</div>
+              </div>
+              
+              <!-- 2. Campañas de Alto Impacto (NEGRO) -->
+              <div class="value-item type-black">
+                <div class="value-icon-container">
+                  <i class="fas fa-bullhorn value-icon"></i>
+                </div>
+                <div class="value-text">Campañas de Alto Impacto</div>
+              </div>
+              
+              <!-- 3. Comunidad de Negocios (BLANCO) -->
+              <div class="value-item type-white">
+                <div class="value-icon-container">
+                  <i class="fas fa-users value-icon"></i>
+                </div>
+                <div class="value-text">Comunidad de Negocios</div>
+              </div>
+              
+              <!-- 4. Soporte Especializado (ROJO) -->
+              <div class="value-item type-red">
+                <div class="value-icon-container">
+                  <i class="fas fa-headset value-icon"></i>
+                </div>
+                <div class="value-text">Soporte Especializado</div>
+              </div>
+              
+              <!-- 5. NUEVA TARJETA: Medios de Comunicación (AZUL) -->
+              <div class="value-item type-blue">
+                <div class="value-icon-container">
+                  <i class="fas fa-globe-americas value-icon"></i>
+                </div>
+                <div class="value-text">Medio de Comunicación</div>
+              </div>
+              
+              <!-- 6. Resultados Medibles (NEGRO) -->
+              <div class="value-item type-black">
+                <div class="value-icon-container">
+                  <i class="fas fa-chart-line value-icon"></i>
+                </div>
+                <div class="value-text">Resultados Medibles</div>
+              </div>
+              
+              <!-- DUPLICADOS PARA EFECTO INFINITO -->
+              <div class="value-item type-red">
+                <div class="value-icon-container">
+                  <i class="fas fa-chess value-icon"></i>
+                </div>
+                <div class="value-text">Estrategias Personalizadas</div>
+              </div>
+              
+              <div class="value-item type-black">
+                <div class="value-icon-container">
+                  <i class="fas fa-bullhorn value-icon"></i>
+                </div>
+                <div class="value-text">Campañas de Alto Impacto</div>
+              </div>
+              
+              <div class="value-item type-white">
+                <div class="value-icon-container">
+                  <i class="fas fa-users value-icon"></i>
+                </div>
+                <div class="value-text">Comunidad de Negocios</div>
+              </div>
+              
+              <div class="value-item type-red">
+                <div class="value-icon-container">
+                  <i class="fas fa-headset value-icon"></i>
+                </div>
+                <div class="value-text">Soporte Especializado</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATEGORÍAS PRINCIPALES -->
+      <section class="categories-section">
+        <div class="container">
+          <div class="categories-header">
+            <h2>Explora Nuestras Categorías</h2>
+            <p>Encuentra el servicio perfecto en nuestro marketplace categorizado</p>
+          </div>
+          <div class="categories-grid">
+            <div class="category-card">
+              <div class="category-icon">
+                <i class="fas fa-paint-brush"></i>
+              </div>
+              <h3>Diseño & Branding</h3>
+              <p>Logos, identidad visual, packaging y más</p>
+              <div class="category-count">45 servicios</div>
+            </div>
+            <div class="category-card">
+              <div class="category-icon">
+                <i class="fas fa-bullhorn"></i>
+              </div>
+              <h3>Marketing Digital</h3>
+              <p>Redes sociales, SEO, email marketing</p>
+              <div class="category-count">68 servicios</div>
+            </div>
+            <div class="category-card">
+              <div class="category-icon">
+                <i class="fas fa-video"></i>
+              </div>
+              <h3>Producción Audiovisual</h3>
+              <p>Videos, edición, animación y fotografía</p>
+              <div class="category-count">32 servicios</div>
+            </div>
+            <div class="category-card">
+              <div class="category-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <h3>Desarrollo Web</h3>
+              <p>Landing pages, ecommerce, apps</p>
+              <div class="category-count">56 servicios</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA DESPUÉS DE CÓMO FUNCIONA (ANTES ESTABA AQUÍ) -->
+      <section class="how-it-works-cta">
+        <div class="container">
+          <h2>Comienza Hoy Mismo</h2>
+          <p>Nuestro proceso simplificado hace que contratar servicios profesionales sea rápido, fácil y sin complicaciones. Encuentra el servicio perfecto para tu negocio en minutos.</p>
+          <div class="how-it-works-cta-buttons">
+            <a href="General.html" class="btn outline" style="border-color: var(--accent-color); color: var(--accent-color);">
+              <i class="fas fa-play-circle"></i> Ver Demo
+            </a>
+            <a href="Servicios.html" class="btn fill" style="background: var(--accent-color); border-color: var(--accent-color);">
+              <i class="fas fa-star"></i> Servicios Destacados
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIOS -->
+      <section class="testimonials-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Lo Que Dicen Nuestros Clientes</h2>
+            <p class="section-subtitle">Experiencias reales de usuarios satisfechos</p>
+          </div>
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="testimonial-text">"Contraté un diseño de logo y superó mis expectativas. El proceso fue tan fácil como comprar en Amazon, pero con resultados profesionales."</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">AM</div>
+                <div class="author-info">
+                  <h4>Ana Martínez</h4>
+                  <p>Dueña de Boutique</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="testimonial-text">"Como freelancer, ahora ofrezco mis servicios aquí. La plataforma me da visibilidad y clientes que valoran mi trabajo."</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">CR</div>
+                <div class="author-info">
+                  <h4>Carlos Rodríguez</h4>
+                  <p>Diseñador Freelancer</p>
+                </div>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="testimonial-text">"La campaña de Instagram que compré triplicó mis seguidores en un mes. La relación calidad-precio es increíble."</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">LG</div>
+                <div class="author-info">
+                  <h4>Laura González</h4>
+                  <p>Emprendedora</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== NUEVAS SECCIONES TEMÁTICAS - AHORA CON EL ESTILO CHINGÓN DE ARRIBA ===== -->
+      
+      <!-- SECCIÓN 1: E-COMMERCE -->
+      <section class="image-section" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+        <div class="container">
+          <h2>E-commerce que Vende</h2>
+          <p>Lanza tu tienda online con una plataforma optimizada para convertir visitantes en clientes. Diseño responsive, pasarelas de pago integradas y gestión de inventario simplificada.</p>
+          <a href="Servicios.html" class="btn">Crear mi Tienda</a>
+        </div>
+      </section>
+      
+      <!-- CONTENIDO DINÁMICO E-COMMERCE (ESTILO "ASÍ SE VERÍA TU NEGOCIO") -->
+      <section class="dynamic-showcase">
+        <div class="container">
+          <div class="service-showcase">
+            <!-- COLUMNA IZQUIERDA: TITULO Y EXPLICACIÓN -->
+            <div class="service-content-left">
+              <h3>Todo lo que necesitas para vender online</h3>
+              <p>Soluciones completas de e-commerce para tu negocio, desde la tienda hasta la logística.</p>
+              
+              <div class="service-highlights">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Tienda Online Profesional</h4>
+                    <p>Diseñamos tu tienda virtual con catálogo de productos, carrito de compras y procesos de pago seguros. Todo optimizado para que tus clientes compren fácilmente.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Gestión y Administración</h4>
+                    <p>Panel de control intuitivo para gestionar productos, inventario, pedidos y clientes. Integración con sistemas de facturación y envío.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-bullseye"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Estrategias de Conversión</h4>
+                    <p>Emails automatizados, carritos abandonados, recomendaciones personalizadas y promociones inteligentes para aumentar tus ventas.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="margin-top: 30px;">
+                <a href="#" class="btn-read-more" style="width: 100%; text-align: center; justify-content: center;">
+                  <i class="fas fa-rocket"></i> Conocer más sobre E-commerce
+                </a>
+              </div>
+            </div>
+            
+            <!-- COLUMNA DERECHA: IMAGEN/BOX DE SERVICIO -->
+            <div class="service-card">
+              <div class="service-badge">DESTACADO</div>
+              <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="E-commerce">
+              </div>
+              <div class="service-content">
+                <span class="service-category">E-commerce</span>
+                <h4>Tienda Online Profesional</h4>
+                <p class="service-description">Tu tienda lista para vender en 24 horas. Diseño profesional, pasarelas de pago y gestión de inventario incluidos. Ideal para emprendedores y pymes.</p>
+                <div class="service-footer">
+                  <div class="service-price">$899<span>/mes</span></div>
+                  <div class="service-rating">
+                    <i class="fas fa-star"></i> 4.8
+                    <span style="color: var(--muted); font-size: 0.9rem; margin-left: 5px;">(89 reseñas)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: UBER DE COMIDA / DELIVERY -->
+      <section class="image-section" style="background-image: url('https://images.unsplash.com/photo-1564759298140-e7a8e1e6d0d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+        <div class="container">
+          <h2>Tu Restaurante a Domicilio</h2>
+          <p>Sistema de pedidos online y delivery para restaurantes. Gestión de menús, seguimiento en tiempo real y cobros automáticos. Lleva tu comida favorita a más clientes.</p>
+          <a href="Servicios.html" class="btn">Activar Delivery</a>
+        </div>
+      </section>
+      
+      <!-- CONTENIDO DINÁMICO DELIVERY -->
+      <section class="dynamic-showcase">
+        <div class="container">
+          <div class="service-showcase">
+            <!-- COLUMNA IZQUIERDA: TITULO Y EXPLICACIÓN -->
+            <div class="service-content-left">
+              <h3>Sistema completo para tu restaurante</h3>
+              <p>Digitaliza tu negocio de comida a domicilio y llega a más clientes con nuestra plataforma todo-en-uno.</p>
+              
+              <div class="service-highlights">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-utensils"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Gestión de Pedidos</h4>
+                    <p>Recibe y administra todos los pedidos en un solo lugar. Notificaciones en tiempo real, impresión automática en cocina y actualización de estados.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Logística de Delivery</h4>
+                    <p>Optimiza entregas con geolocalización, asignación inteligente de repartidores y cálculo de rutas. Seguimiento GPS para clientes.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>App para Clientes</h4>
+                    <p>Tu propia app para iOS y Android con menú digital, historial de pedidos, valoraciones y programa de fidelización.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="margin-top: 30px;">
+                <a href="#" class="btn-read-more" style="width: 100%; text-align: center; justify-content: center;">
+                  <i class="fas fa-rocket"></i> Conocer más sobre Delivery
+                </a>
+              </div>
+            </div>
+            
+            <!-- COLUMNA DERECHA: IMAGEN/BOX DE SERVICIO -->
+            <div class="service-card">
+              <div class="service-badge">MÁS VENDIDO</div>
+              <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Delivery">
+              </div>
+              <div class="service-content">
+                <span class="service-category">Food Delivery</span>
+                <h4>Sistema para Restaurantes</h4>
+                <p class="service-description">Plataforma completa de pedidos online con app para clientes y panel de gestión para tu restaurante. Aumenta tus ventas a domicilio.</p>
+                <div class="service-footer">
+                  <div class="service-price">$699<span>/mes</span></div>
+                  <div class="service-rating">
+                    <i class="fas fa-star"></i> 4.9
+                    <span style="color: var(--muted); font-size: 0.9rem; margin-left: 5px;">(156 reseñas)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: MARKETPLACE -->
+      <section class="image-section" style="background-image: url('https://images.unsplash.com/photo-1607083206968-13611e3d76db?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+        <div class="container">
+          <h2>Marketplace Multi-vendedor</h2>
+          <p>Crea tu propia plataforma donde múltiples vendedores puedan ofrecer sus productos. Comisiones automáticas, perfiles de vendedor y gestión centralizada.</p>
+          <a href="Servicios.html" class="btn">Lanzar Marketplace</a>
+        </div>
+      </section>
+      
+      <!-- CONTENIDO DINÁMICO MARKETPLACE -->
+      <section class="dynamic-showcase">
+        <div class="container">
+          <div class="service-showcase">
+            <!-- COLUMNA IZQUIERDA: TITULO Y EXPLICACIÓN -->
+            <div class="service-content-left">
+              <h3>La plataforma que conecta vendedores y compradores</h3>
+              <p>Todo lo que necesitas para lanzar tu propio marketplace y empezar a generar comisiones.</p>
+              
+              <div class="service-highlights">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-store-alt"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Perfiles de Vendedores</h4>
+                    <p>Cada vendedor tiene su espacio personalizable con catálogo, políticas y reseñas. Ellos gestionan sus productos mientras tú controlas la plataforma.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-percent"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Sistema de Comisiones</h4>
+                    <p>Configura comisiones por venta, membresías o tarifas por publicación. Automatizamos el cobro y la distribución de pagos.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-balance-scale"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Gestión Centralizada</h4>
+                    <p>Administra todo desde un panel: aprueba vendedores, resuelve disputas, monitorea ventas y genera reportes. Control total.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="margin-top: 30px;">
+                <a href="#" class="btn-read-more" style="width: 100%; text-align: center; justify-content: center;">
+                  <i class="fas fa-rocket"></i> Conocer más sobre Marketplaces
+                </a>
+              </div>
+            </div>
+            
+            <!-- COLUMNA DERECHA: IMAGEN/BOX DE SERVICIO -->
+            <div class="service-card">
+              <div class="service-badge">PRO</div>
+              <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Marketplace">
+              </div>
+              <div class="service-content">
+                <span class="service-category">Marketplace</span>
+                <h4>Plataforma Multi-vendedor</h4>
+                <p class="service-description">Lanza tu propio Amazon o MercadoLibre. Soporte para miles de productos, múltiples vendedores y sistema de comisiones automatizado.</p>
+                <div class="service-footer">
+                  <div class="service-price">$1,499<span>/mes</span></div>
+                  <div class="service-rating">
+                    <i class="fas fa-star"></i> 4.7
+                    <span style="color: var(--muted); font-size: 0.9rem; margin-left: 5px;">(42 reseñas)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 4: QUEJAS / ATENCIÓN AL CLIENTE -->
+      <section class="image-section" style="background-image: url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+        <div class="container">
+          <h2>Atención al Cliente 24/7</h2>
+          <p>Sistema de gestión de quejas y reclamos con seguimiento personalizado. Resuelve las dudas de tus clientes de manera rápida y eficiente, mejorando la satisfacción y fidelización.</p>
+          <a href="Contacto.html" class="btn">Solicitar Soporte</a>
+        </div>
+      </section>
+      
+      <!-- CONTENIDO DINÁMICO ATENCIÓN AL CLIENTE -->
+      <section class="dynamic-showcase">
+        <div class="container">
+          <div class="service-showcase">
+            <!-- COLUMNA IZQUIERDA: TITULO Y EXPLICACIÓN -->
+            <div class="service-content-left">
+              <h3>Experiencia excepcional para tus clientes</h3>
+              <p>Sistemas de atención al cliente que generan confianza y convierten quejas en oportunidades.</p>
+              
+              <div class="service-highlights">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Sistema de Tickets</h4>
+                    <p>Gestiona consultas y reclamos en un sistema centralizado. Cada caso tiene su propio hilo de conversación, historial y tiempos de respuesta medibles.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-comment-dots"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Chat en Vivo y WhatsApp</h4>
+                    <p>Atención inmediata con chat integrado y conexión con WhatsApp Business. Respuestas automáticas para consultas frecuentes.</p>
+                  </div>
+                </div>
+                
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-smile"></i>
+                  </div>
+                  <div class="highlight-text">
+                    <h4>Satisfacción y Fidelización</h4>
+                    <p>Mide la satisfacción post-interacción y convierte experiencias negativas en oportunidades de fidelización con nuestro programa de recompensas.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div style="margin-top: 30px;">
+                <a href="#" class="btn-read-more" style="width: 100%; text-align: center; justify-content: center;">
+                  <i class="fas fa-rocket"></i> Conocer más sobre Atención al Cliente
+                </a>
+              </div>
+            </div>
+            
+            <!-- COLUMNA DERECHA: IMAGEN/BOX DE SERVICIO -->
+            <div class="service-card">
+              <div class="service-badge">SOPORTE 24/7</div>
+              <div class="service-image">
+                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Atención al Cliente">
+              </div>
+              <div class="service-content">
+                <span class="service-category">Customer Support</span>
+                <h4>Central de Ayuda</h4>
+                <p class="service-description">Sistema omnicanal de atención al cliente con tickets, chat en vivo, WhatsApp y base de conocimiento. Todo integrado en un solo lugar.</p>
+                <div class="service-footer">
+                  <div class="service-price">$499<span>/mes</span></div>
+                  <div class="service-rating">
+                    <i class="fas fa-star"></i> 4.9
+                    <span style="color: var(--muted); font-size: 0.9rem; margin-left: 5px;">(203 reseñas)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA "¿Listo para Transformar tu Negocio?" - AHORA AL FINAL, DESPUÉS DE LAS SECCIONES Y ANTES DEL FOOTER -->
+      <section class="service-cta">
+        <div class="container">
+          <h2>¿Listo para Transformar tu Negocio?</h2>
+          <p>Únete a miles de emprendedores y empresas que ya están usando LIFETIMES para acceder a servicios profesionales de marketing y branding.</p>
+          <div class="service-cta-buttons">
+            <a href="General.html" class="hero-btn primary">
+              <i class="fas fa-shopping-cart"></i> Ver Catálogo Completo
+            </a>
+            <a href="Servicios.html" class="hero-btn secondary">
+              <i class="fas fa-search"></i> Explorar Servicios
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>Acerca de los Términos y Condiciones</h4>
+          <p class="muted">Cualquier inconformidad contactar a Soporte o en caso mayor a WhatsApp.</p>
+        </div>
+
+        <div>
+          <h4>Servicios</h4>
+          <a href="Servicios.html">Branding</a>
+          <a href="Servicios.html">Campañas publicitarias</a>
+          <a href="Servicios.html">Videos</a>
+          <a href="Servicios.html">Anuncios</a>
+        </div>
+
+        <div>
+          <h4>Ayuda</h4>
+          <a href="Contacto.html">Cambios de Edición</a>
+          <a href="Contacto.html">Devoluciones</a>
+          <a href="Contacto.html">Soporte</a>
+        </div>
+
+        <div>
+          <h4>Síguenos</h4>
+          <p class="muted">@LIFETIMES AGENCY</p>
+          <a href="https://www.instagram.com/life.timestv?igsh=NWJvNHphMGFrMW53" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i> Instagram
+          </a>
+          <a href="https://www.youtube.com/channel/UCqsIJHzN5N47KUR-lrV8kag" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-youtube"></i> YouTube
+          </a>
+          <a href="https://www.tiktok.com/@lifetimes_tv?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-tiktok"></i> TikTok
+          </a>
+        </div>
+      </div>
+
+      <div class="container" style="padding-top:20px;color:#666;font-size:.9rem;text-align:center;">
+        © <span id="year"></span> LIFETIMES AGENCY. Marca Registrada.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // INTRO ANIMATION MEJORADA - MÁS FLUIDA
+    window.addEventListener('load', () => {
+      const intro = document.getElementById('intro');
+      const introFullscreen = document.getElementById('introFullscreen');
+      const introContent = document.getElementById('introContent');
+      const mainContent = document.getElementById('main-content');
+      
+      // Pequeña pausa para asegurar que todo está cargado
+      setTimeout(() => {
+        // Primero mostramos la animación
+        introFullscreen.classList.add('active');
+        
+        // Esperamos un poco para mostrar el contenido
+        setTimeout(() => {
+          introContent.classList.add('active');
+        }, 300);
+        
+        // Esperamos más tiempo para una transición más suave
+        setTimeout(() => {
+          intro.style.opacity = '0';
+          intro.style.transition = 'opacity 0.8s ease';
+          
+          setTimeout(() => {
+            intro.style.display = 'none';
+            mainContent.style.display = 'block';
+            
+            // Pequeño delay para animación más suave
+            setTimeout(() => {
+              mainContent.style.opacity = '1';
+            }, 50);
+          }, 800);
+        }, 2200);
+      }, 300);
+    });
+
+    // MOBILE MENU
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('open');
+    });
+
+    // CONTROL DE ANIMACIÓN DEL SLIDER AL HOVER
+    const valuesTrack = document.getElementById('valuesTrack');
+    
+    if (valuesTrack) {
+      valuesTrack.addEventListener('mouseenter', () => {
+        valuesTrack.classList.add('paused');
+      });
+      
+      valuesTrack.addEventListener('mouseleave', () => {
+        valuesTrack.classList.remove('paused');
+      });
+    }
+
+    // ANIMACIÓN DE APARICIÓN DE ELEMENTOS AL SCROLL
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.category-card, .service-card, .step-card, .testimonial-card, .service-content-left, .image-section, .dynamic-showcase');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementTop < windowHeight - 100) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+
+    // Inicializar animaciones al cargar
+    window.addEventListener('load', () => {
+      // Configurar elementos para animación
+      const elements = document.querySelectorAll('.category-card, .service-card, .step-card, .testimonial-card, .service-content-left, .image-section, .dynamic-showcase');
+      elements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      });
+      
+      // Animar elementos al scroll
+      window.addEventListener('scroll', animateOnScroll);
+      // Ejecutar una vez al cargar
+      setTimeout(animateOnScroll, 500);
+    });
+
+    // AÑO ACTUAL EN FOOTER
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

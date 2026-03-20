@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES Tienda · tu tienda online en 24h</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES: NUEVO COLOR PRINCIPAL #0f52c9 ====== */
+        :root {
+            --primary: #0f52c9;
+            --primary-dark: #0a3a99;
+            --primary-light: rgba(15, 82, 201, 0.12);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --danger: #dc3545;
+            --whatsapp-green: #25D366;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, #0f52c9 0%, #3d7ef2 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9e00 0%, #ffd166 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .back-button i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .back-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-3px);
+        }
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+        
+        .logo{
+            font-weight:900;
+            letter-spacing:.02em;
+            font-size:1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span{
+            color: var(--primary);
+        }
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-links{
+            display:flex;
+            gap:1.8rem;
+            align-items:center;
+        }
+        .nav-links a{
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .btn{
+            display:inline-flex;
+            gap:.6rem;
+            align-items:center;
+            font-weight:600;
+            border: 2px solid var(--primary);
+            padding:.85rem 1.8rem;
+            border-radius:8px;
+            transition:all 0.3s ease;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 5px 15px rgba(15, 82, 201, 0.2);
+        }
+        .btn.fill{
+            background: var(--primary);
+            color:#fff;
+        }
+        .btn.fill:hover{
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        /* ====== CART ICON ====== */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--dark);
+            transition: color 0.3s;
+        }
+        .cart-icon:hover {
+            color: var(--primary);
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* ====== HERO SECTION ====== */
+        .hero-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+        .hero-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        .hero-content h1 span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        .hero-content h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--primary-light);
+            z-index: -1;
+        }
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        .personalized-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            gap: 1rem;
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ====== PRODUCTOS SECTION ====== */
+        .productos-section {
+            padding: 4rem 2rem;
+            background: white;
+        }
+        .productos-container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        .section-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .producto-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .producto-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        .producto-imagen {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .producto-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .producto-card:hover .producto-imagen img {
+            transform: scale(1.1);
+        }
+        .producto-info {
+            padding: 1.5rem;
+        }
+        .producto-nombre {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        .producto-descripcion {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .producto-precio {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .btn-agregar {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-agregar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(15, 82, 201, 0.3);
+        }
+        .btn-agregar i {
+            font-size: 1.1rem;
+        }
+
+        /* ====== CART MODAL ====== */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: flex-end;
+        }
+        .cart-modal.active {
+            display: flex;
+        }
+        .cart-content {
+            width: 400px;
+            background: white;
+            height: 100%;
+            padding: 2rem;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+        .cart-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        .close-cart:hover {
+            color: var(--danger);
+        }
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+        .cart-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .cart-item-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .cart-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cart-item-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .cart-item-info p {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .cart-item-remove {
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+        .cart-item-remove:hover {
+            transform: scale(1.1);
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-top: 2px solid var(--gray-light);
+        }
+        .btn-checkout {
+            width: 100%;
+            padding: 1rem;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-checkout:hover {
+            background: #21867a;
+            transform: translateY(-2px);
+        }
+
+        /* ====== BENEFICIOS ====== */
+        .benefits-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        .benefits-container { max-width: 1200px; margin: 0 auto; }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        .benefit-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+        .benefit-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--dark); }
+        .benefit-card p { color: var(--gray); line-height: 1.6; }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-col h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; color: white; }
+        .footer-col p { color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 1rem; }
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+        .footer-col a:hover { color: var(--primary); }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+            margin: 0;
+        }
+        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .productos-grid { grid-template-columns: repeat(2, 1fr); }
+            .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .productos-grid { grid-template-columns: 1fr; }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .personalized-badge { font-size: 1rem; padding: 0.8rem 1.5rem; }
+            .nav-left { gap: 10px; }
+            .back-button span { display: none; }
+            .back-button { padding: 8px 12px; }
+        }
+        
+        .lifetimes-bold { font-weight: 900; }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <a href="#" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Volver</span>
+                </a>
+                <a class="logo" href="#" aria-label="Inicio">
+                    <i class="fas fa-store logo-icon"></i>
+                    <strong class="lifetimes-bold">LIFETIMES</strong>
+                </a>
+            </div>
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#productos">Productos</a>
+                <a href="#beneficios">Beneficios</a>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION ====== -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>
+                    <span>Tu tienda online</span><br>
+                    con LIFETIMES
+                </h1>
+                <p class="hero-description">
+                    Descubre nuestra selección de productos exclusivos. 
+                    <strong class="lifetimes-bold">Calidad y estilo</strong> en un solo lugar.
+                </p>
+                <div class="personalized-badge">
+                    <i class="fas fa-truck"></i>
+                    <span>Envíos gratis en compras +$50</span>
+                </div>
+            </div>
+            <div class="hero-content">
+                <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=500" alt="Tienda online" style="width:100%; border-radius:20px; box-shadow:var(--shadow-hover);">
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== PRODUCTOS SECTION ====== -->
+    <section class="productos-section" id="productos">
+        <div class="productos-container">
+            <div class="section-header">
+                <h2>Nuestros <span class="lifetimes-bold">Productos</span></h2>
+                <p class="subtitle">Selecciona los mejores productos para tu hogar y estilo de vida</p>
+            </div>
+            
+            <div class="productos-grid" id="productosGrid">
+                <!-- Los productos se generarán dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== BENEFICIOS ====== -->
+    <section class="benefits-section" id="beneficios">
+        <div class="benefits-container">
+            <div class="section-header">
+                <h2>¿Por qué elegir <strong class="lifetimes-bold">LIFETIMES</strong>?</h2>
+                <p class="subtitle">La mejor experiencia de compra online</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-truck"></i></div>
+                    <h3>Envío rápido</h3>
+                    <p>Entregas en 24-48 horas a toda la ciudad.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Pago seguro</h3>
+                    <p>Tus datos protegidos con la mejor tecnología.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-undo-alt"></i></div>
+                    <h3>Devolución gratis</h3>
+                    <p>30 días para devolver tu compra sin costo.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Atención al cliente siempre disponible.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-gem"></i></div>
+                    <h3>Productos exclusivos</h3>
+                    <p>Artículos seleccionados especialmente para ti.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-tag"></i></div>
+                    <h3>Ofertas únicas</h3>
+                    <p>Descuentos especiales para clientes frecuentes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CART MODAL ====== -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Tu Carrito</h3>
+                <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Los items del carrito se generarán dinámicamente -->
+            </div>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <button class="btn-checkout" id="checkoutBtn">
+                <i class="fas fa-credit-card"></i>
+                Proceder al pago
+            </button>
+        </div>
+    </div>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><strong class="lifetimes-bold">LIFETIMES</strong></h4>
+                    <p>Tu tienda online de confianza con los mejores productos y la mejor experiencia de compra.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces</h4>
+                    <a href="#productos">Productos</a>
+                    <a href="#beneficios">Beneficios</a>
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-envelope"></i> tienda@lifetimes.com</p>
+                    <p><i class="fab fa-whatsapp"></i> +34 123 456 789</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Madrid, España</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Horario</h4>
+                    <p>Lun-Vie: 9:00 - 20:00</p>
+                    <p>Sábados: 10:00 - 14:00</p>
+                    <p>Atención 24/7 online</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Tu tienda online con LIFETIMES</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Año en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // ====== PRODUCTOS ======
+            const productos = [
+                {
+                    id: 1,
+                    nombre: "Auriculares Premium",
+                    descripcion: "Auriculares inalámbricos con cancelación de ruido y 30h de batería. Sonido de alta fidelidad.",
+                    precio: 89.99,
+                    imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
+                    categoria: "Electrónica"
+                },
+                {
+                    id: 2,
+                    nombre: "Reloj Inteligente",
+                    descripcion: "Smartwatch con monitor de frecuencia cardíaca, GPS y notificaciones en tiempo real.",
+                    precio: 129.99,
+                    imagen: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
+                    categoria: "Electrónica"
+                },
+                {
+                    id: 3,
+                    nombre: "Mochila Ejecutiva",
+                    descripcion: "Mochila impermeable con compartimiento para laptop de 15 pulgadas y puerto USB.",
+                    precio: 49.99,
+                    imagen: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
+                    categoria: "Accesorios"
+                },
+                {
+                    id: 4,
+                    nombre: "Zapatillas Deportivas",
+                    descripcion: "Zapatillas ultraligeras con tecnología de amortiguación y suela antideslizante.",
+                    precio: 79.99,
+                    imagen: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
+                    categoria: "Calzado"
+                },
+                {
+                    id: 5,
+                    nombre: "Set de Tazas Cerámica",
+                    descripcion: "Set de 4 tazas de cerámica hechas a mano con diseños exclusivos.",
+                    precio: 34.99,
+                    imagen: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500",
+                    categoria: "Hogar"
+                },
+                {
+                    id: 6,
+                    nombre: "Lámpara LED Inteligente",
+                    descripcion: "Lámpara con control por voz, 16 millones de colores y compatible con Alexa/Google Home.",
+                    precio: 45.99,
+                    imagen: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500",
+                    categoria: "Hogar"
+                }
+            ];
+            
+            // ====== CART STATE ======
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // ====== RENDER PRODUCTOS ======
+            const productosGrid = document.getElementById('productosGrid');
+            
+            function renderProductos() {
+                productosGrid.innerHTML = '';
+                productos.forEach(producto => {
+                    const productoCard = document.createElement('div');
+                    productoCard.className = 'producto-card';
+                    productoCard.innerHTML = `
+                        <div class="producto-imagen">
+                            <img src="${producto.imagen}" alt="${producto.nombre}">
+                        </div>
+                        <div class="producto-info">
+                            <h3 class="producto-nombre">${producto.nombre}</h3>
+                            <p class="producto-descripcion">${producto.descripcion}</p>
+                            <div class="producto-precio">$${producto.precio.toFixed(2)}</div>
+                            <button class="btn-agregar" data-id="${producto.id}">
+                                <i class="fas fa-cart-plus"></i>
+                                Agregar al carrito
+                            </button>
+                        </div>
+                    `;
+                    productosGrid.appendChild(productoCard);
+                });
+                
+                // Agregar event listeners a los botones
+                document.querySelectorAll('.btn-agregar').forEach(btn => {
+                    btn.addEventListener('click', agregarAlCarrito);
+                });
+            }
+            
+            // ====== FUNCIONES DEL CARRITO ======
+            function agregarAlCarrito(e) {
+                const productoId = parseInt(e.currentTarget.dataset.id);
+                const producto = productos.find(p => p.id === productoId);
+                
+                const existingItem = cart.find(item => item.id === productoId);
+                
+                if (existingItem) {
+                    existingItem.cantidad += 1;
+                } else {
+                    cart.push({
+                        ...producto,
+                        cantidad: 1
+                    });
+                }
+                
+                updateCart();
+                showNotification('Producto agregado al carrito');
+            }
+            
+            function eliminarDelCarrito(productoId) {
+                cart = cart.filter(item => item.id !== productoId);
+                updateCart();
+            }
+            
+            function updateCart() {
+                // Guardar en localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Actualizar contador
+                const cartCount = cart.reduce((total, item) => total + item.cantidad, 0);
+                document.getElementById('cartCount').textContent = cartCount;
+                
+                // Actualizar vista del carrito
+                renderCartItems();
+            }
+            
+            function renderCartItems() {
+                const cartItemsContainer = document.getElementById('cartItems');
+                const cartTotalElement = document.getElementById('cartTotal');
+                
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--gray); padding: 2rem;">Tu carrito está vacío</p>';
+                    cartTotalElement.textContent = '$0';
+                    return;
+                }
+                
+                let total = 0;
+                cartItemsContainer.innerHTML = '';
+                
+                cart.forEach(item => {
+                    total += item.precio * item.cantidad;
+                    
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="cart-item-img">
+                            <img src="${item.imagen}" alt="${item.nombre}">
+                        </div>
+                        <div class="cart-item-info">
+                            <h4>${item.nombre}</h4>
+                            <p>$${item.precio.toFixed(2)} x ${item.cantidad}</p>
+                        </div>
+                        <div class="cart-item-remove" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+                
+                cartTotalElement.textContent = `$${total.toFixed(2)}`;
+                
+                // Agregar event listeners a los botones de eliminar
+                document.querySelectorAll('.cart-item-remove').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productoId = parseInt(e.currentTarget.dataset.id);
+                        eliminarDelCarrito(productoId);
+                    });
+                });
+            }
+            
+            function showNotification(message) {
+                // Crear notificación simple
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: var(--success);
+                    color: white;
+                    padding: 1rem 2rem;
+                    border-radius: var(--border-radius);
+                    box-shadow: var(--shadow-hover);
+                    z-index: 2000;
+                    animation: slideIn 0.3s ease;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+            
+            // ====== CART MODAL ======
+            const cartModal = document.getElementById('cartModal');
+            const cartIcon = document.getElementById('cartIcon');
+            const closeCart = document.getElementById('closeCart');
+            
+            cartIcon.addEventListener('click', () => {
+                cartModal.classList.add('active');
+                renderCartItems();
+            });
+            
+            closeCart.addEventListener('click', () => {
+                cartModal.classList.remove('active');
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            cartModal.addEventListener('click', (e) => {
+                if (e.target === cartModal) {
+                    cartModal.classList.remove('active');
+                }
+            });
+            
+            // ====== CHECKOUT ======
+            document.getElementById('checkoutBtn').addEventListener('click', () => {
+                if (cart.length === 0) {
+                    alert('Tu carrito está vacío');
+                    return;
+                }
+                alert('¡Gracias por tu compra! Te contactaremos para procesar el pago.');
+                cart = [];
+                updateCart();
+                cartModal.classList.remove('active');
+            });
+            
+            // ====== INICIALIZAR ======
+            renderProductos();
+            updateCart();
+            
+            // ====== SCROLL SUAVE ======
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+            
+            // ====== ANIMACIÓN BENEFICIOS ======
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            document.querySelectorAll('.benefit-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+            
+            // ====== RESALTAR LIFETIMES ======
+            document.querySelectorAll('h1, h2, h3, p, label').forEach(el => {
+                if (el.textContent.includes('LIFETIMES')) {
+                    el.innerHTML = el.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

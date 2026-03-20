@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Comercio con Comisión | LIFETIMES</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #0066CC;
+            --primary-dark: #004999;
+            --primary-light: rgba(0, 102, 204, 0.1);
+            --secondary: #f8f9fa;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #10b981;
+            --success-dark: #059669;
+            --whatsapp-green: #25D366;
+            --instagram: #E4405F;
+            --tiktok: #000000;
+            --facebook: #1877F2;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, #0066CC 0%, #4D94FF 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-dark: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --gradient-marketing: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900 !important;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO PERSONALIZADA ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR MODIFICADO CON BOTÓN VOLVER ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            border: 2px solid var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateX(-3px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+        }
+        
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+        
+        .logo{
+            font-weight:900;
+            letter-spacing:.02em;
+            font-size:1.35rem;
+            text-decoration: none;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .logo span{
+            font-weight:300;
+            color: #000000;
+        }
+        .nav-links{
+            display:flex;
+            gap:1.8rem;
+            align-items:center;
+        }
+        .nav-links a{
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-toggle{
+            display:none;
+            background: var(--primary);
+            color:#fff;
+            border:none;
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu{
+            position:fixed;
+            inset:0 0 auto 0;
+            top:72px;
+            background:#fff;
+            border-top:1px solid #eee;
+            display:none;
+            padding: 1rem 0;
+            z-index: 999;
+        }
+        
+        .mobile-menu.open{display:block}
+        
+        .mobile-menu a{
+            display:block;
+            padding:16px 24px;
+            border-bottom:1px solid #f5f5f5;
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: all 0.2s;
+        }
+        
+        .mobile-menu a:hover{
+            background-color: rgba(0, 102, 204, 0.05);
+            color: var(--primary);
+        }
+        
+        @media (max-width: 960px){
+            .nav-links{display:none}
+            .mobile-toggle{display:inline-grid;place-items:center}
+            .nav-inner {
+                padding: 0 24px;
+            }
+            .back-button span {
+                display: none; /* En móviles solo mostrar el ícono */
+            }
+            .back-button {
+                padding: 8px 12px;
+            }
+        }
+        
+        /* ====== HERO SECTION CON FORMULARIO ====== */
+        .hero-form-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-form-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .hero-content h1 span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-content h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--primary-light);
+            z-index: -1;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .personalized-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            gap: 1rem;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .personalized-badge i {
+            font-size: 1.5rem;
+        }
+        
+        /* ====== FORMULARIO DE REGISTRO ====== */
+        .form-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .form-header p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .form-header p strong {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        .form-group label i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        .social-input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-input {
+            position: relative;
+        }
+        
+        .social-input i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+        
+        .social-input .fa-whatsapp {
+            color: var(--whatsapp-green);
+        }
+        
+        .social-input .fa-instagram {
+            color: var(--instagram);
+        }
+        
+        .social-input .fa-tiktok {
+            color: var(--tiktok);
+        }
+        
+        .social-input .fa-facebook {
+            color: var(--facebook);
+        }
+        
+        .social-input .fa-envelope {
+            color: var(--primary);
+        }
+        
+        .social-input input {
+            padding-left: 3rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        /* ====== ESTILOS PARA SUBIR FOTOS ====== */
+        .upload-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            border: 2px dashed var(--primary);
+        }
+        
+        .upload-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .upload-section h3 i {
+            color: var(--primary);
+        }
+        
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .upload-item {
+            text-align: center;
+        }
+        
+        .upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--gray-light);
+            cursor: pointer;
+            transition: var(--transition);
+            min-height: 120px;
+        }
+        
+        .upload-label:hover {
+            border-color: var(--primary);
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .upload-label i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-label span {
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .upload-label small {
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+        
+        .upload-label.has-preview {
+            border-color: var(--success);
+            background: var(--success-dark);
+            position: relative;
+        }
+        
+        .upload-label.has-preview i,
+        .upload-label.has-preview span,
+        .upload-label.has-preview small {
+            color: white;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .preview-container {
+            margin-top: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 60px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.3);
+        }
+        
+        .btn-submit i {
+            font-size: 1.2rem;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* ====== SECCIÓN DE BENEFICIOS ====== */
+        .benefits-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefits-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1586511934875-5c6d6c5529a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.03;
+            z-index: 0;
+        }
+        
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--gradient-primary);
+            border-radius: 5px;
+        }
+        
+        .section-header .subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        
+        .benefit-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.3);
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .benefit-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        /* ====== SECCIÓN DE MARKETING DE CONTENIDO ====== */
+        .marketing-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .marketing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .marketing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        
+        .marketing-content {
+            padding-right: 2rem;
+        }
+        
+        .marketing-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .marketing-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .marketing-highlight {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .marketing-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--primary-light);
+            z-index: -1;
+        }
+        
+        .marketing-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .marketing-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .marketing-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .feature-text h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        
+        .feature-text p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .marketing-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(0,0,0,0.05);
+        }
+        
+        .stat-small {
+            text-align: left;
+        }
+        
+        .stat-small .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .stat-small .label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .marketing-image {
+            position: relative;
+        }
+        
+        .marketing-image img {
+            width: 100%;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .marketing-card {
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .marketing-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .marketing-card-text h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        
+        .marketing-card-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* ====== SECCIÓN DEL PROCESO ====== */
+        .process-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .process-bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .circle-element {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary-light);
+            opacity: 0.3;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            position: relative;
+            margin-top: 5rem;
+        }
+        
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--border-radius-lg);
+            background: white;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .process-step:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+        
+        .step-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.2rem;
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.3);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border: 3px solid white;
+        }
+        
+        .process-step h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .process-step p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .steps-connector {
+            position: absolute;
+            top: 40px;
+            left: 8%;
+            right: 8%;
+            height: 3px;
+            background: var(--gray-light);
+            z-index: 1;
+        }
+        
+        /* ====== SECCIÓN DE ESTADÍSTICAS ====== */
+        .stats-section {
+            padding: 6rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            padding: 2.5rem 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+        
+        /* ====== SECCIÓN DE TESTIMONIOS ====== */
+        .testimonials-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: var(--dark-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-light);
+        }
+        
+        .author-info h4 {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* ====== CTA SECTION ====== */
+        .cta {
+            padding: 6rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .cta-description {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 1.2rem 3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .cta-button:hover {
+            background: var(--dark);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button.ghost {
+            background-color: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .cta-button.ghost:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+        
+        /* Estilo especial para el botón de WhatsApp */
+        .cta-button.whatsapp-highlight {
+            background: var(--whatsapp-green);
+            color: white;
+            border: 2px solid var(--whatsapp-green);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .cta-button.whatsapp-highlight:hover {
+            background: #128C7E;
+            border-color: #128C7E;
+            transform: scale(1.08);
+        }
+        
+        .cta-button.whatsapp-highlight i {
+            font-size: 1.3rem;
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            border-top: 1px solid #eee;
+            padding: 3rem 0 3rem;
+            color: #444;
+            background-color: #f8f9fa;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 32px;
+        }
+        
+        .footer h4 {
+            margin: 0 0 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .footer a {
+            display: block;
+            padding: 0.35rem 0;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        .footer .muted {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .socials a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #000;
+            transition: color 0.2s;
+        }
+
+        .socials a:hover {
+            color: var(--primary);
+        }
+
+        .socials i {
+            font-size: 1.3rem;
+            width: 24px;
+        }
+
+        .fa-whatsapp { color: var(--whatsapp-green); }
+        .fa-instagram { color: #C13584; }
+        .fa-tiktok { color: #000000; }
+        .fa-youtube { color: #FF0000; }
+        
+        .footer-bottom {
+            text-align: center;
+            width: 100%;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding: 2rem 32px 0;
+        }
+        
+        /* ====== RESPONSIVE STYLES ====== */
+        @media (max-width: 1200px) {
+            .section-header h2 {
+                font-size: 2.8rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3rem;
+            }
+            
+            .steps-connector {
+                display: none;
+            }
+            
+            .marketing-grid {
+                gap: 3rem;
+            }
+            
+            .marketing-content h2 {
+                font-size: 2.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-form-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .process-section,
+            .marketing-section,
+            .benefits-section,
+            .stats-section,
+            .testimonials-section,
+            .cta,
+            .hero-form-section {
+                padding: 4rem 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .marketing-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .marketing-content {
+                padding-right: 0;
+            }
+            
+            .marketing-image {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .process-section,
+            .marketing-section,
+            .benefits-section,
+            .stats-section,
+            .testimonials-section,
+            .cta,
+            .hero-form-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-title {
+                font-size: 2.2rem;
+            }
+            
+            .cta-description {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-inner {
+                padding: 0 20px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .marketing-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .marketing-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .marketing-card {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                margin-top: 1rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-card {
+                padding: 1.5rem;
+            }
+            
+            .social-input-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .upload-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .personalized-badge {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-form-section {
+                padding: 2rem 1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .process-section,
+            .marketing-section,
+            .benefits-section,
+            .stats-section,
+            .testimonials-section,
+            .cta {
+                padding: 2.5rem 1rem;
+            }
+        }
+        
+        /* Estilo para el mensaje de servicio personalizado */
+        .service-message {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+        
+        .service-message p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .service-message i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR MODIFICADO CON BOTÓN VOLVER ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <!-- Botón de volver con flechita que redirige a Subir-comercio.html -->
+                <a href="Subir-comercio.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Volver</span>
+                </a>
+                
+                <a class="logo" href="#" aria-label="Inicio" title="Inicio">
+                    LIFETIMES
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">≡</button>
+            
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#process">Cómo Funciona</a>
+                <a href="#marketing">Marketing</a>
+                <a href="#benefits">Beneficios</a>
+                <a href="#testimonials">Testimonios</a>
+                <a href="#contact">Contacto</a>
+            </nav>
+        </div>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="#process">Cómo Funciona</a>
+            <a href="#marketing">Marketing</a>
+            <a href="#benefits">Beneficios</a>
+            <a href="#testimonials">Testimonios</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION CON FORMULARIO ====== -->
+    <section class="hero-form-section">
+        <div class="hero-form-container">
+            <div class="hero-content">
+                <h1>
+                    <span>Registra tu negocio</span><br>
+                    y comienza a vender más
+                </h1>
+                <p class="hero-description">
+                    En <strong class="lifetimes-bold">LIFETIMES</strong> creamos una solución digital personalizada para tu negocio. 
+                    Te ayudamos a llegar a más clientes y aumentar tus ventas sin inversión inicial.
+                </p>
+                
+                <!-- Mensaje destacado de servicio personalizado -->
+                <div class="service-message">
+                    <p>
+                        <i class="fas fa-star"></i>
+                        <strong>🎯 Servicio 100% Personalizado</strong><br>
+                        Este es un servicio totalmente personalizado. Uno de nuestros asesores se contactará contigo 
+                        en menos de 24 horas para conocer tu negocio y crear una estrategia a tu medida.
+                    </p>
+                </div>
+                
+                <div class="personalized-badge">
+                    <i class="fas fa-headset"></i>
+                    <span>Te contactamos en menos de 24 horas</span>
+                </div>
+            </div>
+            
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Registra tu Negocio</h2>
+                    <p>Completa el formulario y un asesor de <strong>LIFETIMES</strong> te contactará</p>
+                </div>
+                
+                <form id="businessForm">
+                    <!-- Datos del negocio -->
+                    <div class="form-group">
+                        <label><i class="fas fa-store"></i> Nombre del Negocio *</label>
+                        <input type="text" class="form-control" placeholder="Ej: Tienda El Mayorista" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre Completo *</label>
+                            <input type="text" class="form-control" placeholder="Tu nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Ciudad *</label>
+                            <input type="text" class="form-control" placeholder="Ej: Ciudad de México" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Contacto principal -->
+                    <div class="form-group">
+                        <label><i class="fas fa-whatsapp"></i> WhatsApp *</label>
+                        <div class="social-input">
+                            <i class="fab fa-whatsapp"></i>
+                            <input type="tel" class="form-control" placeholder="+52 55 1234 5678" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Gmail *</label>
+                        <div class="social-input">
+                            <i class="far fa-envelope"></i>
+                            <input type="email" class="form-control" placeholder="tunegocio@gmail.com" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Redes sociales -->
+                    <label style="display: block; margin-bottom: 1rem; font-weight: 600;">
+                        <i class="fas fa-share-alt"></i> Redes Sociales (opcional)
+                    </label>
+                    
+                    <div class="social-input-group">
+                        <div class="social-input">
+                            <i class="fab fa-instagram"></i>
+                            <input type="text" class="form-control" placeholder="Instagram">
+                        </div>
+                        
+                        <div class="social-input">
+                            <i class="fab fa-tiktok"></i>
+                            <input type="text" class="form-control" placeholder="TikTok">
+                        </div>
+                        
+                        <div class="social-input">
+                            <i class="fab fa-facebook"></i>
+                            <input type="text" class="form-control" placeholder="Facebook">
+                        </div>
+                        
+                        <div class="social-input">
+                            <i class="fas fa-globe"></i>
+                            <input type="text" class="form-control" placeholder="Sitio web (si tienes)">
+                        </div>
+                    </div>
+                    
+                    <!-- Tipo de negocio -->
+                    <div class="form-group">
+                        <label><i class="fas fa-warehouse"></i> Tipo de Productos *</label>
+                        <select class="form-control" required>
+                            <option value="">Selecciona una opción</option>
+                            <option>Electrónica</option>
+                            <option>Ropa y Accesorios</option>
+                            <option>Hogar y Decoración</option>
+                            <option>Alimentos y Bebidas</option>
+                            <option>Juguetes</option>
+                            <option>Herramientas</option>
+                            <option>Productos de Temporada</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+
+                    <!-- SECCIÓN: SUBIR FOTOS DEL NEGOCIO (HASTA 3) -->
+                    <div class="upload-section">
+                        <h3><i class="fas fa-camera"></i> Fotos de tus productos (máximo 3)</h3>
+                        <p style="font-size: 0.9rem; color: var(--gray); margin-bottom: 1rem;">Ayúdanos a conocer tu mercancía. Puedes subir hasta 3 fotos de tus productos o almacén.</p>
+                        
+                        <div class="upload-grid" id="uploadGrid">
+                            <!-- Foto 1 -->
+                            <div class="upload-item">
+                                <label for="photo1" class="upload-label" id="label1">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Subir foto 1</span>
+                                    <small>JPG o PNG, máx 5MB</small>
+                                </label>
+                                <input type="file" id="photo1" class="file-input" accept="image/jpeg,image/png" data-index="1">
+                                <div class="preview-container" id="preview1"></div>
+                            </div>
+                            
+                            <!-- Foto 2 -->
+                            <div class="upload-item">
+                                <label for="photo2" class="upload-label" id="label2">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Subir foto 2</span>
+                                    <small>JPG o PNG, máx 5MB</small>
+                                </label>
+                                <input type="file" id="photo2" class="file-input" accept="image/jpeg,image/png" data-index="2">
+                                <div class="preview-container" id="preview2"></div>
+                            </div>
+                            
+                            <!-- Foto 3 -->
+                            <div class="upload-item">
+                                <label for="photo3" class="upload-label" id="label3">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Subir foto 3</span>
+                                    <small>JPG o PNG, máx 5MB</small>
+                                </label>
+                                <input type="file" id="photo3" class="file-input" accept="image/jpeg,image/png" data-index="3">
+                                <div class="preview-container" id="preview3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Checkbox de confirmación -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="confirm" required>
+                        <label for="confirm">
+                            Entiendo que este es un servicio <strong>personalizado</strong> y que un asesor de LIFETIMES se contactará conmigo.
+                        </label>
+                    </div>
+                    
+                    <!-- Botón de envío -->
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Solicitar Asesoría Personalizada
+                    </button>
+                    
+                    <div class="form-footer">
+                        <i class="fas fa-lock"></i> Tus datos están seguros. No compartimos información.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DEL PROCESO ====== -->
+    <section class="process-section" id="process">
+        <div class="process-bg-elements">
+            <div class="circle-element circle-1"></div>
+            <div class="circle-element circle-2"></div>
+        </div>
+        
+        <div class="process-container">
+            <div class="section-header">
+                <h2>El Proceso de Comercio</h2>
+                <div class="subtitle">
+                    Perfecto para negocios con stock grande que quieren aumentar sus ventas sin complicaciones
+                </div>
+            </div>
+            
+            <div class="process-steps">
+                <div class="steps-connector"></div>
+                
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h3>Tu Stock, Nuestra Web</h3>
+                    <p>Subes tus productos con fotos y descripciones. Creamos una tienda online profesional que muestra tu mercancía al mundo.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Ventas Automáticas</h3>
+                    <p>Los clientes compran directamente en tu web. Nosotros gestionamos todo el proceso de venta y atención al cliente.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Pago Seguro</h3>
+                    <p>Procesamos los pagos con métodos seguros. El dinero queda protegido hasta que se complete la entrega.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Pedido para Entregar</h3>
+                    <p>Te enviamos el pedido detallado. Solo preparas la mercancía y la entregas (o nosotros coordinamos el envío).</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3>Ganancias con Comisión</h3>
+                    <p>Recibes el pago completo, menos una pequeña comisión por nuestra gestión. Sin costos fijos, solo pagas por ventas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE MARKETING DE CONTENIDO ====== -->
+    <section class="marketing-section" id="marketing">
+        <div class="marketing-container">
+            <div class="section-header">
+                <h2>Marketing de Contenido Incluido</h2>
+                <div class="subtitle">
+                    Nosotros hacemos el marketing para que tus productos se vendan más rápido
+                </div>
+            </div>
+            
+            <div class="marketing-grid">
+                <div class="marketing-content">
+                    <div class="marketing-badge">
+                        <i class="fas fa-rocket"></i> Marketing de Contenido
+                    </div>
+                    <h2>
+                        Nosotros hacemos el 
+                        <span class="marketing-highlight">marketing</span> 
+                        para que vendas más
+                    </h2>
+                    <p class="marketing-description">
+                        En <strong class="lifetimes-bold">LIFETIMES</strong> no solo creamos tu tienda online, también nos encargamos de atraer compradores a través de estrategias de marketing de contenido. Creemos que tu único enfoque debe ser gestionar tu stock y preparar los envíos.
+                    </p>
+                    
+                    <div class="marketing-features">
+                        <div class="marketing-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Fotografía Profesional</h4>
+                                <p>Capturamos la esencia de tus productos con fotos y videos de alta calidad para destacar tu mercancía.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="marketing-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Gestión de Redes</h4>
+                                <p>Manejamos Instagram, Facebook y TikTok con contenido atractivo que genera ventas y engagement.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="marketing-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-pen-fancy"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Copywriting Persuasivo</h4>
+                                <p>Redactamos descripciones que venden y hacen que los compradores quieran adquirir tus productos.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="marketing-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Estrategia de Contenido</h4>
+                                <p>Planificamos publicaciones, promociones y campañas para aumentar tus ventas y mover tu stock más rápido.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="marketing-stats">
+                        <div class="stat-small">
+                            <div class="number">+40%</div>
+                            <div class="label">Aumento en ventas</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="number">+15k</div>
+                            <div class="label">Alcance orgánico</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="number">24/7</div>
+                            <div class="label">Creación de contenido</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="marketing-image">
+                    <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Marketing de contenido para comercio">
+                    <div class="marketing-card">
+                        <div class="marketing-card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="marketing-card-text">
+                            <h4>Resultados Reales</h4>
+                            <p>+40% de aumento en ventas con nuestra estrategia de contenido</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE BENEFICIOS ====== -->
+    <section class="benefits-section" id="benefits">
+        <div class="benefits-bg"></div>
+        <div class="benefits-container">
+            <div class="benefits-header">
+                <h2>Perfecto para Grandes Stocks</h2>
+                <div class="subtitle">
+                    La solución ideal para negocios con mucha mercancía que necesita moverse rápidamente
+                </div>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h3>Máxima Exposición</h3>
+                    <p>Tu stock llega a miles de potenciales clientes. No limites tus ventas a tu local físico o zona geográfica.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Rentabilidad por Venta</h3>
+                    <p>Solo pagas cuando vendes. Sin mensualidades fijas, sin costos ocultos. Nuestra comisión es transparente.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Sin Complicaciones</h3>
+                    <p>Nos encargamos de la tecnología, el marketing, los pagos y la atención al cliente. Tú solo gestionas tu stock.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Implementación Rápida</h3>
+                    <p>En 48 horas tu catálogo está online y vendiendo. Ideal para mover stock rápido o para liquidaciones.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Protección de Pagos</h3>
+                    <p>Sistema de pagos seguro que protege tanto al comprador como a ti. Sin riesgo de impagos o fraudes.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon-wrapper">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Escalabilidad Ilimitada</h3>
+                    <p>Vende 10 o 10,000 productos con la misma plataforma. Crecemos contigo según tu volumen de stock.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE ESTADÍSTICAS ====== -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="section-header light">
+                <h2>Resultados en Comercio</h2>
+                <div class="subtitle" style="color: rgba(255, 255, 255, 0.9);">
+                    Miles de vendedores con stock grande ya confían en nosotros
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="1200">0</div>
+                    <div class="stat-label">Vendedores con Stock</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="85000">0</div>
+                    <div class="stat-label">Productos Movidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="15">0</div>
+                    <div class="stat-label">% Comisión Promedio</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="0">0</div>
+                    <div class="stat-label">Costo Mensual Fijo</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE TESTIMONIOS ====== -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="testimonials-container">
+            <div class="section-header">
+                <h2>Comerciantes que confían en nosotros</h2>
+                <div class="subtitle">
+                    Personas con stock grande que encontraron la forma perfecta de mover su mercancía
+                </div>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Tenía un depósito lleno de productos que no se movían. Con LIFETIMES vendí el 80% en 3 meses. La comisión es justa por el servicio completo que ofrecen."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Roberto García" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Roberto García</h4>
+                            <p>Importador de Electrónica</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Como mayorista, tenía problemas para llegar al cliente final. Ahora tengo mi propia web sin preocuparme por tecnología ni pagos. Muevo 3 veces más stock que antes."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="María Fernández" class="author-avatar">
+                        <div class="author-info">
+                            <h4>María Fernández</h4>
+                            <p>Mayorista de Ropa</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Liquidaba stock de temporada con pérdidas. Ahora lo vendo online a buen precio. La comisión que me cobran es menor a lo que perdía en liquidaciones forzadas."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Carlos Mendoza" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Carlos Mendoza</h4>
+                            <p>Distribuidor de Calzado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CTA SECTION ====== -->
+    <section class="cta" id="contact">
+        <div class="cta-container">
+            <h2 class="cta-title">¿Listo para mover tu stock?</h2>
+            <p class="cta-description">
+                Sin inversión inicial, sin mensualidades, sin complicaciones técnicas. 
+                Sube tus productos, nosotros hacemos el resto y solo cobramos una comisión por cada venta exitosa.
+                <br><strong>¡El servicio de paquetería va incluido!</strong>
+            </p>
+            
+            <div class="cta-buttons">
+                <button class="cta-button" id="whatsappBtn">
+                    <i class="fab fa-whatsapp"></i> Hablar con un asesor
+                </button>
+                <button class="cta-button ghost" id="demoBtn">
+                    <i class="fas fa-play-circle"></i> Ver demostración
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>LIFETIMES - Plataforma de Comercio</h4>
+                <p class="muted">La solución perfecta para negocios con stock grande que quieren mover su mercancía. Creamos tu web, gestionamos ventas, procesamos pagos y solo cobramos una comisión por venta exitosa. Sin costos fijos, sin complicaciones. <strong>Servicio de paquetería incluido en todas las ventas.</strong></p>
+            </div>
+
+            <div>
+                <h4>Servicios</h4>
+                <a href="#process">Cómo Funciona</a>
+                <a href="#marketing">Marketing Incluido</a>
+                <a href="#benefits">Para Grandes Stocks</a>
+                <a href="#testimonials">Casos de Éxito</a>
+            </div>
+
+            <div>
+                <h4>Para Comerciantes</h4>
+                <a href="#contact">Unirme a la Plataforma</a>
+                <a href="#process">Subir mi Catálogo</a>
+                <a href="#contact">Preguntas Frecuentes</a>
+                <a href="#contact">Soporte 24/7</a>
+            </div>
+
+            <div>
+                <h4>Contáctanos</h4>
+                <p class="muted">Email: ventas@lifetimes.com</p>
+                <p class="muted">Teléfono: +52 55 1234 5678</p>
+                <div class="socials">
+                    <a href="https://wa.me/525512345678" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="year"></span> LIFETIMES - Plataforma de Comercio. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            // Año actual en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Botón de WhatsApp
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            if (whatsappBtn) {
+                whatsappBtn.addEventListener('click', function() {
+                    const message = "Hola, tengo un stock grande que quiero mover y me interesa LIFETIMES. ¿Podrían darme más información sobre las comisiones y el servicio de paquetería incluido?";
+                    window.open(`https://wa.me/525512345678?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            }
+            
+            // Botón de demostración
+            const demoBtn = document.getElementById('demoBtn');
+            if (demoBtn) {
+                demoBtn.addEventListener('click', function() {
+                    const message = "Hola, me gustaría ver una demostración de cómo funciona LIFETIMES para mover mi stock y conocer más sobre la paquetería incluida.";
+                    window.open(`https://wa.me/525512345678?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            }
+            
+            // Smooth scroll para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            // Cerrar menú móvil si está abierto
+                            if (mobileMenu.classList.contains('open')) {
+                                mobileMenu.classList.remove('open');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // ====== MANEJO DEL FORMULARIO ======
+            
+            // Manejo de la subida de fotos (previsualización)
+            const fileInputs = document.querySelectorAll('.file-input');
+            
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function(e) {
+                    const index = this.dataset.index;
+                    const file = this.files[0];
+                    const label = document.getElementById(`label${index}`);
+                    const previewContainer = document.getElementById(`preview${index}`);
+                    
+                    // Limpiar preview anterior
+                    previewContainer.innerHTML = '';
+                    
+                    if (file) {
+                        // Validar tipo y tamaño
+                        if (!file.type.match('image.*')) {
+                            alert('Por favor selecciona una imagen válida (JPG o PNG)');
+                            this.value = '';
+                            label.classList.remove('has-preview');
+                            return;
+                        }
+                        
+                        if (file.size > 5 * 1024 * 1024) { // 5MB
+                            alert('La imagen no debe superar los 5MB');
+                            this.value = '';
+                            label.classList.remove('has-preview');
+                            return;
+                        }
+                        
+                        // Crear preview
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.className = 'image-preview';
+                            previewContainer.appendChild(img);
+                            
+                            // Cambiar estilo del label
+                            label.classList.add('has-preview');
+                            label.innerHTML = `
+                                <i class="fas fa-check-circle"></i>
+                                <span>Foto ${index} lista</span>
+                                <small>Archivo: ${file.name.substring(0, 15)}${file.name.length > 15 ? '...' : ''}</small>
+                            `;
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        // Restaurar label si no hay archivo
+                        label.classList.remove('has-preview');
+                        label.innerHTML = `
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Subir foto ${index}</span>
+                            <small>JPG o PNG, máx 5MB</small>
+                        `;
+                    }
+                });
+            });
+            
+            // Manejo del formulario
+            const form = document.getElementById('businessForm');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validación básica
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (field.type === 'checkbox') {
+                            if (!field.checked) {
+                                field.style.outline = '2px solid red';
+                                isValid = false;
+                            } else {
+                                field.style.outline = 'none';
+                            }
+                        } else {
+                            if (!field.value.trim()) {
+                                field.style.borderColor = 'red';
+                                isValid = false;
+                            } else {
+                                field.style.borderColor = 'var(--gray-light)';
+                            }
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        alert('Por favor completa todos los campos obligatorios');
+                        return;
+                    }
+                    
+                    // Verificar que al menos una foto haya sido subida (opcional, pero recomendado)
+                    const files = document.querySelectorAll('.file-input');
+                    let hasFiles = false;
+                    files.forEach(file => {
+                        if (file.files.length > 0) hasFiles = true;
+                    });
+                    
+                    if (!hasFiles) {
+                        if (!confirm('No has subido ninguna foto. ¿Quieres continuar de todas formas?')) {
+                            return;
+                        }
+                    }
+                    
+                    // Aquí iría la lógica para enviar el formulario (incluyendo las fotos si se implementa un backend)
+                    // Por simplicidad, mostramos un mensaje y simulamos el envío
+                    alert('¡Gracias por registrar tu negocio! Un asesor de LIFETIMES se contactará contigo en menos de 24 horas para ofrecerte un servicio completamente personalizado.');
+                    
+                    form.reset();
+                    
+                    // Restaurar labels de fotos
+                    for (let i = 1; i <= 3; i++) {
+                        const label = document.getElementById(`label${i}`);
+                        const preview = document.getElementById(`preview${i}`);
+                        if (label) {
+                            label.classList.remove('has-preview');
+                            label.innerHTML = `
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Subir foto ${i}</span>
+                                <small>JPG o PNG, máx 5MB</small>
+                            `;
+                        }
+                        if (preview) {
+                            preview.innerHTML = '';
+                        }
+                    }
+                });
+            }
+            
+            // Animación para los elementos al hacer scroll
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar los pasos para animación
+            document.querySelectorAll('.process-step').forEach((step, index) => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateY(30px)';
+                step.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                step.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(step);
+            });
+            
+            // Observar elementos de marketing para animación
+            document.querySelectorAll('.marketing-feature').forEach((feature, index) => {
+                feature.style.opacity = '0';
+                feature.style.transform = 'translateY(20px)';
+                feature.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                feature.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(feature);
+            });
+            
+            // Observar los benefit cards para animación
+            document.querySelectorAll('.benefit-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.transitionDelay = `${index * 0.15}s`;
+                observer.observe(card);
+            });
+            
+            // Observar las testimonial cards para animación
+            document.querySelectorAll('.testimonial-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(card);
+            });
+            
+            // Contador animado para las estadísticas
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const statObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const stat = entry.target;
+                        const finalValue = parseInt(stat.getAttribute('data-count'));
+                        
+                        if (!stat.classList.contains('animated')) {
+                            stat.classList.add('animated');
+                            
+                            let startValue = 0;
+                            const duration = 2000;
+                            const increment = finalValue / (duration / 20);
+                            let current = startValue;
+                            
+                            const timer = setInterval(() => {
+                                current += increment;
+                                if (current >= finalValue) {
+                                    clearInterval(timer);
+                                    if (finalValue === 0) {
+                                        stat.textContent = "Sin costo";
+                                    } else if (finalValue === 15) {
+                                        stat.textContent = "15%";
+                                    } else {
+                                        stat.textContent = finalValue.toLocaleString();
+                                    }
+                                } else {
+                                    stat.textContent = Math.floor(current).toLocaleString();
+                                }
+                            }, 20);
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statNumbers.forEach(stat => {
+                statObserver.observe(stat);
+            });
+            
+            // Cerrar menú móvil al hacer clic en un enlace
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                });
+            });
+            
+            // Destacar todas las instancias de LIFETIMES
+            document.querySelectorAll('h1, h2, h3, p, td, th, label, .footer p, .footer h4').forEach(element => {
+                if (element && element.textContent && element.textContent.includes('LIFETIMES')) {
+                    const newHTML = element.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                    element.innerHTML = newHTML;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

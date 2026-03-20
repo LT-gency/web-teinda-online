@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Términos y Condiciones - LIFETIMES AGENCY</title>
+
+  <!-- Fuente Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ 
+  <!-- Íconos Font Awesome -->
+  <script src="https://kit.fontawesome.com/5c5a7a5b9b.js" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    /* ===== NUEVO NAVBAR DEL SEGUNDO CÓDIGO ===== */
+    .nav{
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: saturate(180%) blur(10px);
+      border-bottom: 1px solid #eee;
+      z-index: 50;
+      width: 100%;
+    }
+   
+    .nav-inner{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+   
+    .logo{
+      font-weight: 900;
+      letter-spacing: .02em;
+      font-size: 1.2rem;
+      color: #000000;
+      text-decoration: none;
+    }
+   
+    .nav-links{
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+   
+    .nav-links a{
+      font-weight: 600;
+      text-decoration: none;
+      color: #000;
+      font-size: 0.9rem;
+    }
+   
+    .nav-cta{
+      display: flex;
+      gap: .6rem;
+      align-items: center;
+    }
+   
+    .btn{
+      display: inline-flex;
+      gap: .6rem;
+      align-items: center;
+      font-weight: 600;
+      border: 1px solid #1a1a1a;
+      padding: .75rem 1.4rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+    }
+   
+    .btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+   
+    .btn.fill{
+      background: #000000;
+      color: #fff;
+    }
+   
+    .btn.fill:hover{
+      background: #4a4a4a;
+      border-color: #4a4a4a;
+    }
+   
+    .btn.ghost{
+      background: transparent;
+      color: #000000;
+    }
+   
+    .btn.ghost:hover{
+      background: #000000;
+      color: #fff;
+    }
+   
+    .mobile-toggle{
+      display: none;
+      background: #000;
+      color: #fff;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+   
+    .mobile-menu{
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #eee;
+      display: none;
+      z-index: 49;
+    }
+   
+    .mobile-menu.open{
+      display: block;
+    }
+   
+    .mobile-menu a{
+      display: block;
+      padding: 14px 20px;
+      border-bottom: 1px solid #eee;
+      font-weight: 600;
+      text-decoration: none;
+      color: #000;
+      font-size: 0.9rem;
+    }
+   
+    @media (max-width: 960px){
+      .nav-links{
+        display: none;
+      }
+      .mobile-toggle{
+        display: inline-grid;
+        place-items: center;
+      }
+    }
+
+    /* INTRO - Sin imagen y texto más pequeño */
+    .intro {
+      width: 90%;
+      max-width: 1200px;
+      padding: 50px 0;
+      margin-top: 20px;
+    }
+
+    .intro-text h1 {
+      font-size: 2rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .intro-text p {
+      font-weight: 400;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    .print-btn {
+      background-color: #000;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 25px;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+    .print-btn:hover {
+      background-color: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* ÍNDICE - Texto más pequeño */
+    .indice {
+      width: 90%;
+      max-width: 1200px;
+      margin: 35px 0;
+      background-color: #f9f9f9;
+      border-radius: 18px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+
+    .indice h2 {
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+      font-weight: 700;
+      text-align: center;
+      color: #000;
+    }
+
+    .indice-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 35px;
+    }
+
+    .categoria-indice {
+      margin-bottom: 15px;
+    }
+
+    .categoria-indice h3 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: #000;
+      font-weight: 700;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #000;
+    }
+
+    .categoria-indice ul {
+      list-style: none;
+    }
+
+    .categoria-indice li {
+      margin-bottom: 10px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .categoria-indice a {
+      color: #444;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: block;
+      padding: 5px 0;
+      font-size: 0.9rem;
+    }
+
+    .categoria-indice a:hover {
+      color: #000;
+      transform: translateX(5px);
+    }
+
+    /* NÚMEROS EN NEGRO */
+    .categoria-indice .numero-subcategoria {
+      font-weight: 700;
+      color: #000;
+      margin-right: 6px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1200px) {
+      .indice-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .indice-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+      .indice {
+        padding: 35px 25px;
+      }
+    }
+
+    /* CATEGORÍAS PRINCIPALES - Texto más pequeño */
+    .categoria-principal {
+      width: 90%;
+      max-width: 1200px;
+      margin: 50px 0 25px 0;
+    }
+
+    .categoria-principal h2 {
+      font-size: 1.8rem;
+      color: #000;
+      margin-bottom: 22px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #000;
+      font-weight: 700;
+    }
+
+    /* GRID DE SUBCATEGORÍAS */
+    .subcategorias-grid {
+      width: 90%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      margin-bottom: 50px;
+    }
+
+    @media (max-width: 768px) {
+      .subcategorias-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* TARJETAS DE SUBCATEGORÍA - Texto más pequeño */
+    .subcategoria-card {
+      background-color: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      padding: 25px;
+      transition: all 0.3s ease;
+      border: 1px solid #f0f0f0;
+    }
+
+    .subcategoria-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border-color: #e0e0e0;
+    }
+
+    .subcategoria-header {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    /* NÚMEROS EN NEGRO */
+    .subcategoria-numero {
+      color: #000;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-right: 10px;
+      min-width: 32px;
+    }
+
+    .subcategoria-card h3 {
+      font-size: 1.1rem;
+      color: #000;
+      font-weight: 600;
+      margin-bottom: 10px;
+      flex: 1;
+    }
+
+    .subcategoria-card p {
+      color: #444;
+      font-weight: 400;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      font-size: 0.95rem;
+    }
+
+    .ver-mas-btn {
+      background-color: #000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .ver-mas-btn:hover {
+      background-color: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* MODAL - Texto más pequeño */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 18px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 35px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #333;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background-color: #f5f5f5;
+    }
+
+    .modal-header {
+      margin-bottom: 25px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .modal-header h2 {
+      font-size: 1.6rem;
+      color: #000;
+      font-weight: 700;
+    }
+
+    .modal-body {
+      color: #444;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .modal-body h3 {
+      font-size: 1.2rem;
+      margin: 22px 0 14px;
+      color: #000;
+      font-weight: 600;
+    }
+
+    .modal-body h4 {
+      font-size: 1.1rem;
+      margin: 18px 0 10px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .modal-body p {
+      margin-bottom: 18px;
+    }
+
+    .modal-body ul {
+      margin-left: 22px;
+      margin-bottom: 22px;
+    }
+
+    .modal-body li {
+      margin-bottom: 8px;
+      color: #444;
+    }
+
+    .highlight {
+      background-color: #f8f9fa;
+      border-left: 4px solid #000;
+      padding: 15px;
+      margin: 20px 0;
+      font-style: italic;
+    }
+
+    /* Responsive ajustes */
+    @media (max-width: 900px){
+      .modal-content {
+        padding: 25px 18px;
+      }
+      .intro-text h1 {
+        font-size: 1.8rem;
+      }
+      .indice-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px){
+      .indice {
+        padding: 30px 20px;
+      }
+      .subcategoria-card {
+        padding: 22px 18px;
+      }
+      .categoria-principal h2 {
+        font-size: 1.6rem;
+      }
+      .indice-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NUEVO NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">≡</button>
+      <a class="logo" href="Index.html" aria-label="Inicio" title="Inicio">
+        LIFETIMES<span style="font-weight:300"> AGENCY</span>
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="General.html">Novedades</a>
+        <a href="Servicios.html">Servicios</a>
+        <a href="Contacto.html">Contacto</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn fill" href="portal.html" aria-label="Comprar ahora">Portal</a>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <a href="General.html">Novedades</a>
+      <a href="Servicios.html">Servicios</a>
+      <a href="Index.html">La Historia</a>
+    </div>
+  </header>
+
+  <!-- INTRO - Sin imagen -->
+  <section class="intro">
+    <div class="intro-text">
+      <h1>Términos y Condiciones</h1>
+      <p>
+        Bienvenido a <b>LIFETIMES AGENCY</b>. Al acceder, navegar o utilizar nuestros servicios digitales, usted reconoce y acepta los presentes términos y condiciones, los cuales establecen las bases legales que regulan la relación entre la agencia y sus clientes.
+      </p>
+      <p>
+        Este documento tiene como propósito garantizar una colaboración clara, profesional y segura, definiendo las responsabilidades, derechos y compromisos de ambas partes. Nuestro objetivo es asegurar que cada servicio brindado —ya sea en marketing, diseño, comunicación o desarrollo digital— se ejecute bajo principios de transparencia, confianza y excelencia.
+      </p>
+      <p>
+        Le recomendamos leer detenidamente cada sección antes de hacer uso de nuestros servicios o interactuar con nuestras plataformas. Si continúa utilizando el sitio o contrata nuestros servicios, se considerará que ha aceptado las políticas aquí descritas en su totalidad.
+      </p>
+      <button class="print-btn" onclick="window.print()">
+        <i class="fas fa-print"></i>
+        <span>Imprimir</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ÍNDICE HORIZONTAL -->
+  <section class="indice">
+    <h2>Índice</h2>
+    <div class="indice-grid">
+     
+      <!-- Columna 1: Condiciones de Uso -->
+      <div class="categoria-indice">
+        <h3><a href="#condiciones-uso">1. Condiciones de Uso</a></h3>
+        <ul>
+          <li><a href="#cu-1"><span class="numero-subcategoria">1.1</span> Aceptación de Términos</a></li>
+          <li><a href="#cu-2"><span class="numero-subcategoria">1.2</span> Licencia de Uso</a></li>
+          <li><a href="#cu-3"><span class="numero-subcategoria">1.3</span> Restricciones</a></li>
+          <li><a href="#cu-4"><span class="numero-subcategoria">1.4</span> Propiedad Intelectual</a></li>
+          <li><a href="#cu-5"><span class="numero-subcategoria">1.5</span> Limitación de Responsabilidad</a></li>
+          <li><a href="#cu-6"><span class="numero-subcategoria">1.6</span> Exactitud de Materiales</a></li>
+          <li><a href="#cu-7"><span class="numero-subcategoria">1.7</span> Enlaces Externos</a></li>
+          <li><a href="#cu-8"><span class="numero-subcategoria">1.8</span> Modificaciones</a></li>
+          <li><a href="#cu-9"><span class="numero-subcategoria">1.9</span> Ley Aplicable</a></li>
+          <li><a href="#cu-10"><span class="numero-subcategoria">1.10</span> Registro de Usuario</a></li>
+        </ul>
+      </div>
+     
+      <!-- Columna 2: Términos y Condiciones -->
+      <div class="categoria-indice">
+        <h3><a href="#terminos-condiciones">2. Términos y Condiciones</a></h3>
+        <ul>
+          <li><a href="#tc-1"><span class="numero-subcategoria">2.1</span> Alcance de Servicios</a></li>
+          <li><a href="#tc-2"><span class="numero-subcategoria">2.2</span> Propiedad del Trabajo</a></li>
+          <li><a href="#tc-3"><span class="numero-subcategoria">2.3</span> Pagos y Facturación</a></li>
+          <li><a href="#tc-4"><span class="numero-subcategoria">2.4</span> Revisión y Aprobación</a></li>
+          <li><a href="#tc-5"><span class="numero-subcategoria">2.5</span> Cambios en Alcance</a></li>
+          <li><a href="#tc-6"><span class="numero-subcategoria">2.6</span> Confidencialidad</a></li>
+          <li><a href="#tc-7"><span class="numero-subcategoria">2.7</span> Plazos de Entrega</a></li>
+          <li><a href="#tc-8"><span class="numero-subcategoria">2.8</span> Cancelación</a></li>
+          <li><a href="#tc-9"><span class="numero-subcategoria">2.9</span> Garantías</a></li>
+          <li><a href="#tc-10"><span class="numero-subcategoria">2.10</span> Resolución de Disputas</a></li>
+        </ul>
+      </div>
+     
+      <!-- Columna 3: Política de Privacidad -->
+      <div class="categoria-indice">
+        <h3><a href="#politica-privacidad">3. Política de Privacidad</a></h3>
+        <ul>
+          <li><a href="#pp-1"><span class="numero-subcategoria">3.1</span> Recopilación de Información</a></li>
+          <li><a href="#pp-2"><span class="numero-subcategoria">3.2</span> Uso de la Información</a></li>
+          <li><a href="#pp-3"><span class="numero-subcategoria">3.3</span> Protección de Datos</a></li>
+          <li><a href="#pp-4"><span class="numero-subcategoria">3.4</span> Cookies</a></li>
+          <li><a href="#pp-5"><span class="numero-subcategoria">3.5</span> Compartir Información</a></li>
+          <li><a href="#pp-6"><span class="numero-subcategoria">3.6</span> Derechos del Usuario</a></li>
+          <li><a href="#pp-7"><span class="numero-subcategoria">3.7</span> Retención de Datos</a></li>
+          <li><a href="#pp-8"><span class="numero-subcategoria">3.8</span> Transferencias Internacionales</a></li>
+          <li><a href="#pp-9"><span class="numero-subcategoria">3.9</span> Menores de Edad</a></li>
+          <li><a href="#pp-10"><span class="numero-subcategoria">3.10</span> Cambios en la Política</a></li>
+        </ul>
+      </div>
+     
+      <!-- Columna 4: Términos de la Plataforma -->
+      <div class="categoria-indice">
+        <h3><a href="#terminos-plataforma">4. Términos de la Plataforma</a></h3>
+        <ul>
+          <li><a href="#tp-1"><span class="numero-subcategoria">4.1</span> Introducción y Alcance</a></li>
+          <li><a href="#tp-2"><span class="numero-subcategoria">4.2</span> Aceptación Paso a Paso</a></li>
+          <li><a href="#tp-3"><span class="numero-subcategoria">4.3</span> Declaraciones del Usuario</a></li>
+          <li><a href="#tp-4"><span class="numero-subcategoria">4.4</span> Licencia Universal</a></li>
+          <li><a href="#tp-5"><span class="numero-subcategoria">4.5</span> Ausencia de Verificación</a></li>
+          <li><a href="#tp-6"><span class="numero-subcategoria">4.6</span> Indemnización Total</a></li>
+          <li><a href="#tp-7"><span class="numero-subcategoria">4.7</span> Arbitraje Obligatorio</a></li>
+          <li><a href="#tp-8"><span class="numero-subcategoria">4.8</span> Limitación de Responsabilidad</a></li>
+        </ul>
+      </div>
+     
+    </div>
+  </section>
+
+  <!-- CATEGORÍA 1: CONDICIONES DE USO -->
+  <div class="categoria-principal" id="condiciones-uso">
+    <h2>Condiciones de Uso</h2>
+  </div>
+
+  <div class="subcategorias-grid">
+    <!-- Subcategoría 1.1 -->
+    <div class="subcategoria-card" id="cu-1">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.1</div>
+        <h3>Aceptación de Términos</h3>
+      </div>
+      <p>Al acceder y utilizar nuestros servicios, acepta cumplir con la Ley Federal de Protección al Consumidor y todas las regulaciones aplicables en México...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal1')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.2 -->
+    <div class="subcategoria-card" id="cu-2">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.2</div>
+        <h3>Licencia de Uso</h3>
+      </div>
+      <p>Conforme a la Ley Federal del Derecho de Autor, otorgamos licencia limitada para uso personal de nuestros contenidos...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal2')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.3 -->
+    <div class="subcategoria-card" id="cu-3">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.3</div>
+        <h3>Restricciones</h3>
+      </div>
+      <p>Queda prohibido cualquier uso que infrinja la Ley de la Propiedad Industrial o promueva la piratería según la LFDA...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal3')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.4 -->
+    <div class="subcategoria-card" id="cu-4">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.4</div>
+        <h3>Propiedad Intelectual</h3>
+      </div>
+      <p>Todos los derechos de autor están protegidos bajo la Ley Federal del Derecho de Autor y tratados internacionales...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal4')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.5 -->
+    <div class="subcategoria-card" id="cu-5">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.5</div>
+        <h3>Limitación de Responsabilidad</h3>
+      </div>
+      <p>Nuestra responsabilidad se limita conforme al Código Civil Federal y la Ley Federal de Protección al Consumidor...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal5')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.6 -->
+    <div class="subcategoria-card" id="cu-6">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.6</div>
+        <h3>Exactitud de Materiales</h3>
+      </div>
+      <p>La información proporcionada cumple con estándares de veracidad según la Ley Federal de Protección al Consumidor...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal6')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.7 -->
+    <div class="subcategoria-card" id="cu-7">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.7</div>
+        <h3>Enlaces Externos</h3>
+      </div>
+      <p>No nos responsabilizamos por contenidos externos, conforme al artículo 16 de la Ley Federal del Derecho de Autor...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal7')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.8 -->
+    <div class="subcategoria-card" id="cu-8">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.8</div>
+        <h3>Modificaciones</h3>
+      </div>
+      <p>Reservamos el derecho de modificar términos conforme a la Ley Federal de Procedimiento Administrativo...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal8')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.9 -->
+    <div class="subcategoria-card" id="cu-9">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.9</div>
+        <h3>Ley Aplicable</h3>
+      </div>
+      <p>Estos términos se rigen por las leyes mexicanas, especialmente el Código de Comercio y leyes federales aplicables...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal9')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 1.10 -->
+    <div class="subcategoria-card" id="cu-10">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">1.10</div>
+        <h3>Registro de Usuario</h3>
+      </div>
+      <p>El registro requiere información verificable según la Ley Federal de Protección de Datos Personales en Posesión de Particulares...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal10')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- CATEGORÍA 2: TÉRMINOS Y CONDICIONES -->
+  <div class="categoria-principal" id="terminos-condiciones">
+    <h2>Términos y Condiciones</h2>
+  </div>
+
+  <div class="subcategorias-grid">
+    <!-- Subcategoría 2.1 -->
+    <div class="subcategoria-card" id="tc-1">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.1</div>
+        <h3>Alcance de Servicios</h3>
+      </div>
+      <p>Nuestros servicios cumplen con la NOM-151-SCFI-2016 para comercio electrónico y regulaciones COFEPRIS aplicables...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal11')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.2 -->
+    <div class="subcategoria-card" id="tc-2">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.2</div>
+        <h3>Propiedad del Trabajo</h3>
+      </div>
+      <p>La transferencia de derechos se realiza conforme a la Ley Federal del Derecho de Autor y el Código Civil Federal...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal12')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.3 -->
+    <div class="subcategoria-card" id="tc-3">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.3</div>
+        <h3>Pagos y Facturación</h3>
+      </div>
+      <p>Facturación conforme a la Ley del Impuesto al Valor Agregado y regulaciones del SAT para servicios digitales...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal13')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.4 -->
+    <div class="subcategoria-card" id="tc-4">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.4</div>
+        <h3>Revisión y Aprobación</h3>
+      </div>
+      <p>Procesos de aprobación establecidos conforme a la Ley Federal de Protección al Consumidor para servicios profesionales...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal14')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.5 -->
+    <div class="subcategoria-card" id="tc-5">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.5</div>
+        <h3>Cambios en Alcance</h3>
+      </div>
+      <p>Modificaciones sujetas a consentimiento mutuo según el Código de Comercio y principios de contratación mercantil...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal15')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.6 -->
+    <div class="subcategoria-card" id="tc-6">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.6</div>
+        <h3>Confidencialidad</h3>
+      </div>
+      <p>Protección de información conforme a la Ley Federal de Protección de Datos Personales y secretos industriales...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal16')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.7 -->
+    <div class="subcategoria-card" id="tc-7">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.7</div>
+        <h3>Plazos de Entrega</h3>
+      </div>
+      <p>Plazos estimados conforme a la NOM-151-SCFI-2016 y criterios de la Procuraduría Federal del Consumidor...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal17')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.8 -->
+    <div class="subcategoria-card" id="tc-8">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.8</div>
+        <h3>Cancelación</h3>
+      </div>
+      <p>Derechos de cancelación establecidos según la Ley Federal de Protección al Consumidor y contratos de adhesión...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal18')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.9 -->
+    <div class="subcategoria-card" id="tc-9">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.9</div>
+        <h3>Garantías</h3>
+      </div>
+      <p>Garantías limitadas conforme al Código Civil Federal y la Ley Federal de Protección al Consumidor para servicios...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal19')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 2.10 -->
+    <div class="subcategoria-card" id="tc-10">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">2.10</div>
+        <h3>Resolución de Disputas</h3>
+      </div>
+      <p>Mecanismos de solución conforme a la Ley de Protección al Consumidor y procedimientos PROFECO aplicables...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal20')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- CATEGORÍA 3: POLÍTICA DE PRIVACIDAD -->
+  <div class="categoria-principal" id="politica-privacidad">
+    <h2>Política de Privacidad</h2>
+  </div>
+
+  <div class="subcategorias-grid">
+    <!-- Subcategoría 3.1 -->
+    <div class="subcategoria-card" id="pp-1">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.1</div>
+        <h3>Recopilación de Información</h3>
+      </div>
+      <p>Recopilamos datos personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de Particulares...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal21')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.2 -->
+    <div class="subcategoria-card" id="pp-2">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.2</div>
+        <h3>Uso de la Información</h3>
+      </div>
+      <p>Utilizamos información según principios de licitud, consentimiento y finalidad de la LFPDPPP y regulaciones INAI...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal22')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.3 -->
+    <div class="subcategoria-card" id="pp-3">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.3</div>
+        <h3>Protección de Datos</h3>
+      </div>
+      <p>Implementamos medidas de seguridad conforme a la LFPDPPP y lineamientos del INAI para protección de datos...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal23')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.4 -->
+    <div class="subcategoria-card" id="pp-4">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.4</div>
+        <h3>Cookies</h3>
+      </div>
+      <p>Uso de cookies conforme a la LFPDPPP y lineamientos de la Secretaría de Economía para comercio electrónico...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal24')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.5 -->
+    <div class="subcategoria-card" id="pp-5">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.5</div>
+        <h3>Compartir Información</h3>
+      </div>
+      <p>Transferencias conforme a la LFPDPPP, solo con consentimiento o cuando lo requiera autoridad competente...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal25')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.6 -->
+    <div class="subcategoria-card" id="pp-6">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.6</div>
+        <h3>Derechos del Usuario</h3>
+      </div>
+      <p>Derechos ARCO conforme a la LFPDPPP: Acceso, Rectificación, Cancelación y Oposición de datos personales...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal26')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.7 -->
+    <div class="subcategoria-card" id="pp-7">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.7</div>
+        <h3>Retención de Datos</h3>
+      </div>
+      <p>Conservamos datos conforme a plazos legales de la LFPDPPP y obligaciones fiscales del Código Fiscal Federal...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal27')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.8 -->
+    <div class="subcategoria-card" id="pp-8">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.8</div>
+        <h3>Transferencias Internacionales</h3>
+      </div>
+      <p>Transferencias internacionales conforme a la LFPDPPP y tratados de protección de datos de los que México es parte...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal28')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.9 -->
+    <div class="subcategoria-card" id="pp-9">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.9</div>
+        <h3>Menores de Edad</h3>
+      </div>
+      <p>Protección especial conforme a la LFPDPPP y Ley General de los Derechos de Niñas, Niños y Adolescentes...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal29')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 3.10 -->
+    <div class="subcategoria-card" id="pp-10">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">3.10</div>
+        <h3>Cambios en la Política</h3>
+      </div>
+      <p>Actualizaciones notificadas conforme a la LFPDPPP y lineamientos del INAI para modificaciones a avisos de privacidad...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal30')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- CATEGORÍA 4: TÉRMINOS DE LA PLATAFORMA -->
+  <div class="categoria-principal" id="terminos-plataforma">
+    <h2>Términos de la Plataforma</h2>
+  </div>
+
+  <div class="subcategorias-grid">
+    <!-- Subcategoría 4.1 -->
+    <div class="subcategoria-card" id="tp-1">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.1</div>
+        <h3>Introducción y Alcance</h3>
+      </div>
+      <p>Declaración de alcance como servicio tecnológico de intermediación similar a marketplaces internacionales...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal31')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 4.2 -->
+    <div class="subcategoria-card" id="tp-2">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.2</div>
+        <h3>Aceptación Paso a Paso</h3>
+      </div>
+      <p>Consentimiento expreso, informado y reforzado al subir publicaciones (núcleo jurídico de protección)...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal32')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 4.3 -->
+    <div class="subcategoria-card" id="tp-3">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.3</div>
+        <h3>Declaraciones del Usuario</h3>
+      </div>
+      <p>Manifestaciones bajo protesta de decir verdad y asunción de responsabilidad por información publicada...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal33')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 4.4 -->
+    <div class="subcategoria-card" id="tp-4">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.4</div>
+        <h3>Licencia Universal de Contenido</h3>
+      </div>
+      <p>Licencia mundial, perpetua, irrevocable, gratuita, transferible y sublicenciable para uso comercial...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal34')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 4.5 -->
+    <div class="subcategoria-card" id="tp-5">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.5</div>
+        <h3>Ausencia de Verificación</h3>
+      </div>
+      <p>La Plataforma NO verifica identidad, existencia física, autenticidad, permisos o condiciones sanitarias...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal35')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 4.6 -->
+    <div class="subcategoria-card" id="tp-6">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.6</div>
+        <h3>Indemnización Total</h3>
+      </div>
+      <p>Obligación de defender e indemnizar a la Plataforma por cualquier reclamación derivada de publicaciones...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal36')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 4.7 -->
+    <div class="subcategoria-card" id="tp-7">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.7</div>
+        <h3>Arbitraje Obligatorio</h3>
+      </div>
+      <p>Renuncia a tribunales ordinarios y sometimiento a arbitraje privado para todas las controversias...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal37')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Subcategoría 4.8 -->
+    <div class="subcategoria-card" id="tp-8">
+      <div class="subcategoria-header">
+        <div class="subcategoria-numero">4.8</div>
+        <h3>Limitación de Responsabilidad</h3>
+      </div>
+      <p>Exclusión máxima de responsabilidad conforme a estándares de Amazon, Uber y marketplaces globales...</p>
+      <button class="ver-mas-btn" onclick="openModal('modal38')">
+        <span>Ver más</span>
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODALES EXISTENTES (1-30) -->
+  <div id="modal1" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal1')">&times;</button>
+      <div class="modal-header">
+        <h2>1.1 Aceptación de Términos</h2>
+      </div>
+      <div class="modal-body">
+        <p>Al acceder y utilizar nuestros servicios, usted acepta expresamente cumplir con la <strong>Ley Federal de Protección al Consumidor</strong>, publicada en el Diario Oficial de la Federación el 24 de diciembre de 1992 y sus reformas, así como con todas las regulaciones aplicables en materia de comercio electrónico y servicios digitales en México.</p>
+        <h3>Marco Legal Aplicable:</h3>
+        <ul>
+          <li>Ley Federal de Protección al Consumidor (LFPC)</li>
+          <li>Reglamento de la Ley Federal de Protección al Consumidor</li>
+          <li>Código de Comercio en materia de contratación electrónica</li>
+          <li>Normas Oficiales Mexicanas aplicables a servicios digitales</li>
+        </ul>
+        <p>El uso continuado de nuestros servicios constituye aceptación tácita de los términos actualizados. Es responsabilidad del usuario revisar periódicamente estos términos para estar informado de cualquier modificación.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div id="modal2" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal2')">&times;</button>
+      <div class="modal-header">
+        <h2>1.2 Licencia de Uso</h2>
+      </div>
+      <div class="modal-body">
+        <p>Conforme a la <strong>Ley Federal del Derecho de Autor</strong> (LFDA), publicada en el Diario Oficial de la Federación el 24 de diciembre de 1996, otorgamos una licencia limitada, no exclusiva e intransferible para el uso personal y no comercial de nuestros contenidos, materiales y servicios digitales.</p>
+        <h3>Limitaciones de la Licencia:</h3>
+        <ul>
+          <li><strong>Uso Personal:</strong> Solo para consulta y uso individual</li>
+          <li><strong>No Comercial:</strong> Prohibido su uso con fines lucrativos</li>
+          <li><strong>No Modificación:</strong> No alterar, transformar o crear obras derivadas</li>
+          <li><strong>Atribución:</strong> Reconocer la autoría según establece la LFDA</li>
+          <li><strong>Duración:</strong> Vigente mientras mantenga relación comercial con nosotros</li>
+        </ul>
+        <p>Esta licencia no constituye transferencia de propiedad intelectual, la cual se rige por lo establecido en el Título II de la LFDA y tratados internacionales de los que México es parte.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3 -->
+  <div id="modal3" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal3')">&times;</button>
+      <div class="modal-header">
+        <h2>1.3 Restricciones</h2>
+      </div>
+      <div class="modal-body">
+        <p>Queda estrictamente prohibido cualquier uso que infrinja la <strong>Ley de la Propiedad Industrial</strong>, publicada en el Diario Oficial de la Federación el 27 de junio de 1991, o que promueva la piratería según lo establecido en la <strong>Ley Federal del Derecho de Autor</strong>.</p>
+        <h3>Actividades Prohibidas:</h3>
+        <ul>
+          <li><strong>Reproducción No Autorizada:</strong> Copiar, distribuir o comunicar públicamente sin autorización</li>
+          <li><strong>Ingeniería Inversa:</strong> Descompilar, desensamblar o realizar ingeniería inversa de software</li>
+          <li><strong>Uso Comercial:</strong> Utilizar contenidos con fines comerciales sin licencia expresa</li>
+          <li><strong>Alteración de Contenidos:</strong> Modificar, adaptar o crear obras derivadas sin permiso</li>
+          <li><strong>Infracción de Marcas:</strong> Usar marcas registradas sin autorización del titular</li>
+        </ul>
+        <h3>Consecuencias Legales:</h3>
+        <p>El incumplimiento de estas restricciones puede dar lugar a:</p>
+        <ul>
+          <li>Suspensión inmediata del servicio</li>
+          <li>Acciones legales civiles por daños y perjuicios</li>
+          <li>Denuncias penales por delitos contra la propiedad intelectual</li>
+          <li>Multas administrativas ante el IMPI</li>
+        </ul>
+        <p>Estas restricciones se aplican conforme a los artículos 424 Bis y siguientes del Código Penal Federal en materia de delitos contra los derechos de autor.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4 -->
+  <div id="modal4" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal4')">&times;</button>
+      <div class="modal-header">
+        <h2>1.4 Propiedad Intelectual</h2>
+      </div>
+      <div class="modal-body">
+        <p>Todos los derechos de propiedad intelectual, incluyendo pero no limitado a derechos de autor, marcas, secretos industriales y diseños, están protegidos bajo la <strong>Ley Federal del Derecho de Autor</strong> (LFDA), la <strong>Ley de la Propiedad Industrial</strong> (LPI), y los tratados internacionales de los que México es parte, como el Convenio de Berna y el Tratado de la OMPI sobre Derecho de Autor.</p>
+       
+        <h3>Protección de Derechos de Autor:</h3>
+        <ul>
+          <li><strong>Obras Protegidas:</strong> Software, contenidos digitales, diseños, textos, imágenes</li>
+          <li><strong>Duración:</strong> Vida del autor más 100 años conforme a la LFDA</li>
+          <li><strong>Registro:</strong> Inscripción en el Registro Público del Derecho de Autor</li>
+          <li><strong>Derechos Morales:</strong> Inalienables, imprescriptibles e irrenunciables</li>
+          <li><strong>Derechos Patrimoniales:</strong> Transferibles mediante contrato escrito</li>
+        </ul>
+
+        <h3>Protección de Propiedad Industrial:</h3>
+        <ul>
+          <li><strong>Marcas Registradas:</strong> "LIFETIMES AGENCY" y logos asociados</li>
+          <li><strong>Secretos Industriales:</strong> Métodos, procesos y know-how propietario</li>
+          <li><strong>Diseños Industriales:</strong> Interfaces, layouts y elementos distintivos</li>
+        </ul>
+
+        <h3>Licencias y Transferencias:</h3>
+        <p>Toda transferencia o licencia de derechos debe realizarse por escrito, conforme a los artículos 29 a 32 de la LFDA y los artículos 77 a 82 de la LPI, debiendo inscribirse en los registros correspondientes para surtir efectos contra terceros.</p>
+
+        <h3>Sanciones por Infracción:</h3>
+        <ul>
+          <li><strong>Multas Administrativas:</strong> Hasta 20,000 días de salario mínimo (IMPI)</li>
+          <li><strong>Indemnizaciones Civiles:</strong> Daños y perjuicios comprobados</li>
+          <li><strong>Penales:</strong> Hasta 10 años de prisión por piratería</li>
+          <li><strong>Medidas Cautelares:</strong> Retiro de circulación, aseguramiento de productos</li>
+        </ul>
+
+        <p>Respetamos los derechos de terceros y exigimos el mismo respeto hacia nuestros derechos de propiedad intelectual. Cualquier uso no autorizado será perseguido conforme a las leyes mexicanas e internacionales aplicables.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALES DE LA NUEVA SECCIÓN 4: TÉRMINOS DE LA PLATAFORMA -->
+
+  <!-- Modal 31: Introducción y Alcance -->
+  <div id="modal31" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal31')">&times;</button>
+      <div class="modal-header">
+        <h2>4.1 Introducción y Alcance</h2>
+      </div>
+      <div class="modal-body">
+        <div class="highlight">
+          <strong>Última actualización:</strong> [fecha]
+        </div>
+       
+        <h3>INTRODUCCIÓN GENERAL Y DECLARACIÓN DE ALCANCE</h3>
+        <p>Este documento (en adelante, los <strong>"Términos"</strong>) constituye un contrato legalmente vinculante entre el usuario y la entidad operadora de la plataforma digital (en adelante, la <strong>"Plataforma"</strong>).</p>
+       
+        <p>La Plataforma funciona como un <strong>servicio tecnológico de intermediación</strong>, similar en naturaleza a marketplaces y directorios digitales utilizados a nivel internacional, cuyo objeto es <strong>poner a disposición un espacio digital</strong> donde terceros puedan:</p>
+       
+        <ul>
+          <li>Publicar productos de venta minorista.</li>
+          <li>Registrar y mostrar negocios físicos.</li>
+          <li>Compartir información de contacto, ubicación, imágenes y descripciones.</li>
+        </ul>
+       
+        <h4>DECLARACIÓN FUNDAMENTAL:</h4>
+        <p><strong>La Plataforma NO es un comercio, NO es un proveedor, NO es un distribuidor, NO es un inspector, NO es un certificador y NO es parte de ninguna transacción.</strong></p>
+       
+        <p>El usuario reconoce que estos Términos han sido redactados de forma amplia, reiterativa y preventiva para <strong>limitar al máximo la responsabilidad legal de la Plataforma</strong>, conforme a estándares utilizados por empresas como Amazon, Uber y marketplaces globales.</p>
+       
+        <h3>SECCIÓN I — DEFINICIONES</h3>
+        <p>Para efectos de estos Términos:</p>
+        <ul>
+          <li><strong>Usuario:</strong> cualquier persona que acceda, navegue, se registre o publique contenido.</li>
+          <li><strong>Vendedor / Comercio:</strong> usuario que publica productos o negocios.</li>
+          <li><strong>Comprador / Consumidor:</strong> usuario que consulta o contacta a vendedores.</li>
+          <li><strong>Contenido:</strong> textos, imágenes, logotipos, marcas, ubicaciones, videos, precios, descripciones o cualquier información publicada.</li>
+          <li><strong>Transacción:</strong> cualquier acuerdo celebrado entre usuarios, fuera o dentro de la Plataforma.</li>
+        </ul>
+       
+        <h3>SECCIÓN II — ACEPTACIÓN, CAPACIDAD Y CONSENTIMIENTO</h3>
+       
+        <h4>2.1 Aceptación expresa</h4>
+        <p>El uso de la Plataforma implica aceptación total, expresa e irrevocable de estos Términos, con el mismo valor jurídico que un contrato firmado.</p>
+       
+        <h4>2.2 Capacidad legal</h4>
+        <p>El usuario declara ser mayor de edad y contar con plena capacidad jurídica.</p>
+       
+        <h4>2.3 Consentimiento informado</h4>
+        <p>El usuario reconoce haber tenido oportunidad suficiente de leer, analizar y comprender estos Términos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 32: Aceptación Paso a Paso -->
+  <div id="modal32" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal32')">&times;</button>
+      <div class="modal-header">
+        <h2>4.2 Aceptación Paso a Paso</h2>
+      </div>
+      <div class="modal-body">
+        <h3>SECCIÓN III — ACEPTACIÓN PASO A PASO AL SUBIR UNA PUBLICACIÓN</h3>
+        <p>Esta sección constituye el <strong>núcleo jurídico de protección de la Plataforma</strong>. Está diseñada para establecer, de forma detallada, reiterativa y jurídicamente exhaustiva, <strong>todo lo que el usuario acepta, declara, reconoce, autoriza, consiente y a lo que renuncia</strong> en el momento en que decide subir, publicar, registrar, editar o mantener activa cualquier publicación dentro de la Plataforma.</p>
+       
+        <p>El usuario reconoce expresamente que este esquema de consentimiento se encuentra alineado con los modelos contractuales utilizados por <strong>Amazon Marketplace, Uber, Google Maps, Meta Marketplace y plataformas de intermediación tecnológica</strong>, y acepta que su redacción amplia tiene como finalidad <strong>prevenir, limitar y excluir responsabilidad legal de la Plataforma</strong>.</p>
+       
+        <h4>3.1 Momento exacto de aceptación legal (equivalente a firma)</h4>
+        <p>El usuario acepta que el consentimiento legal ocurre <strong>en el instante preciso</strong> en que realiza cualquiera de las siguientes acciones:</p>
+        <ul>
+          <li>Publicar un producto</li>
+          <li>Registrar un negocio</li>
+          <li>Subir imágenes, logotipos o videos</li>
+          <li>Editar información existente</li>
+          <li>Activar o reactivar una publicación</li>
+        </ul>
+       
+        <p>El usuario reconoce que dichas acciones constituyen:</p>
+        <ul>
+          <li>Un acto voluntario</li>
+          <li>Un consentimiento expreso</li>
+          <li>Una manifestación inequívoca de voluntad</li>
+          <li>Una firma electrónica válida</li>
+        </ul>
+       
+        <p>No será necesario ningún consentimiento adicional, firma manuscrita, confirmación por correo ni validación posterior.</p>
+       
+        <h4>3.13 Aceptación reiterada y acumulativa</h4>
+        <p>Cada modificación, actualización o permanencia activa de una publicación implica una nueva aceptación completa e independiente de estos Términos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 33: Declaraciones del Usuario -->
+  <div id="modal33" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal33')">&times;</button>
+      <div class="modal-header">
+        <h2>4.3 Declaraciones del Usuario</h2>
+      </div>
+      <div class="modal-body">
+        <h3>3.2 Declaraciones legales del usuario (manifestaciones bajo protesta)</h3>
+        <p>Al publicar, el usuario <strong>declara bajo protesta de decir verdad</strong>, asumiendo responsabilidad civil, administrativa y penal, que:</p>
+       
+        <ul>
+          <li>Es propietario legítimo del negocio, producto o información publicada, o</li>
+          <li>Cuenta con autorización expresa, suficiente y verificable del titular real</li>
+        </ul>
+       
+        <p>El usuario acepta que cualquier reclamación de terceros relacionada con titularidad, representación, fraude o suplantación será de su exclusiva responsabilidad.</p>
+       
+        <h3>3.7 Productos ilegales, robados o falsificados</h3>
+        <p>El usuario declara que:</p>
+        <ul>
+          <li>No comercializa productos pirata</li>
+          <li>No vende mercancía robada</li>
+          <li>No infringe marcas, patentes o derechos de autor</li>
+        </ul>
+        <p>Cualquier infracción será imputable exclusivamente al usuario.</p>
+       
+        <h3>3.6 Alimentos, bebidas, higiene y salud pública</h3>
+        <p>Si la publicación involucra alimentos o bebidas, el usuario:</p>
+        <ul>
+          <li>Declara cumplir normas sanitarias</li>
+          <li>Reconoce que la Plataforma no inspecciona</li>
+          <li>Acepta que la Plataforma no certifica higiene</li>
+          <li>Asume toda responsabilidad por intoxicaciones, enfermedades o sanciones</li>
+        </ul>
+       
+        <h3>SECCIÓN IV — REGISTRO, CUENTAS Y RESPONSABILIDAD DEL USUARIO</h3>
+        <h4>4.1 Información veraz</h4>
+        <p>El usuario garantiza que toda la información proporcionada es real, completa y actualizada.</p>
+       
+        <h4>4.2 Seguridad de la cuenta</h4>
+        <p>El usuario es responsable de toda actividad realizada desde su cuenta.</p>
+       
+        <h4>4.3 Uso indebido</h4>
+        <p>La Plataforma no responde por accesos no autorizados.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 34: Licencia Universal de Contenido -->
+  <div id="modal34" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal34')">&times;</button>
+      <div class="modal-header">
+        <h2>4.4 Licencia Universal de Contenido</h2>
+      </div>
+      <div class="modal-body">
+        <h3>3.8 Licencia universal de uso de contenido</h3>
+        <p>Al publicar, el usuario otorga automáticamente a la Plataforma una licencia:</p>
+        <ul>
+          <li><strong>Mundial</strong></li>
+          <li><strong>Perpetua</strong></li>
+          <li><strong>Irrevocable</strong></li>
+          <li><strong>Gratuita</strong></li>
+          <li><strong>Transferible</strong></li>
+          <li><strong>Sublicenciable</strong></li>
+        </ul>
+       
+        <p>Para usar, reproducir, modificar, adaptar, distribuir y explotar su contenido con fines comerciales, promocionales y operativos.</p>
+       
+        <h3>3.9 Uso de imagen, marca y nombre comercial</h3>
+        <p>El usuario autoriza expresamente el uso de:</p>
+        <ul>
+          <li>Su imagen</li>
+          <li>Imagen de su negocio</li>
+          <li>Nombre comercial</li>
+          <li>Marca</li>
+          <li>Logotipo</li>
+          <li>Ubicación</li>
+        </ul>
+        <p>Sin límite territorial, temporal ni económico.</p>
+       
+        <h3>3.10 Renuncia expresa a reclamaciones</h3>
+        <p>El usuario renuncia de forma irrevocable a:</p>
+        <ul>
+          <li>Demandar por uso de imagen</li>
+          <li>Reclamar regalías</li>
+          <li>Alegar enriquecimiento ilícito</li>
+          <li>Invocar derechos morales o patrimoniales</li>
+        </ul>
+       
+        <h3>SECCIÓN VI — LICENCIA UNIVERSAL, CESIÓN Y USO DE IMAGEN</h3>
+        <h4>6.1 Licencia global</h4>
+        <p>El usuario otorga a la Plataforma una licencia:</p>
+        <ul>
+          <li>Mundial</li>
+          <li>Perpetua</li>
+          <li>Irrevocable</li>
+          <li>Gratuita</li>
+          <li>Sublicenciable</li>
+        </ul>
+        <p>para usar su Contenido con fines informativos, comerciales y promocionales.</p>
+       
+        <h4>6.2 Uso de imagen y marca</h4>
+        <p>El usuario autoriza expresamente el uso de imagen, nombre comercial, marca y logotipos.</p>
+       
+        <h4>6.3 Renuncia a reclamaciones</h4>
+        <p>El usuario renuncia a demandar por uso de imagen, propiedad intelectual, lucro o regalías.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 35: Ausencia de Verificación -->
+  <div id="modal35" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal35')">&times;</button>
+      <div class="modal-header">
+        <h2>4.5 Ausencia de Verificación</h2>
+      </div>
+      <div class="modal-body">
+        <h3>3.4 Aceptación expresa de ausencia total de verificación</h3>
+        <p>El usuario acepta y reconoce que la Plataforma:</p>
+        <ul>
+          <li><strong>No verifica</strong> identidad real</li>
+          <li><strong>No valida</strong> existencia física del negocio</li>
+          <li><strong>No revisa</strong> autenticidad de productos</li>
+          <li><strong>No inspecciona</strong> instalaciones</li>
+          <li><strong>No evalúa</strong> condiciones de higiene</li>
+          <li><strong>No valida</strong> permisos sanitarios, fiscales o municipales</li>
+        </ul>
+       
+        <p>El usuario renuncia expresamente a exigir cualquier tipo de supervisión, control, certificación o validación.</p>
+       
+        <h3>SECCIÓN V — CONTENIDO GENERADO POR USUARIOS</h3>
+        <h4>5.1 Propiedad y control</h4>
+        <p>Todo el Contenido es responsabilidad exclusiva del usuario que lo publica.</p>
+       
+        <h4>5.2 Ausencia de verificación</h4>
+        <p>La Plataforma <strong>no verifica</strong> autenticidad, higiene, permisos, licencias, patentes, marcas o legalidad.</p>
+       
+        <h3>SECCIÓN VIII — ALIMENTOS, HIGIENE Y SALUD PÚBLICA</h3>
+        <p>La Plataforma no inspecciona ni certifica condiciones sanitarias. El usuario asume toda responsabilidad por el cumplimiento de normas de salud pública.</p>
+       
+        <h3>SECCIÓN VII — PROHIBICIONES Y CUMPLIMIENTO LEGAL</h3>
+        <p>Prohibición de productos pirata, robados, ilegales o regulados sin permisos. El usuario es el único responsable del cumplimiento legal de sus publicaciones.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 36: Indemnización Total -->
+  <div id="modal36" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal36')">&times;</button>
+      <div class="modal-header">
+        <h2>4.6 Indemnización Total</h2>
+      </div>
+      <div class="modal-body">
+        <h3>3.11 Indemnización total y defensa legal</h3>
+        <p>El usuario se obliga a:</p>
+        <ul>
+          <li><strong>Indemnizar a la Plataforma</strong> por cualquier reclamo, demanda o acción legal</li>
+          <li><strong>Defender legalmente a la Plataforma</strong> en cualquier procedimiento</li>
+          <li><strong>Cubrir gastos legales, multas y sanciones</strong> derivados de su publicación</li>
+        </ul>
+       
+        <p>Esta obligación incluye pero no se limita a:</p>
+        <ul>
+          <li>Honorarios de abogados</li>
+          <li>Costas procesales</li>
+          <li>Indemnizaciones a terceros</li>
+          <li>Multas administrativas</li>
+          <li>Daños y perjuicios</li>
+        </ul>
+       
+        <h3>SECCIÓN XI — INDEMNIZACIÓN TOTAL</h3>
+        <p>El usuario se obliga a defender e indemnizar a la Plataforma contra cualquier reclamo, demanda, pérdida, responsabilidad, daño, costo o gasto, incluyendo honorarios legales razonables, que surjan de o estén relacionados con:</p>
+       
+        <ul>
+          <li>El uso de la Plataforma</li>
+          <li>La violación de estos Términos</li>
+          <li>La infracción de derechos de terceros</li>
+          <li>Contenido publicado por el usuario</li>
+          <li>Actividades realizadas a través de su cuenta</li>
+        </ul>
+       
+        <h4>Alcance de la indemnización:</h4>
+        <ul>
+          <li><strong>Total:</strong> Cubre todos los daños sin límite de monto</li>
+          <li><strong>Irrevocable:</strong> No puede ser revocada por el usuario</li>
+          <li><strong>Inmediata:</strong> Debe cumplirse ante el primer requerimiento</li>
+          <li><strong>Amplia:</strong> Incluye daños directos, indirectos y consecuenciales</li>
+        </ul>
+       
+        <h4>Procedimiento de indemnización:</h4>
+        <ol>
+          <li>La Plataforma notificará al usuario cualquier reclamo</li>
+          <li>El usuario tendrá 10 días para asumir la defensa</li>
+          <li>La Plataforma podrá elegir sus propios abogados si el usuario no actúa</li>
+          <li>El usuario pagará todos los gastos por adelantado si se le solicita</li>
+          <li>El usuario no podrá aceptar ningún arreglo sin consentimiento por escrito de la Plataforma</li>
+        </ol>
+       
+        <div class="highlight">
+          <p><strong>NOTA IMPORTANTE:</strong> Esta cláusula de indemnización es independiente de cualquier otra limitación de responsabilidad y sobrevive a la terminación de estos Términos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 37: Arbitraje Obligatorio -->
+  <div id="modal37" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal37')">&times;</button>
+      <div class="modal-header">
+        <h2>4.7 Arbitraje Obligatorio</h2>
+      </div>
+      <div class="modal-body">
+        <h3>3.12 Arbitraje obligatorio y renuncia a tribunales</h3>
+        <p>Toda controversia se resolverá mediante arbitraje privado, renunciando a tribunales ordinarios.</p>
+       
+        <h3>SECCIÓN XIV — ARBITRAJE OBLIGATORIO</h3>
+        <h4>14.1 Renuncia a tribunales</h4>
+        <p>El usuario <strong>renuncia expresamente</strong> a su derecho a presentar cualquier demanda ante tribunales judiciales ordinarios, federales o estatales.</p>
+       
+        <h4>14.2 Procedimiento arbitral</h4>
+        <p>Todas las controversias, reclamos o disputas que surjan de o estén relacionadas con estos Términos se resolverán mediante arbitraje vinculante administrado por:</p>
+        <ul>
+          <li>El Centro de Arbitraje de México (CAM)</li>
+          <li>O una institución arbitral reconocida internacionalmente designada por la Plataforma</li>
+        </ul>
+       
+        <h4>14.3 Reglas aplicables</h4>
+        <p>El arbitraje se regirá por:</p>
+        <ul>
+          <li>La Ley de Arbitraje Comercial Internacional</li>
+          <li>Las reglas de procedimiento del CAM</li>
+          <li>Los principios de confidencialidad arbitral</li>
+        </ul>
+       
+        <h4>14.4 Árbitro único</h4>
+        <p>El arbitraje será ante un árbitro único designado de conformidad con las reglas de la institución arbitral.</p>
+       
+        <h4>14.5 Sede del arbitraje</h4>
+        <p>La sede del arbitraje será la Ciudad de México, D.F., y el idioma del procedimiento será el español.</p>
+       
+        <h4>14.6 Costos del arbitraje</h4>
+        <p>Los costos del arbitraje, incluidos los honorarios del árbitro y los gastos administrativos, serán compartidos por igual entre las partes, salvo que el laudo arbitral disponga otra cosa.</p>
+       
+        <h4>14.7 Laudo arbitral</h4>
+        <p>El laudo arbitral será:</p>
+        <ul>
+          <li>Definitivo y vinculante para ambas partes</li>
+          <li>Susceptible de ejecución en cualquier tribunal competente</li>
+          <li>Confidencial, salvo que la ley exija su divulgación</li>
+        </ul>
+       
+        <h4>14.8 Excepciones limitadas</h4>
+        <p>El arbitraje no será aplicable para:</p>
+        <ul>
+          <li>Medidas cautelares urgentes (medidas provisionales)</li>
+          <li>Reclamaciones de propiedad intelectual</li>
+          <li>Casos de jurisdicción exclusiva de tribunales mexicanos</li>
+        </ul>
+       
+        <h4>14.9 Renuncia a acciones colectivas</h4>
+        <p>El usuario <strong>renuncia expresamente</strong> a participar en o iniciar cualquier acción colectiva, acción de clase o procedimiento representativo contra la Plataforma.</p>
+       
+        <div class="highlight">
+          <p><strong>ADVERTENCIA:</strong> Al aceptar estos Términos, usted está renunciando a su derecho a un juicio con jurado y a presentar demandas ante tribunales ordinarios. Debe considerar cuidadosamente esta renuncia antes de utilizar la Plataforma.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 38: Limitación de Responsabilidad -->
+  <div id="modal38" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal38')">&times;</button>
+      <div class="modal-header">
+        <h2>4.8 Limitación de Responsabilidad</h2>
+      </div>
+      <div class="modal-body">
+        <h3>3.3 Naturaleza del rol de la Plataforma (no participación)</h3>
+        <p>El usuario reconoce y acepta que la Plataforma:</p>
+        <ul>
+          <li>No es parte de la compraventa</li>
+          <li>No actúa como agente, representante o comisionista</li>
+          <li>No custodia dinero</li>
+          <li>No gestiona entregas</li>
+          <li>No garantiza pagos</li>
+        </ul>
+        <p>Toda interacción, negociación o transacción se realiza <strong>fuera del control operativo de la Plataforma</strong>.</p>
+       
+        <h3>3.5 Asunción total de riesgos derivados de la publicación</h3>
+        <p>El usuario acepta que publicar información conlleva riesgos inherentes, incluyendo de manera enunciativa más no limitativa:</p>
+        <ul>
+          <li>Contactos no deseados</li>
+          <li>Fraudes</li>
+          <li>Estafas</li>
+          <li>Amenazas</li>
+          <li>Extorsión</li>
+          <li>Uso indebido de la información</li>
+        </ul>
+        <p>La Plataforma no será responsable por daños directos, indirectos, morales, económicos o reputacionales.</p>
+       
+        <h3>SECCIÓN IX — ESTAFAS, FRAUDES Y TRANSACCIONES</h3>
+        <p>La Plataforma no garantiza entregas, calidad ni existencia de productos. El usuario asume todos los riesgos de las transacciones.</p>
+       
+        <h3>SECCIÓN X — EXTORSIÓN, AMENAZAS Y DATOS PÚBLICOS</h3>
+        <p>El usuario asume riesgos por publicar información. La Plataforma no es responsable por el mal uso de información pública.</p>
+       
+        <h3>SECCIÓN XII — LIMITACIÓN DE RESPONSABILIDAD</h3>
+        <h4>12.1 Exclusión máxima de responsabilidad</h4>
+        <p>En la máxima medida permitida por la ley aplicable, la responsabilidad máxima de la Plataforma queda excluida, incluyendo pero no limitándose a:</p>
+        <ul>
+          <li>Daños directos</li>
+          <li>Daños indirectos</li>
+          <li>Daños consecuenciales</li>
+          <li>Daños emergentes</li>
+          <li>Lucro cesante</li>
+          <li>Daño moral</li>
+          <li>Pérdida de datos</li>
+          <li>Pérdida de oportunidad comercial</li>
+        </ul>
+       
+        <h4>12.2 Límite monetario</h4>
+        <p>En caso de que un tribunal competente determine que la Plataforma es responsable, la responsabilidad total en cualquier caso no excederá la cantidad de <strong>$100.00 (cien pesos 00/100 M.N.)</strong> o la cantidad pagada por el usuario por el servicio en los últimos 6 meses, lo que sea menor.</p>
+       
+        <h4>12.3 Exclusión de garantías</h4>
+        <p>La Plataforma se proporciona "tal cual" y "según disponibilidad", sin garantías de ningún tipo, expresas o implícitas, incluyendo pero no limitándose a garantías de comerciabilidad, idoneidad para un propósito particular o no infracción.</p>
+       
+        <h4>12.4 Riesgo del usuario</h4>
+        <p>El uso de la Plataforma es bajo el propio riesgo del usuario. El usuario es el único responsable de cualquier daño a su sistema de computación o pérdida de datos resultante del uso de la Plataforma.</p>
+       
+        <h3>SECCIÓN XIII — CLÁUSULA ANTI DEMANDA COLECTIVA</h3>
+        <p>Renuncia expresa a acciones colectivas, acciones de clase o procedimientos representativos. El usuario solo puede presentar reclamos en su nombre individual.</p>
+       
+        <h3>SECCIÓN XV — APLICACIÓN A APP MÓVIL</h3>
+        <p>Aplicación íntegra a aplicaciones móviles. Estos Términos aplican igualmente a cualquier versión móvil de la Plataforma.</p>
+       
+        <h3>SECCIÓN XVI — TERMINACIÓN</h3>
+        <p>La Plataforma puede cancelar cuentas sin previo aviso por violación de estos Términos, a su sola discreción.</p>
+       
+        <h3>DECLARACIÓN FINAL</h3>
+        <div class="highlight">
+          <p>El usuario reconoce que el uso de la Plataforma es bajo su propio riesgo y que la Plataforma no sustituye verificaciones legales, sanitarias o comerciales. El usuario es el único responsable de realizar todas las verificaciones necesarias antes de interactuar con otros usuarios o realizar transacciones.</p>
+        </div>
+       
+        <p><strong>Referencia corporativa:</strong> Estas disposiciones de limitación de responsabilidad están alineadas con los estándares utilizados por Amazon Marketplace, Uber, Google Maps y otras plataformas de intermediación tecnológica global.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // MOBILE MENU
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('open');
+    });
+
+    // FUNCIONALIDAD MODALES
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function closeModalOnOverlay(event) {
+      if (event.target.classList.contains('modal-overlay')) {
+        event.target.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    // Cerrar modal con Escape
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        const modals = document.querySelectorAll('.modal-overlay');
+        modals.forEach(modal => {
+          if (modal.style.display === 'flex') {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+          }
+        });
+      }
+    });
+
+    // Suavizar scroll para enlaces del índice
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+       
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Crear modales restantes con información legal mexicana (5-30)
+    const modalTitles = {
+      modal5: "1.5 Limitación de Responsabilidad",
+      modal6: "1.6 Exactitud de Materiales",
+      modal7: "1.7 Enlaces Externos",
+      modal8: "1.8 Modificaciones",
+      modal9: "1.9 Ley Aplicable",
+      modal10: "1.10 Registro de Usuario",
+      modal11: "2.1 Alcance de Servicios",
+      modal12: "2.2 Propiedad del Trabajo",
+      modal13: "2.3 Pagos y Facturación",
+      modal14: "2.4 Revisión y Aprobación",
+      modal15: "2.5 Cambios en Alcance",
+      modal16: "2.6 Confidencialidad",
+      modal17: "2.7 Plazos de Entrega",
+      modal18: "2.8 Cancelación",
+      modal19: "2.9 Garantías",
+      modal20: "2.10 Resolución de Disputas",
+      modal21: "3.1 Recopilación de Información",
+      modal22: "3.2 Uso de la Información",
+      modal23: "3.3 Protección de Datos",
+      modal24: "3.4 Cookies",
+      modal25: "3.5 Compartir Información",
+      modal26: "3.6 Derechos del Usuario",
+      modal27: "3.7 Retención de Datos",
+      modal28: "3.8 Transferencias Internacionales",
+      modal29: "3.9 Menores de Edad",
+      modal30: "3.10 Cambios en la Política"
+    };
+
+    // Contenido de los modales restantes
+    const modalContents = {
+      modal5: `
+        <h3>Marco Legal de Limitación de Responsabilidad:</h3>
+        <p>Nuestra responsabilidad se limita conforme al <strong>Código Civil Federal</strong> (Libro Cuarto, Título Cuarto), la <strong>Ley Federal de Protección al Consumidor</strong> (Título Quinto) y la jurisprudencia de la Suprema Corte de Justicia de la Nación en materia de responsabilidad por servicios digitales.</p>
+       
+        <h3>Exclusiones de Responsabilidad:</h3>
+        <ul>
+          <li><strong>Fuerza Mayor:</strong> Casos fortuitos o de fuerza mayor conforme al artículo 1914 del CCF</li>
+          <li><strong>Uso Inadecuado:</strong> Daños por uso contrario a las instrucciones proporcionadas</li>
+          <li><strong>Terceros:</strong> Actos de terceros no relacionados con nuestra operación</li>
+          <li><strong>Modificaciones No Autorizadas:</strong> Alteraciones realizadas por el usuario</li>
+          <li><strong>Información de Terceros:</strong> Contenidos proporcionados por usuarios o terceros</li>
+        </ul>
+       
+        <h3>Límites de Responsabilidad:</h3>
+        <ul>
+          <li><strong>Daños Directos:</strong> Hasta el monto pagado por el servicio causante del daño</li>
+          <li><strong>Daños Indirectos:</strong> No cubrimos lucro cesante, pérdida de oportunidad o daño moral</li>
+          <li><strong>Responsabilidad Contractual:</strong> Limitada a lo establecido expresamente en el contrato</li>
+          <li><strong>Plazo de Reclamación:</strong> 6 meses conforme al artículo 83 de la LFPC</li>
+        </ul>
+       
+        <p>Estas limitaciones se aplican en la máxima medida permitida por la ley mexicana, sin perjuicio de los derechos irrenunciables del consumidor establecidos en el artículo 2 de la LFPC.</p>
+      `,
+
+      modal6: `
+        <h3>Exactitud de Información según Marco Legal:</h3>
+        <p>La información proporcionada en nuestros servicios cumple con los estándares de veracidad establecidos en la <strong>Ley Federal de Protección al Consumidor</strong> (artículos 32 a 32 Bis) y la <strong>Ley Federal de Competencia Económica</strong> en materia de publicidad y información comercial.</p>
+       
+        <h3>Compromisos de Exactitud:</h3>
+        <ul>
+          <li><strong>Veracidad:</strong> Información clara, veraz y comprensible conforme al artículo 32 LFPC</li>
+          <li><strong>Actualización:</strong> Revisión periódica conforme a estándares de la PROFECO</li>
+          <li><strong>Transparencia:</strong> Información completa sobre características esenciales del servicio</li>
+          <li><strong>Corrección:</strong> Mecanismos para rectificación de información errónea</li>
+          <li><strong>Fuentes Confiables:</strong> Basada en fuentes oficiales y especializadas</li>
+        </ul>
+       
+        <h3>Limitaciones de Exactitud:</h3>
+        <ul>
+          <li><strong>Información de Terceros:</strong> No nos responsabilizamos por información de fuentes externas</li>
+          <li><strong>Cambios Normativos:</strong> Actualización sujeta a cambios en legislación aplicable</li>
+          <li><strong>Interpretación:</strong> La información no constituye asesoría legal profesional</li>
+          <li><strong>Errores Técnicos:</strong> Posibilidad de errores técnicos no intencionales</li>
+        </ul>
+       
+        <h3>Derechos del Consumidor:</h3>
+        <p>Conforme al artículo 76 de la LFPC, usted tiene derecho a recibir información veraz sobre:</p>
+        <ul>
+          <li>Características esenciales del servicio</li>
+          <li>Precios, cargos adicionales e impuestos</li>
+          <li>Condiciones de contratación y terminación</li>
+          <li>Garantías y servicios post-venta</li>
+          <li>Procedimientos de reclamación y quejas</li>
+        </ul>
+       
+        <p>Para reportar información inexacta, puede contactarnos o presentar queja ante la PROFECO conforme al procedimiento establecido en el Título Sexto de la LFPC.</p>
+      `,
+
+      modal7: `
+        <h3>Responsabilidad por Enlaces Externos:</h3>
+        <p>No nos responsabilizamos por los contenidos, políticas de privacidad o prácticas de sitios web de terceros enlazados desde nuestra plataforma, conforme a lo establecido en el <strong>artículo 16 de la Ley Federal del Derecho de Autor</strong> y los criterios de la <strong>Procuraduría Federal del Consumidor</strong> en materia de responsabilidad por enlaces externos.</p>
+       
+        <h3>Política de Enlaces:</h3>
+        <ul>
+          <li><strong>Verificación Inicial:</strong> Revisamos enlaces al momento de su incorporación</li>
+          <li><strong>Sin Control:</strong> No tenemos control sobre contenidos de sitios enlazados</li>
+          <li><strong>Sin Endoso:</strong> Los enlaces no constituyen respaldo o aprobación</li>
+          <li><strong>Actualización:</strong> Monitoreo periódico de enlaces activos</li>
+          <li><strong>Reporte:</strong> Mecanismo para reportar enlaces problemáticos</li>
+        </ul>
+       
+        <h3>Recomendaciones para Usuarios:</h3>
+        <ul>
+          <li><strong>Revisar Términos:</strong> Leer términos y condiciones de sitios enlazados</li>
+          <li><strong>Privacidad:</strong> Verificar políticas de privacidad antes de compartir datos</li>
+          <li><strong>Seguridad:</strong> Confirmar que los sitios usen conexiones seguras (HTTPS)</li>
+          <li><strong>Legalidad:</strong> Asegurarse de que contenidos cumplan con leyes mexicanas</li>
+          <li><strong>Actualización:</strong> Los contenidos pueden cambiar sin nuestro conocimiento</li>
+        </ul>
+       
+        <h3>Exclusiones de Responsabilidad:</h3>
+        <p>Conforme a la legislación mexicana y estándares internacionales, excluimos responsabilidad por:</p>
+        <ul>
+          <li>Contenidos ilegales, ofensivos o inexactos en sitios enlazados</li>
+          <li>Pérdidas o daños por uso de sitios de terceros</li>
+          <li>Violaciones a derechos de autor en contenidos externos</li>
+          <li>Prácticas comerciales engañosas de terceros</li>
+          <li>Problemas técnicos en plataformas externas</li>
+        </ul>
+       
+        <h3>Acciones ante Enlaces Problemáticos:</h3>
+        <p>Si identifica enlaces que:</p>
+        <ul>
+          <li>Contengan información falsa o engañosa</li>
+          <li>Infrinjan derechos de propiedad intelectual</li>
+          <li>Promuevan actividades ilegales</li>
+          <li>Violen leyes de protección al consumidor</li>
+          <li>Pongan en riesgo la seguridad de usuarios</li>
+        </ul>
+        <p>Favor de reportarlos inmediatamente para su revisión y, en su caso, eliminación.</p>
+      `,
+
+      modal8: `
+        <h3>Modificaciones a Términos y Condiciones:</h3>
+        <p>Reservamos el derecho de modificar estos términos y condiciones conforme a lo establecido en la <strong>Ley Federal de Procedimiento Administrativo</strong>, la <strong>Ley Federal de Protección al Consumidor</strong> (artículo 90) y los principios de transparencia y publicidad administrativa.</p>
+       
+        <h3>Procedimiento de Modificación:</h3>
+        <ul>
+          <li><strong>Notificación Previa:</strong> Con al menos 15 días de anticipación para cambios sustanciales</li>
+          <li><strong>Publicación:</strong> En sitio web y medios electrónicos autorizados</li>
+          <li><strong>Claridad:</strong> Indicación clara de cambios realizados</li>
+          <li><strong>Entrada en Vigor:</strong> Fecha específica de aplicación de nuevas condiciones</li>
+          <li><strong>Consentimiento:</strong> Uso continuado constituye aceptación de modificaciones</li>
+        </ul>
+       
+        <h3>Tipos de Modificaciones:</h3>
+        <ul>
+          <li><strong>Sustanciales:</strong> Cambios que afecten derechos esenciales del usuario</li>
+          <li><strong>Procedimentales:</strong> Modificaciones a procesos operativos</li>
+          <li><strong>Legales:</strong> Actualizaciones por cambios en legislación aplicable</li>
+          <li><strong>Técnicas:</strong> Adaptaciones por cambios tecnológicos</li>
+          <li><strong>Clarificatorias:</strong> Aclaraciones a disposiciones existentes</li>
+        </ul>
+       
+        <h3>Derechos del Usuario ante Modificaciones:</h3>
+        <p>Conforme al artículo 90 de la LFPC, usted tiene derecho a:</p>
+        <ul>
+          <li>Ser notificado con anticipación de cambios sustanciales</li>
+          <li>Recibir información clara sobre modificaciones</li>
+          <li>Terminar la relación contractual si no acepta cambios</li>
+          <li>Solicitar aclaraciones sobre modificaciones</li>
+          <li>Presentar quejas ante PROFECO por modificaciones abusivas</li>
+        </ul>
+       
+        <h3>Registro de Modificaciones:</h3>
+        <p>Mantenemos un registro histórico de todas las modificaciones que incluye:</p>
+        <ul>
+          <li>Fecha de publicación de cada versión</li>
+          <li>Descripción detallada de cambios</li>
+          <li>Justificación de modificaciones realizadas</li>
+          <li>Versiones anteriores disponibles para consulta</li>
+          <li>Control de versiones con identificación única</li>
+        </ul>
+       
+        <h3>Protección de Derechos Adquiridos:</h3>
+        <p>Las modificaciones no afectarán:</p>
+        <ul>
+          <li>Derechos adquiridos bajo versiones anteriores</li>
+          <li>Obligaciones pendientes de cumplimiento</li>
+          <li>Procesos en curso al momento de la modificación</li>
+          <li>Contratos celebrados bajo condiciones anteriores</li>
+          <li>Garantías otorgadas previamente</li>
+        </ul>
+       
+        <p>Para consultar versiones anteriores o presentar observaciones sobre modificaciones, contacte a nuestro departamento legal.</p>
+      `,
+
+      modal9: `
+        <h3>Marco Legal Aplicable:</h3>
+        <p>Estos términos y condiciones se rigen e interpretan de acuerdo con las leyes de los <strong>Estados Unidos Mexicanos</strong>, especialmente por las siguientes disposiciones legales:</p>
+       
+        <h3>Legislación Principal:</h3>
+        <ul>
+          <li><strong>Constitución Política de los Estados Unidos Mexicanos</strong></li>
+          <li><strong>Código Civil Federal</strong> (Libro Cuarto, Obligaciones)</li>
+          <li><strong>Código de Comercio</strong> (Título Primero, Contratos Mercantiles)</li>
+          <li><strong>Ley Federal de Protección al Consumidor</strong></li>
+          <li><strong>Ley Federal del Derecho de Autor</strong></li>
+          <li><strong>Ley de la Propiedad Industrial</strong></li>
+          <li><strong>Ley Federal de Protección de Datos Personales</strong></li>
+        </ul>
+       
+        <h3>Legislación Especializada:</h3>
+        <ul>
+          <li><strong>Ley de Instituciones de Crédito</strong> (para transacciones financieras)</li>
+          <li><strong>Ley del Impuesto al Valor Agregado</strong></li>
+          <li><strong>Código Fiscal de la Federación</strong></li>
+          <li><strong>Ley Federal de Competencia Económica</strong></li>
+          <li><strong>Ley General de Salud</strong> (para aspectos de salubridad)</li>
+          <li><strong>Reglamentos de COFEPRIS</strong> aplicables</li>
+        </ul>
+       
+        <h3>Tratados Internacionales:</h3>
+        <p>México es parte de diversos tratados internacionales que también aplican:</p>
+        <ul>
+          <li>Convenio de Berna para la Protección de las Obras Literarias y Artísticas</li>
+          <li>Tratado de la OMPI sobre Derecho de Autor (WCT)</li>
+          <li>Convenio de París para la Protección de la Propiedad Industrial</li>
+          <li>Acuerdo sobre los ADPIC de la OMC</li>
+          <li>Convención Interamericana sobre Derecho Aplicable a los Contratos Internacionales</li>
+        </ul>
+       
+        <h3>Jurisdicción y Competencia:</h3>
+        <ul>
+          <li><strong>Foro:</strong> Tribunales de la Ciudad de México, D.F.</li>
+          <li><strong>Competencia:</strong> Jueces federales para materias especializadas</li>
+          <li><strong>PROFECO:</strong> Competente para controversias de consumo</li>
+          <li><strong>IMPI:</strong> Competente para asuntos de propiedad industrial</li>
+          <li><strong>INDAUTOR:</strong> Competente para asuntos de derechos de autor</li>
+        </ul>
+       
+        <h3>Interpretación Legal:</h3>
+        <p>En caso de conflicto entre disposiciones:</p>
+        <ul>
+          <li>Primacía de leyes federales sobre estatales</li>
+          <li>Interpretación conforme a principios generales del derecho</li>
+          <li>Aplicación de legislación más favorable al consumidor</li>
+          <li>Consideración de jurisprudencia de la SCJN</li>
+          <li>Respeto a derechos humanos y garantías constitucionales</li>
+        </ul>
+       
+        <h3>Idioma Oficial:</h3>
+        <p>La versión en español de estos términos es la única oficial y vinculante. Cualquier traducción se proporciona únicamente como cortesía y no tendrá efecto legal.</p>
+      `,
+
+      modal10: `
+        <h3>Registro de Usuario conforme a Legislación Mexicana:</h3>
+        <p>El registro como usuario de nuestros servicios requiere proporcionar información personal verificable, la cual será tratada conforme a la <strong>Ley Federal de Protección de Datos Personales en Posesión de Particulares</strong> (LFPDPPP) y su Reglamento.</p>
+       
+        <h3>Requisitos de Registro:</h3>
+        <ul>
+          <li><strong>Mayoría de Edad:</strong> 18 años cumplidos conforme al Código Civil Federal</li>
+          <li><strong>Capacidad Legal:</strong> Plena capacidad para contratar</li>
+          <li><strong>Información Veraz:</strong> Datos personales exactos y actualizados</li>
+          <li><strong>Identificación Oficial:</strong> En casos que lo requiera la ley</li>
+          <li><strong>Correo Electrónico:</strong> Válido y de uso personal</li>
+        </ul>
+       
+        <h3>Datos Personales Recabados:</h3>
+        <p>Conforme al artículo 16 de la LFPDPPP, recabamos:</p>
+        <ul>
+          <li><strong>Datos de Identificación:</strong> Nombre completo, RFC (para facturación)</li>
+          <li><strong>Datos de Contacto:</strong> Correo electrónico, teléfono</li>
+          <li><strong>Datos Patrimoniales:</strong> Información para procesamiento de pagos</li>
+          <li><strong>Datos Laborales:</strong> En caso de servicios empresariales</li>
+          <li><strong>Datos de Uso:</strong> Historial de navegación y preferencias</li>
+        </ul>
+       
+        <h3>Finalidades del Tratamiento:</h3>
+        <ul>
+          <li>Creación y gestión de cuenta de usuario</li>
+          <li>Provisión de servicios contratados</li>
+          <li>Facturación y cobranza</li>
+          <li>Cumplimiento de obligaciones legales</li>
+          <li>Mejora de servicios y experiencia de usuario</li>
+          <li>Comunicación sobre servicios y actualizaciones</li>
+        </ul>
+       
+        <h3>Consentimiento para Tratamiento:</h3>
+        <p>Al registrarse, usted otorga su consentimiento expreso para:</p>
+        <ul>
+          <li>Tratamiento de datos personales para las finalidades indicadas</li>
+          <li>Transferencia de datos a terceros cuando sea necesario para la prestación del servicio</li>
+          <li>Uso de cookies y tecnologías similares</li>
+          <li>Recepción de comunicaciones comerciales</li>
+        </ul>
+       
+        <h3>Derechos ARCO:</h3>
+        <p>Usted tiene derecho a:</p>
+        <ul>
+          <li><strong>Acceso:</strong> Conocer qué datos tenemos y cómo los usamos</li>
+          <li><strong>Rectificación:</strong> Corregir datos inexactos o incompletos</li>
+          <li><strong>Cancelación:</strong> Solicitar eliminación de datos cuando ya no sean necesarios</li>
+          <li><strong>Oposición:</strong> Oponerse al tratamiento para fines específicos</li>
+          <li><strong>Revocación:</strong> Revocar consentimiento en cualquier momento</li>
+        </ul>
+       
+        <h3>Seguridad de Datos:</h3>
+        <p>Implementamos medidas administrativas, técnicas y físicas conforme al artículo 19 de la LFPDPPP para proteger sus datos contra daño, pérdida, alteración, destrucción o uso no autorizado.</p>
+       
+        <h3>Verificación de Identidad:</h3>
+        <p>En cumplimiento de disposiciones de prevención de operaciones con recursos de procedencia ilícita, podemos requerir:</p>
+        <ul>
+          <li>Copia de identificación oficial vigente</li>
+          <li>Comprobante de domicilio reciente</li>
+          <li>Información fiscal para facturación</li>
+          <li>Verificación por medios electrónicos seguros</li>
+        </ul>
+       
+        <p>Para ejercer sus derechos ARCO o solicitar más información sobre el tratamiento de sus datos, contacte a nuestro Oficial de Privacidad.</p>
+      `
+    };
+
+    // Función para crear un modal básico con contenido específico
+    function createModal(id, title, content) {
+      const modal = document.createElement('div');
+      modal.id = id;
+      modal.className = 'modal-overlay';
+      modal.onclick = closeModalOnOverlay;
+     
+      modal.innerHTML = `
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeModal('${id}')">&times;</button>
+          <div class="modal-header">
+            <h2>${title}</h2>
+          </div>
+          <div class="modal-body">
+            ${content}
+          </div>
+        </div>
+      `;
+     
+      document.body.appendChild(modal);
+    }
+
+    // Crear todos los modales faltantes con contenido específico
+    Object.keys(modalTitles).forEach(modalId => {
+      if (!document.getElementById(modalId)) {
+        // Contenido genérico para modales que no tienen contenido específico
+        const genericContent = `
+          <p>Contenido detallado de ${modalTitles[modalId]} conforme a la legislación mexicana aplicable. Esta información se basa en las siguientes leyes y regulaciones:</p>
+          <h3>Marco Legal Aplicable:</h3>
+          <ul>
+            <li>Ley Federal de Protección al Consumidor</li>
+            <li>Ley Federal del Derecho de Autor</li>
+            <li>Ley de la Propiedad Industrial</li>
+            <li>Ley Federal de Protección de Datos Personales</li>
+            <li>Código Civil Federal</li>
+            <li>Código de Comercio</li>
+          </ul>
+          <h3>Información Adicional:</h3>
+          <p>Para consultas específicas sobre esta sección, por favor contacte a nuestro departamento legal. Todos los servicios se prestan conforme a la legislación mexicana vigente y los tratados internacionales aplicables.</p>
+        `;
+       
+        createModal(modalId, modalTitles[modalId], modalContents[modalId] || genericContent);
+      }
+    });
+  </script>
+</body>
+</html>

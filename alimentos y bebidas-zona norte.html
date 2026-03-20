@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Directorio de Negocios LIFE TIMES - Alimentos y Bebidas Zona Norte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f5f7fa;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Sidebar - SIN CAMBIOS */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(to bottom, #c90f0f, #a00c0c);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 20px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+            transition: transform 0.3s;
+        }
+
+        .logo h1:hover {
+            transform: scale(1.05);
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        .logo p {
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .menu-categorias {
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        .categoria-item {
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .categoria-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .categoria-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #ffffff;
+        }
+
+        .categoria-item i {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Botones laterales - MODIFICADO: solo queda el botón de subir negocio */
+        .botones-lateral {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 15px;
+            gap: 15px;
+        }
+
+        .btn-subir-negocio {
+            margin: 0;
+            padding: 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-subir-negocio:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-subir-negocio i {
+            font-size: 18px;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background-color: #f5f7fa;
+        }
+
+        /* Top nav - SIN CAMBIOS */
+        .top-nav {
+            background-color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: #c90f0f;
+        }
+
+        .negocios-container {
+            padding: 20px;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .titulo-banner {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 25px 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eaeaea;
+            position: relative;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .titulo-banner h2 {
+            color: #000000;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .titulo-banner p {
+            color: #555;
+            font-size: 16px;
+            font-weight: 500;
+            padding-left: 5px;
+        }
+
+        .menu-desplazamiento {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .pagina-btn {
+            width: 35px;
+            height: 35px;
+            background: #f8f9fa;
+            color: #555;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pagina-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+            border-color: #ccc;
+        }
+
+        .pagina-btn.active {
+            background: #c90f0f;
+            color: white;
+            border-color: #c90f0f;
+        }
+
+        .pagina-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f8f9fa;
+            border-color: #e0e0e0;
+            color: #999;
+        }
+
+        .pagina-info {
+            font-size: 13px;
+            color: #777;
+            font-weight: 500;
+            margin-left: 8px;
+            padding-left: 8px;
+            border-left: 1px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        .pagina-actual {
+            font-size: 14px;
+            font-weight: 600;
+            color: #c90f0f;
+            margin-right: 5px;
+        }
+
+        /* ============================================ */
+        /* ESTILO SIN BOXES - INTEGRADAS AL FONDO */
+        /* ============================================ */
+        .fila-1, .fila-2 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .alimento-card {
+            background-color: transparent;
+            border-radius: 0;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            aspect-ratio: 3/4;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInCard 0.4s ease forwards;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .alimento-card:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-imagen {
+            width: 100%;
+            height: 45%;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card-imagen.loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .card-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.4s ease;
+        }
+
+        .card-imagen img.loaded {
+            opacity: 1;
+        }
+
+        .alimento-card:hover .card-imagen img {
+            transform: scale(1.03);
+        }
+
+        .card-categoria-flotante {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(201, 15, 15, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 5;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .card-content {
+            padding: 16px 12px 12px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 55%;
+            background: transparent;
+        }
+
+        .card-header {
+            margin-bottom: 8px;
+        }
+
+        .card-header h3 {
+            color: #000000;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-descripcion {
+            color: #555;
+            line-height: 1.5;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-ver-mas-card {
+            background-color: #c90f0f;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(201, 15, 15, 0.2);
+            text-decoration: none;
+        }
+
+        .btn-ver-mas-card:hover {
+            background-color: #a00c0c;
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(201, 15, 15, 0.3);
+        }
+
+        .btn-ver-mas-card i {
+            font-size: 12px;
+        }
+
+        .card-ubicacion {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0 4px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .card-ubicacion i {
+            color: #c90f0f;
+            font-size: 14px;
+            width: 16px;
+        }
+
+        .card-ubicacion span {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ============================================ */
+        /* REDES SOCIALES (se mantienen del original) */
+        /* ============================================ */
+        .redes-sociales {
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            margin-top: 10px;
+        }
+
+        .redes-sociales h4 {
+            color: #000000;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .redes-sociales h4 i {
+            color: #c90f0f;
+        }
+
+        .redes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .red-social-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            border-radius: 6px;
+        }
+
+        .red-social-item:hover {
+            transform: translateY(-3px);
+            background-color: #f8f8f8;
+        }
+
+        .red-social-item.facebook:hover {
+            background-color: #1877f2;
+            color: white;
+        }
+
+        .red-social-item.instagram:hover {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            color: white;
+        }
+
+        .red-social-item.tiktok:hover {
+            background-color: #000000;
+            color: white;
+        }
+
+        .red-social-item i {
+            width: 18px;
+            text-align: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .facebook i {
+            color: #1877f2;
+        }
+
+        .instagram i {
+            color: #E1306C;
+        }
+
+        .tiktok i {
+            color: #000000;
+        }
+
+        .red-social-item:hover i {
+            color: white;
+        }
+
+        .red-social-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .red-social-nombre {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .red-social-usuario {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .red-social-item:hover .red-social-usuario {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* ============================================ */
+        /* MODAL - CON 6 IMÁGENES (3 ARRIBA + 3 ABAJO) */
+        /* ============================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-galeria {
+            background-color: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal-galeria {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            grid-column: 1 / span 2;
+            padding: 20px 25px;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-header-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .modal-header h2 {
+            color: #000000;
+            font-size: 28px;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .modal-categoria {
+            display: inline-block;
+            background-color: #ffe6e6;
+            color: #c90f0f;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-cerrar-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 5px;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+
+        .btn-cerrar-modal:hover {
+            color: #c90f0f;
+            background-color: #f5f5f5;
+        }
+
+        .galeria-container {
+            padding: 20px 20px 10px 20px;
+            grid-column: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .imagen-grande-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .imagen-grande-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Grid para las 3 imágenes SUPERIORES */
+        .grid-imagenes-modal-superior {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            height: 120px;
+            margin-bottom: 0;
+        }
+
+        /* Grid para las 3 imágenes INFERIORES */
+        .grid-imagenes-modal-inferior {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            height: 120px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .imagen-modal-mini {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            width: 100%;
+        }
+
+        .imagen-modal-mini:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .imagen-modal-mini.active {
+            border-color: #c90f0f;
+            box-shadow: 0 0 0 3px rgba(201, 15, 15, 0.3);
+        }
+
+        .imagen-modal-mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .descripcion-container {
+            padding: 20px 20px 20px 10px;
+            grid-column: 2;
+            background-color: #fafafa;
+            border-left: 1px solid #eee;
+            overflow-y: auto;
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .descripcion-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .descripcion-titulo {
+            color: #000000;
+            font-size: 22px;
+            margin-bottom: 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .descripcion-texto {
+            color: #333;
+            line-height: 1.7;
+            font-size: 16px;
+            margin-top: 0;
+        }
+
+        .info-contacto-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            margin-top: auto;
+        }
+
+        .info-contacto-section h4 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .info-contacto-section h4 i {
+            color: #c90f0f;
+            background: rgba(201, 15, 15, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+
+        .ubicacion-detalle {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #c90f0f;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .ubicacion-detalle:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(201, 15, 15, 0.15);
+        }
+
+        .ubicacion-icono {
+            background: #c90f0f;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .ubicacion-texto {
+            flex: 1;
+        }
+
+        .ubicacion-texto .direccion {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .ubicacion-texto .alcaldia {
+            color: #c90f0f;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ubicacion-texto .alcaldia i {
+            font-size: 12px;
+        }
+
+        /* Submenú - SIN CAMBIOS */
+        .categoria-item.with-submenu {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .submenu-arrow {
+            margin-left: auto;
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .categoria-item.with-submenu.active .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .submenu-zonas {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin-left: 15px;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .submenu-zonas.active {
+            max-height: 300px;
+            opacity: 1;
+            padding: 10px 0;
+        }
+
+        .submenu-item {
+            display: block;
+            padding: 12px 15px 12px 40px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .submenu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding-left: 45px;
+        }
+
+        .submenu-item:before {
+            content: "-";
+            position: absolute;
+            left: 25px;
+            color: white;
+        }
+
+        .submenu-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left: 3px solid #ffffff;
+            font-weight: 600;
+        }
+
+        .alimentos-link {
+            text-decoration: none;
+            color: white;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ============================================ */
+        /* TÍTULOS DE SECCIÓN */
+        /* ============================================ */
+        .fila-titulo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #c90f0f;
+            margin: 30px 0 15px 0;
+            padding-left: 15px;
+            border-left: 5px solid #c90f0f;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(to right, rgba(201, 15, 15, 0.05), transparent);
+            padding: 12px 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .fila-titulo i {
+            font-size: 24px;
+            color: #c90f0f;
+            background: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 3px 10px rgba(201, 15, 15, 0.2);
+        }
+
+        .fila-titulo span {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .fila-titulo strong {
+            color: #c90f0f;
+            font-weight: 800;
+        }
+
+        .fila-titulo:first-of-type {
+            margin-top: 10px;
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE - AJUSTES */
+        /* ============================================ */
+        @media (max-width: 1200px) {
+            .fila-1, .fila-2 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .imagen-grande-container {
+                height: 300px;
+            }
+            
+            .grid-imagenes-modal-superior,
+            .grid-imagenes-modal-inferior {
+                height: 100px;
+                gap: 8px;
+            }
+            
+            .modal-galeria {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            .modal-header {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .galeria-container {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .descripcion-container {
+                grid-column: 1;
+                grid-row: 3;
+                border-left: none;
+                border-top: 1px solid #eee;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .fila-1, .fila-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-header h2 {
+                font-size: 24px;
+            }
+            
+            .titulo-banner h2 {
+                font-size: 26px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            body {
+                flex-direction: column;
+            }
+            
+            .top-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+                justify-content: center;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .botones-lateral {
+                margin: 15px 15px;
+                gap: 12px;
+            }
+            
+            .btn-subir-negocio {
+                padding: 14px;
+                font-size: 15px;
+            }
+
+            .titulo-banner {
+                padding: 20px;
+                min-height: 120px;
+            }
+
+            .titulo-banner h2 {
+                font-size: 24px;
+            }
+
+            .menu-desplazamiento {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 15px;
+                width: fit-content;
+                align-self: center;
+            }
+            
+            .fila-1, .fila-2 {
+                display: flex;
+                flex-direction: row;
+                gap: 12px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 15px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                width: 100%;
+                grid-template-columns: none;
+            }
+            
+            .fila-1::-webkit-scrollbar,
+            .fila-2::-webkit-scrollbar {
+                height: 6px;
+            }
+            
+            .fila-1::-webkit-scrollbar-track,
+            .fila-2::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+            
+            .fila-1::-webkit-scrollbar-thumb,
+            .fila-2::-webkit-scrollbar-thumb {
+                background: #c90f0f;
+                border-radius: 10px;
+            }
+            
+            .alimento-card {
+                width: 240px;
+                min-width: 240px;
+                aspect-ratio: 3/4;
+                scroll-snap-align: start;
+                margin-right: 0;
+                flex-shrink: 0;
+            }
+            
+            .card-imagen {
+                height: 45%;
+            }
+            
+            .card-content {
+                padding: 14px 12px;
+                height: 55%;
+            }
+            
+            .card-header h3 {
+                font-size: 17px;
+                margin-bottom: 8px;
+            }
+            
+            .card-descripcion {
+                font-size: 13px;
+                -webkit-line-clamp: 3;
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+            
+            .card-ubicacion {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+            
+            .btn-ver-mas-card {
+                padding: 8px 0;
+                font-size: 13px;
+            }
+            
+            .card-categoria-flotante {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+            
+            .fila-titulo {
+                font-size: 18px;
+                margin: 20px 0 10px 0;
+                padding: 10px 15px;
+            }
+            
+            .fila-titulo i {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            
+            .fila-titulo span {
+                font-size: 16px;
+            }
+            
+            .modal-overlay {
+                padding: 0;
+                align-items: flex-start;
+            }
+            
+            .modal-galeria {
+                border-radius: 0;
+                width: 100%;
+                min-height: 100vh;
+                max-height: none;
+                overflow-y: auto;
+            }
+            
+            .modal-header {
+                padding: 15px;
+            }
+            
+            .modal-header h2 {
+                font-size: 20px;
+            }
+            
+            .imagen-grande-container {
+                height: 220px !important;
+            }
+            
+            .grid-imagenes-modal-superior,
+            .grid-imagenes-modal-inferior {
+                height: 80px !important;
+                gap: 6px;
+            }
+            
+            .galeria-container {
+                padding: 15px 15px 5px 15px;
+            }
+            
+            .descripcion-container {
+                padding: 15px;
+                border-top: 1px solid #eee;
+            }
+            
+            .descripcion-titulo {
+                font-size: 18px;
+            }
+            
+            .descripcion-texto {
+                font-size: 14px;
+            }
+            
+            .info-contacto-section {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .alimento-card {
+                width: 220px;
+                min-width: 220px;
+            }
+            
+            .imagen-grande-container {
+                height: 200px !important;
+            }
+            
+            .grid-imagenes-modal-superior,
+            .grid-imagenes-modal-inferior {
+                height: 70px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .alimento-card {
+                width: 200px;
+                min-width: 200px;
+            }
+            
+            .imagen-grande-container {
+                height: 170px !important;
+            }
+            
+            .grid-imagenes-modal-superior,
+            .grid-imagenes-modal-inferior {
+                height: 60px !important;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="Index.html" style="text-decoration: none; color: inherit;">
+                <h1>LIFE <span>TIMES</span></h1>
+            </a>
+            <p>Directorio de Negocios</p>
+        </div>
+        
+        <div class="menu-categorias">
+            <a href="General.html" class="categoria-item">
+                <i class="fas fa-home"></i>
+                <span>General</span>
+            </a>
+            <a href="Servicio Minoritario.html" class="categoria-item">
+                <i class="fas fa-handshake"></i>
+                <span>Servicio minoritario</span>
+            </a>
+            <a href="Comercio.html" class="categoria-item">
+                <i class="fas fa-store"></i>
+                <span>Comercio</span>
+            </a>
+            <!-- ALIMENTOS Y BEBIDAS CON SUBMENÚ -->
+            <div class="categoria-item active with-submenu" id="alimentos-menu">
+                <a href="Alimentos y bebidas.html" class="alimentos-link">
+                    <i class="fas fa-utensils"></i>
+                    <span>Alimentos</span>
+                </a>
+                <i class="fas fa-chevron-down submenu-arrow" id="submenu-toggle"></i>
+            </div>
+
+            <!-- SUBMENÚ DE ZONAS -->
+            <div class="submenu-zonas active" id="submenu-zonas">
+                <a href="alimentos y bebidas-zona oriente.html" class="submenu-item">Zona Oriente</a>
+                <a href="alimentos y bebidas-zona centro.html" class="submenu-item">Zona Centro</a>
+                <a href="alimentos y bebidas-zona norte.html" class="submenu-item active">Zona Norte</a>
+                <a href="alimentos y bebidas-zona poniente.html" class="submenu-item">Zona Poniente</a>
+                <a href="alimentos y bebidas-zona sur.html" class="submenu-item">Zona Sur</a>
+            </div>
+            
+            <a href="Servicios-general.html" class="categoria-item">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Servicios</span>
+            </a>
+        </div>
+        
+        <!-- BOTONES LATERALES - MODIFICADO: Solo queda el botón de subir negocio -->
+        <div class="botones-lateral">
+            <a href="Subir-negocio.html" style="text-decoration: none;">
+                <button class="btn-subir-negocio">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Publicar mi negocio aquí</span>
+                </button>
+            </a>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="Terminos y condiciones.html" id="terminos-link">Términos y Condiciones</a></li>
+                <li><a href="Index.html" id="historia-link">La Historia</a></li>
+                <li><a href="Servicios.html" id="servicios-link">Servicios</a></li>
+            </ul>
+        </nav>
+
+        <section class="negocios-container">
+            <div class="titulo-banner" id="titulo-banner">
+                <h2>Sabores y Experiencias Gastronómicas - Zona Norte</h2>
+                <p>Descubre los mejores restaurantes, cafeterías, panaderías y establecimientos de comida en la vibrante Zona Norte de la ciudad</p>
+                
+                <div class="menu-desplazamiento" id="menu-desplazamiento">
+                </div>
+            </div>
+            
+            <!-- TÍTULO PARA FILA 1 - Gustavo A. Madero -->
+            <div class="fila-titulo" id="titulo-fila-1">
+                <i class="fas fa-map-pin"></i>
+                <span>Cerca de Ti: <strong>Gustavo A. Madero</strong></span>
+            </div>
+            
+            <!-- CONTENEDOR FILA 1 - Gustavo A. Madero -->
+            <div class="fila-1" id="fila-1"></div>
+            
+            <!-- TÍTULO PARA FILA 2 - Azcapotzalco -->
+            <div class="fila-titulo" id="titulo-fila-2">
+                <i class="fas fa-map-pin"></i>
+                <span>Cerca de Ti: <strong>Azcapotzalco</strong></span>
+            </div>
+            
+            <!-- CONTENEDOR FILA 2 - Azcapotzalco -->
+            <div class="fila-2" id="fila-2"></div>
+            
+            <div style="text-align: center; color: #666; font-size: 14px; margin-top: 20px; padding: 15px; background: white; border-radius: 8px;">
+                <i class="fas fa-store" style="color: #c90f0f; margin-right: 8px;"></i>
+                Mostrando negocios de alimentos y bebidas en la Zona Norte por alcaldías
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL - CON 6 IMÁGENES (3 ARRIBA + 3 ABAJO) -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-galeria">
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <h2 id="modal-nombre">Nombre del Negocio</h2>
+                    <span class="modal-categoria" id="modal-categoria">Categoría</span>
+                </div>
+                <button class="btn-cerrar-modal" id="btn-cerrar-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="galeria-container">
+                <div class="imagen-grande-container">
+                    <img id="imagen-grande" src="" alt="Imagen principal">
+                </div>
+                
+                <!-- PRIMER GRUPO DE 3 IMÁGENES (ARRIBA) -->
+                <div class="grid-imagenes-modal-superior" id="grid-imagenes-modal-superior"></div>
+
+                <!-- SEGUNDO GRUPO DE 3 IMÁGENES (ABAJO) -->
+                <div class="grid-imagenes-modal-inferior" id="grid-imagenes-modal-inferior"></div>
+            </div>
+            
+            <div class="descripcion-container">
+                <div class="descripcion-content">
+                    <div>
+                        <h3 class="descripcion-titulo">Descripción del Negocio</h3>
+                        <p class="descripcion-texto" id="descripcion-texto">
+                            Descripción completa del negocio aparecerá aquí...
+                        </p>
+                    </div>
+                    
+                    <div class="redes-sociales" id="redes-sociales">
+                        <h4><i class="fas fa-hashtag"></i> Síguenos en Redes Sociales</h4>
+                        <div class="redes-grid" id="redes-grid">
+                        </div>
+                    </div>
+                    
+                    <div class="info-contacto-section">
+                        <h4><i class="fas fa-map-marked-alt"></i> Ubicación</h4>
+                        <div class="ubicacion-detalle" id="ubicacion-detalle">
+                            <!-- Se llenará dinámicamente con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const negociosAlimentosNorte = [
+            // FILA 1 - Gustavo A. Madero
+            {
+                nombre: "Restaurante Vista Norte",
+                categoria: "Restaurante Gourmet",
+                descripcion: "Espectacular restaurante con vista panorámica y cocina internacional de autor.",
+                descripcion_larga: "Ubicado en el punto más alto de la Zona Norte, Vista Norte ofrece una experiencia gastronómica única con vistas impresionantes de la ciudad. Nuestro chef ejecutivo combina técnicas modernas con ingredientes locales para crear platos innovadores.",
+                ubicacion: "Torre Norte 1500, Colonia Altavista, Alcaldía Gustavo A. Madero",
+                alcaldia: "Gustavo A. Madero",
+                imagen: "https://images.unsplash.com/photo-1554679665-f5537f187268?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1554679665-f5537f187268?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1554679665-f5537f187268?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "instagram", nombre: "Vista Norte", usuario: "@vistanorte.rest", url: "#" },
+                    { plataforma: "facebook", nombre: "Restaurante Vista Norte", usuario: "@VistaNorteRestaurante", url: "#" }
+                ]
+            },
+            {
+                nombre: "Café del Bosque",
+                categoria: "Cafetería y Panadería",
+                descripcion: "Acogedor café rodeado de naturaleza con productos horneados artesanales.",
+                descripcion_larga: "Ubicado en una zona residencial arbolada, Café del Bosque ofrece un escape tranquilo de la ciudad. Especializados en café de especialidad de fincas locales y panadería artesanal.",
+                ubicacion: "Avenida Bosques 456, Colonia Pinar, Alcaldía Gustavo A. Madero",
+                alcaldia: "Gustavo A. Madero",
+                imagen: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "instagram", nombre: "Café del Bosque", usuario: "@cafedelbosque", url: "#" },
+                    { plataforma: "facebook", nombre: "Café del Bosque", usuario: "@CafeDelBosque", url: "#" }
+                ]
+            },
+            {
+                nombre: "Carnes Prime Norte",
+                categoria: "Carnicería Premium",
+                descripcion: "Cortes de carne premium certificada, seleccionados personalmente por expertos.",
+                descripcion_larga: "Carnes Prime Norte se especializa en cortes premium de res, cerdo y cordero certificados. Trabajamos directamente con ranchos locales que practican ganadería sustentable.",
+                ubicacion: "Plaza Comercial Norte 234, Colonia Industrial, Alcaldía Gustavo A. Madero",
+                alcaldia: "Gustavo A. Madero",
+                imagen: "https://images.unsplash.com/photo-1603048297172-c609ef5e15e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1603048297172-c609ef5e15e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "facebook", nombre: "Carnes Prime Norte", usuario: "@CarnesPrimeNorte", url: "#" }
+                ]
+            },
+            {
+                nombre: "Sushi Garden",
+                categoria: "Restaurante Japonés",
+                descripcion: "Auténtico sushi y cocina japonesa en un ambiente moderno y relajante.",
+                descripcion_larga: "Sushi Garden combina técnicas tradicionales japonesas con ingredientes frescos de la más alta calidad. Nuestro chef principal se formó en Tokio y supervisa cada plato.",
+                ubicacion: "Boulevard del Norte 789, Colonia Jardines, Alcaldía Gustavo A. Madero",
+                alcaldia: "Gustavo A. Madero",
+                imagen: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "instagram", nombre: "Sushi Garden", usuario: "@sushigarden.norte", url: "#" }
+                ]
+            },
+            {
+                nombre: "Panadería Familiar Norte",
+                categoria: "Panadería Tradicional",
+                descripcion: "Panadería familiar que por tres generaciones ha servido el mejor pan de la zona.",
+                descripcion_larga: "Fundada en 1965, Panadería Familiar Norte mantiene vivas las recetas tradicionales transmitidas de abuelos a nietos. Especializados en pan de campo y pan dulce.",
+                ubicacion: "Calle Pan 123, Colonia Tradicional, Alcaldía Gustavo A. Madero",
+                alcaldia: "Gustavo A. Madero",
+                imagen: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "facebook", nombre: "Panadería Familiar Norte", usuario: "@PanaderiaFamiliarNorte", url: "#" }
+                ]
+            },
+            {
+                nombre: "Parrilla Norteña",
+                categoria: "Restaurante de Carnes",
+                descripcion: "Especialistas en carnes a la parrilla con cortes premium y salsas artesanales.",
+                descripcion_larga: "Parrilla Norteña se ha ganado su reputación por servir los mejores cortes de carne a la parrilla en la Zona Norte. Utilizamos carbón de mezquite para dar ese sabor ahumado característico.",
+                ubicacion: "Avenida Carnes 567, Colonia Parrilleros, Alcaldía Gustavo A. Madero",
+                alcaldia: "Gustavo A. Madero",
+                imagen: "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "instagram", nombre: "Parrilla Norteña", usuario: "@parrillanortena", url: "#" }
+                ]
+            },
+            {
+                nombre: "Comida Mexicana Auténtica",
+                categoria: "Restaurante Mexicano",
+                descripcion: "Platillos tradicionales mexicanos preparados con recetas familiares centenarias.",
+                descripcion_larga: "Nuestro restaurante se especializa en platillos mexicanos tradicionales que han pasado por generaciones en nuestra familia. Ofrecemos mole poblano, cochinita pibil y chiles en nogada.",
+                ubicacion: "Calle México 890, Colonia Azteca, Alcaldía Gustavo A. Madero",
+                alcaldia: "Gustavo A. Madero",
+                imagen: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1551503759-5c9c6b8a2c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "facebook", nombre: "Comida Mexicana Auténtica", usuario: "@ComidaMexicanaAutentica", url: "#" }
+                ]
+            },
+
+            // FILA 2 - Azcapotzalco
+            {
+                nombre: "Helados Artesanales del Norte",
+                categoria: "Heladería Artesanal",
+                descripcion: "Helados 100% artesanales elaborados con ingredientes naturales y de temporada.",
+                descripcion_larga: "Nuestros helados se elaboran en lotes pequeños utilizando frutas de temporada, leche fresca y crema de alta calidad. Contamos con más de 40 sabores.",
+                ubicacion: "Plaza Helados 34, Colonia Dulce, Alcaldía Azcapotzalco",
+                alcaldia: "Azcapotzalco",
+                imagen: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "instagram", nombre: "Helados del Norte", usuario: "@heladosnorte", url: "#" }
+                ]
+            },
+            {
+                nombre: "Cervecería Norteña",
+                categoria: "Microcervecería",
+                descripcion: "Microcervecería que produce cervezas artesanales con ingredientes locales.",
+                descripcion_larga: "Cervecería Norteña es una microcervecería familiar que produce cervezas artesanales en lotes limitados. Contamos con taproom y visitas guiadas.",
+                ubicacion: "Calle Cerveza 456, Colonia Industrial Norte, Alcaldía Azcapotzalco",
+                alcaldia: "Azcapotzalco",
+                imagen: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1599593740009-ed0d3ca6a3be?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "instagram", nombre: "Cervecería Norteña", usuario: "@cervecerianortena", url: "#" },
+                    { plataforma: "facebook", nombre: "Cervecería Norteña", usuario: "@CerveceriaNortena", url: "#" }
+                ]
+            },
+            {
+                nombre: "Pastelería Francesa del Norte",
+                categoria: "Pastelería Gourmet",
+                descripcion: "Exquisitos pasteles y postres franceses elaborados por chefs formados en Europa.",
+                descripcion_larga: "Nuestros pasteleros se formaron en las mejores escuelas de Francia y Bélgica. Ofrecemos una amplia gama de pasteles, tartas y macarons.",
+                ubicacion: "Plaza Francia 123, Colonia Europea, Alcaldía Azcapotzalco",
+                alcaldia: "Azcapotzalco",
+                imagen: "https://images.unsplash.com/photo-1559620192-032c64bc86af?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1559620192-032c64bc86af?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "instagram", nombre: "Pastelería Francesa Norte", usuario: "@pastelerianorte", url: "#" }
+                ]
+            },
+            {
+                nombre: "Taquería El Norteño",
+                categoria: "Taquería",
+                descripcion: "Tacos al pastor y de bistec en un ambiente familiar y tradicional.",
+                descripcion_larga: "Con más de 20 años de experiencia, nuestros tacos son famosos por el sabor de la carne marinada y nuestras salsas caseras.",
+                ubicacion: "Avenida Juárez 456, Colonia Centro, Alcaldía Azcapotzalco",
+                alcaldia: "Azcapotzalco",
+                imagen: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "facebook", nombre: "Taquería El Norteño", usuario: "@tacoselnorteno", url: "#" }
+                ]
+            },
+            {
+                nombre: "Marisquería El Puerto Norte",
+                categoria: "Marisquería",
+                descripcion: "Mariscos frescos del Pacífico, preparados con recetas tradicionales.",
+                descripcion_larga: "Especializados en mariscos del Pacífico mexicano, trabajamos directamente con pescadores locales para garantizar la máxima frescura.",
+                ubicacion: "Boulevard del Mar 789, Colonia del Puerto, Alcaldía Azcapotzalco",
+                alcaldia: "Azcapotzalco",
+                imagen: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                imagenes_adicionales: [
+                    "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ],
+                redes_socales: [
+                    { plataforma: "facebook", nombre: "Marisquería El Puerto", usuario: "@ElPuertoMariscos", url: "#" }
+                ]
+            }
+        ];
+
+        // ==============================================
+        // ELEMENTOS DOM
+        // ==============================================
+        const fila1 = document.getElementById('fila-1'); // Gustavo A. Madero
+        const fila2 = document.getElementById('fila-2'); // Azcapotzalco
+        const menuDesplazamiento = document.getElementById('menu-desplazamiento');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+        const modalNombre = document.getElementById('modal-nombre');
+        const modalCategoria = document.getElementById('modal-categoria');
+        const imagenGrande = document.getElementById('imagen-grande');
+        const gridImagenesSuperior = document.getElementById('grid-imagenes-modal-superior');
+        const gridImagenesInferior = document.getElementById('grid-imagenes-modal-inferior');
+        const descripcionTexto = document.getElementById('descripcion-texto');
+        const ubicacionDetalle = document.getElementById('ubicacion-detalle');
+        const redesGrid = document.getElementById('redes-grid');
+        const redesSocialesSection = document.getElementById('redes-sociales');
+        
+        // Elementos para el submenú
+        const alimentosMenu = document.getElementById('alimentos-menu');
+        const submenuZonas = document.getElementById('submenu-zonas');
+        const submenuToggle = document.getElementById('submenu-toggle');
+        const alimentosLink = document.querySelector('.alimentos-link');
+
+        // ==============================================
+        // FUNCIONES
+        // ==============================================
+
+        // Función para crear grid de 6 imágenes (3 arriba + 3 abajo)
+        function crearGridsImagenesModal(imagenes, imagenPrincipal) {
+            // Limpiar grids
+            gridImagenesSuperior.innerHTML = '';
+            gridImagenesInferior.innerHTML = '';
+            
+            // Tomamos todas las imágenes disponibles (principal + adicionales)
+            const todasImagenes = [imagenPrincipal, ...imagenes];
+            
+            // PRIMER GRUPO: 3 imágenes para arriba (índices 0,1,2)
+            const imagenesSuperior = todasImagenes.slice(0, 3);
+            
+            imagenesSuperior.forEach((imagen, index) => {
+                const imagenDiv = document.createElement('div');
+                imagenDiv.className = `imagen-modal-mini ${index === 0 ? 'active' : ''}`;
+                imagenDiv.dataset.imagen = imagen;
+                
+                const img = document.createElement('img');
+                img.src = imagen;
+                img.alt = `Imagen ${index + 1} del negocio`;
+                img.loading = 'lazy';
+                
+                imagenDiv.appendChild(img);
+                
+                imagenDiv.addEventListener('click', function() {
+                    imagenGrande.src = this.dataset.imagen;
+                    
+                    document.querySelectorAll('.imagen-modal-mini').forEach(m => {
+                        m.classList.remove('active');
+                    });
+                    
+                    this.classList.add('active');
+                });
+                
+                gridImagenesSuperior.appendChild(imagenDiv);
+            });
+            
+            // SEGUNDO GRUPO: 3 imágenes para abajo (índices 3,4,5 si existen, si no, repetir)
+            let imagenesInferior = [];
+            if (todasImagenes.length > 3) {
+                // Si hay más de 3 imágenes, tomar las siguientes 3
+                imagenesInferior = todasImagenes.slice(3, 6);
+            } else {
+                // Si no hay suficientes, repetir las que tenemos
+                imagenesInferior = todasImagenes.slice(0, 3);
+            }
+            
+            // Asegurar que siempre tengamos 3 imágenes para el grid inferior
+            while (imagenesInferior.length < 3) {
+                imagenesInferior.push(todasImagenes[0]); // Repetir la primera si es necesario
+            }
+            
+            imagenesInferior.forEach((imagen, index) => {
+                const imagenDiv = document.createElement('div');
+                imagenDiv.className = `imagen-modal-mini`;
+                imagenDiv.dataset.imagen = imagen;
+                
+                const img = document.createElement('img');
+                img.src = imagen;
+                img.alt = `Imagen adicional ${index + 4} del negocio`;
+                img.loading = 'lazy';
+                
+                imagenDiv.appendChild(img);
+                
+                imagenDiv.addEventListener('click', function() {
+                    imagenGrande.src = this.dataset.imagen;
+                    
+                    document.querySelectorAll('.imagen-modal-mini').forEach(m => {
+                        m.classList.remove('active');
+                    });
+                    
+                    this.classList.add('active');
+                });
+                
+                gridImagenesInferior.appendChild(imagenDiv);
+            });
+        }
+
+        function cargarNegocios() {
+            // Limpiar filas
+            fila1.innerHTML = '';
+            fila2.innerHTML = '';
+            
+            // Filtrar negocios por alcaldía
+            const negociosGustavoMadero = negociosAlimentosNorte.filter(n => n.alcaldia === "Gustavo A. Madero");
+            const negociosAzcapotzalco = negociosAlimentosNorte.filter(n => n.alcaldia === "Azcapotzalco");
+            
+            // Cargar FILA 1 - Gustavo A. Madero
+            negociosGustavoMadero.forEach((negocio, index) => {
+                const tarjeta = crearTarjeta(negocio, index);
+                fila1.appendChild(tarjeta);
+            });
+            
+            // Cargar FILA 2 - Azcapotzalco
+            negociosAzcapotzalco.forEach((negocio, index) => {
+                const tarjeta = crearTarjeta(negocio, index);
+                fila2.appendChild(tarjeta);
+            });
+            
+            // Actualizar contadores en títulos
+            document.getElementById('titulo-fila-1').innerHTML = `
+                <i class="fas fa-map-pin"></i>
+                <span>Cerca de Ti: <strong>Gustavo A. Madero</strong> (${negociosGustavoMadero.length} negocios)</span>
+            `;
+            
+            document.getElementById('titulo-fila-2').innerHTML = `
+                <i class="fas fa-map-pin"></i>
+                <span>Cerca de Ti: <strong>Azcapotzalco</strong> (${negociosAzcapotzalco.length} negocios)</span>
+            `;
+        }
+        
+        function crearTarjeta(negocio, index) {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = `alimento-card`;
+            tarjeta.style.animationDelay = `${index * 0.05}s`;
+            
+            tarjeta.innerHTML = `
+                <div class="card-imagen loading">
+                    <img data-src="${negocio.imagen}" alt="${negocio.nombre}">
+                    <span class="card-categoria-flotante">${negocio.categoria}</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3>${negocio.nombre}</h3>
+                    </div>
+                    
+                    <p class="card-descripcion">${negocio.descripcion}</p>
+                    
+                    <div class="card-footer">
+                        <button class="btn-ver-mas-card" data-negocio-id="${negocio.nombre}">
+                            Ver más <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <div class="card-ubicacion">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${negocio.ubicacion}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const imgElement = tarjeta.querySelector('img');
+            if (imgElement) {
+                setTimeout(() => {
+                    imgElement.src = imgElement.getAttribute('data-src');
+                    imgElement.classList.add('loaded');
+                    imgElement.parentElement.classList.remove('loading');
+                }, 100);
+            }
+            
+            const btnVerMas = tarjeta.querySelector('.btn-ver-mas-card');
+            if (btnVerMas) {
+                btnVerMas.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    abrirGaleriaNegocio(negocio);
+                });
+            }
+            
+            tarjeta.addEventListener('click', () => {
+                abrirGaleriaNegocio(negocio);
+            });
+            
+            return tarjeta;
+        }
+
+        function abrirGaleriaNegocio(negocio) {
+            redesGrid.innerHTML = '';
+            
+            modalNombre.textContent = negocio.nombre;
+            modalCategoria.textContent = negocio.categoria;
+            
+            imagenGrande.src = negocio.imagen;
+            imagenGrande.alt = negocio.nombre;
+            
+            crearGridsImagenesModal(negocio.imagenes_adicionales, negocio.imagen);
+            
+            descripcionTexto.textContent = negocio.descripcion_larga || negocio.descripcion;
+            
+            // Crear ubicación con nuevo estilo
+            ubicacionDetalle.innerHTML = `
+                <div class="ubicacion-icono">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="ubicacion-texto">
+                    <div class="direccion">${negocio.ubicacion}</div>
+                    <div class="alcaldia">
+                        <i class="fas fa-building"></i> Alcaldía ${negocio.alcaldia}
+                    </div>
+                </div>
+            `;
+            
+            if (negocio.redes_socales && negocio.redes_socales.length > 0) {
+                redesSocialesSection.style.display = 'block';
+                negocio.redes_socales.forEach(red => {
+                    const redItem = document.createElement('a');
+                    redItem.href = red.url || "#";
+                    redItem.target = "_blank";
+                    redItem.rel = "noopener noreferrer";
+                    redItem.className = `red-social-item ${red.plataforma}`;
+                    
+                    let iconClass = '';
+                    switch(red.plataforma) {
+                        case 'facebook':
+                            iconClass = 'fab fa-facebook-f';
+                            break;
+                        case 'instagram':
+                            iconClass = 'fab fa-instagram';
+                            break;
+                        case 'tiktok':
+                            iconClass = 'fab fa-tiktok';
+                            break;
+                        default:
+                            iconClass = 'fas fa-link';
+                    }
+                    
+                    redItem.innerHTML = `
+                        <i class="${iconClass}"></i>
+                        <div class="red-social-info">
+                            <div class="red-social-nombre">${red.nombre}</div>
+                            <div class="red-social-usuario">${red.usuario}</div>
+                        </div>
+                    `;
+                    
+                    redesGrid.appendChild(redItem);
+                });
+            } else {
+                redesSocialesSection.style.display = 'none';
+            }
+            
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ==============================================
+        // EVENT LISTENERS
+        // ==============================================
+        btnCerrarModal.addEventListener('click', cerrarModal);
+        modalOverlay.addEventListener('click', function(event) {
+            if (event.target === modalOverlay) cerrarModal();
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cerrarModal();
+            }
+        });
+
+        // ==============================================
+        // INICIALIZACIÓN
+        // ==============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarNegocios();
+            
+            submenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                submenuZonas.classList.toggle('active');
+                alimentosMenu.classList.toggle('active');
+            });
+            
+            alimentosLink.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!alimentosMenu.contains(e.target)) {
+                    submenuZonas.classList.remove('active');
+                    alimentosMenu.classList.remove('active');
+                }
+            });
+            
+            // Mantener el submenú abierto para la zona norte
+            submenuZonas.classList.add('active');
+            alimentosMenu.classList.add('active');
+        });
+    </script>
+</body>
+</html>

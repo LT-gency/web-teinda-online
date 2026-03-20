@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Producto | LIFETIMES AGENCY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #c90f0f;
+            --primary-dark: #a80c0c;
+            --primary-light: rgba(201, 15, 15, 0.08);
+            --secondary: #f8f9fa;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --gray-lighter: #adb5bd;
+            --gray-very-light: rgba(108, 117, 125, 0.6);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO PERSONALIZADA ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--primary-dark), #8a0a0a);
+        }
+        
+        /* ====== NAVBAR ====== */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, .98);
+            backdrop-filter: saturate(180%) blur(10px);
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .logo {
+            font-weight: 900;
+            letter-spacing: .02em;
+            font-size: 1.35rem;
+            text-decoration: none;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .logo span {
+            font-weight: 300;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            text-decoration: none;
+            color: #000;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        .nav-cta {
+            display: flex;
+            gap: .8rem;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            font-weight: 600;
+            border: 1px solid #1a1a1a;
+            padding: .85rem 1.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn.fill {
+            background: #1a1a1a;
+            color: #fff;
+        }
+        
+        .btn.fill:hover {
+            background: #4a4a4a;
+            border-color: #4a4a4a;
+        }
+        
+        .btn.ghost {
+            background: transparent;
+            color: #1a1a1a;
+        }
+        
+        .btn.ghost:hover {
+            background: #1a1a1a;
+            color: #fff;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: #000;
+            color: #fff;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            inset: 0 0 auto 0;
+            top: 72px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            display: none;
+            padding: 1rem 0;
+            z-index: 999;
+        }
+        
+        .mobile-menu.open {
+            display: block
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f5f5f5;
+            font-weight: 600;
+            text-decoration: none;
+            color: #000;
+            transition: background-color 0.2s;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: #f9f9f9;
+        }
+        
+        @media (max-width: 960px) {
+            .nav-links {
+                display: none
+            }
+            
+            .mobile-toggle {
+                display: inline-grid;
+                place-items: center
+            }
+            
+            .nav-inner {
+                padding: 0 24px;
+            }
+        }
+        
+        /* ====== HERO SECTION PARA PÁGINA DE PRODUCTO (REDUCIDA) ====== */
+        .hero-product {
+            padding: 4rem 2rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(201, 15, 15, 0.9) 0%, rgba(168, 12, 12, 0.95) 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-product::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+        }
+        
+        .hero-container-product {
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero-badge-product {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero-title-product {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.1;
+            color: white;
+        }
+        
+        .hero-description-product {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 992px) {
+            .hero-product {
+                padding: 3rem 2rem 2rem;
+            }
+            
+            .hero-title-product {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-product {
+                padding: 2.5rem 1.5rem 1.8rem;
+            }
+            
+            .hero-title-product {
+                font-size: 1.8rem;
+            }
+            
+            .hero-description-product {
+                font-size: 1rem;
+            }
+        }
+        
+        /* ====== FORMULARIO DE PRODUCTO ====== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .form-card {
+            background-color: white;
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid #e9ecef;
+            transition: var(--transition);
+        }
+        
+        .form-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        .icon-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(201, 15, 15, 0.3);
+        }
+        
+        .header-icon {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .form-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin: 0;
+        }
+        
+        .form-header p {
+            color: var(--gray);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+        
+        .required:after {
+            content: " *";
+            color: var(--primary);
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--light);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+            background-color: white;
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        textarea {
+            min-height: 150px;
+            max-height: 400px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        .field-hint {
+            font-size: 0.85rem;
+            color: var(--gray-very-light);
+            margin-top: 8px;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+        
+        .field-hint i {
+            color: var(--gray-very-light);
+            font-size: 0.8rem;
+        }
+        
+        .word-count {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 8px;
+            text-align: right;
+        }
+        
+        .word-count.error {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .word-count span {
+            font-weight: 600;
+        }
+        
+        .photo-section {
+            margin-top: 35px;
+        }
+        
+        /* ESTILO MODIFICADO: MENSAJE DE FOTOS EN GRIS DIFUMINADO Y PEQUEÑO */
+        .photo-requirements {
+            background: transparent;
+            padding: 12px 0;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+            color: var(--gray-very-light);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: none;
+            opacity: 0.8;
+            font-weight: 400;
+            font-style: italic;
+        }
+        
+        .photo-requirements i {
+            color: var(--gray-very-light);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .photos-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .photos-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .photos-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .photo-slot {
+            height: 110px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+        }
+        
+        .photo-slot:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+        
+        .photo-slot.empty {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #adb5bd;
+        }
+        
+        .photo-slot.empty:hover {
+            background: linear-gradient(135deg, var(--primary-light), rgba(201, 15, 15, 0.03));
+            border-color: var(--primary);
+        }
+        
+        .photo-slot.filled {
+            background-color: white;
+            border: 2px solid var(--primary);
+        }
+        
+        .photo-slot .slot-number {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: rgba(201, 15, 15, 0.9);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            z-index: 2;
+        }
+        
+        .photo-slot .slot-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .photo-slot.empty .slot-content i {
+            font-size: 1.8rem;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+        
+        .photo-slot.empty .slot-content span {
+            color: var(--gray);
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .photo-slot.filled .slot-content {
+            padding: 0;
+            position: relative;
+        }
+        
+        .photo-slot.filled .slot-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-slot.filled .slot-content .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .photo-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+        
+        .photo-slot:hover .photo-actions {
+            transform: translateY(0);
+        }
+        
+        .photo-action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .photo-action-btn:hover {
+            background-color: white;
+            transform: scale(1.15);
+        }
+        
+        .photo-action-btn i {
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        .photo-action-btn.remove:hover i {
+            color: var(--primary);
+        }
+        
+        .photo-action-btn.change:hover i {
+            color: var(--primary);
+        }
+        
+        /* ====== BOTÓN DE ENVÍO ====== */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 40px;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(201, 15, 15, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .submit-btn i {
+            margin-right: 10px;
+        }
+        
+        /* ====== ESTADOS DE CARGA Y MENSAJES ====== */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .loading i {
+            color: var(--primary);
+            font-size: 2.5rem;
+            animation: spin 1.5s linear infinite;
+        }
+        
+        .loading p {
+            margin-top: 15px;
+            color: var(--dark-light);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .message {
+            display: none;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, rgba(201, 15, 15, 0.08), rgba(168, 12, 12, 0.05));
+            color: var(--primary-dark);
+            border: 1px solid rgba(201, 15, 15, 0.3);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, rgba(255, 87, 87, 0.08), rgba(255, 87, 87, 0.05));
+            color: #ff3b30;
+            border: 1px solid rgba(255, 87, 87, 0.3);
+        }
+        
+        .message i {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .message h3 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .message p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .upload-progress {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+            background-color: var(--primary-light);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+        
+        /* ====== MODAL DE IMAGEN ====== */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            max-width: 800px;
+            max-height: 80vh;
+            background-color: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            border: 1px solid #e9ecef;
+        }
+        
+        .modal-img {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            z-index: 10;
+            border: 2px solid #f0f0f0;
+        }
+        
+        .modal-close:hover {
+            background-color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .modal-info {
+            padding: 25px;
+            background-color: white;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .modal-info h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .modal-info p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            border-top: 1px solid #eee;
+            padding: 3rem 0 3rem;
+            color: #444;
+            background-color: #f8f9fa;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .footer h4 {
+            margin: 0 0 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .footer a {
+            display: block;
+            padding: 0.35rem 0;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        .footer .muted {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .socials a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #000;
+            transition: color 0.2s;
+        }
+        
+        .socials a:hover {
+            color: var(--primary);
+        }
+        
+        .socials i {
+            font-size: 1.3rem;
+            width: 24px;
+        }
+        
+        .fa-instagram {
+            color: #C13584;
+        }
+        
+        .fa-youtube {
+            color: #FF0000;
+        }
+        
+        .fa-tiktok {
+            color: #000000;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            width: 100%;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding: 2rem 32px 0;
+        }
+        
+        /* ====== RESPONSIVE STYLES ====== */
+        @media (max-width: 1200px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 24px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .form-card {
+                padding: 30px;
+            }
+            
+            .form-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-title-product {
+                font-size: 2rem;
+            }
+            
+            .photo-requirements {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-product {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+            
+            .hero-title-product {
+                font-size: 1.8rem;
+            }
+            
+            .hero-description-product {
+                font-size: 1rem;
+            }
+            
+            .form-card {
+                padding: 25px;
+            }
+            
+            .form-header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .icon-container {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .header-icon {
+                font-size: 1.5rem;
+            }
+            
+            .photo-requirements {
+                font-size: 0.78rem;
+                padding: 10px 0;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-product {
+                padding: 1.8rem 1rem 1.2rem;
+            }
+            
+            .hero-title-product {
+                font-size: 1.6rem;
+            }
+            
+            .hero-description-product {
+                font-size: 0.95rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .form-card {
+                padding: 20px;
+            }
+            
+            .icon-title {
+                gap: 12px;
+            }
+            
+            .icon-container {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .header-icon {
+                font-size: 1.3rem;
+            }
+            
+            .form-header h1 {
+                font-size: 1.4rem;
+            }
+            
+            input, textarea, select {
+                padding: 15px;
+            }
+            
+            .photo-requirements {
+                font-size: 0.75rem;
+            }
+            
+            .submit-btn {
+                padding: 18px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">≡</button>
+            <a class="logo" href="Index.html" aria-label="Inicio" title="Inicio">
+                LIFETIMES<span>AGENCY</span>
+            </a>
+            <nav class="nav-links" aria-label="Principal">
+                <a href="General.html">Novedades</a>
+                <a href="Terminos y Condiciones.html">Términos y Condiciones</a>
+                <a href="Index.html">La Historia</a>
+            </nav>
+            <div class="nav-cta">
+                <a class="btn ghost" href="portal.html" aria-label="Portal">Portal</a>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="General.html">Novedades</a>
+            <a href="Terminos y Condiciones.html">Términos y Condiciones</a>
+            <a href="Servicios.html">La Historia</a>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION ====== -->
+    <section class="hero-product">
+        <div class="hero-container-product">
+            <div class="hero-badge-product">
+                <i class="fas fa-rocket"></i>
+                Publica tu producto
+            </div>
+            <h1 class="hero-title-product">Subir Producto al Catálogo</h1>
+            <p class="hero-description-product">
+                Publica tu producto en nuestro catálogo digital y llega a más clientes en toda la Ciudad de México.
+            </p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="form-card">
+            <div class="form-header">
+                <div class="icon-title">
+                    <div class="icon-container">
+                        <i class="fas fa-box-open header-icon"></i>
+                    </div>
+                    <h1>Publicar Producto</h1>
+                </div>
+                <p>Completa todos los campos requeridos para publicar tu producto en el catálogo de LIFETIMES</p>
+            </div>
+
+            <form id="productForm">
+                <div class="form-group">
+                    <label for="productName" class="required">Nombre del producto</label>
+                    <input type="text" id="productName" placeholder="Ej: Zapatillas deportivas de running" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productCategory" class="required">Categoría</label>
+                    <input type="text" id="productCategory" placeholder="Escribe la categoría de tu producto" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription" class="required">Descripción</label>
+                    <textarea id="productDescription" placeholder="Describe detalladamente tu producto (mínimo 10 palabras, máximo 150 palabras)..." required></textarea>
+                    <div class="word-count" id="wordCount">
+                        <span id="currentWords">0</span> palabras de <span id="maxWords">150</span> máximas
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productPrice" class="required">Precio</label>
+                    <input type="text" id="productPrice" placeholder="Ej: $45.99, €39,95" required>
+                </div>
+
+                <!-- NUEVO: CAMPO DE UBICACIÓN -->
+                <div class="form-group">
+                    <label for="productLocation" class="required">Ubicación</label>
+                    <input type="text" id="productLocation" placeholder="Ej: Avenida Revolución 150, Condesa, CDMX" required>
+                    <div class="field-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Puede ser una dirección exacta o zona popular cerca (ej: "Cerca de Metro Insurgentes")
+                    </div>
+                </div>
+
+                <!-- NUEVO: CAMPO DE NÚMERO TELEFÓNICO -->
+                <div class="form-group">
+                    <label for="productPhone" class="required">Número telefónico</label>
+                    <input type="tel" id="productPhone" placeholder="Ej: 55 1234 5678 o +52 55 1234 5678" required>
+                    <div class="field-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Este número será usado para que los clientes te contacten
+                    </div>
+                </div>
+
+                <div class="photo-section">
+                    <label class="required">Fotos del producto</label>
+
+                    <!-- ESTILO MODIFICADO: MENSAJE EN GRIS DIFUMINADO Y PEQUEÑO -->
+                    <div class="photo-requirements">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            Se requieren mínimo 3 fotos y máximo 6. Las fotos ayudan a mostrar mejor tu producto.
+                        </div>
+                    </div>
+
+                    <input type="file" id="photoInput" accept="image/*" class="hidden" multiple>
+
+                    <div class="upload-progress" id="uploadProgress">
+                        <i class="fas fa-spinner fa-spin"></i> Subiendo imagen...
+                    </div>
+
+                    <div class="photos-container" id="photosContainer">
+                        <!-- Los 6 slots de fotos se generarán dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="loading" id="loadingIndicator">
+                    <i class="fas fa-spinner"></i>
+                    <p>Enviando información del producto...</p>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                    <i class="fas fa-paper-plane"></i> Publicar Producto
+                </button>
+
+                <div class="message success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>¡Producto publicado con éxito!</h3>
+                    <p>La información ha sido enviada correctamente.</p>
+                </div>
+
+                <div class="message error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h3>Error al publicar</h3>
+                    <p id="errorText">Por favor, verifica los datos e intenta nuevamente.</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="photo-modal" id="photoModal">
+            <div class="modal-content">
+                <div class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </div>
+                <img class="modal-img" id="modalImage" src="" alt="Vista previa">
+                <div class="modal-info">
+                    <h3 id="modalTitle">Foto del producto</h3>
+                    <p id="modalInfo">Tamaño: -- KB • Resolución: --</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>Acerca de LIFETIMES</h4>
+                <p class="muted">Impulsamos negocios locales y comerciales mediante soluciones digitales estratégicas. Cualquier inconformidad contactar a Soporte o en caso mayor a WhatsApp.</p>
+            </div>
+
+            <div>
+                <h4>Servicios</h4>
+                <a href="servicios.html">Producción de Video</a>
+                <a href="servicios.html">Publicación en Redes</a>
+                <a href="servicios.html">Páginas Web</a>
+                <a href="servicios.html">Catálogo Web</a>
+            </div>
+
+            <div>
+                <h4>Síguenos</h4>
+                <p class="muted">@LIFETIMES AGENCY</p>
+                <div class="socials">
+                    <a href="https://www.instagram.com/crxz_xs?igsh=M3J3aGhmaHVoNmk2" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCqsIJHzN5N47KUR-lrV8kag" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </a>
+                    <a href="https://www.tiktok.com/@cxrz_xs" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="year"></span> LIFETIMES AGENCY. Todos los derechos reservados. Marca Registrada.
+        </div>
+    </footer>
+
+    <script>
+        // Elementos del DOM
+        const form = document.getElementById('productForm');
+        const productDescription = document.getElementById('productDescription');
+        const wordCount = document.getElementById('wordCount');
+        const currentWords = document.getElementById('currentWords');
+        const maxWords = document.getElementById('maxWords');
+        const photoInput = document.getElementById('photoInput');
+        const photosContainer = document.getElementById('photosContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const photoModal = document.getElementById('photoModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalInfo = document.getElementById('modalInfo');
+        const modalClose = document.getElementById('modalClose');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const productLocation = document.getElementById('productLocation');
+        const productPhone = document.getElementById('productPhone');
+        
+        // Variables
+        let photos = Array(6).fill(null); // Array para 6 slots de fotos
+        let currentSlotIndex = 0;
+        let descriptionWordCount = 0;
+        const MIN_WORDS = 10;
+        const MAX_WORDS = 150;
+        
+        // Función para contar palabras
+        function countWords(text) {
+            if (!text || text.trim().length === 0) return 0;
+            
+            // Eliminar espacios extra y dividir por espacios
+            const words = text.trim().split(/\s+/);
+            
+            // Filtrar palabras vacías
+            return words.filter(word => word.length > 0).length;
+        }
+        
+        // Función para actualizar el contador de palabras
+        function updateWordCount() {
+            const text = productDescription.value;
+            descriptionWordCount = countWords(text);
+            currentWords.textContent = descriptionWordCount;
+            
+            // Verificar si está en el rango válido
+            if (descriptionWordCount < MIN_WORDS) {
+                wordCount.classList.add('error');
+                wordCount.innerHTML = `<span id="currentWords">${descriptionWordCount}</span> palabras de <span id="maxWords">${MAX_WORDS}</span> máximas <span style="color:var(--primary)">(Mínimo ${MIN_WORDS} palabras requeridas)</span>`;
+                return false;
+            } else if (descriptionWordCount > MAX_WORDS) {
+                wordCount.classList.add('error');
+                wordCount.innerHTML = `<span id="currentWords">${descriptionWordCount}</span> palabras de <span id="maxWords">${MAX_WORDS}</span> máximas <span style="color:var(--primary)">(Límite excedido)</span>`;
+                return false;
+            } else {
+                wordCount.classList.remove('error');
+                wordCount.innerHTML = `<span id="currentWords">${descriptionWordCount}</span> palabras de <span id="maxWords">${MAX_WORDS}</span> máximas`;
+                return true;
+            }
+        }
+        
+        // Función para validar número de teléfono
+        function validatePhoneNumber(phone) {
+            // Eliminar espacios, guiones, paréntesis y otros caracteres
+            const cleaned = phone.replace(/[\s\-\(\)\+]/g, '');
+            
+            // Verificar que solo contenga números
+            if (!/^\d+$/.test(cleaned)) {
+                return false;
+            }
+            
+            // Para México, un número válido tiene 10 dígitos (sin código de país)
+            // O 12 dígitos con código de país (+52)
+            return cleaned.length >= 10 && cleaned.length <= 15;
+        }
+        
+        // Función para validar ubicación
+        function validateLocation(location) {
+            // La ubicación debe tener al menos 5 caracteres
+            return location.trim().length >= 5;
+        }
+        
+        // Inicializar slots de fotos
+        function initializePhotoSlots() {
+            photosContainer.innerHTML = '';
+            
+            for (let i = 0; i < 6; i++) {
+                const photoSlot = document.createElement('div');
+                photoSlot.className = photos[i] ? 'photo-slot filled' : 'photo-slot empty';
+                photoSlot.dataset.index = i;
+                
+                if (photos[i]) {
+                    // Slot con foto - mostrar solo el número
+                    photoSlot.innerHTML = `
+                        <div class="slot-number">${i + 1}</div>
+                        <div class="slot-content">
+                            <img src="${photos[i].url}" alt="Foto ${i + 1}">
+                            <div class="image-overlay">Imagen ${i + 1}</div>
+                        </div>
+                        <div class="photo-actions">
+                            <div class="photo-action-btn view" data-index="${i}">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="photo-action-btn change" data-index="${i}">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="photo-action-btn remove" data-index="${i}">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Slot vacío
+                    photoSlot.innerHTML = `
+                        <div class="slot-number">${i + 1}</div>
+                        <div class="slot-content">
+                            <i class="fas fa-plus"></i>
+                            <span>Agregar foto</span>
+                        </div>
+                    `;
+                }
+                
+                photoSlot.addEventListener('click', (e) => {
+                    // Si el clic fue en una acción, manejarlo separadamente
+                    if (e.target.closest('.photo-action-btn')) return;
+                    
+                    // Si el slot está vacío, agregar foto
+                    if (!photos[i]) {
+                        openPhotoPicker(i);
+                    } else {
+                        // Si ya tiene foto, mostrar en modal
+                        viewPhoto(i);
+                    }
+                });
+                
+                photosContainer.appendChild(photoSlot);
+            }
+            
+            // Agregar event listeners para acciones de fotos
+            setTimeout(() => {
+                document.querySelectorAll('.photo-action-btn.view').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const index = parseInt(btn.dataset.index);
+                        viewPhoto(index);
+                    });
+                });
+                
+                document.querySelectorAll('.photo-action-btn.change').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const index = parseInt(btn.dataset.index);
+                        openPhotoPicker(index);
+                    });
+                });
+                
+                document.querySelectorAll('.photo-action-btn.remove').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const index = parseInt(btn.dataset.index);
+                        removePhoto(index);
+                    });
+                });
+            }, 100);
+            
+            updateSubmitButton();
+        }
+        
+        // Actualizar estado del botón de enviar
+        function updateSubmitButton() {
+            const filledCount = photos.filter(photo => photo !== null).length;
+            const hasValidDescription = descriptionWordCount >= MIN_WORDS && descriptionWordCount <= MAX_WORDS;
+            const hasValidLocation = validateLocation(productLocation.value);
+            const hasValidPhone = validatePhoneNumber(productPhone.value);
+            const hasName = document.getElementById('productName').value.trim().length > 0;
+            const hasCategory = document.getElementById('productCategory').value.trim().length > 0;
+            const hasPrice = document.getElementById('productPrice').value.trim().length > 0;
+            
+            const isValid = filledCount >= 3 && 
+                           hasValidDescription && 
+                           hasValidLocation && 
+                           hasValidPhone &&
+                           hasName &&
+                           hasCategory &&
+                           hasPrice;
+            
+            submitBtn.disabled = !isValid;
+        }
+        
+        // Abrir selector de fotos para un slot específico
+        function openPhotoPicker(slotIndex) {
+            currentSlotIndex = slotIndex;
+            
+            // Limpiar el input para poder seleccionar la misma imagen otra vez
+            photoInput.value = '';
+            photoInput.click();
+        }
+        
+        // Manejar selección de archivos
+        photoInput.addEventListener('change', function() {
+            const files = Array.from(this.files);
+            
+            if (files.length === 0) return;
+            
+            // Mostrar indicador de progreso
+            uploadProgress.style.display = 'block';
+            
+            // Procesar cada archivo
+            let processedCount = 0;
+            
+            files.forEach((file, fileIndex) => {
+                // Validar tipo de archivo
+                if (!file.type.startsWith('image/')) {
+                    showError("Solo se permiten archivos de imagen (JPG, PNG, etc.).");
+                    processedCount++;
+                    if (processedCount === files.length) {
+                        uploadProgress.style.display = 'none';
+                    }
+                    return;
+                }
+                
+                // Validar tamaño (5MB máximo)
+                if (file.size > 5 * 1024 * 1024) {
+                    showError("La imagen es demasiado grande. Máximo 5MB.");
+                    processedCount++;
+                    if (processedCount === files.length) {
+                        uploadProgress.style.display = 'none';
+                    }
+                    return;
+                }
+                
+                // Buscar el siguiente slot disponible si estamos subiendo múltiples imágenes
+                let targetIndex = currentSlotIndex;
+                if (fileIndex > 0) {
+                    // Buscar el siguiente slot vacío
+                    for (let i = currentSlotIndex + 1; i < 6; i++) {
+                        if (!photos[i]) {
+                            targetIndex = i;
+                            break;
+                        }
+                    }
+                }
+                
+                // Si no hay espacio para todas las imágenes
+                if (targetIndex >= 6 || photos[targetIndex] !== null) {
+                    showError("Ya has alcanzado el límite de 6 imágenes.");
+                    processedCount++;
+                    if (processedCount === files.length) {
+                        uploadProgress.style.display = 'none';
+                    }
+                    return;
+                }
+                
+                // Procesar imagen
+                processPhotoFile(file, targetIndex);
+                
+                processedCount++;
+                if (processedCount === files.length) {
+                    uploadProgress.style.display = 'none';
+                }
+            });
+            
+            // Limpiar input
+            this.value = '';
+        });
+        
+        // Procesar archivo de foto
+        function processPhotoFile(file, index) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Crear imagen para obtener dimensiones
+                const img = new Image();
+                img.onload = function() {
+                    photos[index] = {
+                        url: e.target.result,
+                        file: file,
+                        name: file.name,
+                        size: file.size,
+                        width: img.width,
+                        height: img.height
+                    };
+                    
+                    initializePhotoSlots();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Ver foto en modal
+        function viewPhoto(index) {
+            const photo = photos[index];
+            if (!photo) return;
+            
+            modalImage.src = photo.url;
+            modalTitle.textContent = `Imagen ${index + 1} del producto`;
+            modalInfo.textContent = `Tamaño: ${formatFileSize(photo.size)} • Resolución: ${photo.width}x${photo.height}`;
+            
+            photoModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Eliminar foto
+        function removePhoto(index) {
+            photos[index] = null;
+            initializePhotoSlots();
+        }
+        
+        // Formatear tamaño de archivo
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + " bytes";
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
+            else return (bytes / 1048576).toFixed(1) + " MB";
+        }
+        
+        // Cerrar modal
+        modalClose.addEventListener('click', () => {
+            photoModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Cerrar modal al hacer clic fuera
+        photoModal.addEventListener('click', (e) => {
+            if (e.target === photoModal) {
+                photoModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Mostrar error
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Mostrar éxito
+        function showSuccess(message) {
+            successMessage.querySelector('p').textContent = message;
+            successMessage.style.display = 'block';
+        }
+        
+        // Validar descripción
+        productDescription.addEventListener('input', function() {
+            const isValid = updateWordCount();
+            updateSubmitButton();
+            
+            // Si excede el límite, recortar el texto
+            if (descriptionWordCount > MAX_WORDS) {
+                const words = this.value.trim().split(/\s+/);
+                if (words.length > MAX_WORDS) {
+                    const truncated = words.slice(0, MAX_WORDS).join(' ');
+                    this.value = truncated;
+                    updateWordCount();
+                }
+            }
+        });
+        
+        // Validar ubicación
+        productLocation.addEventListener('input', function() {
+            if (this.value.trim().length > 0) {
+                if (!validateLocation(this.value)) {
+                    this.style.borderColor = 'var(--primary)';
+                } else {
+                    this.style.borderColor = '';
+                }
+            }
+            updateSubmitButton();
+        });
+        
+        // Validar teléfono
+        productPhone.addEventListener('input', function() {
+            if (this.value.trim().length > 0) {
+                if (!validatePhoneNumber(this.value)) {
+                    this.style.borderColor = 'var(--primary)';
+                } else {
+                    this.style.borderColor = '';
+                }
+            }
+            updateSubmitButton();
+        });
+        
+        // Validar otros campos obligatorios
+        document.getElementById('productName').addEventListener('input', updateSubmitButton);
+        document.getElementById('productCategory').addEventListener('input', updateSubmitButton);
+        document.getElementById('productPrice').addEventListener('input', updateSubmitButton);
+        
+        // Manejar envío del formulario
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validar formulario
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Validar descripción
+            if (!updateWordCount()) {
+                if (descriptionWordCount < MIN_WORDS) {
+                    showError(`La descripción debe tener al menos ${MIN_WORDS} palabras. Actualmente tiene ${descriptionWordCount}.`);
+                } else {
+                    showError(`La descripción no puede exceder las ${MAX_WORDS} palabras. Actualmente tiene ${descriptionWordCount}.`);
+                }
+                return;
+            }
+            
+            // Validar ubicación
+            const locationValue = productLocation.value.trim();
+            if (!validateLocation(locationValue)) {
+                showError("Por favor, ingresa una ubicación válida (al menos 5 caracteres). Puede ser una dirección exacta o zona popular cerca.");
+                return;
+            }
+            
+            // Validar teléfono
+            const phoneValue = productPhone.value.trim();
+            if (!validatePhoneNumber(phoneValue)) {
+                showError("Por favor, ingresa un número telefónico válido (ej: 55 1234 5678 o +52 55 1234 5678).");
+                return;
+            }
+            
+            // Validar fotos
+            const filledCount = photos.filter(photo => photo !== null).length;
+            if (filledCount < 3) {
+                showError(`Debes seleccionar al menos 3 fotos. Actualmente tienes ${filledCount}.`);
+                return;
+            }
+            
+            // Obtener datos del formulario
+            const productData = {
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                description: document.getElementById('productDescription').value,
+                price: document.getElementById('productPrice').value,
+                location: locationValue,
+                phone: phoneValue,
+                photos: []
+            };
+            
+            // Obtener solo las fotos que existen
+            const existingPhotos = photos.filter(photo => photo !== null);
+            
+            // Convertir fotos a Base64
+            for (let i = 0; i < existingPhotos.length; i++) {
+                const base64Data = await getBase64Image(existingPhotos[i].file);
+                productData.photos.push(base64Data);
+            }
+            
+            // Mostrar indicador de carga
+            submitBtn.disabled = true;
+            loadingIndicator.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Simular tiempo de procesamiento
+            setTimeout(() => {
+                // Enviar datos a WhatsApp
+                const success = sendToWhatsApp(productData);
+                
+                // Ocultar indicador de carga
+                loadingIndicator.style.display = 'none';
+                
+                if (success) {
+                    // Mostrar mensaje de éxito
+                    showSuccess("El producto ha sido publicado y enviado al WhatsApp 55 3944 5908");
+                    
+                    // Limpiar formulario
+                    form.reset();
+                    photos = Array(6).fill(null);
+                    initializePhotoSlots();
+                    updateWordCount();
+                    
+                    // Desplazar hacia el mensaje de éxito
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Ocultar mensaje después de 6 segundos
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 6000);
+                } else {
+                    // Mostrar mensaje de error
+                    showError("No se pudo enviar la información. Por favor, verifica tu conexión e intenta nuevamente.");
+                }
+                
+                updateSubmitButton();
+            }, 2000);
+        });
+        
+        // Convertir imagen a Base64
+        function getBase64Image(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve({
+                    data: reader.result,
+                    name: file.name,
+                    size: file.size
+                });
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Función para enviar a WhatsApp
+        function sendToWhatsApp(productData) {
+            // En una implementación real, aquí se usaría la API de WhatsApp Business
+            
+            console.log("=== PRODUCTO PUBLICADO ===");
+            console.log(`Nombre: ${productData.name}`);
+            console.log(`Categoría: ${productData.category}`);
+            console.log(`Descripción: ${productData.description}`);
+            console.log(`Palabras: ${descriptionWordCount}`);
+            console.log(`Precio: ${productData.price}`);
+            console.log(`Ubicación: ${productData.location}`);
+            console.log(`Teléfono: ${productData.phone}`);
+            console.log(`Fotos: ${productData.photos.length} imágenes`);
+            console.log(`Enviado a: 55 3944 5908`);
+            console.log("==========================");
+            
+            // Simulamos éxito en el 95% de los casos
+            return Math.random() > 0.05;
+        }
+        
+        // Mobile menu
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+        }
+        
+        // Año actual en footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Inicializar la interfaz
+        document.addEventListener('DOMContentLoaded', () => {
+            initializePhotoSlots();
+            updateWordCount();
+        });
+    </script>
+</body>
+</html>

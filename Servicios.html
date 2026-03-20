@@ -1,0 +1,3593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios | LIFETIMES AGENCY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Google Maps API - Key modificada para funcionar -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0C1LfPHi9aJRV8Y7bn_1Nf7HqD3XqQ4E&callback=initMap" async defer></script>
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #c90f0f;
+            --primary-dark: #a80c0c;
+            --primary-light: rgba(201, 15, 15, 0.08);
+            --secondary: #f8f9fa;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO PERSONALIZADA ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--primary-dark), #8a0a0a);
+        }
+        
+        /* ====== NAVBAR ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .logo{
+            font-weight:900;
+            letter-spacing:.02em;
+            font-size:1.35rem;
+            text-decoration: none;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .logo span{
+            font-weight:300;
+        }
+        .nav-links{
+            display:flex;
+            gap:1.8rem;
+            align-items:center;
+        }
+        .nav-links a{
+            font-weight:600;
+            text-decoration: none;
+            color: #000;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+        }
+        .nav-cta{
+            display:flex;
+            gap:.8rem;
+            align-items:center;
+        }
+        
+        .btn{
+            display:inline-flex;
+            gap:.6rem;
+            align-items:center;
+            font-weight:600;
+            border:1px solid #1a1a1a;
+            padding:.85rem 1.8rem;
+            border-radius:8px;
+            transition:all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn.fill{
+            background:#1a1a1a;
+            color:#fff;
+        }
+        
+        .btn.fill:hover{
+            background:#4a4a4a;
+            border-color:#4a4a4a;
+        }
+        
+        .btn.ghost{
+            background:transparent;
+            color:#1a1a1a;
+        }
+        
+        .btn.ghost:hover{
+            background:#1a1a1a;
+            color:#fff;
+        }
+        
+        .mobile-toggle{
+            display:none;
+            background:#000;
+            color:#fff;
+            border:none;
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu{
+            position:fixed;
+            inset:0 0 auto 0;
+            top:72px;
+            background:#fff;
+            border-top:1px solid #eee;
+            display:none;
+            padding: 1rem 0;
+            z-index: 999;
+        }
+        
+        .mobile-menu.open{display:block}
+        
+        .mobile-menu a{
+            display:block;
+            padding:16px 24px;
+            border-bottom:1px solid #f5f5f5;
+            font-weight:600;
+            text-decoration: none;
+            color: #000;
+            transition: background-color 0.2s;
+        }
+        
+        .mobile-menu a:hover{
+            background-color: #f9f9f9;
+        }
+        
+        @media (max-width: 960px){
+            .nav-links{display:none}
+            .mobile-toggle{display:inline-grid;place-items:center}
+            .nav-inner {
+                padding: 0 24px;
+            }
+        }
+        
+        /* ====== HERO SECTION ====== */
+        .hero {
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 2;
+            color: white;
+        }
+        
+        .hero-content {
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary-light);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            color: white;
+        }
+        
+        .hero-title span {
+            color: var(--primary);
+        }
+        
+        .hero-description {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media (max-width: 992px) {
+            .hero {
+                padding: 6rem 2rem;
+                min-height: 80vh;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 1.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-description {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* ====== SERVICES SECTION - FONDOS DE PANTALLA COMPLETA ====== */
+        .services {
+            padding: 0;
+            position: relative;
+        }
+        
+        .services-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-item {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            overflow: hidden;
+        }
+        
+        /* Fondo de pantalla completa para cada servicio */
+        .service-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+        }
+        
+        /* Fondo específico para cada servicio - MODIFICADO */
+        .service-item:nth-child(1) .service-background {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+        }
+        
+        .service-item:nth-child(2) .service-background {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+        }
+        
+        /* SERVICIO 3 CON IMAGEN NUEVA */
+        .service-item:nth-child(3) .service-background {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+        }
+        
+        /* SERVICIO 4 CON IMAGEN NUEVA */
+        .service-item:nth-child(4) .service-background {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://lh3.googleusercontent.com/pw/AP1GczPA50mRimZMGOxEymxj05q6sAvu_vJp3DRwz_fkIgIKiTc8PI1trbKVzl0itmdwIMkRGzd3OP7yc9PBhTk5sQAhbcj7KxXjPwR-Wzqo-_R89RvCkVk0457vs4dqBfpTCeCfOuxpyylus-0DCRQZnZl7hA=w1436-h957-s-no-gm?authuser=4');
+            background-position: center 30%;
+        }
+        
+        /* Overlay para mejorar legibilidad */
+        .service-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+            z-index: -1;
+        }
+        
+        .service-content-wrapper {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .service-content {
+            color: white;
+        }
+        
+        .service-content h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .service-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        
+        .service-features {
+            margin-bottom: 2.5rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            color: var(--primary);
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+            font-size: 1rem;
+            min-width: 20px;
+        }
+        
+        .feature-text {
+            color: white;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .service-benefit {
+            background: rgba(201, 15, 15, 0.15);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .benefit-title {
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .benefit-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* Precio sin box - MODIFICADO PARA SERVICIO 1 CON DOS PRECIOS */
+        .service-price {
+            margin: 2rem 0;
+        }
+        
+        .service-price-exterior {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+        }
+        
+        .service-price-exterior .currency {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .service-price-exterior.free {
+            color: white;
+            font-size: 2.8rem;
+        }
+        
+        .service-price-note {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+        
+        /* Estilos para mostrar dos precios */
+        .dual-price-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dual-price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .price-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: baseline;
+            gap: 0.2rem;
+        }
+        
+        .price-amount .currency {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Botón expandir */
+        .expand-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 1.2rem 2.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+            min-width: 200px;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+        
+        .expand-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .expand-btn i {
+            transition: all 0.4s ease;
+            font-size: 1rem;
+        }
+        
+        .expand-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* ====== BOTÓN PUBLICAR NEGOCIO ====== */
+        .publish-btn {
+            background: white;
+            color: #000;
+            border: 2px solid #000;
+            border-radius: var(--border-radius);
+            padding: 1.2rem 2.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+            min-width: 200px;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+        
+        .publish-btn:hover {
+            background: #000;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .publish-btn i {
+            transition: all 0.4s ease;
+            font-size: 1rem;
+        }
+        
+        .publish-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* ====== BOTÓN PUBLICAR ARTÍCULO ====== */
+        .publish-article-btn {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 1.2rem 2.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+            min-width: 200px;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .publish-article-btn:hover {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .publish-article-btn i {
+            transition: all 0.4s ease;
+            font-size: 1rem;
+        }
+        
+        .publish-article-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Contenedor para ambos botones */
+        .publish-buttons-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        /* Responsive para los botones de publicación */
+        @media (max-width: 768px) {
+            .publish-buttons-container {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .publish-btn,
+            .publish-article-btn {
+                margin-left: 0;
+                width: 100%;
+                min-width: auto;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .publish-btn,
+            .publish-article-btn {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Imagen del servicio - ahora más prominente */
+        .service-image-container {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            height: 500px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .service-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .service-image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Contenedor del mapa */
+        .service-map-container {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            height: 500px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #cdmx-map {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Indicador visual de mapa para el servicio 2 */
+        .map-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(201, 15, 15, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* ====== MODAL DE DETALLES ====== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1.5rem;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-container {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            animation: slideUp 0.4s ease forwards;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid #f0f0f0;
+        }
+        
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+        
+        /* BOTÓN DE CERRAR MEJORADO - X VISIBLE */
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: var(--dark);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2010;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid #f0f0f0;
+        }
+        
+        .modal-close:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+            box-shadow: 0 6px 20px rgba(201, 15, 15, 0.4);
+        }
+        
+        /* Header del modal con imagen de fondo */
+        .modal-header {
+            padding: 5rem 3rem 3rem;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Overlay para el header del modal */
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+            z-index: 1;
+            border-radius: 16px 16px 0 0;
+        }
+
+        /* Asegurar que el contenido esté sobre el overlay */
+        .modal-header > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: white;
+            max-width: 800px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 400;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Contenido del modal */
+        .modal-body {
+            padding: 3rem;
+            background: white;
+        }
+        
+        /* Sección de descripción centrada */
+        .description-section {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        /* Contenedor de texto centrado */
+        .description-centered {
+            color: var(--dark-light);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        /* Subtítulo de sección centrado */
+        .section-title-modal {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title-modal.centered {
+            text-align: center;
+            justify-content: center;
+            border-bottom: none;
+            margin-bottom: 2rem;
+        }
+
+        .section-title-modal.centered i {
+            background: var(--primary-light);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Grid de características */
+        .features-grid-modal {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card-modal {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .feature-card-modal:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .feature-icon-modal {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            background: var(--primary-light);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card-modal:hover .feature-icon-modal {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-title-modal {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            line-height: 1.4;
+        }
+
+        .feature-description-modal {
+            color: var(--dark-light);
+            line-height: 1.6;
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        /* Sección de beneficios */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .benefit-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .benefit-icon {
+            background: var(--primary-light);
+            color: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover .benefit-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .benefit-content h4 {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .benefit-content p {
+            color: var(--dark-light);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        /* ====== SECCIÓN DE PAQUETES DE CONTENIDO ====== */
+        .packages-section {
+            margin: 4rem 0;
+            padding: 3rem 0;
+            background: #fafafa;
+            border-radius: 16px;
+            border: 1px solid #eaeaea;
+        }
+
+        .packages-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .packages-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .packages-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .packages-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        
+        .package-card {
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid #eaeaea;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .package-card:hover {
+            border-color: #ddd;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px);
+        }
+        
+        .package-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .package-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .package-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: baseline;
+        }
+        
+        .price-note {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .package-content {
+            padding: 30px;
+        }
+        
+        .section-title-package {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .features-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #444;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .features-list li i {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .platforms {
+            display: flex;
+            gap: 20px;
+            margin: 25px 0 30px;
+            flex-wrap: wrap;
+        }
+        
+        .platform {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 0.9rem;
+            background: #f5f5f5;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        
+        .platform i {
+            font-size: 1.1rem;
+        }
+
+        .fa-tiktok {
+            color: #000;
+        }
+
+        .fa-instagram {
+            color: #C13584;
+        }
+
+        .fa-facebook {
+            color: #1877F2;
+        }
+        
+        .support-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .support-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .support-features {
+            list-style: none;
+        }
+        
+        .support-features li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .support-features li i {
+            font-size: 0.8rem;
+            margin-top: 4px;
+            color: var(--primary);
+        }
+        
+        .package-note {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #f0f0f0;
+            margin: 30px 0;
+        }
+
+        /* Botón de contacto para paquetes */
+        .package-cta {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .package-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 15, 15, 0.2);
+        }
+        
+        /* ====== SECCIÓN DE PLANES DE MARKETING EN REDES SOCIALES - NUEVO ESTILO ====== */
+        .marketing-plans-section {
+            margin: 4rem 0;
+            padding: 3rem 0;
+            background: #fafafa;
+            border-radius: 16px;
+            border: 1px solid #eaeaea;
+        }
+
+        .marketing-plans-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .marketing-plans-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .marketing-plans-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .marketing-plans-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        
+        /* Estilos IDÉNTICOS a los paquetes de producción */
+        .marketing-plan-card {
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid #eaeaea;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .marketing-plan-card:hover {
+            border-color: #ddd;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px);
+        }
+        
+        .marketing-plan-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .marketing-plan-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .marketing-plan-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: baseline;
+        }
+        
+        .marketing-price-note {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .marketing-plan-content {
+            padding: 30px;
+        }
+        
+        .marketing-section-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .marketing-features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .marketing-features-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #444;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .marketing-features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .marketing-features-list li i {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .marketing-platforms {
+            display: flex;
+            gap: 20px;
+            margin: 25px 0 30px;
+            flex-wrap: wrap;
+        }
+        
+        .marketing-platform {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 0.9rem;
+            background: #f5f5f5;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        
+        .marketing-platform i {
+            font-size: 1.1rem;
+        }
+
+        .marketing-support-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .marketing-support-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .marketing-support-features {
+            list-style: none;
+        }
+        
+        .marketing-support-features li {
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .marketing-support-features li i {
+            font-size: 0.8rem;
+            margin-top: 4px;
+            color: var(--primary);
+        }
+        
+        .marketing-note {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .marketing-divider {
+            height: 1px;
+            background-color: #f0f0f0;
+            margin: 30px 0;
+        }
+
+        /* Botón de contacto para planes de marketing - Mismo estilo que producción */
+        .marketing-cta {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .marketing-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 15, 15, 0.2);
+        }
+        
+        /* ====== SECCIÓN DE PAQUETES WEB - NUEVO ESTILO CONSISTENTE ====== */
+        .web-plans-section {
+            margin: 4rem 0;
+            padding: 3rem 0;
+            background: #fafafa;
+            border-radius: 16px;
+            border: 1px solid #eaeaea;
+        }
+
+        .web-plans-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .web-plans-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .web-plans-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+            line-height: 1.6;
+        }
+
+        .web-plans-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        
+        /* Tabla para planes web - Estilo consistente con los otros paquetes */
+        .web-plan-card {
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid #eaeaea;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .web-plan-card:hover {
+            border-color: #ddd;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px);
+        }
+        
+        .web-plan-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .web-plan-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .web-plan-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: baseline;
+        }
+        
+        .web-price-note {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .web-plan-content {
+            padding: 30px;
+        }
+        
+        .web-section-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .web-features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .web-features-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #444;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .web-features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .web-features-list li i {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .web-features-list li i.fa-times-circle {
+            color: #e0e0e0;
+        }
+        
+        .feature-disabled {
+            opacity: 0.6;
+        }
+        
+        .feature-highlight {
+            background-color: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--primary);
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Etiqueta "Sin costo extra" */
+        .tag {
+            display: inline-block;
+            background-color: #2ecc71;
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+        
+        /* Botón de CTA con colores de cada plan */
+        .web-plan-cta {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .web-plan-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 15, 15, 0.2);
+        }
+        
+        .web-plan-note {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .web-plan-note strong {
+            color: var(--dark);
+        }
+        
+        /* Sección de precio */
+        .pricing-section-modal {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-badge-modal {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-amount-modal {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .pricing-period-modal {
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .pricing-features-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #e9ecef;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .pricing-feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .pricing-feature-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .pricing-feature-item i {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+
+        .pricing-feature-item span {
+            color: var(--dark-light);
+            font-size: 1rem;
+            flex: 1;
+            text-align: left;
+        }
+        
+        /* Footer del modal */
+        .modal-footer {
+            padding: 3rem;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            border-radius: 0 0 16px 16px;
+            text-align: center;
+        }
+
+        .modal-footer-text {
+            color: var(--dark-light);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .modal-cta {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 1.2rem 3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(201, 15, 15, 0.3);
+        }
+
+        .modal-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(201, 15, 15, 0.4);
+        }
+
+        .modal-cta i {
+            font-size: 1.2rem;
+        }
+        
+        /* ====== CTA SECTION ====== */
+        .cta {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(201,15,15,0.9) 0%, rgba(168,12,12,0.95) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .cta-description {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .cta-button:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .cta-button.ghost {
+            background-color: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .cta-button.ghost:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            border-top: 1px solid #eee;
+            padding: 3rem 0 3rem;
+            color: #444;
+            background-color: #f8f9fa;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 32px;
+        }
+        
+        .footer h4 {
+            margin: 0 0 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .footer a {
+            display: block;
+            padding: 0.35rem 0;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        .footer .muted {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .socials a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #000;
+            transition: color 0.2s;
+        }
+
+        .socials a:hover {
+            color: var(--primary);
+        }
+
+        .socials i {
+            font-size: 1.3rem;
+            width: 24px;
+        }
+
+        .fa-instagram { color: #C13584; }
+        .fa-youtube { color: #FF0000; }
+        .fa-tiktok { color: #000000; }
+        
+        .footer-bottom {
+            text-align: center;
+            width: 100%;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding: 2rem 32px 0;
+        }
+        
+        /* ====== RESPONSIVE STYLES ====== */
+        @media (max-width: 1200px) {
+            .service-content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .service-content h3 {
+                font-size: 2.5rem;
+            }
+            
+            .service-image-container, .service-map-container {
+                height: 400px;
+            }
+            
+            .packages-container,
+            .marketing-plans-container,
+            .web-plans-container {
+                flex-wrap: wrap;
+            }
+            
+            .package-card,
+            .marketing-plan-card,
+            .web-plan-card {
+                max-width: 100%;
+                min-width: 280px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .service-item {
+                min-height: auto;
+                padding: 4rem 2rem;
+            }
+            
+            .service-content h3 {
+                font-size: 2.2rem;
+            }
+            
+            .service-description {
+                font-size: 1.1rem;
+            }
+            
+            .modal-header {
+                padding: 4rem 2rem 2rem;
+                min-height: 250px;
+            }
+            
+            .modal-title {
+                font-size: 2.2rem;
+            }
+            
+            .modal-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .modal-body {
+                padding: 2rem;
+            }
+            
+            .modal-footer {
+                padding: 2rem;
+            }
+            
+            .pricing-section-modal {
+                padding: 2.5rem;
+            }
+            
+            .pricing-amount-modal {
+                font-size: 3rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 24px;
+            }
+
+            .packages-container,
+            .marketing-plans-container,
+            .web-plans-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .package-card,
+            .marketing-plan-card,
+            .web-plan-card {
+                max-width: 100%;
+            }
+            
+            .web-plan-card {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .service-item {
+                padding: 3rem 1.5rem;
+            }
+            
+            .service-content h3 {
+                font-size: 1.8rem;
+            }
+            
+            .service-image-container, .service-map-container {
+                height: 350px;
+            }
+            
+            .cta {
+                padding: 4rem 1.5rem;
+            }
+            
+            .cta-title {
+                font-size: 2rem;
+            }
+            
+            .cta-description {
+                font-size: 1.1rem;
+            }
+            
+            .modal-overlay {
+                padding: 1rem;
+            }
+            
+            .modal-header {
+                padding: 3rem 1.5rem 1.5rem;
+                min-height: 200px;
+            }
+            
+            .modal-title {
+                font-size: 2rem;
+            }
+            
+            .modal-subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .modal-body {
+                padding: 1.5rem;
+            }
+            
+            .modal-footer {
+                padding: 1.5rem;
+            }
+            
+            .features-grid-modal,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .feature-card-modal,
+            .benefit-card {
+                padding: 1.5rem;
+            }
+            
+            .pricing-section-modal {
+                padding: 2rem 1.5rem;
+            }
+            
+            .pricing-amount-modal {
+                font-size: 2.5rem;
+            }
+            
+            .modal-cta {
+                width: 100%;
+                padding: 1rem 1.5rem;
+            }
+            
+            .modal-close {
+                width: 44px;
+                height: 44px;
+                font-size: 1.3rem;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-inner {
+                padding: 0 20px;
+            }
+
+            .packages-title,
+            .marketing-plans-title,
+            .web-plans-title {
+                font-size: 1.8rem;
+            }
+            
+            .package-header,
+            .marketing-plan-header,
+            .web-plan-header {
+                padding: 20px 20px 15px;
+            }
+
+            .package-content,
+            .marketing-plan-content,
+            .web-plan-content {
+                padding: 20px;
+            }
+
+            .package-price,
+            .marketing-plan-price,
+            .web-plan-price {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .services {
+                padding: 0;
+            }
+            
+            .service-item {
+                padding: 2.5rem 1rem;
+            }
+            
+            .service-image-container, .service-map-container {
+                height: 300px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal-header {
+                padding: 2.5rem 1rem 1rem;
+                min-height: 180px;
+            }
+            
+            .modal-title {
+                font-size: 1.8rem;
+            }
+            
+            .modal-subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .description-centered {
+                font-size: 1rem;
+                padding: 0;
+            }
+            
+            .feature-icon-modal {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .feature-title-modal {
+                font-size: 1.2rem;
+            }
+            
+            .expand-btn {
+                padding: 1rem 2rem;
+                min-width: 180px;
+                font-size: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .service-price-exterior {
+                font-size: 2.2rem;
+            }
+            
+            .service-price-exterior.free {
+                font-size: 2.2rem;
+            }
+            
+            .modal-close {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                top: 10px;
+                right: 10px;
+            }
+
+            .package-card,
+            .marketing-plan-card,
+            .web-plan-card {
+                min-width: 100%;
+            }
+            
+            .web-plan-footer {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">≡</button>
+            <a class="logo" href="Index.html" aria-label="Inicio" title="Inicio">
+                LIFETIMES<span>AGENCY</span>
+            </a>
+            <nav class="nav-links" aria-label="Principal">
+                <a href="General.html">Novedades</a>
+                <a href="Terminos y Condiciones.html">Términos y Condiciones</a>
+                <a href="Index.html">La Historia</a>
+            </nav>
+            <div class="nav-cta">
+                <a class="btn ghost" href="portal.html" aria-label="Portal">Portal</a>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="General.html">Novedades</a>
+            <a href="Terminos y Condiciones.html">Términos y Condiciones</a>
+            <a href="Servicios.html">La Historia</a>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION ====== -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-rocket"></i>
+                    Impulsa tu negocio
+                </div>
+                <h1 class="hero-title">Servicios de <span>Marketing Digital</span></h1>
+                <p class="hero-description">
+                    Transformamos negocios locales con soluciones digitales estratégicas. Desde producción audiovisual hasta presencia web, potenciamos tu visibilidad y conexión con clientes.
+                </p>
+                <p class="hero-description">
+                    En LIFETIMES apoyamos a negocios locales y comerciales a mejorar su visibilidad mediante contenido audiovisual, presencia digital y difusión estratégica.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SERVICES SECTION ====== -->
+    <section class="services">
+        <div class="services-container">
+            <!-- Servicio 1: Producción de Video (MODIFICADO CON DOS PRECIOS) -->
+            <div class="service-item">
+                <div class="service-background"></div>
+                <div class="service-overlay"></div>
+                
+                <div class="service-content-wrapper">
+                    <div class="service-content">
+                        <h3>Producción de Video Promocional</h3>
+                        <p class="service-description">
+                            Creamos videos promocionales profesionales diseñados para mostrar tu negocio de forma clara, atractiva y confiable.
+                        </p>
+                        
+                        <div class="service-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Producción de video promocional con reportero</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Presentación clara de tu negocio, productos o servicios</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Contenido optimizado para redes sociales</div>
+                            </div>
+                        </div>
+                        
+                        <div class="service-benefit">
+                            <div class="benefit-title">Beneficio adicional:</div>
+                            <div class="benefit-description">
+                                Al realizar el video, tu negocio se integra automáticamente en la sección de Negocios Destacados dentro del catálogo principal de la web de LIFETIMES, brindándote mayor visibilidad frente a otros negocios.
+                            </div>
+                        </div>
+                        
+                        <!-- SECCIÓN MODIFICADA: MOSTRAR DOS PRECIOS -->
+                        <div class="dual-price-container">
+                            <div class="dual-price-item">
+                                <div class="price-label">Con tarjeta LTA Community:</div>
+                                <div class="price-amount">$499 <span class="currency">MXN</span></div>
+                            </div>
+                            <div class="dual-price-item">
+                                <div class="price-label">Precio regular:</div>
+                                <div class="price-amount">$799 <span class="currency">MXN</span></div>
+                            </div>
+                        </div>
+                        
+                        <button class="expand-btn" data-service="1">
+                            Ver detalles <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="service-image-container">
+                        <img src="https://elysiamstudio.com/wp-content/uploads/2022/10/Produccion-medios-digitales.jpg" alt="Producción de Video Promocional">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Servicio 2: Publicación en Redes (ELIMINADO EL PRECIO DE $54) -->
+            <div class="service-item">
+                <div class="service-background"></div>
+                <div class="service-overlay"></div>
+                
+                <div class="service-content-wrapper">
+                    <div class="service-content">
+                        <h3>Publicación en Redes Sociales LIFETIMES</h3>
+                        <p class="service-description">
+                            Difundimos tu contenido en nuestras cuentas principales para aumentar su alcance y visibilidad en toda la CDMX.
+                        </p>
+                        
+                        <div class="service-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Publicación en Instagram y Facebook</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Alcance a una audiencia ya establecida en CDMX</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Entrega de reporte de métricas (KPIs)</div>
+                            </div>
+                        </div>
+                        
+                        <!-- SE ELIMINÓ LA SECCIÓN DE PRECIO DE $54 -->
+                        
+                        <button class="expand-btn" data-service="4">
+                            Ver detalles <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="service-image-container">
+                        <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Publicación en Redes Sociales">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Servicio 3: Página Web (NUEVO ORDEN) -->
+            <div class="service-item">
+                <div class="service-background"></div>
+                <div class="service-overlay"></div>
+                
+                <div class="service-content-wrapper">
+                    <div class="service-content">
+                        <h3>Creación de Página Web de Presentación</h3>
+                        <p class="service-description">
+                            Desarrollamos páginas web de presentación para negocios que buscan un espacio propio donde mostrar quiénes son y qué ofrecen.
+                        </p>
+                        
+                        <div class="service-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Página web con diseño limpio y funcional</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Información del negocio, productos o servicios</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Ubicación, horarios y contacto</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Adaptada para celular y computadora</div>
+                            </div>
+                        </div>
+                        
+                        <div class="service-benefit">
+                            <div class="benefit-title">Beneficio adicional:</div>
+                            <div class="benefit-description">
+                                Al crear tu página web, esta se integra automáticamente al catálogo web de LIFETIMES con posicionamiento destacado.
+                            </div>
+                        </div>
+                        
+                        <button class="expand-btn" data-service="3">
+                            Ver detalles <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="service-image-container">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" alt="Página Web de Presentación">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Servicio 4: Catálogo Web (NUEVO ORDEN - ÚLTIMO) -->
+            <div class="service-item">
+                <div class="service-background"></div>
+                <div class="service-overlay"></div>
+                
+                <div class="service-content-wrapper">
+                    <div class="service-content">
+                        <h3>Catalogo Web</h3>
+                        <p class="service-description">
+                            Publicamos tu negocio dentro de nuestro catálogo web, donde las personas pueden descubrir diferentes opciones de comercios y servicios en toda la Ciudad de México.
+                        </p>
+                        
+                        <div class="service-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Publicación de tu negocio en el catálogo</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Clasificación por categoría y zona de la CDMX</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-text">Información básica y datos de contacto</div>
+                            </div>
+                        </div>
+                        
+                        <div class="service-price">
+                            <div class="service-price-exterior free">Conecta con más personas que buscan lo mismo</div>
+                            <div class="service-price-note">Servicio completamente gratuito sin límite de tiempo</div>
+                        </div>
+                        
+                        <div class="service-benefit">
+                            <div class="benefit-title">Beneficio:</div>
+                            <div class="benefit-description">
+                                Este servicio permite que tu negocio tenga presencia digital sin costo dentro de nuestra plataforma, con alcance en toda la Ciudad de México.
+                            </div>
+                        </div>
+                        
+                        <button class="expand-btn" data-service="2">
+                            Ver detalles <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <!-- BOTONES NUEVOS: PUBLICAR NEGOCIO Y PUBLICAR ARTÍCULO -->
+                        <div class="publish-buttons-container">
+                            <button class="publish-btn" data-service="2" data-type="business">
+                                <i class="fas fa-store"></i> Publicar Negocio
+                            </button>
+                            <button class="publish-article-btn" data-service="2" data-type="article">
+                                <i class="fas fa-newspaper"></i> Publicar Artículo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="service-map-container">
+                        <div class="map-indicator">
+                            <i class="fas fa-map-marker-alt"></i> CDMX
+                        </div>
+                        <!-- Mapa de Google Maps -->
+                        <iframe 
+                            id="cdmx-map"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120409.91956113874!2d-99.20539920000001!3d19.4326296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce0026db097507%3A0x54061076265ee841!2sCiudad%20de%20M%C3%A9xico%20%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1710304281311!5m2!1ses-419!2smx"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== MODAL ====== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container" id="modalContainer">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <section class="cta">
+        <div class="cta-container">
+            <h2 class="cta-title">¿Listo para Impulsar tu Negocio?</h2>
+            <p class="cta-description">
+                No importa el tamaño de tu negocio, tenemos soluciones adaptadas a tus necesidades. Contáctanos hoy mismo y descubre cómo podemos ayudarte a alcanzar nuevos clientes y aumentar tus ventas.
+            </p>
+            
+            <div class="cta-buttons">
+                <button class="cta-button" id="whatsappBtn">
+                    <i class="fas fa-whatsapp"></i> Contáctanos por WhatsApp
+                </button>
+                <button class="cta-button ghost" id="emailBtn">
+                    <i class="fas fa-envelope"></i> Solicitar Información
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>Acerca de LIFETIMES</h4>
+                <p class="muted">Impulsamos negocios locales y comerciales mediante soluciones digitales estratégicas. Cualquier inconformidad contactar a Soporte o en caso mayor a WhatsApp.</p>
+            </div>
+
+            <div>
+                <h4>Servicios</h4>
+                <a href="servicios.html">Producción de Video</a>
+                <a href="servicios.html">Publicación en Redes</a>
+                <a href="servicios.html">Páginas Web</a>
+                <a href="servicios.html">Catálogo Web</a>
+            </div>
+
+            <div>
+                <h4>Ayuda</h4>
+                <a href="contacto.html">Cambios de Edición</a>
+                <a href="contacto.html">Devoluciones</a>
+                <a href="contacto.html">Soporte</a>
+                <a href="terminos-y-condiciones.html">Términos y Condiciones</a>
+            </div>
+
+            <div>
+                <h4>Síguenos</h4>
+                <p class="muted">@LIFETIMES AGENCY</p>
+                <div class="socials">
+                    <a href="https://www.instagram.com/crxz_xs?igsh=M3J3aGhmaHVoNmk2" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCqsIJHzN5N47KUR-lrV8kag" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </a>
+                    <a href="https://www.tiktok.com/@cxrz_xs" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="year"></span> LIFETIMES AGENCY. Todos los derechos reservados. Marca Registrada.
+        </div>
+    </footer>
+
+    <script>
+        // Datos de los servicios actualizados
+        const servicesData = {
+            1: {
+                title: "Producción de Video Promocional",
+                subtitle: "Contenido audiovisual profesional para destacar tu negocio y conectar con tu audiencia objetivo",
+                description: "En LIFETIMES nos especializamos en crear videos promocionales de alta calidad que no solo muestran tu negocio, sino que cuentan su historia de manera emocionante y memorable. Nuestro proceso comienza con una consulta detallada para entender tu visión, valores y objetivos de negocio.",
+                image: "https://elysiamstudio.com/wp-content/uploads/2022/10/Produccion-medios-digitales.jpg",
+                features: [
+                    {
+                        icon: "fa-camera",
+                        title: "Producción musical personalizada",
+                        description: "Si lo deseas, podemos desarrollar un beat o música personalizada, definiendo el estilo y los detalles conforme a lo que se converse y se llegue a un acuerdo."
+                    },
+                    {
+                        icon: "fa-film",
+                        title: "Presencia en el catalogo web",
+                        description: "La publicación también forma parte de nuestro catálogo web, manteniéndose disponible dentro de la plataforma."
+                    },
+                    {
+                        icon: "fa-mobile-screen",
+                        title: "Gestión y publicación de Contenido",
+                        description: "El servicio incluye la creación del video y su publicación en nuestras plataformas durante un mes, como parte de un plan integral para que el contenido se mantenga activo."
+                    }
+                ],
+                benefits: [
+                    {
+                        icon: "fa-chart-line",
+                        title: "Visibilidad aumentada",
+                        description: "Tu video no solo se publica donde tú lo solicites, sino que automáticamente gana visibilidad en nuestra sección de Negocios Destacados dentro del catálogo principal de LIFETIMES."
+                    },
+                    {
+                        icon: "fa-repeat",
+                        title: "Menciones TV",
+                        description: "Recibirás menciones en Historias o videos cortos en plataformas digitales como un plan para conectar clientes a tu negocio, esto de manera cuando LIFE TIMES haga contenido tipo Noticiero"
+                    }
+                ],
+                packages: {
+                    title: "Paquetes de Contenido",
+                    subtitle: "Solución profesional para la presencia digital de tu negocio",
+                    description: "Ofrecemos diferentes paquetes de producción de contenido para adaptarnos a las necesidades específicas de cada negocio, desde proyectos puntuales hasta planes mensuales y bimestrales.",
+                    packages: [
+                        {
+                            title: "Reportero",
+                            price: "$499 MXN",
+                            priceNote: "Con tarjeta LTA Community • Precio regular $899 MXN",
+                            features: [
+                                "1 video con reportero",
+                                "Grabación dentro del local",
+                                "Selección de 1 platillo del menú como producto principal",
+                                "Edición y postproducción"
+                                
+                            ],
+                            platforms: ["TikTok", "Instagram", "Facebook"],
+                            support: [
+                                "Soporte básico LIFETIME",
+                                "Hasta 1 revisión de edición sin costo",
+                                "Ajustes menores de texto o cortes",
+                                "Atención vía WhatsApp para seguimiento",
+                                "Entrega final optimizada para redes"
+                            ],
+                            note: "Pensado para proyectos puntuales con acompañamiento básico."
+                        },
+                        {
+                            title: "Plan de Contenido Mensual",
+                            price: "$3,900 MXN",
+                            priceNote: "Plan mensual • Producción constante",
+                            features: [
+                                "2 videos narrados por reportero",
+                                "1 video estilo TikTok (tomas rápidas)",
+                                "1 video estilo Instagram",
+                                "Planificación de contenido mensual"
+                            ],
+                            monthlyPlan: [
+                                "1 video por semana",
+                                "Repetición estratégica de contenido",
+                                "Optimización según engagement",
+                                "Análisis de resultados"
+                            ],
+                            platforms: ["TikTok", "Instagram", "Facebook"],
+                            support: [
+                                "Soporte completo LIFETIME",
+                                "Hasta 3 revisiones completas sin costo",
+                                "Ajustes de ritmo, texto o estructura",
+                                "Soporte vía WhatsApp durante todo el mes",
+                                "Asesoría estratégica continua"
+                            ],
+                            note: "Ideal para mantener presencia constante con contenido variado."
+                        },
+                        {
+                            title: "Plan de Contenido Bimestral",
+                            price: "$8,499 MXN",
+                            priceNote: "Plan bimestral • Contenido y publicación continua",
+                            features: [
+                                "Producción de contenido (2 meses)",
+                                "4 videos estilo TikTok (tomas rápidas y dinámicas)",
+                                "4 videos estilo Instagram",
+                                "2 video clips cortos",
+                                "+2 historias",
+                                "Edición y postproducción profesional",
+                                "Mención en la sección de LIFE TV",
+                                "(Contenido creado sin reportero)"
+                            ],
+                            monthlyPlan: [
+                                "Contenido todas las semanas",
+                                "Distribución estratégica del contenido durante 2 meses",
+                                "Repetición planificada de los mejores videos"
+                            ],
+                            platforms: ["TikTok", "Instagram", "Facebook"],
+                            optimization: [
+                                "Ajustes de contenido según desempeño KPI's",
+                                "Integración de Negocios Destacados en la Pagina Web Oficial LIFE TIMES"
+                            ],
+                            support: [
+                                "Soporte premium LIFETIME",
+                                "Hasta 5 revisiones completas sin costo",
+                                "Ajustes de texto, ritmo o estructura",
+                                "Soporte vía WhatsApp durante los 2 meses"
+                            ],
+                            note: "Solución integral para 2 meses de contenido continuo y estrategia de publicación."
+                        }
+                    ]
+                }
+            },
+            2: {
+                title: "Catálogo Web LIFETIMES",
+                subtitle: "Presencia digital gratuita que conecta tu negocio con clientes locales en toda la CDMX",
+                description: "Nuestro catálogo web es una plataforma diseñada específicamente para dar visibilidad a negocios locales de toda la Ciudad de México sin necesidad de inversión inicial. Es más que un simple directorio: es un espacio digital donde los clientes pueden descubrir, comparar y contactar negocios como el tuyo de manera intuitiva, con cobertura en toda la CDMX.",
+                image: "https://lh3.googleusercontent.com/pw/AP1GczPA50mRimZMGOxEymxj05q6sAvu_vJp3DRwz_fkIgIKiTc8PI1trbKVzl0itmdwIMkRGzd3OP7yc9PBhTk5sQAhbcj7KxXjPwR-Wzqo-_R89RvCkVk0457vs4dqBfpTCeCfOuxpyylus-0DCRQZnZl7hA=w1436-h957-s-no-gm?authuser=4",
+                features: [
+                    {
+                        icon: "fa-store",
+                        title: "Perfil completo",
+                        description: "Creamos un perfil que incluye: nombre comercial, descripción detallada de productos o servicios, horarios de atención, métodos de pago aceptados, políticas especiales, y todas las formas de contacto. Organizamos la información de manera lógica para que los clientes encuentren rápidamente lo que necesitan."
+                    },
+                    {
+                        icon: "fa-tags",
+                        title: "Categorización por zona CDMX",
+                        description: "Tu negocio aparece clasificado no solo por rubro principal, sino por múltiples categorías secundarias, servicios específicos, ubicación geográfica dentro de la CDMX y características especiales. Esto aumenta exponencialmente las posibilidades de que te encuentren clientes que buscan exactamente lo que ofreces en su zona."
+                    }
+                ],
+                benefits: [
+                    {
+                        icon: "fa-money-bill-wave",
+                        title: "Cero inversión",
+                        description: "Este servicio es completamente gratuito, sin costos ocultos, comisiones por ventas, o compromisos contractuales. Creemos en apoyar el crecimiento de los negocios locales en la CDMX."
+                    },
+                    {
+                        icon: "fa-rocket",
+                        title: "Alcance en toda la CDMX",
+                        description: "Desde el momento en que publicamos tu perfil, tu negocio se hace visible para todos los usuarios que consultan nuestro catálogo en toda la Ciudad de México."
+                    }
+                ],
+                pricing: {
+                    amount: "Llega y conecta con más gente",
+                    period: "Servicio completamente gratuito sin límite de tiempo",
+                    features: [
+                        "Publicación completa y permanente del perfil de tu negocio",
+                        "Actualizaciones ilimitadas y gratuitas cuando las necesites",
+                        "Sin límite de tiempo - permanece en el catálogo indefinidamente",
+                        "Soporte básico incluido para consultas y modificaciones",
+                    ]
+                }
+            },
+            3: {
+                title: "Creación de Página Web de Presentación",
+                subtitle: "Tu espacio digital personalizado que funciona como el escaparate perfecto de tu negocio",
+                description: "Desarrollamos páginas web de presentación que van mucho más allá de una simple página informativa. Creamos experiencias digitales completas que funcionan como la extensión natural de tu negocio en el mundo online.",
+                image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+                features: [
+                    {
+                        icon: "fa-paintbrush",
+                        title: "Pagina web",
+                        description: "Se trata de páginas web de presentación donde los clientes pueden conocer tu negocio, ver información clave y entender fácilmente lo que ofreces."
+                    },
+                    {
+                        icon: "fa-mobile-screen-button",
+                        title: "Diseño responsive",
+                        description: "Tu sitio web se verá y funcionará perfectamente en cualquier dispositivo: desde smartphones pequeños hasta laptops y monitores de escritorio grandes. Implementamos técnicas de diseño adaptativo que reorganizan contenido, ajustan tamaños de texto, y optimizan imágenes automáticamente según el dispositivo del usuario."
+                    },
+                    {
+                        icon: "fa-bolt",
+                        title: "Diseño personalizado",
+                        description: "Cada elemento visual se diseña específicamente para reflejar la personalidad de tu marca. Creamos interfaces intuitivas que guían al visitante naturalmente hacia la información más importante y los llamados a la acción más efectivos."
+                    }
+                ],
+                benefits: [
+                    {
+                        icon: "fa-link",
+                        title: "Integración automática",
+                        description: "Al crear tu página web con nosotros, automáticamente recibes un enlace destacado y posición preferencial dentro del catálogo web de LIFETIMES."
+                    }
+                ],
+                webPlans: {
+                    title: "Planes de Servicios Web",
+                    subtitle: "Selecciona el plan que mejor se adapte a las necesidades de tu negocio. Todos los planes incluyen diseño responsive, estructura profesional y optimización básica.",
+                    packages: [
+                        {
+                            title: "Página Web de Presentación",
+                            price: "$2,499",
+                            priceNote: "Precio base • Ideal para comenzar",
+                            features: [
+                                "Diseño responsive (celular, tablet, computadora)",
+                                "Barra de navegación (Navbar) superior",
+                                "Presentación del negocio ",
+                                "Hasta 5 productos con descripción y costo",
+                                "Galería de productos básica",
+                                "Footer informativo con datos del negocio(teléfono, email)"
+                            ],
+                            excluded: [
+                                { text: "Dominio personalizado (.com)", included: false },
+                                { text: "Google Maps integrado", included: false },
+                                { text: "Redes sociales integradas", included: false },
+                                { text: "Fotografía profesional de productos", included: false }
+                            ],
+                            note: "Ideal para comenzar tu presencia digital."
+                        },
+                        {
+                            title: "Página Web con catalogo amplio",
+                            price: "$6,499",
+                            priceNote: "Precio completo • Todo incluido",
+                            features: [
+                                "Dominio personalizado (.com, Net, Store... por 3 años) <span class='tag'>Sin costo extra</span>",
+                                "Diseño responsive (celular, tablet, computadora)",
+                                "Barra de navegación (Navbar) superior avanzada",
+                                "Presentación del negocio con identidad y propósito",
+                                "+30 productos con descripción, costo y categoría",
+                                "Galería de productos premium y ordenada",
+                                "Google Maps integrado con ubicación exacta",
+                                "Información de contacto completa(TikTok, Instagram, Facebook, Whatsapp y Gmail)",
+                                "Footer informativo avanzado",
+                            ],
+                            highlight: "Servicio de fotografía a domicilio para una mejor presentación de tus productos",
+                            note: "Todo incluido para máxima presencia digital."
+                        }
+                    ],
+                    note: "Todos los planes incluyen estructura clara y profesional, optimización básica para carga rápida y soporte inicial para ajustes básicos posteriores a la entrega. Los precios son referenciales y pueden variar según requerimientos específicos. <strong>Exclusivo Plan Premium:</strong> Servicio de fotografía profesional in situ (¡vamos a tu negocio a tomar las fotos!)."
+                }
+            },
+            4: {
+                title: "Publicación en Redes Sociales LIFETIMES",
+                subtitle: "Amplificación estratégica del alcance de tu contenido a través de nuestras audiencias establecidas en CDMX",
+                description: "Nuestro servicio de publicación en redes sociales no es simplemente compartir tu contenido; es una estrategia de amplificación cuidadosamente planificada. Publicamos tu contenido en nuestras cuentas principales de Instagram, TikTok y Facebook con alcance en la Ciudad de México y más. Además, ofrecemos planes mensuales completos de gestión de contenido para mantener presencia constante en redes sociales.",
+                image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                features: [
+                    {
+                        icon: "fa-bullhorn",
+                        title: "Amplificación de alcance",
+                        description: "Nuestras cuentas tienen seguidores que específicamente siguen a LIFETIMES para descubrir negocios locales interesantes en la CDMX. Cuando publicamos tu contenido, lo exponemos a una audiencia que ya está mentalmente preparada para descubrir y posiblemente contratar servicios como los tuyos en la ciudad."
+                    },
+                    {
+                        icon: "fa-chart-column",
+                        title: "Reporte completo de métricas",
+                        description: "No te damos solo números básicos. Proporcionamos un análisis completo que incluye: alcance orgánico vs. pagado, tasa de engagement, demografía de la audiencia alcanzada, horarios de mayor interacción, clics en enlaces, y comportamiento del usuario específico de CDMX."
+                    },
+                    {
+                        icon: "fa-calendar-check",
+                        title: "Planificación estratégica",
+                        description: "El contenido se publica siguiendo un plan mensual, donde se definen tiempos y publicaciones."
+                    }
+                ],
+                benefits: [
+                    {
+                        icon: "fa-user-check",
+                        title: "Acceso inmediato",
+                        description: "Construir una audiencia orgánica significativa desde cero puede tomar meses o incluso años de trabajo constante."
+                    },
+                    {
+                        icon: "fa-chart-pie",
+                        title: "Transparencia total",
+                        description: "Cada peso invertido en este servicio es completamente rastreable. Recibirás capturas de pantalla de las publicaciones, acceso a métricas de la plataforma y análisis interpretado."
+                    }
+                ],
+                marketingPlans: {
+                    title: "Planes de Marketing en Redes Sociales",
+                    subtitle: "Selecciona el plan que mejor se adapte a las necesidades de tu negocio. Todos incluyen publicación en Instagram, TikTok y Facebook, más calendario de publicación.",
+                    packages: [
+                        {
+                            title: "Presencia LIFE TV",
+                            price: "$690 MXN",
+                            priceNote: "Plan mensual · Presencia constante",
+                            features: [
+                                "Duración: 1 mes",
+                                "Hasta 2 videos proporcionados por el cliente",
+                                "Difusión durante todo el mes",
+                                "Total de 4 apariciones:1 publicación por semana",
+                                "Planificación de calendario mensual",
+                            ],
+                            platforms: ["TikTok", "Instagram", "Facebook"],
+                            support: [
+                                "Soporte básico LIFETIME",
+                                "Calendario de publicación mensual",
+                                "Optimización básica por plataforma",
+                            ],
+                            note: "Pensado para negocios que quieren estar activos en redes sin saturar contenido."
+                        },
+                        {
+                            title: "Movimiento Constante TV",
+                            price: "$1,290 MXN",
+                            priceNote: "Plan mensual · Mayor rotación",
+                            features: [
+                                "Duración: 2 meses",
+                                "Hasta 4 videos proporcionados por el cliente",
+                                "Difusión durante los dos meses",
+                                "Total de 10 apariciones durante el mes, Total: 20 apariciones",
+                                "Planificación semanal de difusión",
+                                "Optimización por formato y plataforma"
+                            ],
+                            platforms: ["TikTok", "Instagram", "Facebook"],
+                            monthlyPlan: [
+                                "Contenido semanal estratégico",
+                                "Rotación equilibrada de contenido",
+                                "Análisis básico de resultados KPI's"
+                            ],
+                            support: [
+                                "Soporte completo LIFETIME",
+                                "Ajustes de estrategia según resultados",
+                                "Calendario de publicación semanal",
+                                "Soporte vía WhatsApp durante todo el mes"
+                            ],
+                            note: "Ideal para negocios que buscan mayor movimiento y recordación de marca."
+                        },
+                        {
+                            title: "Anuncios Publicitarios ",
+                            price: "Costo a definir",
+                            priceNote: "Campaña publicitaria · Formato televisión digital",
+                            features: [
+                                "Duración: 2 meses",
+                                "Creación de 3 anuncios publicitarios estilo comercial",
+                                "Enfoque comercial y de posicionamiento",
+                                "Difusión durante el periodo contratado",
+                                "Rotación estratégica de anuncios",
+                                "Planificación completa de campaña",
+                                "Ajustes y optimización durante la difusión"
+                            ],
+                            platforms: ["TikTok", "Instagram", "Facebook"],
+                            optimization: [
+                                "Ajustes de campaña en tiempo real",
+                                "Análisis profundo de ROI"
+                            ],
+                            support: [
+                                "Soporte premium LIFETIME",
+                                "Ajustes de estrategia en tiempo real",
+                                "Calendario de campaña completo",
+                                "Soporte prioritario vía WhatsApp 24/7",
+                                "Reportes semanales de desempeño",
+                                "Optimización continua de la campaña"
+                            ],
+                            note: "Diseñado para negocios que buscan verse como marca sólida y profesional."
+                        }
+                    ]
+                }
+            }
+        };
+
+        // Función para crear la sección de tablas de planes web
+        function createWebPlansSection(webPlansData) {
+            if (!webPlansData || !webPlansData.packages) return '';
+            
+            return `
+                <div class="packages-section">
+                    <h3 class="packages-title">${webPlansData.title}</h3>
+                    <div class="packages-subtitle">${webPlansData.subtitle}</div>
+                    
+                    <div class="packages-container">
+                        ${webPlansData.packages.map((pkg, index) => `
+                            <div class="package-card">
+                                <div class="package-header">
+                                    <h2 class="package-title">
+                                        <span>${pkg.title}</span>
+                                    </h2>
+                                    <div class="package-price">${pkg.price}</div>
+                                    <p class="price-note">${pkg.priceNote}</p>
+                                </div>
+                                
+                                <div class="package-content">
+                                    <h3 class="section-title-package">
+                                        <i class="far fa-check-circle"></i> Incluye
+                                    </h3>
+                                    <ul class="features-list">
+                                        ${pkg.features.map(feature => `
+                                            <li><i class="fas fa-check"></i> ${feature}</li>
+                                        `).join('')}
+                                    </ul>
+                                    
+                                    ${pkg.excluded ? `
+                                        <div class="divider"></div>
+                                        
+                                        <h3 class="section-title-package">
+                                            <i class="fas fa-times-circle"></i> No incluye
+                                        </h3>
+                                        <ul class="features-list">
+                                            ${pkg.excluded.map(item => `
+                                                <li class="feature-disabled"><i class="fas fa-times-circle"></i> ${item.text}</li>
+                                            `).join('')}
+                                        </ul>
+                                    ` : ''}
+                                    
+                                    ${pkg.highlight ? `
+                                        <div class="support-section">
+                                            <h4 class="support-title">
+                                                <i class="fas fa-star"></i> Beneficio Exclusivo
+                                            </h4>
+                                            <p class="package-note">
+                                                ${pkg.highlight}
+                                            </p>
+                                        </div>
+                                    ` : ''}
+                                    
+                                    <div class="support-section">
+                                        <h4 class="support-title">
+                                            <i class="fas fa-info-circle"></i> Nota
+                                        </h4>
+                                        <p class="package-note">
+                                            ${pkg.note}
+                                        </p>
+                                    </div>
+                                    
+                                    <button class="package-cta" data-plan="${pkg.title}">
+                                        <i class="fas fa-whatsapp"></i> Solicitar ${pkg.title}
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${webPlansData.note ? `
+                        <div class="web-plan-note">${webPlansData.note}</div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // Función para crear la sección de planes de marketing en redes sociales
+        function createMarketingPlansSection(marketingPlansData) {
+            if (!marketingPlansData || !marketingPlansData.packages) return '';
+            
+            return `
+                <div class="marketing-plans-section">
+                    <h3 class="marketing-plans-title">${marketingPlansData.title}</h3>
+                    <div class="marketing-plans-subtitle">${marketingPlansData.subtitle}</div>
+                    
+                    <div class="marketing-plans-container">
+                        ${marketingPlansData.packages.map((pkg, index) => `
+                            <div class="marketing-plan-card">
+                                <div class="marketing-plan-header">
+                                    <h2 class="marketing-plan-title">
+                                        <span>${pkg.title}</span>
+                                    </h2>
+                                    <div class="marketing-plan-price">${pkg.price}</div>
+                                    <p class="marketing-price-note">${pkg.priceNote}</p>
+                                </div>
+                                
+                                <div class="marketing-plan-content">
+                                    <h3 class="marketing-section-title">
+                                        <i class="far fa-check-circle"></i> Incluye
+                                    </h3>
+                                    <ul class="marketing-features-list">
+                                        ${pkg.features.map(feature => `
+                                            <li><i class="fas fa-check"></i> ${feature}</li>
+                                        `).join('')}
+                                    </ul>
+                                    
+                                    ${pkg.optimization ? `
+                                        <div class="marketing-divider"></div>
+                                        
+                                        <h3 class="marketing-section-title">
+                                            <i class="fas fa-chart-line"></i> Optimización y seguimiento
+                                        </h3>
+                                        <ul class="marketing-features-list">
+                                            ${pkg.optimization.map(item => `
+                                                <li><i class="fas fa-check"></i> ${item}</li>
+                                            `).join('')}
+                                        </ul>
+                                    ` : ''}
+                                    
+                                    <div class="marketing-section-title">
+                                        <i class="fas fa-share-alt"></i> Publicación en
+                                    </div>
+                                    <div class="marketing-platforms">
+                                        ${pkg.platforms.map(platform => {
+                                            let icon = '';
+                                            if (platform === 'TikTok') icon = 'fa-tiktok';
+                                            if (platform === 'Instagram') icon = 'fa-instagram';
+                                            if (platform === 'Facebook') icon = 'fa-facebook';
+                                            return `
+                                                <div class="marketing-platform">
+                                                    <i class="fab ${icon}"></i>
+                                                    <span>${platform}</span>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                    
+                                    ${pkg.monthlyPlan ? `
+                                        <div class="marketing-divider"></div>
+                                        
+                                        <h3 class="marketing-section-title">
+                                            <i class="far fa-calendar-alt"></i> Planificación y publicación
+                                        </h3>
+                                        <ul class="marketing-features-list">
+                                            ${pkg.monthlyPlan.map(item => `
+                                                <li><i class="fas fa-check"></i> ${item}</li>
+                                            `).join('')}
+                                        </ul>
+                                    ` : ''}
+                                    
+                                    <div class="marketing-support-section">
+                                        <h4 class="marketing-support-title">
+                                            <i class="fas fa-life-ring"></i> Soporte incluido
+                                        </h4>
+                                        <ul class="marketing-support-features">
+                                            ${pkg.support.map(item => `
+                                                <li><i class="fas fa-circle"></i> ${item}</li>
+                                            `).join('')}
+                                        </ul>
+                                        <p class="marketing-note">
+                                            ${pkg.note}
+                                        </p>
+                                    </div>
+                                    
+                                    <button class="marketing-cta" data-package="${pkg.title}">
+                                        <i class="fas fa-whatsapp"></i> Solicitar este plan
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Función para crear la sección de paquetes de contenido
+        function createPackagesSection(packagesData) {
+            if (!packagesData || !packagesData.packages) return '';
+            
+            return `
+                <div class="packages-section">
+                    <h3 class="packages-title">${packagesData.title}</h3>
+                    <div class="packages-subtitle">${packagesData.subtitle}</div>
+                    
+                    <div class="packages-container">
+                        ${packagesData.packages.map((pkg, index) => `
+                            <div class="package-card">
+                                <div class="package-header">
+                                    <h2 class="package-title">
+                                        <span>${pkg.title}</span>
+                                    </h2>
+                                    <div class="package-price">${pkg.price}</div>
+                                    <p class="price-note">${pkg.priceNote}</p>
+                                </div>
+                                
+                                <div class="package-content">
+                                    <h3 class="section-title-package">
+                                        <i class="far fa-check-circle"></i> Incluye
+                                    </h3>
+                                    <ul class="features-list">
+                                        ${pkg.features.map(feature => `
+                                            <li><i class="fas fa-check"></i> ${feature}</li>
+                                        `).join('')}
+                                    </ul>
+                                    
+                                    ${pkg.optimization ? `
+                                        <div class="divider"></div>
+                                        
+                                        <h3 class="section-title-package">
+                                            <i class="fas fa-chart-line"></i> Optimización y seguimiento
+                                        </h3>
+                                        <ul class="features-list">
+                                            ${pkg.optimization.map(item => `
+                                                <li><i class="fas fa-check"></i> ${item}</li>
+                                            `).join('')}
+                                        </ul>
+                                    ` : ''}
+                                    
+                                    <div class="section-title-package">
+                                        <i class="fas fa-share-alt"></i> Publicación en
+                                    </div>
+                                    <div class="platforms">
+                                        ${pkg.platforms.map(platform => {
+                                            let icon = '';
+                                            if (platform === 'TikTok') icon = 'fa-tiktok';
+                                            if (platform === 'Instagram') icon = 'fa-instagram';
+                                            if (platform === 'Facebook') icon = 'fa-facebook';
+                                            return `
+                                                <div class="platform">
+                                                    <i class="fab ${icon}"></i>
+                                                    <span>${platform}</span>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                    
+                                    ${pkg.monthlyPlan ? `
+                                        <div class="divider"></div>
+                                        
+                                        <h3 class="section-title-package">
+                                            <i class="far fa-calendar-alt"></i> Planificación y publicación
+                                        </h3>
+                                        <ul class="features-list">
+                                            ${pkg.monthlyPlan.map(item => `
+                                                <li><i class="fas fa-check"></i> ${item}</li>
+                                            `).join('')}
+                                        </ul>
+                                    ` : ''}
+                                    
+                                    <div class="support-section">
+                                        <h4 class="support-title">
+                                            <i class="fas fa-life-ring"></i> Soporte ${pkg.title === 'Reportero' ? 'básico' : (pkg.title.includes('Bimestral') ? 'premium' : 'completo')}
+                                        </h4>
+                                        <ul class="support-features">
+                                            ${pkg.support.map(item => `
+                                                <li><i class="fas fa-circle"></i> ${item}</li>
+                                            `).join('')}
+                                        </ul>
+                                        <p class="package-note">
+                                            ${pkg.note}
+                                        </p>
+                                    </div>
+                                    
+                                    <button class="package-cta" data-package="${pkg.title}">
+                                        <i class="fas fa-whatsapp"></i> Solicitar este paquete
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Función para crear el contenido del modal con la nueva estructura
+        function createModalContent(serviceId) {
+            const service = servicesData[serviceId];
+            if (!service) {
+                console.error('Servicio no encontrado:', serviceId);
+                return '';
+            }
+            
+            // Crear características HTML
+            const featuresHTML = service.features.map(feature => `
+                <div class="feature-card-modal">
+                    <div class="feature-icon-modal">
+                        <i class="fas ${feature.icon}"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4 class="feature-title-modal">${feature.title}</h4>
+                        <p class="feature-description-modal">${feature.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Crear beneficios HTML
+            const benefitsHTML = service.benefits.map(benefit => `
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas ${benefit.icon}"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>${benefit.title}</h4>
+                        <p>${benefit.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Crear sección de paquetes si existe (solo para servicio 1)
+            const packagesSection = serviceId === '1' && service.packages ? createPackagesSection(service.packages) : '';
+            
+            // Crear sección de planes web si existe (solo para servicio 3)
+            const webPlansSection = serviceId === '3' && service.webPlans ? createWebPlansSection(service.webPlans) : '';
+            
+            // Crear sección de planes de marketing si existe (solo para servicio 4)
+            const marketingPlansSection = serviceId === '4' && service.marketingPlans ? createMarketingPlansSection(service.marketingPlans) : '';
+            
+            // Crear sección de precio solo si existe (no para servicios 1, 3 y 4)
+            const pricingSection = serviceId !== '1' && serviceId !== '3' && serviceId !== '4' && service.pricing ? `
+                <div class="modal-section">
+                    <h3 class="section-title-modal centered">
+                        <i class="fas fa-dollar-sign"></i>
+                        Inversión requerida y lo que incluye
+                    </h3>
+                    
+                    <div class="pricing-section-modal">
+                        <div class="pricing-badge-modal">
+                            ${service.pricing.amount === 'Consultar' ? 'Servicio personalizado' : (service.pricing.amount.includes('MXN') ? 'Inversión estratégica' : 'Servicio gratuito')}
+                        </div>
+                        <div class="pricing-amount-modal">${service.pricing.amount}</div>
+                        <div class="pricing-period-modal">${service.pricing.period}</div>
+                        
+                        <div class="pricing-features-modal">
+                            ${service.pricing.features.map(feature => `
+                                <div class="pricing-feature-item">
+                                    <i class="fas fa-check"></i>
+                                    <span>${feature}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    ${serviceId === '2' ? '' : `
+                        <div class="description-centered" style="margin-top: 2rem;">
+                            <strong>Importante:</strong> Todos los precios son transparentes y sin cargos ocultos. Para servicios personalizados como producción de video o desarrollo web, ofrecemos cotizaciones detalladas después de entender exactamente tus necesidades específicas. Contáctanos para una evaluación gratuita y una propuesta personalizada.
+                        </div>
+                    `}
+                </div>
+            ` : '';
+            
+            return `
+                <button class="modal-close" id="modalCloseInside">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="modal-header" style="background-image: url('${service.image}')">
+                    <h3 class="modal-title">${service.title}</h3>
+                    <div class="modal-subtitle">${service.subtitle}</div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="description-section">
+                        <h3 class="section-title-modal centered">
+                            <i class="fas fa-file-alt"></i>
+                            Descripción detallada del servicio
+                        </h3>
+                        <div class="description-centered">
+                            ${service.description}
+                        </div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3 class="section-title-modal">
+                            <i class="fas fa-list-check"></i>
+                            Características principales
+                        </h3>
+                        <div class="features-grid-modal">
+                            ${featuresHTML}
+                        </div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3 class="section-title-modal">
+                            <i class="fas fa-gift"></i>
+                            Beneficios exclusivos para tu negocio
+                        </h3>
+                        <div class="benefits-grid">
+                            ${benefitsHTML}
+                        </div>
+                    </div>
+                    
+                    ${packagesSection}
+                    
+                    ${webPlansSection}
+                    
+                    ${marketingPlansSection}
+                    
+                    ${pricingSection}
+                </div>
+                
+                <div class="modal-footer">
+                    <div class="modal-footer-text">
+                        <strong>¿Interesado en este servicio o tienes preguntas específicas?</strong><br>
+                        Nuestro equipo está listo para ayudarte a determinar si esta solución es la ideal para tus objetivos comerciales. Agenda una consulta gratuita sin compromiso para explorar cómo podemos impulsar tu negocio juntos.
+                    </div>
+                    <button class="modal-cta" id="modalCtaBtn">
+                        <i class="fas fa-whatsapp"></i> Contactar por WhatsApp para más información
+                    </button>
+                </div>
+            `;
+        }
+        
+        // Función para abrir el modal
+        function openModal(serviceId) {
+            console.log('Intentando abrir modal para servicio:', serviceId);
+            
+            // Verificar que el servicio existe
+            if (!servicesData[serviceId]) {
+                console.error('Servicio no encontrado:', serviceId);
+                return;
+            }
+            
+            const content = createModalContent(serviceId);
+            if (!content) {
+                console.error('No se pudo generar contenido para el modal');
+                return;
+            }
+            
+            modalContainer.innerHTML = content;
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Agregar evento al botón de WhatsApp dentro del modal
+            const modalCtaBtn = document.getElementById('modalCtaBtn');
+            if (modalCtaBtn) {
+                modalCtaBtn.addEventListener('click', function() {
+                    window.open('https://wa.me/5539445908', '_blank');
+                });
+            }
+            
+            // Agregar eventos a los botones de paquetes
+            const packageCtaButtons = document.querySelectorAll('.package-cta');
+            packageCtaButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const packageName = this.getAttribute('data-package');
+                    const message = `Hola, estoy interesado en el paquete "${packageName}" del servicio de Producción de Video Promocional. ¿Podrían darme más información?`;
+                    window.open(`https://wa.me/5539445908?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            });
+            
+            // Agregar eventos a los botones de planes de marketing
+            const marketingCtaButtons = document.querySelectorAll('.marketing-cta');
+            marketingCtaButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const packageName = this.getAttribute('data-package');
+                    const message = `Hola, estoy interesado en el plan "${packageName}" de Publicación en Redes Sociales. ¿Podrían darme más información?`;
+                    window.open(`https://wa.me/5539445908?text=${encodeURIComponent(message)}`, '_blank');
+                });
+            });
+            
+            // Asegurarse de que el botón de cerrar dentro del modal funcione
+            const modalCloseInside = document.getElementById('modalCloseInside');
+            if (modalCloseInside) {
+                modalCloseInside.addEventListener('click', closeModal);
+            }
+        }
+        
+        // Función para cerrar el modal
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página cargada, inicializando botones...');
+            
+            // Botones "Ver detalles" - Asegurarnos de que funcionen
+            const expandButtons = document.querySelectorAll('.expand-btn');
+            expandButtons.forEach(button => {
+                console.log('Configurando botón:', button);
+                button.addEventListener('click', function() {
+                    console.log('Botón clickeado, data-service:', this.getAttribute('data-service'));
+                    const serviceId = this.getAttribute('data-service');
+                    if (serviceId) {
+                        openModal(serviceId);
+                    } else {
+                        console.error('Botón no tiene data-service:', this);
+                    }
+                });
+            });
+            
+            // Botones "Publicar Negocio" - Redirige a WhatsApp
+            const publishBusinessButtons = document.querySelectorAll('.publish-btn[data-type="business"]');
+            publishBusinessButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const serviceId = this.getAttribute('data-service');
+                    const service = servicesData[serviceId];
+                    
+                    if (service) {
+                        // Mensaje predefinido para WhatsApp para negocio
+                        const message = `Hola, quiero subir mi publicación. Mi negocio es: [NOMBRE DEL NEGOCIO]. ¿Podrían ayudarme con el proceso?`;
+                        
+                        // Abrir WhatsApp con el mensaje
+                        window.open(`https://wa.me/5539445908?text=${encodeURIComponent(message)}`, '_blank');
+                    }
+                });
+            });
+            
+            // Botones "Publicar Artículo" - Redirige a WhatsApp
+            const publishArticleButtons = document.querySelectorAll('.publish-article-btn[data-type="article"]');
+            publishArticleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const serviceId = this.getAttribute('data-service');
+                    const service = servicesData[serviceId];
+                    
+                    if (service) {
+                        // Mensaje predefinido para WhatsApp para artículo
+                        const message = `Hola, quiero publicar un ARTÍCULO. El artículo es sobre: [TEMA DEL ARTÍCULO]. ¿Podrían ayudarme con el proceso?`;
+                        
+                        // Abrir WhatsApp con el mensaje
+                        window.open(`https://wa.me/5539445908?text=${encodeURIComponent(message)}`, '_blank');
+                    }
+                });
+            });
+            
+            // Cerrar modal con el botón de cierre
+            modalClose.addEventListener('click', closeModal);
+            
+            // Cerrar modal al hacer clic fuera
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+            
+            // Cerrar modal con ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+            
+            // Mobile menu
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            // Año actual en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Botones de CTA principales
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            const emailBtn = document.getElementById('emailBtn');
+            
+            if (whatsappBtn) {
+                whatsappBtn.addEventListener('click', function() {
+                    window.open('https://wa.me/5539445908', '_blank');
+                });
+            }
+            
+            if (emailBtn) {
+                emailBtn.addEventListener('click', function() {
+                    window.location.href = 'mailto:info@lifetimesagency.com';
+                });
+            }
+            
+            console.log('Total de botones expand-btn encontrados:', expandButtons.length);
+            console.log('Total de botones publish-btn encontrados:', publishBusinessButtons.length);
+            console.log('Total de botones publish-article-btn encontrados:', publishArticleButtons.length);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES - Vende por Mayoreo | Guía Profesional para Proveedores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES ====== */
+        :root {
+            --primary: #0F52C9;
+            --primary-dark: #0D45A8;
+            --primary-light: rgba(15, 82, 201, 0.1);
+            --secondary: #FFB347;
+            --secondary-light: rgba(255, 179, 71, 0.2);
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --warning: #e9c46a;
+            --danger: #e76f51;
+            --whatsapp: #25D366;
+            --whatsapp-dark: #128C7E;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --gradient-primary: linear-gradient(135deg, #0F52C9 0%, #2A73FF 100%);
+            --gradient-overlay: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== NAVBAR ====== */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .logo {
+            font-weight: 900;
+            font-size: 1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-cta {
+            display: flex;
+            gap: .8rem;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            padding: .85rem 1.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(15, 82, 201, 0.2);
+        }
+        
+        .btn.fill {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        .btn.fill:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn.ghost {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn.ghost:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        .btn.success {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        
+        .btn.success:hover {
+            background: #1f7a6b;
+            border-color: #1f7a6b;
+        }
+        
+        .btn.whatsapp {
+            background: var(--whatsapp);
+            border-color: var(--whatsapp);
+            color: white;
+        }
+        
+        .btn.whatsapp:hover {
+            background: var(--whatsapp-dark);
+            border-color: var(--whatsapp-dark);
+        }
+
+        /* Nuevo estilo para el botón Volver */
+        .btn.back {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn.back:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn.back i {
+            font-size: 0.9rem;
+        }
+        
+        /* ====== SECCIONES CON IMAGEN DE FONDO ====== */
+        .full-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .full-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-overlay);
+            z-index: 1;
+        }
+        
+        .section-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .section-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+        }
+        
+        .section-title span {
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title .secondary-color {
+            color: var(--secondary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            line-height: 1.6;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+            max-width: 800px;
+        }
+        
+        .step-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            font-weight: 800;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* ====== HERO SECTION ====== */
+        .hero-section {
+            background-image: url('https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            min-width: 180px;
+        }
+        
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--secondary);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* ====== GRID DE TARJETAS ====== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.8rem;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(15, 82, 201, 0.3);
+        }
+        
+        .card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            color: white;
+        }
+        
+        .card p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .card ul {
+            list-style: none;
+            padding: 0;
+            flex: 1;
+        }
+        
+        .card li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .card li i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+        
+        .card .highlight {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+        
+        .card .btn-card {
+            margin-top: 1.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        /* ====== TARJETAS ESPECIALES ====== */
+        .highlight-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border-left: 6px solid var(--primary);
+        }
+        
+        .info-card {
+            background: rgba(15, 82, 201, 0.3);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+        }
+        
+        .info-card h4 {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .price-table {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .price-row:last-child {
+            border-bottom: none;
+        }
+        
+        .price-row.highlight {
+            background: rgba(15, 82, 201, 0.3);
+        }
+        
+        .price-row .range {
+            font-weight: 600;
+        }
+        
+        .price-row .price {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .example-box {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px dashed var(--secondary);
+        }
+        
+        .example-box p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .example-box i {
+            color: var(--secondary);
+            margin-right: 8px;
+        }
+        
+        .badge-new {
+            background: var(--secondary);
+            color: var(--dark);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            margin-left: 1rem;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        
+        /* ====== OPCIONES DE ENVÍO ====== */
+        .shipping-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .shipping-option {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .shipping-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .shipping-option h4 {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .address-box {
+            background: rgba(0,0,0,0.4);
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 1rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        /* ====== SECCIÓN DE PSICOLOGÍA ====== */
+        .psychology-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .psychology-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .psychology-card:hover {
+            transform: scale(1.05);
+            background: rgba(15, 82, 201, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .psychology-term {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .psychology-meaning {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        /* ====== SECCIÓN DE OBJETIVOS ====== */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .objective-card {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+        }
+        
+        .objective-icon {
+            width: 90px;
+            height: 90px;
+            background: var(--gradient-primary);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.8rem;
+            font-size: 2.8rem;
+            color: white;
+        }
+        
+        .objective-card h4 {
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .objective-card p {
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        /* ====== TIMELINE ====== */
+        .timeline {
+            margin: 3rem 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .timeline-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-content h4 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* ====== CTA SECTION ====== */
+        .cta-section {
+            background-image: url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            text-align: center;
+        }
+        
+        .cta-button-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--primary);
+            color: white;
+            padding: 1.3rem 3.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            margin-top: 2.5rem;
+            box-shadow: 0 10px 25px rgba(15, 82, 201, 0.3);
+        }
+        
+        .cta-button-large:hover {
+            background: transparent;
+            border-color: white;
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer h4 {
+            color: white;
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer a {
+            color: #999;
+            text-decoration: none;
+            display: block;
+            padding: 0.4rem 0;
+            transition: color 0.3s;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        .footer .muted {
+            color: #999;
+            line-height: 1.6;
+        }
+        
+        .socials a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid #333;
+            color: #999;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1200px) {
+            .section-title {
+                font-size: 3.5rem;
+            }
+            
+            .psychology-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .objectives-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 3rem;
+            }
+            
+            .shipping-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .psychology-grid,
+            .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .btn .btn-text {
+                display: none;
+            }
+            
+            .nav-inner {
+                padding: 0 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900;
+        }
+        
+        .text-secondary {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <a class="logo" href="#">
+                <i class="fas fa-store logo-icon"></i>
+                <strong class="lifetimes-bold">LIFETIMES</strong> <span>Proveedores</span>
+            </a>
+            <div class="nav-cta">
+                <a class="btn ghost" href="#proceso">
+                    <i class="fas fa-list"></i> <span class="btn-text">Pasos</span>
+                </a>
+                <!-- Botón modificado: ahora es "Volver" con flecha y redirige a Pre-subir-comercio.html -->
+                <a class="btn back" href="Pre-subir-comercio.html">
+                    <i class="fas fa-arrow-left"></i> <span class="btn-text">Volver</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION ====== -->
+    <section class="full-section hero-section">
+        <div class="section-content">
+            <h1 class="section-title">
+                Conviértete en <span>proveedor</span><br>
+                de <span class="secondary-color">LIFETIMES</span>
+            </h1>
+            <p class="section-subtitle">
+                Lleva tus productos al siguiente nivel. Vende por mayoreo a través de nuestra plataforma profesional. Hemos mejorado el proceso para que sea más claro, seguro y escalable.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">+350</div>
+                    <div class="stat-label">Proveedores activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Pasos claros</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24h</div>
+                    <div class="stat-label">Activación</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FASE 1: REGISTRO Y PRIMER CONTACTO (CON BOTONES ACTUALIZADOS) ====== -->
+    <section id="proceso" class="full-section" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <div class="step-badge">FASE 1</div>
+            <h2 class="section-title">Registro y <span>primer contacto</span></h2>
+            
+            <div class="cards-grid">
+                <!-- Tarjeta de Registro del Negocio con botón -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Registro del Negocio</h3>
+                    <p>Cuéntanos quién eres. Necesitamos:</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Nombre completo y cargo</li>
+                        <li><i class="fas fa-check-circle"></i> Nombre de tu negocio o marca</li>
+                        <li><i class="fas fa-check-circle"></i> Teléfono y correo electrónico</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> <strong>RFC o Identificación Fiscal</strong> <span class="badge-new">Nuevo</span></li>
+                    </ul>
+                    <p class="highlight">¿Por qué? Necesitamos tus datos fiscales desde el principio para poder pagarte.</p>
+                    
+                    <!-- BOTÓN NUEVO: Registro de negocio -->
+                    <a href="Paqueteria-Comercio.html" class="btn fill btn-card" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
+                        <i class="fas fa-file-signature"></i> Registrar mi negocio
+                    </a>
+                </div>
+                
+                <!-- Tarjeta de Primer Contacto con botón de WhatsApp "Asesor personalizado" -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Primer contacto</h3>
+                    <p>¿Tienes dudas? Habla directamente con un asesor personalizado que te guiará en todo el proceso.</p>
+                    <ul>
+                        <li><i class="fas fa-phone-alt"></i> Llamada de bienvenida</li>
+                        <li><i class="fas fa-check-double"></i> Validación de datos</li>
+                        <li><i class="fas fa-handshake"></i> Acuerdo de confidencialidad simple</li>
+                    </ul>
+                    
+                    <!-- BOTÓN NUEVO: Asesor personalizado por WhatsApp -->
+                    <a href="https://wa.me/52123456789?text=Hola%2C%20quiero%20ser%20proveedor%20de%20LIFETIMES%20y%20necesito%20asesor%C3%ADa%20personalizada" class="btn whatsapp btn-card" style="margin-top: 1.5rem; width: 100%; justify-content: center;" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Asesor personalizado
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FASE 2: CONFIGURACIÓN DEL PRODUCTO ====== -->
+    <section class="full-section" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <div class="step-badge">FASE 2</div>
+            <h2 class="section-title">Configuración del <span>producto</span></h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-info-circle"></i></div>
+                    <h3>Información del Producto</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Nombre del producto</li>
+                        <li><i class="fas fa-check-circle"></i> Categoría (alimentos, ropa, hogar...)</li>
+                        <li><i class="fas fa-check-circle"></i> Descripción breve y características</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> <strong>Código de barras (SKU o UPC)</strong> <span class="badge-new">Nuevo</span></li>
+                    </ul>
+                    <p class="highlight">¿Por qué? El código de barras evita confusiones en inventario. Si no tienes, nosotros te asignamos uno.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-box-open"></i></div>
+                    <h3>Presentación y Empaque</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Empaque individual sellado</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> <strong>Etiquetado completo:</strong> nombre, ingredientes, peso, fecha de caducidad <span class="badge-new">Nuevo</span></li>
+                        <li><i class="fas fa-check-circle"></i> Protegido para transporte</li>
+                        <li><i class="fas fa-check-circle"></i> Incluye nombre de tu marca</li>
+                    </ul>
+                    <p class="highlight">¿Por qué? Un cliente podría devolver un producto sin etiquetado. Te protegemos a ti.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-cubes"></i></div>
+                    <h3>Define la Logística</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Unidades por caja (ej. 24 piezas)</li>
+                        <li><i class="fas fa-check-circle"></i> Peso aproximado por caja</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> <strong>Dimensiones de la caja (alto, ancho, profundo)</strong> <span class="badge-new">Nuevo</span></li>
+                        <li><i class="fas fa-check-circle"></i> Frecuencia de reabastecimiento</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> <strong>Stock inicial disponible (cajas/piezas)</strong> <span class="badge-new">Nuevo</span></li>
+                    </ul>
+                    <p class="highlight">¿Por qué? Las dimensiones evitan sorpresas en costos de envío. El stock inicial evita publicar productos sin existencia.</p>
+                </div>
+            </div>
+            
+            <div class="example-box" style="margin-top: 2rem;">
+                <p><i class="fas fa-lightbulb"></i> <strong>Ejemplo completo de logística:</strong></p>
+                <p>📦 24 shampoos por caja | ⚖️ 8 kg por caja | 📐 40x30x20 cm | 🔄 Reabastecimiento semanal | 📊 Stock inicial: 10 cajas (240 piezas)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FASE 3: PRECIOS Y CONDICIONES COMERCIALES ====== -->
+    <section class="full-section" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <div class="step-badge">FASE 3</div>
+            <h2 class="section-title">Precios y <span>condiciones comerciales</span></h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-tag"></i></div>
+                    <h3>Precio por pieza</h3>
+                    <p>¿En cuánto nos vendes cada unidad a nosotros?</p>
+                    <div class="example-box">
+                        <p>Ejemplo: Shampoo → $25 por unidad</p>
+                    </div>
+                    <p class="highlight">Este es tu costo unitario para la plataforma</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Precio por volumen</h3>
+                    <p>Mejor precio para mayores cantidades:</p>
+                    <div class="price-table">
+                        <div class="price-row"><span class="range">1–100 piezas</span><span class="price">$25 c/u</span></div>
+                        <div class="price-row highlight"><span class="range">100–500 piezas</span><span class="price">$22 c/u</span></div>
+                        <div class="price-row"><span class="range">500+ piezas</span><span class="price">$20 c/u</span></div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-store"></i></div>
+                    <h3>Precio sugerido al público</h3>
+                    <p>¿A qué precio crees que debería venderse al cliente final?</p>
+                    <div class="example-box">
+                        <p>Ejemplo: $49</p>
+                    </div>
+                    <p class="highlight">(Nosotros analizamos el mercado y acordamos el precio final contigo)</p>
+                </div>
+            </div>
+            
+            <div class="highlight-card" style="margin-top: 2rem;">
+                <h3 style="font-size: 2rem; margin-bottom: 1rem; color: var(--secondary);">🤝 Negociación y ajuste</h3>
+                <p style="font-size: 1.2rem;">Revisaremos tu información, analizaremos el mercado y la competencia. Juntos definiremos el precio de venta final, buscando un equilibrio donde todos ganen: tú por volumen, nosotros por comisión y el cliente por valor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FASE 4: LOGÍSTICA, CALIDAD Y ACTIVACIÓN ====== -->
+    <section class="full-section" style="background-image: url('https://images.unsplash.com/photo-1566577134770-3d85bb3a9cc4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <div class="step-badge">FASE 4</div>
+            <h2 class="section-title">Calidad y <span>activación</span></h2>
+            
+            <div class="cards-grid">
+                <div class="card" style="border-left: 4px solid var(--secondary);">
+                    <div class="card-icon"><i class="fas fa-flask"></i></div>
+                    <h3>Paso de la Muestra <span class="badge-new">Nuevo - Crucial</span></h3>
+                    <p><strong>Antes de enviarnos tu primer pedido grande, necesitamos validar la calidad.</strong></p>
+                    <ul>
+                        <li><i class="fas fa-box"></i> Tú nos envías 1 muestra (por tu cuenta)</li>
+                        <li><i class="fas fa-truck"></i> O pasamos por ella si estás en zona de recolección</li>
+                    </ul>
+                    <p class="highlight">Revisaremos empaque, etiquetado y producto. Si todo está bien, ¡adelante! Si no, te daremos retroalimentación para ajustarlo.</p>
+                    <p style="color: var(--secondary); margin-top: 1rem;">¿Por qué? Es más barato corregir un error en una muestra que en 240 unidades.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-truck"></i></div>
+                    <h3>Envío de tu Mercancía</h3>
+                    <p>Una vez aprobada la muestra, envía tu stock inicial.</p>
+                    
+                    <div style="margin-top: 1rem;">
+                        <p><i class="fas fa-truck" style="color: var(--secondary);"></i> <strong>Opción A — Entregar:</strong></p>
+                        <div class="address-box" style="font-size: 0.9rem;">
+                            Av. Logística #123, Bodega 5<br>
+                            Ciudad Central, CP 45000
+                        </div>
+                        
+                        <p style="margin-top: 1rem;"><i class="fas fa-box" style="color: var(--secondary);"></i> <strong>Opción B — Recolección:</strong></p>
+                        <p>Si estás en zona disponible, pasamos por tu producto. Solo agenda día y horario.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>Revisión y Activación</h3>
+                    <p>Al recibir tu mercancía:</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> <strong>Revisión de calidad por muestreo</strong> <span class="badge-new">Nuevo</span></li>
+                        <li><i class="fas fa-check-circle"></i> Abriremos algunas cajas para verificar consistencia con la muestra</li>
+                        <li><i class="fas fa-check-circle"></i> Registramos inventario con código de barras</li>
+                        <li><i class="fas fa-check-circle"></i> Publicamos tu producto</li>
+                    </ul>
+                    <p class="highlight">¿Por qué? La revisión por muestreo asegura que todo el lote es bueno, no solo la muestra.</p>
+                </div>
+            </div>
+            
+            <div class="info-card" style="margin-top: 2rem;">
+                <h4><i class="fas fa-rocket"></i> ¡Inicio de Ventas!</h4>
+                <p style="font-size: 1.2rem; color: white;">¡Felicidades! Tu producto ya está vivo en la plataforma. A partir de ahora, nosotros nos encargamos de los pedidos, pagos, promoción y atención al cliente. Tú te enfocas en seguir creando y reabasteciéndonos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== RESUMEN DEL FLUJO COMPLETO ====== -->
+    <section class="full-section" style="background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80');">
+        <div class="section-content">
+            <h2 class="section-title">Tu <span>flujo completo</span> en 10 pasos</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h4>Registro del negocio + RFC</h4>
+                        <p>Datos básicos y fiscales para poder pagarte</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h4>Información del producto + Código de barras</h4>
+                        <p>Nombre, categoría, descripción y SKU</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h4>Presentación y empaque + Etiquetado completo</h4>
+                        <p>Producto listo para cliente final con toda la información</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h4>Definición de volumen + Dimensiones + Stock inicial</h4>
+                        <p>Unidades por caja, peso, medidas y disponibilidad</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">5</div>
+                    <div class="timeline-content">
+                        <h4>Precio por unidad + Precio por volumen</h4>
+                        <p>Precio base y escalas por cantidad</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">6</div>
+                    <div class="timeline-content">
+                        <h4>Precio sugerido al público</h4>
+                        <p>Referencia para analizar mercado</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">7</div>
+                    <div class="timeline-content">
+                        <h4>Negociación de precio con la plataforma</h4>
+                        <p>Definimos juntos el precio final</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">8</div>
+                    <div class="timeline-content">
+                        <h4>Paso de la muestra (validación de calidad)</h4>
+                        <p>Envías 1 muestra para aprobación</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">9</div>
+                    <div class="timeline-content">
+                        <h4>Envío o recolección de mercancía</h4>
+                        <p>Entregas el stock inicial en nuestro almacén</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">10</div>
+                    <div class="timeline-content">
+                        <h4>Revisión por muestreo y activación</h4>
+                        <p>Verificamos el lote y publicamos tu producto</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE PSICOLOGÍA ====== -->
+    <section class="full-section" style="background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80');">
+        <div class="section-content">
+            <h2 class="section-title">🧠 Por qué esta <span>forma de trabajar</span> funciona</h2>
+            
+            <div class="psychology-grid">
+                <div class="psychology-card">
+                    <div class="psychology-term">margen comercial</div>
+                    <div class="psychology-meaning">precio justo</div>
+                </div>
+                <div class="psychology-card">
+                    <div class="psychology-term">negociación</div>
+                    <div class="psychology-meaning">trabajamos contigo</div>
+                </div>
+                <div class="psychology-card">
+                    <div class="psychology-term">estrategia pricing</div>
+                    <div class="psychology-meaning">vender más</div>
+                </div>
+                <div class="psychology-card">
+                    <div class="psychology-term">escalas de volumen</div>
+                    <div class="psychology-meaning">descuento por cantidad</div>
+                </div>
+            </div>
+            
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <div class="objective-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Objetivo 1</h4>
+                    <p>tú ganes por volumen</p>
+                </div>
+                <div class="objective-card">
+                    <div class="objective-icon"><i class="fas fa-smile"></i></div>
+                    <h4>Objetivo 2</h4>
+                    <p>cliente perciba buen valor</p>
+                </div>
+                <div class="objective-card">
+                    <div class="objective-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h4>Objetivo 3</h4>
+                    <p>rotación real</p>
+                </div>
+            </div>
+            
+            <div class="highlight-card" style="margin-top: 2rem;">
+                <h3 style="color: var(--secondary);">Lo que hemos añadido para protegerte:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div><i class="fas fa-file-invoice"></i> RFC/Identificación Fiscal</div>
+                    <div><i class="fas fa-barcode"></i> Código de Barras</div>
+                    <div><i class="fas fa-tag"></i> Etiquetado completo</div>
+                    <div><i class="fas fa-ruler"></i> Dimensiones de caja</div>
+                    <div><i class="fas fa-boxes"></i> Stock inicial</div>
+                    <div><i class="fas fa-flask"></i> Paso de la muestra</div>
+                    <div><i class="fas fa-search"></i> Revisión por muestreo</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CTA FINAL ====== -->
+    <section id="contacto" class="full-section cta-section">
+        <div class="section-content" style="text-align: center;">
+            <h2 class="section-title">¿Listo para vender <span>por mayoreo</span>?</h2>
+            <p class="section-subtitle" style="margin: 0 auto; max-width: 700px;">
+                Únete como proveedor y comienza a vender tus productos a través de nuestra plataforma profesional. Te guiamos en cada paso con un proceso claro y escalable.
+            </p>
+            <a href="#" class="cta-button-large">
+                <i class="fab fa-whatsapp"></i> Quiero ser proveedor
+            </a>
+            <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.95;">
+                <i class="fas fa-clock"></i> Te contactamos en menos de 24 horas
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                <i class="fas fa-shield-alt"></i> Sin contratos largos • Proceso 100% online • Te ayudamos con cada paso
+            </p>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4><strong class="lifetimes-bold">LIFETIMES</strong> Proveedores</h4>
+                <p class="muted">Ayudamos a productores y fabricantes a vender por mayoreo a través de nuestra plataforma profesional. Expande tu negocio sin complicaciones con un proceso claro y escalable.</p>
+            </div>
+            <div>
+                <h4>Para Proveedores</h4>
+                <a href="#proceso">Cómo vender (10 pasos)</a>
+                <a href="#">Requisitos de calidad</a>
+                <a href="#">Preguntas frecuentes</a>
+                <a href="#">Guía de empaque</a>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <p class="muted">Email: proveedores@lifetimes.com</p>
+                <p class="muted">WhatsApp: +34 123 456 789</p>
+                <p class="muted">Horario: Lunes a Viernes 9am - 6pm</p>
+            </div>
+            <div>
+                <h4>Redes</h4>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+                    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Transformamos microempresarios en proveedores profesionales.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // Animación para destacar elementos nuevos
+            const newBadges = document.querySelectorAll('.badge-new');
+            newBadges.forEach(badge => {
+                badge.style.animation = 'pulse 2s infinite';
+            });
+            
+            // Añadir estilo de animación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0% { opacity: 1; transform: scale(1); }
+                    50% { opacity: 0.8; transform: scale(1.05); background: #FFB347; }
+                    100% { opacity: 1; transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

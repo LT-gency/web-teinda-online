@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Comunidad · LIFETIMES</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== VARIABLES Y RESET (Basado en el segundo código, color azul #0C6BA0) ===== */
+        :root {
+            --primary: #0C6BA0;
+            --primary-dark: #0a5a86;
+            --primary-light: rgba(12, 107, 160, 0.1);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --whatsapp-green: #25D366;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR (Adaptado del primer código con colores azules) ===== */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            width: 100%;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 768px) {
+            .nav-inner {
+                padding: 0 32px;
+            }
+        }
+
+        .logo {
+            font-weight: 900;
+            letter-spacing: .02em;
+            font-size: clamp(1.1rem, 4vw, 1.35rem);
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .logo span { 
+            color: var(--primary); 
+        }
+        
+        .logo-icon { 
+            color: var(--primary); 
+            margin-right: 4px; 
+        }
+
+        .nav-links {
+            display: none;
+            gap: 1.8rem;
+            align-items: center;
+        }
+
+        @media (min-width: 960px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: .8rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .btn {
+                padding: 0.85rem 1.8rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(12, 107, 160, 0.2);
+        }
+
+        .btn.fill {
+            background: var(--primary);
+            color: #fff;
+            border: 2px solid var(--primary);
+        }
+
+        .btn.fill:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn.ghost:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .mobile-toggle {
+            display: inline-grid;
+            place-items: center;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        @media (min-width: 960px) {
+            .mobile-toggle {
+                display: none;
+            }
+        }
+
+        .mobile-menu {
+            position: fixed;
+            inset: 70px 0 auto 0;
+            background: #fff;
+            border-top: 1px solid #eee;
+            display: none;
+            padding: 1rem 0;
+            z-index: 999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .mobile-menu.open { 
+            display: block; 
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f5f5f5;
+            font-weight: 600;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: all 0.2s;
+        }
+
+        .mobile-menu a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* ===== HERO SECTION (Manteniendo estilos originales del segundo código) ===== */
+        .hero-presentation {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-content h1 .blue-text {
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .personalized-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(12, 107, 160, 0.4);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .publish-container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        /* ===== TARJETA DE FORMULARIO ===== */
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f0f0;
+            height: fit-content;
+        }
+
+        .form-header {
+            margin-bottom: 25px;
+        }
+
+        .form-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* ===== ELEMENTOS DE FORMULARIO ===== */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #000;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+            width: 20px;
+            margin-right: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #eaeef2;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(12, 107, 160, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* ===== SECCIÓN DE MÚLTIPLES IMÁGENES ===== */
+        .images-section {
+            border: 1px solid #eaeef2;
+            border-radius: 16px;
+            padding: 20px;
+            background: #fafcfd;
+            margin-bottom: 20px;
+        }
+
+        .images-section h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .image-upload-item {
+            text-align: center;
+        }
+
+        .image-upload-item small {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .file-upload-container {
+            border: 3px dashed var(--primary);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .file-upload-container:hover {
+            background: #e8f0fe;
+            border-color: #0a5a86;
+        }
+
+        .file-upload-container i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .file-upload-container p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .file-upload-container small {
+            color: #999;
+            font-size: 0.75rem;
+        }
+
+        .file-upload-container.file-selected {
+            border-color: #28a745;
+            background: #e8f5e9;
+        }
+
+        .file-upload-container.file-selected i {
+            color: #28a745;
+        }
+
+        .file-name {
+            margin-top: 8px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 80px;
+            margin-top: 10px;
+            border-radius: 6px;
+            display: none;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .image-preview.show {
+            display: block;
+            margin: 10px auto 0;
+        }
+
+        .fileInput {
+            display: none;
+        }
+
+        .image-note {
+            font-size: 0.85rem;
+            color: var(--primary);
+            background: #e8f0fe;
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .image-note i {
+            margin-right: 5px;
+        }
+
+        /* ===== INDICADOR EN VIVO ===== */
+        .live-indicator {
+            background: #f0f7fc;
+            padding: 12px 15px;
+            border-radius: 30px;
+            margin: 25px 0 15px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* ===== BOTÓN DE ENVÍO ===== */
+        .btn-publicar {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 18px 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-publicar:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(12, 107, 160, 0.3);
+        }
+
+        .btn-publicar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== VISTA PREVIA ===== */
+        .preview-wrapper {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .preview-badge {
+            background: var(--primary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(12, 107, 160, 0.2);
+        }
+
+        /* ===== TARJETA DE PRODUCTO ===== */
+        .accesorios-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            aspect-ratio: 2/3.8;
+            border: 1px solid #f0f0f0;
+            cursor: default;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .card-imagen {
+            width: 100%;
+            height: 35%;
+            overflow: hidden;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .accesorios-card:hover .card-imagen img {
+            transform: scale(1.02);
+        }
+
+        .card-categoria-flotante {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(12, 107, 160, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 5;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .card-content {
+            padding: 16px 16px 14px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 65%;
+            background: white;
+        }
+
+        .card-header h3 {
+            color: #000000;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .accesorios-precio {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000000;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .accesorios-precio span {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+        .card-descripcion {
+            color: #444;
+            line-height: 1.5;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+            font-weight: 400;
+        }
+
+        .seller-mini-info {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin: 8px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            border: 1px solid #edf2f7;
+        }
+
+        .seller-mini-info i {
+            color: var(--primary);
+            width: 18px;
+        }
+
+        .seller-mini-info span {
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .seller-mini-info small {
+            color: #718096;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-ver-mas-card {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(12, 107, 160, 0.2);
+            opacity: 0.9;
+        }
+
+        .btn-whatsapp-card {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+        }
+
+        /* ===== NOTIFICACIONES ===== */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            border-left: 4px solid #28a745;
+        }
+
+        .notification.error {
+            border-left: 4px solid #dc3545;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ===== MEDIA QUERIES ===== */
+        @media (max-width: 1000px) {
+            .publish-container {
+                grid-template-columns: 1fr;
+            }
+            .preview-wrapper {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            .publish-container {
+                padding: 0 20px;
+            }
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVBAR (Adaptado del primer código) ===== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">☰</button>
+            <a class="logo" href="#" aria-label="Inicio">
+                <i class="fas fa-laptop-code logo-icon"></i>
+                <strong class="lifetimes-bold">LIFETIMES</strong>
+            </a>
+            <nav class="nav-links">
+                <a href="#">Página Principal</a>
+                <a href="#">Servicios</a>
+            </nav>
+            <div class="nav-cta">
+                <a class="btn fill" href="Servicios-auto-minoritario.html">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#">Página Principal</a>
+            <a href="#">Servicios</a>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero-presentation">
+        <div class="hero-content">
+            <h1>
+                <span class="blue-text">Enviar información</span><br>
+                a la Comunidad LIFETIMES
+            </h1>
+            <p>Completa el formulario para compartir tu producto o servicio con miles de personas.</p>
+            <div class="personalized-badge">
+                <i class="fas fa-bolt"></i> Publicación activa en 24h
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
+    <div class="publish-container">
+        <!-- ===== FORMULARIO ===== -->
+        <div class="form-card">
+            <div class="form-header">
+                <h2>Completa los datos</h2>
+                <p>La vista previa se actualiza automáticamente</p>
+            </div>
+
+            <form id="miFormulario" enctype="multipart/form-data">
+                <!-- Nombre -->
+                <div class="form-group">
+                    <label><i class="fas fa-store"></i> Nombre:</label>
+                    <input type="text" class="form-control" id="sellerName" name="nombre" placeholder="Ej: Joyas Artesanales ML" value="Joyas Artesanales ML" required>
+                </div>
+
+                <!-- Teléfono y Ubicación -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Teléfono / WhatsApp</label>
+                        <input type="text" class="form-control" id="sellerPhone" name="telefono" placeholder="+52 555 123 4567" value="+52 555 123 4567" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-map-pin"></i> Ubicación</label>
+                        <input type="text" class="form-control" id="sellerLocation" name="ubicacion" placeholder="Ciudad, País" value="Ciudad de México" required>
+                    </div>
+                </div>
+
+                <!-- Título -->
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Título del producto / servicio</label>
+                    <input type="text" class="form-control" id="productTitle" name="titulo" placeholder="Ej: Collar de plata con turquesa" value="Collar de plata con turquesa" required>
+                </div>
+
+                <!-- Categoría y Precio -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-layer-group"></i> Categoría</label>
+                        <select class="form-control" id="productCategory" name="categoria" required>
+                            <option value="Accesorios">Accesorios</option>
+                            <option value="Joyería Artesanal">Joyería Artesanal</option>
+                            <option value="Bisutería">Bisutería</option>
+                            <option value="Artesanías">Artesanías</option>
+                            <option value="Ropa">Ropa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-dollar-sign"></i> Precio (con moneda)</label>
+                        <input type="text" class="form-control" id="productPrice" name="precio" placeholder="Ej: $850 MXN" value="$850 MXN" required>
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Descripción:</label>
+                    <textarea class="form-control" id="productDescription" name="descripcion" rows="3" required>Collar artesanal de plata con incrustaciones de turquesa. Diseño único, hecho a mano por artesanos mexicanos. Ideal para ocasiones especiales.</textarea>
+                </div>
+
+                <!-- ===== MÚLTIPLES IMÁGENES (4 en total) ===== -->
+                <div class="images-section">
+                    <h4><i class="fas fa-images"></i> Imágenes del producto (máx. 4):</h4>
+                    
+                    <div class="images-grid">
+                        <!-- Imagen 1 - Principal -->
+                        <div class="image-upload-item">
+                            <small><i class="fas fa-star"></i> Imagen Principal</small>
+                            <div class="file-upload-container" id="uploadContainer1" onclick="document.getElementById('fileInput1').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 1</p>
+                                <small>JPG, PNG (5MB)</small>
+                                <div class="file-name" id="fileName1"></div>
+                                <img class="image-preview" id="imagePreview1" src="#" alt="Vista previa">
+                            </div>
+                            <input type="file" id="fileInput1" name="imagen1" accept=".jpg,.jpeg,.png" class="fileInput" required>
+                        </div>
+
+                        <!-- Imagen 2 -->
+                        <div class="image-upload-item">
+                            <small><i class="fas fa-image"></i> Imagen 2</small>
+                            <div class="file-upload-container" id="uploadContainer2" onclick="document.getElementById('fileInput2').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 2</p>
+                                <small>JPG, PNG (5MB)</small>
+                                <div class="file-name" id="fileName2"></div>
+                                <img class="image-preview" id="imagePreview2" src="#" alt="Vista previa">
+                            </div>
+                            <input type="file" id="fileInput2" name="imagen2" accept=".jpg,.jpeg,.png" class="fileInput">
+                        </div>
+
+                        <!-- Imagen 3 -->
+                        <div class="image-upload-item">
+                            <small><i class="fas fa-image"></i> Imagen 3</small>
+                            <div class="file-upload-container" id="uploadContainer3" onclick="document.getElementById('fileInput3').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 3</p>
+                                <small>JPG, PNG (5MB)</small>
+                                <div class="file-name" id="fileName3"></div>
+                                <img class="image-preview" id="imagePreview3" src="#" alt="Vista previa">
+                            </div>
+                            <input type="file" id="fileInput3" name="imagen3" accept=".jpg,.jpeg,.png" class="fileInput">
+                        </div>
+
+                        <!-- Imagen 4 -->
+                        <div class="image-upload-item">
+                            <small><i class="fas fa-image"></i> Imagen 4</small>
+                            <div class="file-upload-container" id="uploadContainer4" onclick="document.getElementById('fileInput4').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 4</p>
+                                <small>JPG, PNG (5MB)</small>
+                                <div class="file-name" id="fileName4"></div>
+                                <img class="image-preview" id="imagePreview4" src="#" alt="Vista previa">
+                            </div>
+                            <input type="file" id="fileInput4" name="imagen4" accept=".jpg,.jpeg,.png" class="fileInput">
+                        </div>
+                    </div>
+                    
+                    <div class="image-note">
+                        <i class="fas fa-info-circle"></i> La primera imagen es la principal y se mostrará en la publicación
+                    </div>
+                </div>
+
+                <!-- Indicador -->
+                <div class="live-indicator">
+                    <i class="fas fa-sync-alt fa-spin"></i> Vista previa en tiempo real
+                </div>
+
+                <!-- Botón Enviar -->
+                <button type="submit" class="btn-publicar" id="btnPublicar">
+                    <i class="fas fa-cloud-upload-alt"></i> Enviar
+                </button>
+            </form>
+        </div>
+
+        <!-- ===== VISTA PREVIA ===== -->
+        <div class="preview-wrapper">
+            <div class="preview-badge"><i class="fas fa-eye"></i> Vista previa de tu tarjeta</div>
+            
+            <div class="accesorios-card" id="previewCard">
+                <div class="card-imagen" id="previewImageContainer">
+                    <img id="previewImg" src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="preview">
+                    <span class="card-categoria-flotante" id="previewCategoryBadge">Accesorios</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3 id="previewTitle">Collar de plata con turquesa</h3>
+                        <div class="accesorios-precio" id="previewPrice">
+                            $850 MXN<span>/producto</span>
+                        </div>
+                    </div>
+
+                    <div class="seller-mini-info">
+                        <i class="fas fa-store"></i>
+                        <span id="previewSeller">Joyas Artesanales ML</span>
+                        <small>•</small>
+                        <small id="previewLocation"><i class="fas fa-map-marker-alt"></i> Ciudad de México</small>
+                    </div>
+
+                    <p class="card-descripcion" id="previewDescription">
+                        Collar artesanal de plata con incrustaciones de turquesa. Diseño único, hecho a mano por artesanos mexicanos.
+                    </p>
+                    <div class="card-footer">
+                        <button class="btn-ver-mas-card" disabled="disabled" style="opacity:0.9; cursor:default;">
+                            Ver más <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <a href="#" class="btn-whatsapp-card" onclick="return false;" style="cursor:default;">
+                            <i class="fab fa-whatsapp"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align:center; font-size:0.8rem; color:#888; margin-top:12px;">
+                <i class="fas fa-mobile-alt"></i> Esta es la apariencia exacta en el directorio.
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== NOTIFICACIÓN ===== -->
+    <div id="notification" class="notification" style="display: none;"></div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        (function() {
+            // Elementos del formulario
+            const sellerName = document.getElementById('sellerName');
+            const sellerLocation = document.getElementById('sellerLocation');
+            const productTitle = document.getElementById('productTitle');
+            const productCategory = document.getElementById('productCategory');
+            const productPrice = document.getElementById('productPrice');
+            const productDescription = document.getElementById('productDescription');
+            
+            // Elementos de imagen principal (solo la primera imagen se muestra en preview)
+            const fileInput1 = document.getElementById('fileInput1');
+            const uploadContainer1 = document.getElementById('uploadContainer1');
+            const fileName1 = document.getElementById('fileName1');
+            const imagePreview1 = document.getElementById('imagePreview1');
+            const previewImg = document.getElementById('previewImg');
+
+            // Elementos de vista previa
+            const previewTitle = document.getElementById('previewTitle');
+            const previewCategoryBadge = document.getElementById('previewCategoryBadge');
+            const previewPrice = document.getElementById('previewPrice');
+            const previewDescription = document.getElementById('previewDescription');
+            const previewSeller = document.getElementById('previewSeller');
+            const previewLocation = document.getElementById('previewLocation');
+
+            // Configurar todos los inputs de imagen
+            const fileInputs = [
+                { input: document.getElementById('fileInput1'), container: document.getElementById('uploadContainer1'), name: document.getElementById('fileName1'), preview: document.getElementById('imagePreview1') },
+                { input: document.getElementById('fileInput2'), container: document.getElementById('uploadContainer2'), name: document.getElementById('fileName2'), preview: document.getElementById('imagePreview2') },
+                { input: document.getElementById('fileInput3'), container: document.getElementById('uploadContainer3'), name: document.getElementById('fileName3'), preview: document.getElementById('imagePreview3') },
+                { input: document.getElementById('fileInput4'), container: document.getElementById('uploadContainer4'), name: document.getElementById('fileName4'), preview: document.getElementById('imagePreview4') }
+            ];
+
+            // Función genérica para manejar la subida de imágenes
+            function setupImageUploader(fileInput, container, fileNameEl, previewEl, isMain = false) {
+                if (!fileInput) return;
+                
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+
+                    if (file) {
+                        // Validar tipo
+                        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                            mostrarNotificacion('Solo se permiten archivos JPG y PNG', 'error');
+                            fileInput.value = '';
+                            container.classList.remove('file-selected');
+                            fileNameEl.textContent = '';
+                            previewEl.classList.remove('show');
+                            return;
+                        }
+
+                        // Validar tamaño
+                        if (file.size > 5 * 1024 * 1024) {
+                            mostrarNotificacion('La imagen no debe superar los 5MB', 'error');
+                            fileInput.value = '';
+                            container.classList.remove('file-selected');
+                            fileNameEl.textContent = '';
+                            previewEl.classList.remove('show');
+                            return;
+                        }
+
+                        // Mostrar nombre y vista previa
+                        fileNameEl.textContent = file.name;
+                        container.classList.add('file-selected');
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewEl.src = e.target.result;
+                            previewEl.classList.add('show');
+                            
+                            // Si es la imagen principal, actualizar la vista previa de la tarjeta
+                            if (isMain) {
+                                previewImg.src = e.target.result;
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        container.classList.remove('file-selected');
+                        fileNameEl.textContent = '';
+                        previewEl.classList.remove('show');
+                        
+                        // Si es la imagen principal, restaurar imagen por defecto
+                        if (isMain) {
+                            previewImg.src = 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+                        }
+                    }
+                });
+            }
+
+            // Configurar cada input de imagen
+            fileInputs.forEach((item, index) => {
+                setupImageUploader(item.input, item.container, item.name, item.preview, index === 0); // El primero es main
+            });
+
+            // Función para actualizar vista previa
+            function actualizarPreview() {
+                previewTitle.textContent = productTitle.value.trim() || "Título del producto";
+                previewCategoryBadge.textContent = productCategory.value || "Categoría";
+
+                let precioTexto = productPrice.value.trim();
+                if (precioTexto === "") precioTexto = "$0 MXN";
+                previewPrice.innerHTML = `${precioTexto}<span>/producto</span>`;
+
+                previewDescription.textContent = productDescription.value.trim() || "Descripción del producto o servicio...";
+                previewSeller.textContent = sellerName.value.trim() || "Nombre del vendedor";
+
+                let ubicacion = sellerLocation.value.trim() || "Ubicación";
+                previewLocation.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${ubicacion}`;
+            }
+
+            // Event listeners para inputs
+            const inputs = [sellerName, sellerLocation, productTitle, productCategory, productPrice, productDescription];
+            inputs.forEach(input => {
+                if (input) {
+                    input.addEventListener('input', actualizarPreview);
+                    input.addEventListener('change', actualizarPreview);
+                }
+            });
+            
+            if (productCategory) {
+                productCategory.addEventListener('change', actualizarPreview);
+            }
+
+            // Función de notificación
+            function mostrarNotificacion(mensaje, tipo) {
+                const notification = document.getElementById('notification');
+                notification.textContent = mensaje;
+                notification.className = `notification ${tipo}`;
+                notification.style.display = 'block';
+
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+
+            // Inicializar vista previa
+            actualizarPreview();
+
+            // ===== Código del navbar (menú móvil) =====
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            // Cerrar menú al hacer clic en enlaces
+            if (mobileMenu) {
+                document.querySelectorAll('.mobile-menu a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('open');
+                    });
+                });
+            }
+
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                            if (mobileMenu?.classList.contains('open')) {
+                                mobileMenu.classList.remove('open');
+                            }
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

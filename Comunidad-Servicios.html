@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES - Registra tu Servicio | Plataforma Personalizada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Conekta.js -->
+    <script src="https://cdn.conekta.com/js/latest/conekta.js"></script>
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #3EAA4C;
+            --primary-dark: #2D7A3A;
+            --primary-light: rgba(62, 170, 76, 0.1);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --success-dark: #21867a;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, #3EAA4C 0%, #6FBF7A 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9e00 0%, #ffd166 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR CON BOTÓN DE VOLVER ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-3px);
+            box-shadow: 0 5px 15px rgba(62, 170, 76, 0.2);
+        }
+        
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+        
+        .logo {
+            font-weight: 900;
+            letter-spacing: .02em;
+            font-size: 1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .btn {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            padding: .85rem 1.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(62, 170, 76, 0.2);
+        }
+        
+        .btn.fill {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        .btn.fill:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        /* ====== HERO SECTION CON FORMULARIO ====== */
+        .hero-form-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-form-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .hero-content {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .hero-content h1 span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-content h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--primary-light);
+            z-index: -1;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .personalized-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            gap: 1rem;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .personalized-badge i {
+            font-size: 1.5rem;
+        }
+        
+        /* ====== FORMULARIO DE REGISTRO DE SERVICIOS ====== */
+        .form-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .form-header p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .form-header p strong {
+            color: var(--primary);
+        }
+        
+        /* Estilo para múltiples cargas de archivos */
+        .upload-section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        .multiple-upload-area {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .file-upload-item {
+            border: 2px dashed var(--primary);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            background: var(--primary-light);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .file-upload-item:hover {
+            background: rgba(62, 170, 76, 0.2);
+            transform: scale(1.02);
+        }
+        
+        .file-upload-item i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .file-upload-item p {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .file-upload-item small {
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+        
+        .file-upload-item .file-info-small {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--primary);
+            display: none;
+            word-break: break-all;
+            max-width: 100%;
+        }
+        
+        .file-upload-item.has-file {
+            border-style: solid;
+            background: white;
+        }
+        
+        .file-upload-item.has-file .file-info-small {
+            display: block;
+        }
+        
+        /* Estilo para el área de código promocional */
+        .promo-section {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3d4 100%);
+            border: 2px solid var(--secondary);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promo-section::before {
+            content: '🎁';
+            position: absolute;
+            right: -20px;
+            top: -20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .promo-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .promo-title i {
+            font-size: 1.5rem;
+        }
+        
+        .promo-input-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .promo-input {
+            flex: 2;
+            min-width: 200px;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--secondary);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+        
+        .promo-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--secondary-light);
+        }
+        
+        .promo-input::placeholder {
+            text-transform: none;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        
+        .promo-button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: var(--gradient-secondary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .promo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 158, 0, 0.3);
+        }
+        
+        .promo-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .promo-message {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .promo-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .promo-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .promo-message.info {
+            display: block;
+            background: #e2f3ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+        
+        .promo-benefit {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .promo-examples {
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .promo-examples span {
+            display: inline-block;
+            background: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin: 0.2rem;
+            border: 1px solid var(--secondary-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .promo-examples span:hover {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        /* Estilo para el área de carga de archivos */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        .form-group label i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(62, 170, 76, 0.3);
+        }
+        
+        .btn-submit i {
+            font-size: 1.2rem;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* ====== SECCIÓN DE BENEFICIOS PARA SERVICIOS ====== */
+        .benefits-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .benefit-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        /* ====== FOOTER SIMPLIFICADO ====== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-col p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .hero-form-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+                position: static;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .multiple-upload-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-form-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .form-card {
+                padding: 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-inner {
+                padding: 0 20px;
+            }
+            
+            .nav-left {
+                gap: 0.5rem;
+            }
+            
+            .back-button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .promo-input-group {
+                flex-direction: column;
+            }
+            
+            .promo-button {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .back-button span {
+                display: none;
+            }
+            
+            .back-button {
+                padding: 0.5rem;
+            }
+            
+            .back-button i {
+                margin: 0;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900;
+        }
+        
+        .service-message {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+        
+        .service-message p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .service-message i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        /* ====== MODAL DE PAGO ====== */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .payment-modal.active {
+            display: flex;
+        }
+        
+        .payment-modal-content {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .payment-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .payment-modal-close:hover {
+            color: var(--primary);
+        }
+        
+        .payment-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .payment-modal .subtitle {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 1rem;
+        }
+        
+        .payment-method-btn {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--gray-light);
+            background: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .payment-method-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .payment-method-btn.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .payment-method-btn:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-form {
+            display: none;
+        }
+        
+        .payment-form.active {
+            display: block;
+        }
+        
+        .price-summary {
+            background: var(--primary-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .price-summary .total-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-summary .total-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .price-summary .total-amount.with-discount {
+            color: var(--secondary);
+            text-decoration: line-through;
+            font-size: 2rem;
+        }
+        
+        .price-summary .discount-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .price-summary .discount-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .card-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+        }
+        
+        .oxxo-instructions {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .oxxo-instructions i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .oxxo-instructions p {
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+        
+        .oxxo-instructions .oxxo-note {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+        
+        .btn-payment {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+        }
+        
+        .btn-payment:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(62, 170, 76, 0.3);
+        }
+        
+        .payment-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        
+        .payment-footer i {
+            color: var(--primary);
+            margin-right: 0.3rem;
+        }
+
+        /* Mensajes de error y éxito */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            padding: 0.5rem;
+            background: #f8d7da;
+            border-radius: var(--border-radius);
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Info de tarjetas de prueba */
+        .test-card-info {
+            background: #e2f3ff;
+            border-left: 4px solid #007bff;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+        
+        .test-card-info h4 {
+            margin-bottom: 0.5rem;
+            color: #0056b3;
+        }
+        
+        .test-card-info p {
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR CON BOTÓN DE VOLVER ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <a href="Subir-servicio.html" class="back-button" aria-label="Volver atrás">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Volver</span>
+                </a>
+                
+                <a class="logo" href="#" aria-label="Inicio">
+                    <i class="fas fa-hand-sparkles logo-icon"></i>
+                    <strong class="lifetimes-bold">LIFETIMES</strong>
+                </a>
+            </div>
+            
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#beneficios">Beneficios</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION CON FORMULARIO ====== -->
+    <section class="hero-form-section">
+        <div class="hero-form-container">
+            <div class="hero-content">
+                <h1>
+                    <span>Registra tu servicio</span><br>
+                    y llega a más clientes
+                </h1>
+                <p class="hero-description">
+                    En <strong class="lifetimes-bold">LIFETIMES</strong> creamos una solución digital personalizada para tu servicio. 
+                    Te ayudamos a promocionar tu oferta y aumentar tus ventas sin inversión inicial.
+                </p>
+                
+                <div class="service-message">
+                    <p>
+                        <i class="fas fa-star"></i>
+                        <strong>🎯 Servicio 100% Personalizado</strong><br>
+                        Sube las imágenes de tu servicio y uno de nuestros asesores se contactará contigo 
+                        en menos de 24 horas para crear una estrategia a tu medida.
+                    </p>
+                </div>
+                
+                <div class="personalized-badge">
+                    <i class="fas fa-headset"></i>
+                    <span>Te contactamos en menos de 24 horas</span>
+                </div>
+            </div>
+            
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Registra tu Servicio</h2>
+                    <p>Completa el formulario y sube tus imágenes</p>
+                </div>
+                
+                <!-- ====== FORMULARIO COMPLETO MODIFICADO ====== -->
+                <form id="serviceForm">
+                    <!-- Datos del servicio -->
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Nombre del Servicio *</label>
+                        <input type="text" class="form-control" id="serviceName" placeholder="Ej: Clases de música, Consultoría, Reparaciones..." required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre Completo *</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Tu nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Ciudad *</label>
+                            <input type="text" class="form-control" id="city" placeholder="Ej: Madrid" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Teléfono de Contacto *</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="+34 123 456 789" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Correo Electrónico *</label>
+                        <input type="email" class="form-control" id="email" placeholder="tuservicio@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-list"></i> Categoría del Servicio *</label>
+                        <select class="form-control" id="category" required>
+                            <option value="">Selecciona una categoría</option>
+                            <option>Servicios Profesionales (Consultoría, Asesoría)</option>
+                            <option>Servicios Creativos (Diseño, Fotografía)</option>
+                            <option>Servicios Educativos (Clases, Talleres)</option>
+                            <option>Servicios Técnicos (Reparaciones, Mantenimiento)</option>
+                            <option>Servicios de Salud (Bienestar, Terapias)</option>
+                            <option>Servicios para Eventos</option>
+                            <option>Servicios a Domicilio</option>
+                            <option>Otro tipo de servicio</option>
+                        </select>
+                    </div>
+                    
+                    <!-- NUEVA SECCIÓN DE CÓDIGO PROMOCIONAL -->
+                    <div class="promo-section">
+                        <div class="promo-title">
+                            <i class="fas fa-gift"></i>
+                            <span>¿Tienes un código promocional?</span>
+                        </div>
+                        
+                        <div class="promo-input-group">
+                            <input type="text" class="promo-input" id="promoCode" placeholder="Ej: LTA-MEXICO, BIENVENIDO10" value="">
+                            <button type="button" class="promo-button" id="applyPromoBtn">
+                                <i class="fas fa-tag"></i> Aplicar
+                            </button>
+                        </div>
+                        
+                        <div class="promo-message" id="promoMessage"></div>
+                        
+                        <div class="promo-benefit">
+                            <i class="fas fa-star"></i> ¡Obtén un mes gratis con códigos válidos!
+                        </div>
+                        
+                        <div class="promo-examples">
+                            <span onclick="document.getElementById('promoCode').value='LTA-MEXICO'">LTA-MEXICO</span>
+                            <span onclick="document.getElementById('promoCode').value='BIENVENIDO10'">BIENVENIDO10</span>
+                            <span onclick="document.getElementById('promoCode').value='MESGRATIS'">MESGRATIS</span>
+                            <span onclick="document.getElementById('promoCode').value='PROMO24'">PROMO24</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Título para la sección de imágenes -->
+                    <div class="upload-section-title">
+                        <i class="fas fa-images"></i> FOTOS DE TU SERVICIO (4 imágenes requeridas)
+                    </div>
+                    
+                    <!-- Subir 4 imágenes (funcional) -->
+                    <div class="form-group">
+                        <div class="multiple-upload-area" id="multipleUploadArea">
+                            <!-- Imagen 1 -->
+                            <div class="file-upload-item" id="uploadItem1">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 1</p>
+                                <small>Haz clic para subir</small>
+                                <div class="file-info-small" id="fileInfo1"></div>
+                                <input type="file" id="serviceFile1" style="display: none;" accept=".jpg,.jpeg,.png" data-index="1" required>
+                            </div>
+                            
+                            <!-- Imagen 2 -->
+                            <div class="file-upload-item" id="uploadItem2">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 2</p>
+                                <small>Haz clic para subir</small>
+                                <div class="file-info-small" id="fileInfo2"></div>
+                                <input type="file" id="serviceFile2" style="display: none;" accept=".jpg,.jpeg,.png" data-index="2" required>
+                            </div>
+                            
+                            <!-- Imagen 3 -->
+                            <div class="file-upload-item" id="uploadItem3">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 3</p>
+                                <small>Haz clic para subir</small>
+                                <div class="file-info-small" id="fileInfo3"></div>
+                                <input type="file" id="serviceFile3" style="display: none;" accept=".jpg,.jpeg,.png" data-index="3" required>
+                            </div>
+                            
+                            <!-- Imagen 4 -->
+                            <div class="file-upload-item" id="uploadItem4">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Imagen 4</p>
+                                <small>Haz clic para subir</small>
+                                <div class="file-info-small" id="fileInfo4"></div>
+                                <input type="file" id="serviceFile4" style="display: none;" accept=".jpg,.jpeg,.png" data-index="4" required>
+                            </div>
+                        </div>
+                        <small style="color: var(--gray);">Formatos permitidos: JPG, PNG. Tamaño máximo por imagen: 5MB</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-align-left"></i> Descripción breve de tu servicio</label>
+                        <textarea class="form-control" id="description" rows="3" placeholder="Cuéntanos brevemente en qué consiste tu servicio..."></textarea>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="confirm" required>
+                        <label for="confirm">
+                            Entiendo que este es un servicio <strong>personalizado</strong> y que un asesor de LIFETIMES se contactará conmigo.
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="fas fa-credit-card"></i>
+                        Continuar al pago <span id="priceDisplay">($499 MXN)</span>
+                    </button>
+                    
+                    <div class="form-footer">
+                        <i class="fas fa-lock"></i> Tus datos están seguros. No compartimos información.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== MODAL DE PAGO CON CONEKTA ====== -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-modal-content">
+            <span class="payment-modal-close" id="closePaymentModal">&times;</span>
+            
+            <h2>Completa tu pago</h2>
+            <p class="subtitle">Elige tu método de pago preferido</p>
+            
+            <!-- Resumen del precio - Actualizado con descuento si aplica -->
+            <div class="price-summary" id="priceSummary">
+                <div class="total-label">Total a pagar</div>
+                <div id="priceDisplayModal">
+                    <span class="total-amount" id="totalAmount">$499</span> <small>MXN</small>
+                </div>
+                <div id="discountInfo" style="display: none; margin-top: 0.5rem;">
+                    <span class="discount-badge"><i class="fas fa-gift"></i> ¡Mes gratis aplicado!</span>
+                </div>
+            </div>
+            
+            <!-- Métodos de pago -->
+            <div class="payment-methods">
+                <button type="button" class="payment-method-btn active" id="cardMethodBtn">
+                    <i class="fas fa-credit-card"></i> Tarjeta
+                </button>
+                <button type="button" class="payment-method-btn" id="oxxoMethodBtn">
+                    <i class="fas fa-receipt"></i> OXXO
+                </button>
+            </div>
+            
+            <!-- Formulario de Tarjeta (ACTIVO POR DEFECTO) -->
+            <div class="payment-form active" id="cardPaymentForm">
+                <!-- Información de tarjetas de prueba -->
+                <div class="test-card-info">
+                    <h4><i class="fas fa-info-circle"></i> Tarjetas de prueba</h4>
+                    <p><strong>Visa:</strong> 4111 1111 1111 1111</p>
+                    <p><strong>Mastercard:</strong> 5555 5555 5555 4444</p>
+                    <p><strong>CVV:</strong> 123 | <strong>Fecha exp:</strong> 12/25</p>
+                    <p><strong>Nombre:</strong> Cualquier nombre</p>
+                </div>
+                
+                <div id="cardPaymentMessage"></div>
+                <form id="cardForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nombre en la tarjeta</label>
+                        <input type="text" class="form-control" id="cardName" placeholder="Como aparece en la tarjeta" value="Juan Perez" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-credit-card"></i> Número de tarjeta</label>
+                        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" value="4111 1111 1111 1111" maxlength="19" required>
+                    </div>
+                    
+                    <div class="card-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Fecha exp.</label>
+                            <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA" value="12/25" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> CVV</label>
+                            <input type="text" class="form-control" id="cardCvv" placeholder="123" value="123" maxlength="4" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Campo oculto para el token -->
+                    <input type="hidden" id="conektaTokenId" name="conektaTokenId">
+                    
+                    <button type="submit" class="btn-payment" id="payWithCard">
+                        <i class="fas fa-lock"></i> Pagar con tarjeta
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Formulario de OXXO -->
+            <div class="payment-form" id="oxxoPaymentForm">
+                <div id="oxxoPaymentMessage"></div>
+                <div class="oxxo-instructions">
+                    <i class="fas fa-receipt"></i>
+                    <h3>Paga en OXXO</h3>
+                    <p>Generaremos un código de barras para que puedas pagar en cualquier tienda OXXO.</p>
+                    <div class="oxxo-note">
+                        <i class="fas fa-clock"></i> El código expira en 24 horas
+                    </div>
+                    
+                    <button type="button" class="btn-payment" id="generateOxxo">
+                        <i class="fas fa-barcode"></i> Generar código OXXO
+                    </button>
+                </div>
+            </div>
+            
+            <div class="payment-footer">
+                <i class="fas fa-shield-alt"></i> Pago seguro procesado por Conekta
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== SECCIÓN DE BENEFICIOS ====== -->
+    <section class="benefits-section" id="beneficios">
+        <div class="benefits-container">
+            <div class="section-header">
+                <h2>¿Por qué registrar tu servicio con <strong class="lifetimes-bold">LIFETIMES</strong>?</h2>
+                <p class="subtitle">Te ofrecemos una solución completa y personalizada para digitalizar tu servicio</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Web Personalizada</h3>
+                    <p>Creamos tu página web con toda la información de tu servicio y sistema de contacto.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Marketing de Contenido</h3>
+                    <p>Manejamos tus redes sociales con contenido profesional para atraer más clientes.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Sistema de Pagos</h3>
+                    <p>Integramos pagos online para que recibas el dinero automáticamente por tus servicios.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte Continuo</h3>
+                    <p>Atención personalizada y soporte técnico 24/7 para tu servicio.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <h3>Sin Costos Fijos</h3>
+                    <p>Solo pagas cuando vendes. Sin mensualidades ni inversión inicial.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Implementación Rápida</h3>
+                    <p>En 48 horas tu servicio está online y listo para recibir clientes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER SIMPLIFICADO ====== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><strong class="lifetimes-bold">LIFETIMES</strong></h4>
+                    <p>Transformamos servicios tradicionales en experiencias digitales con marketing de contenido y sistemas personalizados.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <a href="#beneficios">Beneficios</a>
+                    <a href="#">Términos y Condiciones</a>
+                    <a href="#">Política de Privacidad</a>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Horario de Atención</h4>
+                    <p>Lunes a Viernes: 9:00 - 18:00</p>
+                    <p>Sábados: 10:00 - 14:00</p>
+                    <p>Respuesta en menos de 24h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Plataforma personalizada para todo tipo de servicios.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Configurar Conekta (key pública de prueba)
+            Conekta.setPublicKey('key_eYvWV7gZk_fmjUaY3zGqyg');
+            
+            // Precios
+            const BASE_PRICE = 499;
+            const DISCOUNT_PRICE = 0; // Mes gratis
+            
+            let currentPrice = BASE_PRICE;
+            let promoApplied = false;
+            let promoCode = '';
+            
+            // Códigos promocionales válidos (en producción, esto vendría de un backend)
+            const validPromoCodes = {
+                'LTA-MEXICO': { discount: 100, message: '¡Código LTA-MEXICO aplicado! Obtienes un mes gratis 🎉' },
+                'BIENVENIDO10': { discount: 100, message: '¡Bienvenido! Tu primer mes es gratis 🎁' },
+                'MESGRATIS': { discount: 100, message: '¡Mes gratis activado! Disfruta tu beneficio ✨' },
+                'PROMO24': { discount: 100, message: '¡Promoción 24 aplicada! Un mes sin costo ⭐' }
+            };
+            
+            // Actualizar display de precio
+            function updatePriceDisplay() {
+                const priceDisplay = document.getElementById('priceDisplay');
+                const totalAmount = document.getElementById('totalAmount');
+                const discountInfo = document.getElementById('discountInfo');
+                const priceDisplayModal = document.getElementById('priceDisplayModal');
+                
+                if (promoApplied) {
+                    priceDisplay.innerHTML = `($0 MXN - ¡Mes gratis!)`;
+                    totalAmount.innerHTML = '$0';
+                    totalAmount.classList.add('with-discount');
+                    discountInfo.style.display = 'block';
+                    
+                    // Mostrar el precio original tachado y el nuevo
+                    priceDisplayModal.innerHTML = `
+                        <span class="total-amount with-discount">$${BASE_PRICE}</span> 
+                        <span class="discount-amount">$0</span> 
+                        <small>MXN</small>
+                    `;
+                } else {
+                    priceDisplay.innerHTML = `($${BASE_PRICE} MXN)`;
+                    totalAmount.innerHTML = `$${BASE_PRICE}`;
+                    totalAmount.classList.remove('with-discount');
+                    discountInfo.style.display = 'none';
+                    
+                    priceDisplayModal.innerHTML = `
+                        <span class="total-amount" id="totalAmount">$${BASE_PRICE}</span> 
+                        <small>MXN</small>
+                    `;
+                }
+            }
+            
+            // Función para aplicar código promocional
+            function applyPromoCode(code) {
+                const promoMessage = document.getElementById('promoMessage');
+                const normalizedCode = code.trim().toUpperCase();
+                
+                if (!normalizedCode) {
+                    promoMessage.className = 'promo-message error';
+                    promoMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Por favor ingresa un código';
+                    return false;
+                }
+                
+                // Verificar si el código existe
+                if (validPromoCodes[normalizedCode]) {
+                    promoApplied = true;
+                    promoCode = normalizedCode;
+                    currentPrice = DISCOUNT_PRICE;
+                    
+                    promoMessage.className = 'promo-message success';
+                    promoMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${validPromoCodes[normalizedCode].message}`;
+                    
+                    updatePriceDisplay();
+                    
+                    // Deshabilitar el botón y el input después de aplicar
+                    document.getElementById('promoCode').disabled = true;
+                    document.getElementById('applyPromoBtn').disabled = true;
+                    
+                    return true;
+                } else {
+                    promoApplied = false;
+                    currentPrice = BASE_PRICE;
+                    
+                    promoMessage.className = 'promo-message error';
+                    promoMessage.innerHTML = '<i class="fas fa-times-circle"></i> Código no válido. Intenta con otro.';
+                    
+                    updatePriceDisplay();
+                    return false;
+                }
+            }
+            
+            // Event listener para el botón de aplicar código
+            document.getElementById('applyPromoBtn').addEventListener('click', function() {
+                const code = document.getElementById('promoCode').value;
+                applyPromoCode(code);
+            });
+            
+            // Permitir aplicar con Enter
+            document.getElementById('promoCode').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('applyPromoBtn').click();
+                }
+            });
+            
+            // ====== FUNCIONALIDAD DE SUBIR MÚLTIPLES IMÁGENES ======
+            const uploadedFiles = [];
+            
+            // Configurar cada área de carga
+            for (let i = 1; i <= 4; i++) {
+                const uploadItem = document.getElementById(`uploadItem${i}`);
+                const fileInput = document.getElementById(`serviceFile${i}`);
+                const fileInfo = document.getElementById(`fileInfo${i}`);
+                
+                // Click en el área de carga
+                uploadItem.addEventListener('click', function() {
+                    fileInput.click();
+                });
+                
+                // Cambio en el archivo
+                fileInput.addEventListener('change', function(e) {
+                    if (this.files && this.files[0]) {
+                        const file = this.files[0];
+                        
+                        // Validar tipo de archivo
+                        if (!file.type.match('image.*')) {
+                            alert('Por favor selecciona una imagen válida (JPG o PNG)');
+                            this.value = '';
+                            return;
+                        }
+                        
+                        // Validar tamaño (5MB máximo)
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert('La imagen es demasiado grande. Tamaño máximo: 5MB');
+                            this.value = '';
+                            return;
+                        }
+                        
+                        // Mostrar nombre del archivo
+                        fileInfo.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+                        uploadItem.classList.add('has-file');
+                        
+                        // Guardar referencia al archivo
+                        uploadedFiles[i] = file;
+                    }
+                });
+                
+                // Prevenir que el arrastrar y soltar abra el archivo
+                uploadItem.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.background = 'rgba(62, 170, 76, 0.2)';
+                });
+                
+                uploadItem.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.style.background = '';
+                });
+                
+                uploadItem.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.background = '';
+                    
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                        fileInput.files = e.dataTransfer.files;
+                        // Disparar evento change manualmente
+                        const event = new Event('change', { bubbles: true });
+                        fileInput.dispatchEvent(event);
+                    }
+                });
+            }
+            
+            // ====== MODAL DE PAGO ======
+            const paymentModal = document.getElementById('paymentModal');
+            const closeModal = document.getElementById('closePaymentModal');
+            const cardMethodBtn = document.getElementById('cardMethodBtn');
+            const oxxoMethodBtn = document.getElementById('oxxoMethodBtn');
+            const cardForm = document.getElementById('cardPaymentForm');
+            const oxxoForm = document.getElementById('oxxoPaymentForm');
+            
+            // Formulario principal
+            const form = document.getElementById('serviceForm');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar campos requeridos
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.style.borderColor = 'red';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = 'var(--gray-light)';
+                    }
+                });
+                
+                // Validar que se hayan subido las 4 imágenes
+                for (let i = 1; i <= 4; i++) {
+                    const fileInput = document.getElementById(`serviceFile${i}`);
+                    if (!fileInput.files || !fileInput.files[0]) {
+                        document.getElementById(`uploadItem${i}`).style.borderColor = 'red';
+                        isValid = false;
+                    } else {
+                        document.getElementById(`uploadItem${i}`).style.borderColor = 'var(--primary)';
+                    }
+                }
+                
+                if (!isValid) {
+                    alert('Por favor completa todos los campos obligatorios y sube las 4 imágenes requeridas');
+                    return;
+                }
+                
+                // Abrir modal de pago (con tarjeta por defecto)
+                paymentModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Asegurar que el formulario de tarjeta esté activo
+                cardMethodBtn.classList.add('active');
+                oxxoMethodBtn.classList.remove('active');
+                cardForm.classList.add('active');
+                oxxoForm.classList.remove('active');
+                
+                // Limpiar mensajes anteriores
+                document.getElementById('cardPaymentMessage').innerHTML = '';
+                document.getElementById('oxxoPaymentMessage').innerHTML = '';
+            });
+            
+            // Cerrar modal
+            closeModal.addEventListener('click', function() {
+                paymentModal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            paymentModal.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    paymentModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Cambiar entre métodos de pago
+            cardMethodBtn.addEventListener('click', function() {
+                cardMethodBtn.classList.add('active');
+                oxxoMethodBtn.classList.remove('active');
+                cardForm.classList.add('active');
+                oxxoForm.classList.remove('active');
+            });
+            
+            oxxoMethodBtn.addEventListener('click', function() {
+                oxxoMethodBtn.classList.add('active');
+                cardMethodBtn.classList.remove('active');
+                oxxoForm.classList.add('active');
+                cardForm.classList.remove('active');
+            });
+            
+            // Formatear campos de tarjeta
+            document.getElementById('cardNumber').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s/g, '');
+                value = value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
+                }
+                e.target.value = value;
+            });
+            
+            document.getElementById('cardExpiry').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\//g, '');
+                value = value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0,2) + '/' + value.substring(2,4);
+                }
+                e.target.value = value;
+            });
+            
+            document.getElementById('cardCvv').addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '');
+            });
+            
+            // Función para mostrar mensajes de error
+            function showError(containerId, message) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-circle"></i> ${message}</div>`;
+            }
+            
+            // Función para limpiar mensajes
+            function clearMessages(containerId) {
+                document.getElementById(containerId).innerHTML = '';
+            }
+            
+            // Procesar pago con tarjeta (REAL, no simulación)
+            document.getElementById('cardForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                clearMessages('cardPaymentMessage');
+                
+                const amountToPay = promoApplied ? DISCOUNT_PRICE : BASE_PRICE;
+                const amountInCents = amountToPay * 100; // Conekta usa centavos
+                
+                // Validar campos de tarjeta
+                const cardName = document.getElementById('cardName').value;
+                const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCvv = document.getElementById('cardCvv').value;
+                
+                if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
+                    showError('cardPaymentMessage', 'Por favor completa todos los datos de la tarjeta');
+                    return;
+                }
+                
+                // Validar formato de fecha
+                const expiryParts = cardExpiry.split('/');
+                if (expiryParts.length !== 2) {
+                    showError('cardPaymentMessage', 'Formato de fecha inválido (MM/AA)');
+                    return;
+                }
+                
+                const expMonth = expiryParts[0];
+                const expYear = expiryParts[1];
+                
+                if (expMonth.length !== 2 || expYear.length !== 2) {
+                    showError('cardPaymentMessage', 'Formato de fecha inválido (MM/AA)');
+                    return;
+                }
+                
+                const payButton = document.getElementById('payWithCard');
+                const originalText = payButton.innerHTML;
+                payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                payButton.disabled = true;
+                
+                // Si es mes gratis (monto 0), no necesitamos token
+                if (amountToPay === 0) {
+                    setTimeout(() => {
+                        const serviceName = document.getElementById('serviceName').value;
+                        
+                        // Mostrar mensaje de éxito
+                        const messageDiv = document.getElementById('cardPaymentMessage');
+                        messageDiv.innerHTML = `
+                            <div class="success-message">
+                                <i class="fas fa-check-circle"></i>
+                                <strong>¡Registro completado con mes gratis!</strong><br>
+                                Código: ${promoCode}<br>
+                                Beneficio: Primer mes sin costo
+                            </div>
+                        `;
+                        
+                        // Cerrar modal después de 2 segundos
+                        setTimeout(() => {
+                            paymentModal.classList.remove('active');
+                            document.body.style.overflow = '';
+                            
+                            alert(`✅ ¡Registro completado con mes gratis!\n\n` +
+                                  `Servicio: ${serviceName}\n` +
+                                  `Código: ${promoCode}\n` +
+                                  `Beneficio: Primer mes sin costo\n\n` +
+                                  `Un asesor de LIFETIMES se contactará contigo en menos de 24 horas.`);
+                            
+                            // Resetear formulario
+                            form.reset();
+                            for (let i = 1; i <= 4; i++) {
+                                const uploadItem = document.getElementById(`uploadItem${i}`);
+                                const fileInput = document.getElementById(`serviceFile${i}`);
+                                const fileInfo = document.getElementById(`fileInfo${i}`);
+                                
+                                fileInput.value = '';
+                                fileInfo.textContent = '';
+                                uploadItem.classList.remove('has-file');
+                                uploadedFiles[i] = null;
+                            }
+                            
+                            // Resetear código promocional
+                            document.getElementById('promoCode').disabled = false;
+                            document.getElementById('applyPromoBtn').disabled = false;
+                            document.getElementById('promoCode').value = '';
+                            document.getElementById('promoMessage').className = 'promo-message';
+                            document.getElementById('promoMessage').innerHTML = '';
+                            promoApplied = false;
+                            currentPrice = BASE_PRICE;
+                            updatePriceDisplay();
+                            
+                        }, 2000);
+                        
+                        payButton.innerHTML = originalText;
+                        payButton.disabled = false;
+                    }, 1000);
+                    
+                    return;
+                }
+                
+                // Si hay monto a pagar, generar token con Conekta
+                const tokenParams = {
+                    card: {
+                        number: cardNumber,
+                        name: cardName,
+                        exp_year: '20' + expYear,
+                        exp_month: expMonth,
+                        cvc: cardCvv
+                    }
+                };
+                
+                console.log('Generando token con Conekta...', tokenParams);
+                
+                // Llamada REAL a Conekta
+                Conekta.Token.create(tokenParams, function(token) {
+                    console.log('✅ Token generado exitosamente:', token);
+                    
+                    const serviceName = document.getElementById('serviceName').value;
+                    const fullName = document.getElementById('fullName').value;
+                    const email = document.getElementById('email').value;
+                    
+                    // Mostrar mensaje de éxito con el token real
+                    const messageDiv = document.getElementById('cardPaymentMessage');
+                    messageDiv.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <strong>¡Token generado exitosamente!</strong><br>
+                            Token: ${token.id}<br>
+                            Monto: $${amountToPay} MXN<br>
+                            ${promoApplied ? '<span style="color: var(--secondary);">🎁 Mes gratis aplicado al siguiente mes</span>' : ''}
+                        </div>
+                    `;
+                    
+                    // Aquí puedes enviar los datos a tu servidor
+                    const paymentData = {
+                        token: token.id,
+                        amount: amountToPay,
+                        serviceName: serviceName,
+                        customerName: fullName,
+                        email: email,
+                        description: document.getElementById('description').value,
+                        promoCode: promoApplied ? promoCode : null,
+                        promoApplied: promoApplied
+                    };
+                    
+                    console.log('Datos para enviar al backend:', paymentData);
+                    
+                    // Simular envío al backend
+                    setTimeout(() => {
+                        // Cerrar modal después de mostrar el token
+                        alert(`✅ Pago procesado\n\nToken: ${token.id}\nMonto: $${amountToPay} MXN\n\nTu servicio ha sido registrado.`);
+                        
+                        // Resetear formulario
+                        form.reset();
+                        for (let i = 1; i <= 4; i++) {
+                            const uploadItem = document.getElementById(`uploadItem${i}`);
+                            const fileInput = document.getElementById(`serviceFile${i}`);
+                            const fileInfo = document.getElementById(`fileInfo${i}`);
+                            
+                            fileInput.value = '';
+                            fileInfo.textContent = '';
+                            uploadItem.classList.remove('has-file');
+                            uploadedFiles[i] = null;
+                        }
+                        
+                        // Resetear código promocional
+                        document.getElementById('promoCode').disabled = false;
+                        document.getElementById('applyPromoBtn').disabled = false;
+                        document.getElementById('promoCode').value = '';
+                        document.getElementById('promoMessage').className = 'promo-message';
+                        document.getElementById('promoMessage').innerHTML = '';
+                        promoApplied = false;
+                        currentPrice = BASE_PRICE;
+                        updatePriceDisplay();
+                        
+                        paymentModal.classList.remove('active');
+                        document.body.style.overflow = '';
+                        
+                        payButton.innerHTML = originalText;
+                        payButton.disabled = false;
+                    }, 2000);
+                    
+                }, function(error) {
+                    console.error('❌ Error de Conekta:', error);
+                    
+                    let errorMessage = 'Error al procesar el pago';
+                    if (error.message_to_purchaser) {
+                        errorMessage = error.message_to_purchaser;
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    }
+                    
+                    showError('cardPaymentMessage', errorMessage);
+                    
+                    payButton.innerHTML = originalText;
+                    payButton.disabled = false;
+                });
+            });
+            
+            // Generar pago OXXO
+            document.getElementById('generateOxxo').addEventListener('click', function() {
+                clearMessages('oxxoPaymentMessage');
+                
+                const amountToPay = promoApplied ? DISCOUNT_PRICE : BASE_PRICE;
+                
+                // Si es mes gratis
+                if (amountToPay === 0) {
+                    const messageDiv = document.getElementById('oxxoPaymentMessage');
+                    messageDiv.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <strong>¡Mes gratis activado!</strong><br>
+                            No es necesario generar pago en OXXO.<br>
+                            Código: ${promoCode}
+                        </div>
+                    `;
+                    
+                    setTimeout(() => {
+                        paymentModal.classList.remove('active');
+                        document.body.style.overflow = '';
+                        alert(`✅ ¡Mes gratis activado con el código ${promoCode}!`);
+                    }, 2000);
+                    
+                    return;
+                }
+                
+                const oxxoButton = document.getElementById('generateOxxo');
+                const originalText = oxxoButton.innerHTML;
+                oxxoButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+                oxxoButton.disabled = true;
+                
+                // Simular generación de código OXXO (en producción, llamar a tu backend)
+                setTimeout(() => {
+                    const oxxoReference = 'OX' + Math.floor(Math.random() * 10000000000).toString().padStart(10, '0');
+                    
+                    const serviceName = document.getElementById('serviceName').value;
+                    
+                    // Mostrar información del código OXXO
+                    const messageDiv = document.getElementById('oxxoPaymentMessage');
+                    messageDiv.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-barcode"></i>
+                            <strong>Código OXXO generado</strong><br>
+                            Referencia: ${oxxoReference}<br>
+                            Monto: $${amountToPay} MXN<br>
+                            <small>Válido por 24 horas</small>
+                            ${promoApplied ? '<br><span style="color: var(--secondary);">🎁 Mes gratis aplicado al siguiente mes</span>' : ''}
+                        </div>
+                    `;
+                    
+                    console.log('Referencia OXXO generada:', oxxoReference);
+                    
+                    oxxoButton.innerHTML = originalText;
+                    oxxoButton.disabled = false;
+                }, 1500);
+            });
+            
+            // Smooth scroll para enlaces
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Animaciones para cards de beneficios
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.benefit-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+            
+            // Resaltar LIFETIMES en textos
+            document.querySelectorAll('h1, h2, h3, p, label').forEach(element => {
+                if (element.textContent.includes('LIFETIMES')) {
+                    const newHTML = element.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                    element.innerHTML = newHTML;
+                }
+            });
+            
+            // Inicializar precio
+            updatePriceDisplay();
+        });
+    </script>
+</body>
+</html>

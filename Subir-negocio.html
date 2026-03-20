@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>LIFETIMES - Personaliza tu Comida | Llega al Negocio, Ganamos Todos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #c90f0f;
+            --primary-dark: #a80c0c;
+            --primary-light: rgba(201, 15, 15, 0.1);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --success-dark: #21867a;
+            --whatsapp-green: #25D366;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, #c90f0f 0%, #ff5252 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9e00 0%, #ffd166 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO PERSONALIZADA ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .logo{
+            font-weight:900;
+            letter-spacing:.02em;
+            font-size:1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        .logo span{
+            color: var(--primary);
+        }
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-links{
+            display:flex;
+            gap:1.8rem;
+            align-items:center;
+        }
+        .nav-links a{
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta{
+            display:flex;
+            gap:.8rem;
+            align-items:center;
+        }
+        
+        .btn{
+            display:inline-flex;
+            gap:.6rem;
+            align-items:center;
+            font-weight:600;
+            border: 2px solid var(--primary);
+            padding:.85rem 1.8rem;
+            border-radius:8px;
+            transition:all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 5px 15px rgba(201, 15, 15, 0.2);
+        }
+        
+        .btn.fill{
+            background: var(--primary);
+            color:#fff;
+        }
+        
+        .btn.fill:hover{
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn.ghost{
+            background:transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn.ghost:hover{
+            background: var(--primary);
+            color:#fff;
+            border-color: var(--primary);
+        }
+        
+        .mobile-toggle{
+            display:none;
+            background: var(--primary);
+            color:#fff;
+            border:none;
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        .mobile-menu{
+            position:fixed;
+            inset:0 0 auto 0;
+            top:72px;
+            background:#fff;
+            border-top:1px solid #eee;
+            display:none;
+            padding: 1rem 0;
+            z-index: 999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-menu.open{
+            display:block;
+        }
+        
+        .mobile-menu a{
+            display:block;
+            padding:16px 24px;
+            border-bottom:1px solid #f5f5f5;
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        
+        .mobile-menu a:hover{
+            background-color: rgba(201, 15, 15, 0.05);
+            color: var(--primary);
+        }
+
+        /* ====== ESTILO ESPECIAL PARA BOTÓN VOLVER (MÓVIL) ====== */
+        .mobile-menu a.catalogo-link {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            width: fit-content;
+            margin: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-left: none;
+        }
+        
+        .mobile-menu a.catalogo-link i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        
+        .mobile-menu a.catalogo-link:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .mobile-menu a.catalogo-link:hover i {
+            color: white;
+        }
+        
+        /* ====== RESPONSIVE NAV ====== */
+        @media (max-width: 960px){
+            .nav-links{
+                display:none;
+            }
+            .mobile-toggle{
+                display:inline-grid;
+                place-items:center;
+            }
+            .nav-inner {
+                padding: 0 20px;
+            }
+        }
+        
+        @media (max-width: 480px){
+            .nav-inner {
+                padding: 0 15px;
+            }
+            .logo {
+                font-size: 1.35rem;
+            }
+        }
+        
+        /* ====== ESTILOS PARA LAS SECCIONES CON IMAGEN DE FONDO ====== */
+        .full-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .full-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .section-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+        }
+        
+        .section-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            line-height: 1.7;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+        }
+        
+        .section-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 1.2rem 3.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+        
+        .section-button:hover {
+            background: white;
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        .section-button i {
+            font-size: 1.4rem;
+        }
+        
+        /* ====== BOTONES ADICIONALES PARA LA SECCIÓN 1 - AHORA ROJOS ====== */
+        .negocios-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .negocio-btn {
+            background: var(--primary);  /* Fondo rojo */
+            border: 2px solid var(--primary);
+            color: white;  /* Texto blanco */
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(201, 15, 15, 0.3);
+        }
+        
+        .negocio-btn:hover {
+            background: white;  /* Fondo blanco al hacer hover */
+            color: var(--primary);  /* Texto rojo al hacer hover */
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(201, 15, 15, 0.4);
+        }
+        
+        .negocio-btn i {
+            font-size: 1.2rem;
+            color: white;  /* Icono blanco */
+        }
+        
+        .negocio-btn:hover i {
+            color: var(--primary);  /* Icono rojo al hacer hover */
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.8rem;
+            }
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+            .negocios-grid {
+                gap: 1rem;
+            }
+            .negocio-btn {
+                min-width: 160px;
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            .section-button {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .negocios-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .negocio-btn {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            border-top: 1px solid #eee;
+            padding: 3rem 0 3rem;
+            color: #444;
+            background-color: #f8f9fa;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 32px;
+        }
+        
+        .footer h4 {
+            margin: 0 0 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .footer a {
+            display: block;
+            padding: 0.35rem 0;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        .footer .muted {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .socials a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #000;
+            transition: color 0.2s;
+        }
+
+        .socials a:hover {
+            color: var(--primary);
+        }
+
+        .socials i {
+            font-size: 1.3rem;
+            width: 24px;
+        }
+
+        /* Estilos para iconos de redes sociales */
+        .fa-whatsapp { color: var(--whatsapp-green); }
+        .fa-instagram { color: #C13584; }
+        .fa-tiktok { color: #000000; }
+        
+        /* Estilo para Gmail (gris informativo) */
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #6b7280;
+            cursor: default;
+        }
+        
+        .info-item i {
+            font-size: 1.3rem;
+            width: 24px;
+            color: #9ca3af;
+        }
+        
+        .info-item span {
+            color: #6b7280;
+        }
+        
+        .info-item:hover {
+            color: #6b7280;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            width: 100%;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding: 2rem 32px 0;
+        }
+        
+        /* ====== RESPONSIVE FOOTER ====== */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Estilo especial para LIFETIMES en negritas */
+        .lifetimes-bold {
+            font-weight: 900 !important;
+        }
+        
+        .brand-name {
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        /* Estilo para el icono de mundo en azul claro */
+        .world-icon {
+            color: #87CEEB !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">☰</button>
+            <a class="logo" href="#" aria-label="Inicio" title="Inicio">
+                <i class="fas fa-utensils logo-icon"></i>
+                <strong class="lifetimes-bold">LIFETIMES</strong>
+            </a>
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#section1">Personalización</a>
+                <a href="#section2">Experiencia</a>
+                <a href="#section3">Comunidad LTA</a>
+            </nav>
+            <div class="nav-cta">
+                <!-- BOTÓN VOLVER EN PC - DICE "VOLVER" CON FLECHA -->
+                <a class="btn fill" href="Alimentos y bebidas.html" aria-label="Volver al catálogo">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+        
+        <!-- MENÚ MÓVIL - BOTÓN VOLVER CON FLECHA -->
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="#section1">Personalización</a>
+            <a href="#section2">Experiencia</a>
+            <a href="#section3">Comunidad LTA</a>
+            
+            <!-- BOTÓN VOLVER EN MÓVIL - "VOLVER" CON FLECHA -->
+            <a href="#" class="catalogo-link" id="volverCatalogo">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </header>
+
+    <!-- ====== SECCIÓN 1 ====== -->
+    <section id="section1" class="full-section" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="section-content">
+            <h1 class="section-title">Personaliza tu Comida<br><strong class="lifetimes-bold">LIFETIMES</strong></h1>
+            <p class="section-subtitle">Los clientes crean su platillo ideal eligiendo ingredientes, porciones y extras. Tú recibes el pedido listo para preparar.</p>
+            <a href="#contact" class="section-button">
+                <i class="fas fa-utensils"></i> Ver Ejemplos
+            </a>
+            
+            <!-- TRES BOTONES ROJOS CON ENLACES A SUS PÁGINAS -->
+            <div class="negocios-grid">
+                <a href="Negocio-Web-1.html" class="negocio-btn">
+                    <i class="fas fa-store"></i> Negocio-1
+                </a>
+                <a href="Negocio-Web-2.html" class="negocio-btn">
+                    <i class="fas fa-pizza-slice"></i> Negocio-2
+                </a>
+                <a href="Negocio-Web-3.html" class="negocio-btn">
+                    <i class="fas fa-fish"></i> Negocio-3
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN 2 ====== -->
+    <section id="section2" class="full-section" style="background-image: url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80');">
+        <div class="section-content">
+            <h2 class="section-title">Ser parte de la experiencia</h2>
+            <p class="section-subtitle">Nosotros creamos fotos, videos y estrategias para redes sociales. Atraemos clientes y hacemos crecer tu negocio, Sin inversión inicial. Solo compartimos ganancias cuando vendes. En 48 horas tu negocio está online.</p>
+            <a href="Servicios-comision-negocios.html" class="section-button" id="marketingBtn">
+                <i class="fas fa-camera"></i> Comenzar ahora
+            </a>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN 3 ====== -->
+    <section id="section3" class="full-section" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80');">
+        <div class="section-content">
+            <h2 class="section-title">Crear publicación</h2>
+            <p class="section-subtitle">Aquí puedes publicar tu negocio. Esta acción solo agrega el contenido al catálogo y no forma parte de servicios de crecimiento o promoción.</p>
+            <a href="Comunidad-Negocio.html" class="section-button" id="comunidadBtn">
+                <i class="fas fa-globe world-icon"></i> Unirme a la Comunidad LTA
+            </a>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE CONTACTO OCULTA PARA ANCLAS ====== -->
+    <div id="contact" style="display: none;"></div>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>Acerca de <strong class="lifetimes-bold">LIFETIMES</strong></h4>
+                <p class="muted">Plataforma que conecta restaurantes con clientes que buscan personalizar su comida. Creamos tu web, gestionamos los pedidos y pagos, y hacemos marketing de contenido. Tú recibes el 80% del valor. Modelo justo y transparente para todos.</p>
+            </div>
+
+            <div>
+                <h4>Para Restaurantes</h4>
+                <a href="#section1">Personalización</a>
+                <a href="#section2">Experiencia</a>
+                <a href="#section3">Comunidad LTA</a>
+                <a href="#contact">Unirse Gratis</a>
+            </div>
+
+            <div>
+                <h4>Recursos</h4>
+                <a href="#section1">Casos de Éxito</a>
+                <a href="#section2">Preguntas Frecuentes</a>
+                <a href="#section3">Soporte Técnico</a>
+                <a href="#contact">Blog de Tips</a>
+            </div>
+
+            <div>
+                <h4>Contáctanos</h4>
+                <p class="muted">Email: socios@lifetimes.com</p>
+                <p class="muted">Teléfono: +52 55 1234 5678</p>
+                <div class="socials">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>socios@lifetimes.com</span>
+                    </div>
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            // Año actual en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Botón "Volver" en móvil
+            const volverCatalogo = document.getElementById('volverCatalogo');
+            if (volverCatalogo) {
+                volverCatalogo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Aquí puedes poner la URL a la que quieres redirigir
+                    window.location.reload(); // Recarga la página actual
+                    
+                    // Cerrar el menú móvil
+                    if (mobileMenu) {
+                        mobileMenu.classList.remove('open');
+                    }
+                });
+            }
+            
+            // Cerrar menú al hacer clic en cualquier enlace
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (mobileMenu) {
+                        mobileMenu.classList.remove('open');
+                    }
+                });
+            });
+            
+            // Smooth scroll para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            // Cerrar menú móvil si está abierto
+                            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                                mobileMenu.classList.remove('open');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Cerrar menú al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (mobileMenu && mobileMenu.classList.contains('open')) {
+                    if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                        mobileMenu.classList.remove('open');
+                    }
+                }
+            });
+            
+            // Animación para elementos al hacer scroll
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar secciones
+            document.querySelectorAll('.full-section').forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                section.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(section);
+            });
+            
+            // Destacar todas las instancias de LIFETIMES
+            document.querySelectorAll('h1, h2, h3, p, .section-title, .section-subtitle').forEach(element => {
+                if (element.textContent.includes('LIFETIMES')) {
+                    const newHTML = element.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                    element.innerHTML = newHTML;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

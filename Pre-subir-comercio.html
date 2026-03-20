@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES - Abre tu Tienda Online | Tu Producto, Nuestra Tecnología</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES Y RESET - NUEVO COLOR AZUL #0F52C9 ====== */
+        :root {
+            --primary: #0F52C9;
+            --primary-dark: #0D45A8;
+            --primary-light: rgba(15, 82, 201, 0.1);
+            --primary-soft: rgba(15, 82, 201, 0.05);
+            --secondary: #FFB347;
+            --secondary-light: rgba(255, 179, 71, 0.1);
+            --accent: #FF6B6B;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --success-dark: #21867a;
+            --whatsapp-green: #25D366;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --border-radius-xl: 30px;
+            --gradient-primary: linear-gradient(135deg, #0F52C9 0%, #2A73FF 100%);
+            --gradient-secondary: linear-gradient(135deg, #FFB347 0%, #FFD966 100%);
+            --gradient-food: linear-gradient(135deg, #0F52C9 0%, #FFB347 50%, #2a9d8f 100%);
+            --gradient-dark: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --gradient-marketing: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-premium: linear-gradient(135deg, #0F52C9 0%, #2A73FF 50%, #667eea 100%);
+            --gradient-psychology: linear-gradient(135deg, #FF6B6B 0%, #FFB347 100%);
+            
+            /* Color azul para los botones web - AHORA USA EL COLOR PRINCIPAL */
+            --web-color: #0F52C9;
+            --web-color-light: #2A73FF;
+            --web-color-dark: #0D45A8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO PERSONALIZADA ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .logo{
+            font-weight:900;
+            letter-spacing:.02em;
+            font-size:1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        .logo span{
+            color: var(--primary);
+        }
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-links{
+            display:flex;
+            gap:1.8rem;
+            align-items:center;
+        }
+        .nav-links a{
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta{
+            display:flex;
+            gap:.8rem;
+            align-items:center;
+        }
+        
+        .btn{
+            display:inline-flex;
+            gap:.6rem;
+            align-items:center;
+            font-weight:600;
+            border: 2px solid var(--primary);
+            padding:.85rem 1.8rem;
+            border-radius:8px;
+            transition:all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 5px 15px rgba(15, 82, 201, 0.2);
+        }
+        
+        .btn.fill{
+            background: var(--primary);
+            color:#fff;
+        }
+        
+        .btn.fill:hover{
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn.ghost{
+            background:transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn.ghost:hover{
+            background: var(--primary);
+            color:#fff;
+            border-color: var(--primary);
+        }
+        
+        .mobile-toggle{
+            display:none;
+            background: var(--primary);
+            color:#fff;
+            border:none;
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu{
+            position:fixed;
+            inset:0 0 auto 0;
+            top:72px;
+            background:#fff;
+            border-top:1px solid #eee;
+            display:none;
+            padding: 1rem 0;
+            z-index: 999;
+        }
+        
+        .mobile-menu.open{display:block}
+        
+        .mobile-menu a{
+            display:block;
+            padding:16px 24px;
+            border-bottom:1px solid #f5f5f5;
+            font-weight:600;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: all 0.2s;
+        }
+        
+        .mobile-menu a:hover{
+            background-color: rgba(15, 82, 201, 0.05);
+            color: var(--primary);
+        }
+        
+        /* Estilo especial para el enlace "Volver al catálogo" en móvil */
+        .mobile-menu a.catalogo-link {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            font-weight: 700;
+        }
+        
+        .mobile-menu a.catalogo-link:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .mobile-menu a.catalogo-link i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .mobile-menu a.catalogo-link:hover i {
+            color: white;
+        }
+        
+        @media (max-width: 960px){
+            .nav-links{display:none}
+            .mobile-toggle{display:inline-grid;place-items:center}
+            .nav-inner {
+                padding: 0 24px;
+            }
+        }
+        
+        /* ====== HERO SECTION ====== */
+        .hero {
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1;
+            opacity: 0.9;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 2;
+            color: white;
+        }
+        
+        .hero-content {
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(15, 82, 201, 0.3);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-title span {
+            color: var(--primary);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-weight: 900;
+            display: inline;
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: var(--primary);
+            background-clip: unset;
+        }
+        
+        .hero-title strong {
+            font-weight: 900;
+            color: white;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        /* ====== NUEVAS SECCIONES FULL WIDTH (INSPIRADAS EN EL CÓDIGO DE REFERENCIA) ====== */
+        .discover-full-section {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Imagen de fondo para cada sección - de izquierda a derecha */
+        .discover-full-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: brightness(0.5) contrast(1.1);
+            z-index: -1;
+        }
+
+        /* Overlay sutil */
+        .discover-full-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 100%);
+            z-index: -1;
+        }
+
+        /* NUEVAS IMÁGENES - Totalmente diferentes y relacionadas con tiendas online */
+        .discover-section-1::before {
+            background-image: url('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        }
+
+        /* NUEVA IMAGEN PARA LA SECCIÓN DE MARCA - Completamente diferente */
+        .discover-section-2::before {
+            background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+        }
+
+        .discover-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        /* Badge minimalista centrado arriba */
+        .discover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            backdrop-filter: blur(5px);
+            background: rgba(255,255,255,0.05);
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            width: fit-content;
+        }
+
+        .discover-badge i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* Contenedor principal FLEX para izquierda y derecha */
+        .discover-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        /* ===== LADO IZQUIERDO: Icono grande ===== */
+        .discover-icon-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .discover-icon-circle {
+            width: 200px;
+            height: 200px;
+            background: rgba(15, 82, 201, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .discover-icon-circle:hover {
+            background: rgba(15, 82, 201, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .discover-icon-label {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* ===== LADO DERECHO: Título y Descripción ===== */
+        .discover-description-wrapper {
+            flex: 1;
+            text-align: left;
+        }
+
+        .discover-description-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .discover-description-title span {
+            color: var(--primary);
+            display: inline-block;
+            position: relative;
+        }
+
+        .discover-description-text {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .discover-features {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .discover-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            color: white;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .discover-feature-item i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .discover-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(15, 82, 201, 0.4);
+            cursor: pointer;
+        }
+
+        .discover-cta-button:hover {
+            background: transparent;
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(15, 82, 201, 0.3);
+        }
+
+        /* Responsive para las nuevas secciones */
+        @media (max-width: 992px) {
+            .discover-main {
+                flex-direction: column;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .discover-icon-wrapper {
+                align-items: center;
+            }
+
+            .discover-description-wrapper {
+                text-align: center;
+            }
+
+            .discover-description-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .discover-features {
+                justify-content: center;
+            }
+
+            .discover-description-title {
+                font-size: 3rem;
+            }
+
+            .discover-icon-circle {
+                width: 150px;
+                height: 150px;
+                font-size: 4rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .discover-description-title {
+                font-size: 2.5rem;
+            }
+
+            .discover-description-text {
+                font-size: 1.1rem;
+            }
+
+            .discover-icon-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+
+            .discover-features {
+                gap: 1rem;
+            }
+
+            .discover-feature-item {
+                font-size: 0.9rem;
+                padding: 0.4rem 1rem;
+            }
+        }
+        
+        /* ====== ESTILOS PARA LAS SECCIONES CON IMAGEN DE FONDO (de las secciones importadas) ====== */
+        .full-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .full-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .section-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+        }
+        
+        .section-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            line-height: 1.7;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+        }
+        
+        .section-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 1.2rem 3.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+        
+        .section-button:hover {
+            background: white;
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        .section-button i {
+            font-size: 1.4rem;
+        }
+        
+        /* ====== BOTONES EN AZUL (AHORA USA EL COLOR PRINCIPAL #0F52C9) ====== */
+        .webs-intro {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            font-weight: 400;
+            text-transform: uppercase;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(3px);
+            display: inline-block;
+            padding: 0.4rem 1.5rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            opacity: 0.8;
+        }
+        
+        .webs-intro i {
+            margin-right: 6px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+        }
+        
+        .webs-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .web-btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(15, 82, 201, 0.3);
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: var(--primary);
+            color: white;
+        }
+        
+        .web-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .web-btn:hover::before {
+            left: 100%;
+        }
+        
+        .web-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(15, 82, 201, 0.5);
+            border-color: rgba(255,255,255,0.3);
+        }
+        
+        .web-btn i {
+            font-size: 1.2rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .web-btn:hover i {
+            transform: translateX(3px);
+        }
+        
+        /* Nota descriptiva más discreta y difuminada */
+        .webs-note {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(2px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            flex-wrap: wrap;
+        }
+        
+        .webs-note:hover {
+            opacity: 0.9;
+        }
+        
+        .webs-note i {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+        
+        .webs-note span {
+            font-weight: 400;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.3px;
+        }
+        
+        /* ====== TARJETA DIFUMINADA ADICIONAL (ESTILO DE MARCA) ====== */
+        .brand-card {
+            margin-top: 2.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 60px;
+            padding: 1.2rem 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: white;
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .brand-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .brand-card i {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(15, 82, 201, 0.5);
+            padding: 0.6rem;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .brand-card span {
+            font-weight: 600;
+            color: white;
+        }
+        
+        .brand-card small {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        /* ====== SECCIÓN DEL PROCESO ====== */
+        .process-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .process-bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .circle-element {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary-light);
+            opacity: 0.3;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--gradient-primary);
+            border-radius: 5px;
+        }
+        
+        .section-header .subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+            margin-top: 5rem;
+        }
+        
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--border-radius-lg);
+            background: white;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .process-step:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+        
+        .step-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.2rem;
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 10px 25px rgba(15, 82, 201, 0.3);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border: 3px solid white;
+        }
+        
+        .process-step h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .process-step p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .pain-point {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #fff9e6;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        /* ====== NUEVA SECCIÓN DE BENEFICIOS - REDISEÑADA ====== */
+        .benefits-showcase {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafc 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-showcase::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(15,82,201,0.03) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .benefits-showcase::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: -5%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255,179,71,0.03) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .benefits-showcase-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        .benefits-showcase-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .benefits-tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(15,82,201,0.2);
+        }
+
+        .benefits-showcase-header h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .benefits-showcase-header h2 span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .benefits-showcase-header h2 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--primary-light);
+            z-index: -1;
+        }
+
+        .benefits-subhead {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* NUEVO DISEÑO - Timeline horizontal */
+        .benefits-timeline {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin: 3rem 0 4rem;
+            position: relative;
+        }
+
+        .benefits-timeline::before {
+            content: '';
+            position: absolute;
+            top: 100px;
+            left: 15%;
+            right: 15%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-light), var(--primary), var(--primary-light), transparent);
+            z-index: 1;
+        }
+
+        .benefit-timeline-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .benefit-timeline-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+
+        .benefit-timeline-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -50px auto 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(15,82,201,0.3);
+        }
+
+        .benefit-timeline-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-timeline-item h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .benefit-timeline-item h3 span {
+            color: var(--primary);
+            font-size: 1rem;
+            display: block;
+            margin-top: 0.3rem;
+            font-weight: 500;
+        }
+
+        .benefit-timeline-item p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Testimonial / Pensamiento del cliente - estilo quote */
+        .client-quote {
+            background: var(--primary-soft);
+            border-radius: 20px;
+            padding: 1.2rem;
+            border-left: 4px solid var(--primary);
+            text-align: left;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .client-quote i {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            opacity: 0.7;
+        }
+
+        .client-quote p {
+            margin: 0;
+            font-style: italic;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .client-quote p::before {
+            content: '"';
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.3;
+            position: absolute;
+            top: -5px;
+            left: 5px;
+        }
+
+        /* Cards para beneficios adicionales */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .benefit-mini-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .benefit-mini-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+
+        .benefit-mini-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .benefit-mini-content h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+
+        .benefit-mini-content p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        /* EL BANNER AZUL CON LAS TRES PALOMITAS HA SIDO ELIMINADO */
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .benefits-timeline {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            .benefits-timeline::before {
+                display: none;
+            }
+
+            .benefit-timeline-number {
+                margin-top: 0;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* ====== CTA SECTION ====== */
+        .cta {
+            padding: 6rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .cta-description {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+        
+        .cta-note {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            font-weight: 500;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 1.2rem 3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+        
+        .cta-button:hover {
+            background: var(--dark);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button.ghost {
+            background-color: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .cta-button.ghost:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+        
+        /* Estilo especial para el botón principal */
+        .cta-button.primary-highlight {
+            background: white;
+            color: var(--primary);
+            border: 2px solid white;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .cta-button.primary-highlight:hover {
+            background: var(--dark);
+            color: white;
+            border-color: var(--dark);
+            transform: scale(1.08);
+        }
+        
+        .cta-button.primary-highlight i {
+            font-size: 1.3rem;
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            border-top: 1px solid #eee;
+            padding: 3rem 0 3rem;
+            color: #444;
+            background-color: #f8f9fa;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 32px;
+        }
+        
+        .footer h4 {
+            margin: 0 0 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .footer a {
+            display: block;
+            padding: 0.35rem 0;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        .footer .muted {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .socials a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #000;
+            transition: color 0.2s;
+        }
+
+        .socials a:hover {
+            color: var(--primary);
+        }
+
+        .socials i {
+            font-size: 1.3rem;
+            width: 24px;
+        }
+
+        .fa-instagram { color: #C13584; }
+        .fa-tiktok { color: #000000; }
+        
+        .footer-bottom {
+            text-align: center;
+            width: 100%;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding: 2rem 32px 0;
+        }
+        
+        /* ====== RESPONSIVE STYLES GENERALES ====== */
+        @media (max-width: 1200px) {
+            .section-header h2 {
+                font-size: 2.8rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+            
+            .benefits-showcase-header h2 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .process-section,
+            .benefits-showcase,
+            .cta {
+                padding: 4rem 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .benefits-showcase-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 24px;
+            }
+            
+            .full-section {
+                padding: 6rem 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .process-section,
+            .benefits-showcase,
+            .cta {
+                padding: 3rem 1.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .benefits-showcase-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .cta-title {
+                font-size: 2.2rem;
+            }
+            
+            .cta-description {
+                font-size: 1.1rem;
+            }
+            
+            .cta-note {
+                font-size: 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-inner {
+                padding: 0 20px;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .full-section {
+                padding: 4rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .process-section,
+            .benefits-showcase,
+            .cta {
+                padding: 2.5rem 1rem;
+            }
+            
+            .full-section {
+                padding: 3rem 1rem;
+            }
+        }
+        
+        /* Estilo especial para LIFETIMES en negritas */
+        .lifetimes-bold {
+            font-weight: 900 !important;
+        }
+        
+        .brand-name {
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        /* ====== NUEVOS ESTILOS CON PSICOLOGÍA ====== */
+        .fear-message {
+            background: rgba(15, 82, 201, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .fear-message p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .fear-message i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+        
+        .opportunity-highlight {
+            background: linear-gradient(135deg, #0F52C9 0%, #2A73FF 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .opportunity-highlight h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .opportunity-highlight p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* Estilo para el icono de paquetería */
+        .package-icon {
+            color: #FFD700 !important; /* Dorado */
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <button class="mobile-toggle" aria-label="Abrir menú" id="menuBtn">≡</button>
+            <a class="logo" href="#" aria-label="Inicio" title="Inicio">
+                <i class="fas fa-store logo-icon"></i>
+                <strong class="lifetimes-bold">LIFETIMES</strong>
+            </a>
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#process">Cómo Funciona</a>
+                <a href="#section1">Tienda/Volumen</a>
+                <a href="#section2">Tienda/Marca</a>
+                <a href="#contact">Vender Ahora</a>
+            </nav>
+            <div class="nav-cta">
+                <!-- Botón cambiado a "Volver" con flecha y redirige a Comercio.html -->
+                <a class="btn fill" href="Comercio.html" aria-label="Volver">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+            <a href="#process">Cómo Funciona</a>
+            <a href="#section1">Tienda/Volumen</a>
+            <a href="#section2">Tienda/Marca</a>
+            <a href="#contact">Vender Ahora</a>
+            <a href="#" class="catalogo-link" id="volverCatalogo">
+                <i class="fas fa-arrow-left"></i> Volver al catálogo
+            </a>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION ====== -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-store"></i>
+                    ¡Tu negocio, ahora online!
+                </div>
+                <h1 class="hero-title">¿Sin canales para vender?<br>Nosotros <span>creamos tu tienda online</span></h1>
+                <p class="hero-subtitle">
+                    Miles de microempresarios como tú están perdiendo ventas todos los días porque no tienen presencia digital. 
+                    <strong class="lifetimes-bold">LIFETIMES</strong> crea tu web profesional, hacemos marketing, y llevamos tus productos más lejos. 
+                    <strong>Tú solo te enfocas en crear, nosotros en vender.</strong>
+                </p>
+                
+                <!-- Mensaje de dolor/oportunidad -->
+                <div class="fear-message">
+                    <p>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <strong>¿Sabías que el 70% de los clientes buscan productos online antes de comprar?</strong><br>
+                        Si no estás en internet, estás perdiendo clientes todos los días. Nosotros te llevamos al mundo digital.
+                    </p>
+                </div>
+                
+                <a href="#contact" class="btn fill" style="font-size: 1.2rem; padding: 1.2rem 3rem; margin-top: 1rem;">
+                    <i class="fas fa-rocket"></i> Activar mi Tienda Online
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN 1: TIENDA / VOLUMEN ====== -->
+    <section id="section1" class="discover-full-section discover-section-1">
+        <div class="discover-container">
+            <div class="discover-badge">
+                <i class="fas fa-cubes"></i> VENTAS POR MAYOREO
+            </div>
+            
+            <div class="discover-main">
+                <!-- LADO IZQUIERDO: Icono grande -->
+                <div class="discover-icon-wrapper">
+                    <div class="discover-icon-circle">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <div class="discover-icon-label">VOLUMEN</div>
+                </div>
+
+                <!-- LADO DERECHO: Título y Descripción -->
+                <div class="discover-description-wrapper">
+                    <h2 class="discover-description-title">
+                        Tienda para <span>Ventas por Volumen</span>
+                    </h2>
+                    <p class="discover-description-text">
+                        Ideal para mayoristas, distribuidores o negocios que venden por cantidad. Crea catálogos con precios especiales por volumen, gestiona pedidos grandes y permite a tus clientes realizar compras al por mayor de forma rápida y sencilla.
+                    </p>
+                    
+                    <div class="discover-features">
+                        <span class="discover-feature-item"><i class="fas fa-check-circle"></i> Precios por volumen</span>
+                        <span class="discover-feature-item"><i class="fas fa-check-circle"></i> Pedidos al por mayor</span>
+                        <span class="discover-feature-item"><i class="fas fa-check-circle"></i> Gestión de inventario</span>
+                    </div>
+                    
+                    <button class="discover-cta-button" onclick="window.location.href='Condiciones-volumen.html'">
+                        Ver ejemplo <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN 2: TIENDA / MARCA ====== -->
+    <section id="section2" class="discover-full-section discover-section-2">
+        <div class="discover-container">
+            <div class="discover-badge">
+                <i class="fas fa-tag"></i> CONSTRUCCIÓN DE MARCA
+            </div>
+            
+            <div class="discover-main">
+                <!-- LADO IZQUIERDO: Icono grande -->
+                <div class="discover-icon-wrapper">
+                    <div class="discover-icon-circle">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div class="discover-icon-label">MARCA</div>
+                </div>
+
+                <!-- LADO DERECHO: Título y Descripción -->
+                <div class="discover-description-wrapper">
+                    <h2 class="discover-description-title">
+                        Tienda para <span>Construir tu Marca</span>
+                    </h2>
+                    <p class="discover-description-text">
+                        Perfecta para emprendedores y pequeñas marcas que buscan destacar. Diseñamos una tienda online única que refleja la identidad de tu marca, te ayuda a contar tu historia y conectar con tus clientes para crear una comunidad alrededor de tus productos.
+                    </p>
+                    
+                    <div class="discover-features">
+                        <span class="discover-feature-item"><i class="fas fa-check-circle"></i> Identidad de marca</span>
+                        <span class="discover-feature-item"><i class="fas fa-check-circle"></i> Storytelling visual</span>
+                        <span class="discover-feature-item"><i class="fas fa-check-circle"></i> Fidelización</span>
+                    </div>
+                    
+                    <button class="discover-cta-button" onclick="window.location.href='Condiciones-marca.html'">
+                        Ver ejemplo <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DEL PROCESO (De cero a vender online) ====== -->
+    <section class="process-section" id="process">
+        <div class="process-bg-elements">
+            <div class="circle-element circle-1"></div>
+            <div class="circle-element circle-2"></div>
+        </div>
+        
+        <div class="process-container">
+            <div class="section-header">
+                <h2>De cero a vender online</h2>
+                <div class="subtitle">
+                    Te llevamos de no tener canales de venta a tener tu negocio digital funcionando
+                </div>
+            </div>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Creamos tu web</h3>
+                    <p>Diseñamos una tienda online profesional con catálogo de productos, carrito de compras y todo listo para vender.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Hacemos marketing</h3>
+                    <p>Promocionamos tus productos en redes sociales, creamos contenido atractivo y atraemos clientes interesados.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Sistema de pagos</h3>
+                    <p>Integramos pagos con tarjeta, transferencias y plataformas digitales. Recibes el dinero automáticamente.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon-wrapper">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Te acompañamos siempre. Resolvemos dudas, problemas técnicos y optimizamos tu tienda continuamente.</p>
+                </div>
+            </div>
+            
+            <!-- Punto de dolor adicional -->
+            <div class="pain-point" style="margin-top: 3rem;">
+                <i class="fas fa-lightbulb"></i> 
+                <strong>La realidad:</strong> Hoy tus clientes están buscando productos como los tuyos en Google y redes sociales. 
+                Si no apareces, tu competencia sí lo hace. Nosotros te hacemos visible.
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== NUEVA SECCIÓN DE BENEFICIOS - REDISEÑADA ====== -->
+    <section class="benefits-showcase" id="benefits">
+        <div class="benefits-showcase-container">
+
+            <!-- Header de la sección con nuevo estilo -->
+            <div class="benefits-showcase-header">
+                <span class="benefits-tag">🚀 TRANSFORMA TU NEGOCIO</span>
+                <h2>Todo lo que ganas al <span>digitalizar tu negocio</span></h2>
+                <p class="benefits-subhead">No solo creamos tu página web. Te damos un ecosistema completo para que vendas más, sin complicaciones.</p>
+            </div>
+
+            <!-- NUEVO: Timeline de beneficios -->
+            <div class="benefits-timeline">
+                
+                <!-- Beneficio 1 -->
+                <div class="benefit-timeline-item">
+                    <div class="benefit-timeline-number">1</div>
+                    <div class="benefit-timeline-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Gana visibilidad y clientes <span>24/7</span></h3>
+                    <p>Tu negocio siempre estará abierto en internet. Te ayudamos a que te encuentren aunque tu local físico esté cerrado, y los clientes pueden contactarte directamente por WhatsApp o teléfono, sin intermediarios.</p>
+                    
+                    <!-- Quote del cliente -->
+                    <div class="client-quote">
+                        <p><i class="fas fa-quote-left"></i> Más oportunidades de venta sin perder comisiones.</p>
+                    </div>
+                </div>
+
+                <!-- Beneficio 2 -->
+                <div class="benefit-timeline-item">
+                    <div class="benefit-timeline-number">2</div>
+                    <div class="benefit-timeline-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Construye confianza y <span>credibilidad</span></h3>
+                    <p>Te diseñamos una página web profesional y atractiva que hace que tu negocio se vea serio y confiable. Además, apareces en nuestro catálogo digital, para que nuevos clientes te descubran fácilmente.</p>
+                    
+                    <!-- Quotes del cliente -->
+                    <div class="client-quote">
+                        <p><i class="fas fa-quote-left"></i> Mi negocio se ve profesional, como una gran empresa. Así vendo más.</p>
+                        <p style="margin-top: 0.5rem;"><i class="fas fa-quote-left"></i> Pueden descubrirme aunque no me conozcan.</p>
+                    </div>
+                </div>
+
+                <!-- Beneficio 3 -->
+                <div class="benefit-timeline-item">
+                    <div class="benefit-timeline-number">3</div>
+                    <div class="benefit-timeline-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Ahorra tiempo y <span>enfócate en vender</span></h3>
+                    <p>Olvídate de la tecnología. Nosotros nos encargamos de todo el diseño y configuración. Tú solo atiendes a tus clientes. Todo esto, en un solo lugar, sin costos ocultos ni complicaciones.</p>
+                    
+                    <!-- Quote del cliente -->
+                    <div class="client-quote">
+                        <p><i class="fas fa-quote-left"></i> No pierdo tiempo aprendiendo cosas difíciles. Ellos hacen todo por mí.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUEVO: Beneficios adicionales en mini cards -->
+            <div class="benefits-grid">
+                <div class="benefit-mini-card">
+                    <div class="benefit-mini-icon">
+                        <i class="fas fa-whatsapp"></i>
+                    </div>
+                    <div class="benefit-mini-content">
+                        <h4>WhatsApp integrado</h4>
+                        <p>Tus clientes te contactan directamente</p>
+                    </div>
+                </div>
+                <div class="benefit-mini-card">
+                    <div class="benefit-mini-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="benefit-mini-content">
+                        <h4>Sin conocimientos técnicos</h4>
+                        <p>Nosotros hacemos todo por ti</p>
+                    </div>
+                </div>
+                <div class="benefit-mini-card">
+                    <div class="benefit-mini-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="benefit-mini-content">
+                        <h4>Aumenta tus ventas</h4>
+                        <p>Aparece donde te buscan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EL BANNER AZUL CON LAS TRES PALOMITAS HA SIDO ELIMINADO -->
+
+        </div>
+    </section>
+
+    <!-- ====== CTA SECTION ====== -->
+    <section class="cta" id="contact">
+        <div class="cta-container">
+            <h2 class="cta-title">¿Listo para empezar a vender online?</h2>
+            <p class="cta-description">
+                No importa si nunca has tenido una página web o si no sabes nada de marketing digital. 
+                Nosotros hacemos todo por ti. <strong class="lifetimes-bold">LIFETIMES</strong> se encarga de la tecnología, 
+                el marketing y los pagos. Tú solo te enfocas en crear tus productos.
+            </p>
+            
+            <div class="cta-note">
+                <i class="fas fa-clock"></i> Nos pondremos en contacto directamente contigo
+            </div>
+            
+            <div class="cta-buttons">
+                <!-- Botón modificado para redirigir a Facturacion-Comercio.html -->
+                <a href="portal/portal-2.html" class="cta-button primary-highlight" id="unirNegocioBtn">
+                    <i class="fas fa-store"></i> Quiero mi Tienda Online
+                </a>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+                <i class="fas fa-check-circle"></i> Sin contratos largos • Sin costos ocultos • Cancelas cuando quieras
+            </p>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>Acerca de <strong class="lifetimes-bold">LIFETIMES</strong></h4>
+                <p class="muted">Ayudamos a microempresarios a vender online sin complicaciones. Creamos tu tienda, hacemos marketing, gestionamos pagos y damos soporte 24/7. Tú solo creas, nosotros vendemos.</p>
+            </div>
+
+            <div>
+                <h4>Para Emprendedores</h4>
+                <a href="#process">Cómo Funciona</a>
+                <a href="#section1">Tienda/Volumen</a>
+                <a href="#section2">Tienda/Marca</a>
+                <a href="#contact">Comenzar a Vender</a>
+            </div>
+
+            <div>
+                <h4>Recursos</h4>
+                <a href="#">Preguntas Frecuentes</a>
+                <a href="#">Soporte Técnico</a>
+                <a href="#">Blog para Emprendedores</a>
+            </div>
+
+            <div>
+                <h4>Contáctanos</h4>
+                <p class="muted">Email: hola@lifetimes.com</p>
+                <p class="muted">WhatsApp: +34 123 456 789</p>
+                <div class="socials">
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            © <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Transformamos microempresarios en negocios digitales.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            // Año actual en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Función para cerrar menú móvil
+            const closeMobileMenu = () => {
+                if (mobileMenu.classList.contains('open')) {
+                    mobileMenu.classList.remove('open');
+                }
+            };
+            
+            // Smooth scroll para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            closeMobileMenu();
+                        }
+                    }
+                });
+            });
+            
+            // Botón Volver al catálogo
+            const volverCatalogo = document.getElementById('volverCatalogo');
+            if (volverCatalogo) {
+                volverCatalogo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.reload();
+                    closeMobileMenu();
+                });
+            }
+            
+            // Animación para los elementos al hacer scroll
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar las nuevas secciones completas
+            document.querySelectorAll('.discover-full-section').forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                section.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(section);
+            });
+            
+            // Observar los pasos para animación
+            document.querySelectorAll('.process-step').forEach((step, index) => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateY(30px)';
+                step.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                step.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(step);
+            });
+            
+            // Observar los benefit timeline items
+            document.querySelectorAll('.benefit-timeline-item').forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                item.style.transitionDelay = `${index * 0.2}s`;
+                observer.observe(item);
+            });
+            
+            // Observar los benefit mini cards
+            document.querySelectorAll('.benefit-mini-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                card.style.transitionDelay = `${0.6 + index * 0.1}s`;
+                observer.observe(card);
+            });
+            
+            // Observar el header de beneficios
+            const benefitsHeader = document.querySelector('.benefits-showcase-header');
+            if (benefitsHeader) {
+                benefitsHeader.style.opacity = '0';
+                benefitsHeader.style.transform = 'translateY(20px)';
+                benefitsHeader.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(benefitsHeader);
+            }
+            
+            // Cerrar menú móvil al hacer clic en un enlace
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                });
+            });
+            
+            // Destacar todas las instancias de LIFETIMES
+            document.querySelectorAll('h1, h2, h3, p, .subtitle').forEach(element => {
+                if (element.textContent.includes('LIFETIMES')) {
+                    const newHTML = element.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                    element.innerHTML = newHTML;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

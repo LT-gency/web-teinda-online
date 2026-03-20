@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES - Registra tu Negocio | Servicio Personalizado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #c90f0f;
+            --primary-dark: #a80c0c;
+            --primary-light: rgba(201, 15, 15, 0.1);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --success-dark: #21867a;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, #c90f0f 0%, #ff5252 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9e00 0%, #ffd166 100%);
+            --gradient-food: linear-gradient(135deg, #c90f0f 0%, #ff9e00 50%, #2a9d8f 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR CON BOTÓN DE VOLVER ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        /* Grupo izquierdo: botón volver + logo */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-3px);
+            box-shadow: 0 5px 15px rgba(201, 15, 15, 0.2);
+        }
+        
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+        
+        .logo {
+            font-weight: 900;
+            letter-spacing: .02em;
+            font-size: 1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .btn {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            padding: .85rem 1.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 15, 15, 0.2);
+        }
+        
+        .btn.fill {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        .btn.fill:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        /* ====== HERO SECTION CON FORMULARIO ====== */
+        .hero-form-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-form-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .hero-content h1 span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-content h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--primary-light);
+            z-index: -1;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        
+        .personalized-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            gap: 1rem;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .personalized-badge i {
+            font-size: 1.5rem;
+        }
+        
+        /* ====== FORMULARIO DE REGISTRO ====== */
+        .form-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .form-header p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .form-header p strong {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        .form-group label i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(201, 15, 15, 0.3);
+        }
+        
+        .btn-submit i {
+            font-size: 1.2rem;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* ====== SECCIÓN DE BENEFICIOS ====== */
+        .benefits-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        
+        .benefit-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .benefit-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        /* ====== FOOTER SIMPLIFICADO (SIN CONTACTO) ====== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-col p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .hero-form-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-form-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .form-card {
+                padding: 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .personalized-badge {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+            }
+            
+            /* Ajustes responsive para el navbar */
+            .nav-inner {
+                padding: 0 20px;
+            }
+            
+            .nav-left {
+                gap: 0.5rem;
+            }
+            
+            .back-button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .back-button span {
+                display: none; /* Oculta el texto en móviles, solo muestra la flecha */
+            }
+            
+            .back-button {
+                padding: 0.5rem;
+            }
+            
+            .back-button i {
+                margin: 0;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900;
+        }
+        
+        /* Estilo para el mensaje de servicio personalizado */
+        .service-message {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+        
+        .service-message p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .service-message i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR CON BOTÓN DE VOLVER ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <!-- Botón de volver que redirige a Servicios-comision-Negocios.html -->
+                <a href="Subir-negocio.html" class="back-button" aria-label="Volver a servicios">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Volver</span>
+                </a>
+                
+                <!-- Logo -->
+                <a class="logo" href="#" aria-label="Inicio">
+                    <i class="fas fa-utensils logo-icon"></i>
+                    <strong class="lifetimes-bold">LIFETIMES</strong>
+                </a>
+            </div>
+            
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#beneficios">Beneficios</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION CON FORMULARIO ====== -->
+    <section class="hero-form-section">
+        <div class="hero-form-container">
+            <div class="hero-content">
+                <h1>
+                    <span>Registra tu negocio</span><br>
+                    y comienza a vender más
+                </h1>
+                <p class="hero-description">
+                    En <strong class="lifetimes-bold">LIFETIMES</strong> creamos una solución digital personalizada para tu restaurante. 
+                    Te ayudamos a llegar a más clientes y aumentar tus ventas sin inversión inicial.
+                </p>
+                
+                <!-- Mensaje destacado de servicio personalizado -->
+                <div class="service-message">
+                    <p>
+                        <i class="fas fa-star"></i>
+                        <strong>🎯 Servicio 100% Personalizado</strong><br>
+                        Este es un servicio totalmente personalizado. Uno de nuestros asesores se contactará contigo 
+                        en menos de 24 horas para conocer tu negocio y crear una estrategia a tu medida.
+                    </p>
+                </div>
+                
+                <div class="personalized-badge">
+                    <i class="fas fa-headset"></i>
+                    <span>Te contactamos en menos de 24 horas</span>
+                </div>
+            </div>
+            
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Registra tu Negocio</h2>
+                    <p>Completa el formulario y un asesor de <strong>LIFETIMES</strong> te contactará</p>
+                </div>
+                
+                <form id="businessForm">
+                    <!-- Datos del negocio -->
+                    <div class="form-group">
+                        <label><i class="fas fa-store"></i> Nombre del Negocio *</label>
+                        <input type="text" class="form-control" placeholder="Ej: Restaurante El Sabor" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre Completo *</label>
+                            <input type="text" class="form-control" placeholder="Tu nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Ciudad *</label>
+                            <input type="text" class="form-control" placeholder="Ej: Madrid" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Teléfono de contacto (sin icono de WhatsApp) -->
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Teléfono de Contacto *</label>
+                        <input type="tel" class="form-control" placeholder="+34 123 456 789" required>
+                    </div>
+                    
+                    <!-- Email (sin icono de Gmail) -->
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Correo Electrónico *</label>
+                        <input type="email" class="form-control" placeholder="tunegocio@email.com" required>
+                    </div>
+                    
+                    <!-- Tipo de negocio -->
+                    <div class="form-group">
+                        <label><i class="fas fa-utensils"></i> Tipo de Comida *</label>
+                        <select class="form-control" required>
+                            <option value="">Selecciona una opción</option>
+                            <option>Hamburguesas</option>
+                            <option>Pizzas</option>
+                            <option>Comida Mexicana</option>
+                            <option>Comida Asiática</option>
+                            <option>Comida Saludable</option>
+                            <option>Postres</option>
+                            <option>Cafetería</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Checkbox de confirmación -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="confirm" required>
+                        <label for="confirm">
+                            Entiendo que este es un servicio <strong>personalizado</strong> y que un asesor de LIFETIMES se contactará conmigo.
+                        </label>
+                    </div>
+                    
+                    <!-- Botón de envío -->
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Solicitar Asesoría Personalizada
+                    </button>
+                    
+                    <div class="form-footer">
+                        <i class="fas fa-lock"></i> Tus datos están seguros. No compartimos información.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SECCIÓN DE BENEFICIOS ====== -->
+    <section class="benefits-section" id="beneficios">
+        <div class="benefits-container">
+            <div class="section-header">
+                <h2>¿Por qué registrar tu negocio con <strong class="lifetimes-bold">LIFETIMES</strong>?</h2>
+                <p class="subtitle">Te ofrecemos una solución completa y personalizada para digitalizar tu restaurante</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Web Personalizada</h3>
+                    <p>Creamos tu página web con menú interactivo y sistema de personalización de platillos.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Marketing de Contenido</h3>
+                    <p>Manejamos tus redes sociales con contenido profesional para atraer más clientes.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Sistema de Pagos</h3>
+                    <p>Integramos pagos online para que recibas el dinero automáticamente.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte Continuo</h3>
+                    <p>Atención personalizada y soporte técnico 24/7 para tu negocio.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <h3>Sin Costos Fijos</h3>
+                    <p>Solo pagas cuando vendes. Sin mensualidades ni inversión inicial.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Implementación Rápida</h3>
+                    <p>En 48 horas tu negocio está online y listo para recibir pedidos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER SIMPLIFICADO (SIN REDES SOCIALES NI CONTACTO) ====== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><strong class="lifetimes-bold">LIFETIMES</strong></h4>
+                    <p>Transformamos restaurantes tradicionales en negocios digitales con sistemas de personalización y marketing de contenido.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <a href="#beneficios">Beneficios</a>
+                    <a href="#">Términos y Condiciones</a>
+                    <a href="#">Política de Privacidad</a>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Horario de Atención</h4>
+                    <p>Lunes a Viernes: 9:00 - 18:00</p>
+                    <p>Sábados: 10:00 - 14:00</p>
+                    <p>Respuesta en menos de 24h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Servicio personalizado para restaurantes y negocios de comida.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Año actual en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Manejo del formulario
+            const form = document.getElementById('businessForm');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validación básica
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.style.borderColor = 'red';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = 'var(--gray-light)';
+                    }
+                });
+                
+                if (!isValid) {
+                    alert('Por favor completa todos los campos obligatorios');
+                    return;
+                }
+                
+                // Aquí iría la lógica para enviar el formulario
+                // Por ahora solo mostramos un mensaje de éxito
+                alert('¡Gracias por registrar tu negocio! Un asesor de LIFETIMES se contactará contigo en menos de 24 horas para ofrecerte un servicio completamente personalizado.');
+                form.reset();
+            });
+            
+            // Smooth scroll para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Animación para los beneficios al hacer scroll
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar las cards de beneficios
+            document.querySelectorAll('.benefit-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+            
+            // Destacar todas las instancias de LIFETIMES
+            document.querySelectorAll('h1, h2, h3, p, label').forEach(element => {
+                if (element.textContent.includes('LIFETIMES')) {
+                    const newHTML = element.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                    element.innerHTML = newHTML;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

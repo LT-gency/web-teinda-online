@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES - Calculadora de Ganancias | Microempresarios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Librería para generar PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Plugin para usar fuentes y estilos en PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        /* ====== VARIABLES Y RESET ====== */
+        :root {
+            --primary: #0f52c9;
+            --primary-dark: #0a3a8c;
+            --primary-light: rgba(15, 82, 201, 0.1);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --success: #2a9d8f;
+            --success-dark: #21867a;
+            --success-light: rgba(42, 157, 143, 0.15);
+            --warning: #ff9e00;
+            --warning-light: rgba(255, 158, 0, 0.15);
+            --error: #c90f0f;
+            --error-light: rgba(201, 15, 15, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, #0f52c9 0%, #2a9d8f 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9e00 0%, #ffd166 100%);
+            
+            /* Colores para márgenes */
+            --profit-green: #2a9d8f;
+            --profit-green-light: rgba(42, 157, 143, 0.15);
+            --margin-yellow: #ff9e00;
+            --margin-yellow-light: rgba(255, 158, 0, 0.15);
+            --loss-red: #c90f0f;
+            --loss-red-light: rgba(201, 15, 15, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== BARRA DE DESPLAZAMIENTO ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* ====== NAVBAR CON BOTÓN DE VOLVER ====== */
+        .nav{
+            position:sticky;
+            top:0;
+            background:rgba(255,255,255,.98);
+            backdrop-filter:saturate(180%) blur(10px);
+            border-bottom:1px solid #f0f0f0;
+            z-index:1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .nav-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            height:72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        /* Grupo izquierdo: botón volver + logo */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-3px);
+            box-shadow: 0 5px 15px rgba(15, 82, 201, 0.2);
+        }
+        
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+        
+        .logo {
+            font-weight: 900;
+            letter-spacing: .02em;
+            font-size: 1.35rem;
+            text-decoration: none;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .btn {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            padding: .85rem 1.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(15, 82, 201, 0.2);
+        }
+        
+        .btn.fill {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        .btn.fill:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        /* ====== HERO SECTION CON CALCULADORA ====== */
+        .hero-calculator-section {
+            padding: 2rem 2rem 4rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .hero-calculator-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .hero-content {
+            position: sticky;
+            top: 100px;
+            align-self: start;
+            padding-top: 1rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .hero-content h1 span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-content h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--primary-light);
+            z-index: -1;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .hero-note {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+        
+        .hero-note p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .hero-note i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+        
+        .personalized-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            gap: 1rem;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .personalized-badge i {
+            font-size: 1.5rem;
+        }
+        
+        /* ====== FORMULARIO DE CÁLCULO ====== */
+        .calculator-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid rgba(0,0,0,0.05);
+            max-height: none;
+            overflow-y: visible;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .form-header p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .form-header p i {
+            color: var(--primary);
+            margin-right: 0.3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        
+        .form-group label i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        .form-control.error {
+            border-color: var(--error);
+            background-color: var(--error-light);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        /* ====== SECCIÓN DE VENTAS ====== */
+        .ventas-section {
+            background: #f5f5f5;
+            border-radius: var(--border-radius);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: none;
+        }
+        
+        .ventas-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .ventas-title i {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+        
+        .ventas-input-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .ventas-input-group input {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .ventas-input-group input:focus {
+            outline: none;
+            border-color: var(--gray);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .ventas-badge {
+            background: #e0e0e0;
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .ventas-note {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+        
+        .ventas-note i {
+            color: var(--gray);
+            margin-right: 0.3rem;
+        }
+        
+        /* ====== SECCIÓN DE PESO ====== */
+        .peso-section {
+            background: #f5f5f5;
+            border-radius: var(--border-radius);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: none;
+        }
+        
+        .peso-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .peso-title i {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+        
+        .peso-selector {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--dark);
+            background-color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .peso-selector:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .peso-selector:disabled {
+            background-color: var(--gray-light);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .peso-info {
+            margin-top: 0.8rem;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+            font-size: 0.9rem;
+            border: 1px solid var(--gray-light);
+        }
+        
+        .peso-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .peso-info td {
+            padding: 0.3rem 0;
+            color: var(--dark);
+        }
+        
+        .peso-info td:first-child {
+            font-weight: 600;
+        }
+        
+        .peso-info td:last-child {
+            text-align: right;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .peso-note {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .peso-note i {
+            color: var(--primary);
+        }
+        
+        /* ====== TOGGLE SÍ/NO ====== */
+        .toggle-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .toggle-option i {
+            font-size: 1.2rem;
+        }
+        
+        .toggle-option.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(15, 82, 201, 0.2);
+        }
+        
+        .toggle-option:not(.active):hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+        
+        .toggle-option.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+            background: var(--gray-light);
+        }
+        
+        /* ====== MENSAJE DE ERROR/ADVERTENCIA ====== */
+        .warning-message {
+            background: var(--warning-light);
+            border-left: 4px solid var(--warning);
+            padding: 0.8rem 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .warning-message i {
+            color: var(--warning);
+            font-size: 1.1rem;
+        }
+        
+        .error-message {
+            background: var(--error-light);
+            border-left: 4px solid var(--error);
+            padding: 0.8rem 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--error);
+        }
+        
+        .error-message i {
+            color: var(--error);
+            font-size: 1.1rem;
+        }
+        
+        /* ====== TABLA DE RESULTADOS ====== */
+        .results-section {
+            margin-top: 2rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 2px solid var(--gray-light);
+        }
+        
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .results-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .results-header h3 i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+        
+        .commission-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+        
+        .results-table tr {
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .results-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .results-table td {
+            padding: 1rem 0.5rem;
+        }
+        
+        .results-table td:first-child {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .results-table td:last-child {
+            text-align: right;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--dark) !important;
+        }
+        
+        .shipping-detail {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .commission-note {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.3rem;
+            font-weight: 400;
+        }
+        
+        .commission-note i {
+            color: var(--primary);
+            margin-right: 0.3rem;
+        }
+        
+        /* ====== LISTA DE PRODUCTOS GUARDADOS ====== */
+        .productos-guardados {
+            margin-bottom: 1.5rem;
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            border: 2px dashed var(--primary);
+        }
+        
+        .productos-guardados h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .productos-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .producto-guardado-item {
+            background: white;
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid var(--gray-light);
+            font-size: 0.9rem;
+        }
+        
+        .producto-guardado-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .producto-guardado-nombre {
+            font-weight: 700;
+            color: var(--dark);
+            min-width: 120px;
+        }
+        
+        .producto-guardado-detalle {
+            color: var(--gray);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .producto-guardado-detalle span {
+            background: var(--light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .producto-guardado-eliminar {
+            color: var(--error);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .producto-guardado-eliminar:hover {
+            background: var(--error-light);
+            transform: scale(1.1);
+        }
+        
+        /* ====== BOTÓN VERDE PARA AGREGAR PRODUCTOS ====== */
+        .add-product-btn-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .add-product-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+        }
+        
+        .add-product-btn:hover {
+            background: var(--success-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .add-product-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .add-product-btn:active {
+            transform: translateY(0);
+        }
+        
+        .contador-productos {
+            display: inline-block;
+            background: white;
+            color: var(--success);
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        /* ====== BOTÓN DE DESCARGA PDF ====== */
+        .download-btn-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            width: 100%;
+            border: 2px solid transparent;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .download-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* ====== FOOTNOTE ====== */
+        .footnote {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--light);
+            border-radius: var(--border-radius);
+        }
+        
+        .footnote i {
+            color: var(--primary);
+        }
+        
+        /* ====== NUEVA SECCIÓN DE MENSAJE RECOMENDADO ====== */
+        .mensaje-section {
+            padding: 8rem 2rem;
+            background-image: url('https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        .mensaje-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .mensaje-icon {
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 2rem;
+            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .mensaje-container h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            line-height: 1.2;
+            max-width: 900px;
+        }
+        
+        .mensaje-container p {
+            font-size: 1.5rem;
+            color: white;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            font-weight: 600;
+        }
+        
+        .mensaje-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: var(--primary);
+            color: white;
+            border: 2px solid white;
+            padding: 1.3rem 3.5rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mensaje-btn:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+        
+        .mensaje-btn i {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .mensaje-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* ====== FOOTER SIMPLIFICADO ====== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-col p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .hero-calculator-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                text-align: center;
+                position: static;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .mensaje-container h2 {
+                font-size: 2.8rem;
+            }
+            
+            .mensaje-container p {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-calculator-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .personalized-badge {
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .nav-inner {
+                padding: 0 20px;
+            }
+            
+            .nav-left {
+                gap: 0.5rem;
+            }
+            
+            .back-button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .ventas-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .download-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .mensaje-section {
+                padding: 4rem 1.5rem;
+                background-attachment: scroll;
+            }
+            
+            .mensaje-container h2 {
+                font-size: 2.2rem;
+            }
+            
+            .mensaje-container p {
+                font-size: 1.1rem;
+            }
+            
+            .mensaje-btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            .mensaje-icon {
+                font-size: 4rem;
+            }
+            
+            .producto-guardado-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .back-button span {
+                display: none;
+            }
+            
+            .back-button {
+                padding: 0.5rem;
+            }
+            
+            .back-button i {
+                margin: 0;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .toggle-container {
+                flex-direction: column;
+            }
+            
+            .toggle-option {
+                padding: 0.8rem;
+            }
+            
+            .mensaje-container h2 {
+                font-size: 1.8rem;
+            }
+            
+            .mensaje-container p {
+                font-size: 1rem;
+            }
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR CON BOTÓN DE VOLVER ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <!-- Botón de volver que redirige a Subir-negocio.html -->
+                <a href="Pre-subir-comercio.html" class="back-button" aria-label="Volver a servicios">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Volver</span>
+                </a>
+                
+                <!-- Logo -->
+                <a class="logo" href="#" aria-label="Inicio">
+                    <i class="fas fa-chart-line logo-icon"></i>
+                    <strong class="lifetimes-bold">LIFETIMES</strong>
+                </a>
+            </div>
+            
+            <nav class="nav-links" aria-label="Principal">
+                <a href="#mensaje">Activar tienda</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ====== HERO SECTION CON CALCULADORA DE GANANCIAS ====== -->
+    <section class="hero-calculator-section">
+        <div class="hero-calculator-container">
+            <div class="hero-content">
+                <h1>
+                    <span>Calcula tu ganancia</span><br>
+                    por venta en el Comercio
+                </h1>
+                <p class="hero-description">
+                    Estima cuánto ganarás realmente después de comisiones y costos de envío. 
+                    Una herramienta diseñada para <strong>microempresarios</strong> que quieren maximizar sus ingresos.
+                </p>
+                
+                <!-- Nota destacada -->
+                <div class="hero-note">
+                    <p>
+                        <i class="fas fa-lightbulb"></i>
+                        <strong>Pedido mínimo de $350 MXN para poder incluir paquetería.</strong>
+                    </p>
+                </div>
+                
+                <div class="personalized-badge">
+                    <i class="fas fa-calculator"></i>
+                    <span>Resultados en tiempo real</span>
+                </div>
+            </div>
+            
+            <div class="calculator-card">
+                <div class="form-header">
+                    <h2>Calculadora de Ganancias</h2>
+                    <p><i class="fas fa-hand-pointer"></i> Ajusta los valores y mira tus ganancias al instante</p>
+                </div>
+                
+                <form id="profitForm">
+                    <!-- LISTA DE PRODUCTOS GUARDADOS -->
+                    <div id="productosGuardadosContainer" class="productos-guardados" style="display: none;">
+                        <h4>
+                            <i class="fas fa-shopping-bag"></i>
+                            Productos en factura
+                            <span id="contadorProductos" class="contador-productos">0/5</span>
+                        </h4>
+                        <div id="productosLista" class="productos-lista">
+                            <!-- Aquí se insertarán los productos guardados -->
+                        </div>
+                    </div>
+                    
+                    <!-- FORMULARIO PARA NUEVO PRODUCTO (IGUAL AL ORIGINAL) -->
+                    <div id="formularioProducto">
+                        <!-- Input 1: Precio de venta -->
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> Precio de venta del producto (MXN)</label>
+                            <input type="number" id="precioProducto" class="form-control" value="500" min="0" step="1" required>
+                        </div>
+                        
+                        <!-- Mensaje de error si el precio es menor a 350 -->
+                        <div id="precioErrorMsg" class="error-message" style="display: none;">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>El precio mínimo para incluir paquetería es de $350 MXN</span>
+                        </div>
+                        
+                        <!-- Input 2: Ventas estimadas -->
+                        <div class="ventas-section">
+                            <div class="ventas-title">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Ventas estimadas al mes</span>
+                            </div>
+                            <div class="ventas-input-group">
+                                <input type="number" id="ventasExactas" class="form-control" placeholder="Ej: 15, 23, 47..." min="1" value="18">
+                                <span class="ventas-badge" id="ventasBadge">18 ventas</span>
+                            </div>
+                            <div class="ventas-note">
+                                <i class="fas fa-info-circle"></i> La comisión se ajusta según tu volumen: 1-10 (18%), 11-25 (15%), 26-100 (15%), 100+ (25%)
+                            </div>
+                        </div>
+                        
+                        <!-- Input 3: Toggle Envío incluido -->
+                        <div class="form-group">
+                            <label><i class="fas fa-truck"></i> ¿Desea envío incluido?</label>
+                            <div class="toggle-container" id="envioToggle">
+                                <div class="toggle-option active" data-value="si" id="envioSiOption">
+                                    <i class="fas fa-check-circle"></i>
+                                    Sí
+                                </div>
+                                <div class="toggle-option" data-value="no" id="envioNoOption">
+                                    <i class="fas fa-times-circle"></i>
+                                    No
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Input 4: Selector de peso (solo visible si envío = Sí) -->
+                        <div class="form-group" id="pesoGroup">
+                            <label><i class="fas fa-weight-scale"></i> Peso aproximado del producto</label>
+                            <div class="peso-section">
+                                <div class="peso-title">
+                                    <i class="fas fa-box"></i>
+                                    <span>Selecciona el rango de peso</span>
+                                </div>
+                                <select class="peso-selector" id="pesoSelector">
+                                    <option value="0.5">0–1 kg (Paquete pequeño)</option>
+                                    <option value="2" selected>1–3 kg (Paquete mediano)</option>
+                                    <option value="4">3–5 kg (Paquete grande)</option>
+                                </select>
+                                
+                                <div class="peso-info">
+                                    <table>
+                                        <tr>
+                                            <td>0–1 kg</td>
+                                            <td>$70–100 MXN</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1–3 kg</td>
+                                            <td>$110–160 MXN</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3–5 kg</td>
+                                            <td>$160–220 MXN</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                <div class="peso-note">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>El costo se calcula automáticamente según el peso seleccionado</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tabla de resultados del producto actual -->
+                        <div class="results-section">
+                            <div class="results-header">
+                                <h3><i class="fas fa-chart-pie"></i> Ganancia del producto actual</h3>
+                                <span class="commission-badge" id="comisionBadge">
+                                    <i class="fas fa-percent"></i> 18%
+                                </span>
+                            </div>
+                            
+                            <table class="results-table">
+                                <tr>
+                                    <td><i class="fas fa-tag"></i> Precio de venta</td>
+                                    <td id="precioDisplay">$500.00</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-percent"></i> Comisión aplicada</td>
+                                    <td id="comisionMontoDisplay">$90.00</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-truck"></i> Costo de envío</td>
+                                    <td id="envioDisplay">$100.00</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-weight-scale"></i> Rango de peso</td>
+                                    <td id="pesoDisplay">1-3 kg</td>
+                                </tr>
+                                <tr>
+                                    <td><strong><i class="fas fa-wallet"></i> Ganancia neta por venta</strong></td>
+                                    <td><strong id="gananciaPorVenta">$310.00</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- BOTÓN VERDE PARA AGREGAR PRODUCTO (ARRIBA DE DESCARGAR) -->
+                    <div class="add-product-btn-container">
+                        <button type="button" id="addProductBtn" class="add-product-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>AGREGAR UN PRODUCTO MÁS</span>
+                        </button>
+                    </div>
+                    
+                    <!-- RESUMEN TOTAL DE TODOS LOS PRODUCTOS -->
+                    <div class="results-section" style="background: var(--primary-light); border-color: var(--primary);">
+                        <div class="results-header">
+                            <h3 style="color: var(--primary);"><i class="fas fa-chart-pie"></i> TOTAL FACTURA (Todos los productos)</h3>
+                            <span class="commission-badge" style="background: var(--primary);" id="totalProductosCount">0 productos</span>
+                        </div>
+                        
+                        <table class="results-table">
+                            <tr>
+                                <td><i class="fas fa-tag"></i> Total productos</td>
+                                <td id="totalPreciosDisplay">$0.00</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-percent"></i> Total comisiones</td>
+                                <td id="totalComisionesDisplay">$0.00</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-truck"></i> Total envíos</td>
+                                <td id="totalEnviosDisplay">$0.00</td>
+                            </tr>
+                            <tr>
+                                <td><strong><i class="fas fa-wallet"></i> GANANCIA TOTAL POR VENTA</strong></td>
+                                <td><strong id="totalGananciaDisplay">$0.00</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong><i class="fas fa-calendar-alt"></i> GANANCIA MENSUAL TOTAL</strong></td>
+                                <td><strong id="totalGananciaMensualDisplay">$0.00</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Botón de descarga PDF -->
+                    <div class="download-btn-container">
+                        <button type="button" id="downloadPDFBtn" class="download-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Descargar factura PDF</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Nota al pie simplificada -->
+                    <div class="footnote">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="comisionTexto">Valores estimados para ayudarte a planear tus ventas.</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== NUEVA SECCIÓN DE MENSAJE RECOMENDADO ====== -->
+    <section class="mensaje-section" id="mensaje">
+        <div class="mensaje-container">
+            <div class="mensaje-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>¿Listo para empezar a vender?</h2>
+            <p>
+                Ya calculamos el potencial de tus productos. Ahora creemos tu tienda y subamos tus productos para comenzar.
+            </p>
+            <a href="Comunidad-Comercio.html" class="mensaje-btn">
+                <i class="fas fa-rocket"></i>
+                Activar mi tienda ahora
+            </a>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER SIMPLIFICADO ====== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><strong class="lifetimes-bold">LIFETIMES</strong></h4>
+                    <p>Ayudamos a microempresarios a digitalizar sus negocios con herramientas prácticas y servicios personalizados.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Enlaces Rápidos</h4>
+                    <a href="#mensaje">Activar tienda</a>
+                    <a href="#">Términos y Condiciones</a>
+                    <a href="#">Política de Privacidad</a>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Horario de Atención</h4>
+                    <p>Lunes a Viernes: 9:00 - 18:00</p>
+                    <p>Sábados: 10:00 - 14:00</p>
+                    <p>Respuesta en menos de 24h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Herramienta gratuita para microempresarios.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Año actual en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Smooth scroll para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Destacar todas las instancias de LIFETIMES
+            document.querySelectorAll('h1, h2, h3, p, label').forEach(element => {
+                if (element.textContent.includes('LIFETIMES')) {
+                    const newHTML = element.innerHTML.replace(/LIFETIMES/g, '<strong class="lifetimes-bold">LIFETIMES</strong>');
+                    element.innerHTML = newHTML;
+                }
+            });
+            
+            // ====== VARIABLES GLOBALES ======
+            let productosGuardados = [];
+            const MAX_PRODUCTOS = 5;
+            const PRECIO_MINIMO = 350;
+            
+            // Elementos del DOM
+            const productosGuardadosContainer = document.getElementById('productosGuardadosContainer');
+            const productosLista = document.getElementById('productosLista');
+            const contadorProductos = document.getElementById('contadorProductos');
+            const totalProductosCount = document.getElementById('totalProductosCount');
+            const addProductBtn = document.getElementById('addProductBtn');
+            
+            // Elementos del formulario
+            const precioInput = document.getElementById('precioProducto');
+            const ventasInput = document.getElementById('ventasExactas');
+            const ventasBadge = document.getElementById('ventasBadge');
+            const toggleOptions = document.querySelectorAll('.toggle-option');
+            const envioSiOption = document.getElementById('envioSiOption');
+            const envioNoOption = document.getElementById('envioNoOption');
+            const precioErrorMsg = document.getElementById('precioErrorMsg');
+            const pesoGroup = document.getElementById('pesoGroup');
+            const pesoSelector = document.getElementById('pesoSelector');
+            const pesoDisplay = document.getElementById('pesoDisplay');
+            
+            // Elementos de resultados del producto actual
+            const gananciaPorVenta = document.getElementById('gananciaPorVenta');
+            const comisionBadge = document.getElementById('comisionBadge');
+            const comisionTexto = document.getElementById('comisionTexto');
+            const precioDisplay = document.getElementById('precioDisplay');
+            const comisionMontoDisplay = document.getElementById('comisionMontoDisplay');
+            const envioDisplay = document.getElementById('envioDisplay');
+            
+            // Elementos de resultados totales
+            const totalPreciosDisplay = document.getElementById('totalPreciosDisplay');
+            const totalComisionesDisplay = document.getElementById('totalComisionesDisplay');
+            const totalEnviosDisplay = document.getElementById('totalEnviosDisplay');
+            const totalGananciaDisplay = document.getElementById('totalGananciaDisplay');
+            const totalGananciaMensualDisplay = document.getElementById('totalGananciaMensualDisplay');
+            
+            // Botón de descarga PDF
+            const downloadPDFBtn = document.getElementById('downloadPDFBtn');
+
+            // Estado inicial
+            let envioIncluido = true;
+
+            // Función para obtener el costo de envío según peso
+            function getCostoEnvioPorPeso(pesoValue) {
+                const peso = parseFloat(pesoValue);
+                
+                if (peso <= 1) {
+                    return 85;
+                } else if (peso <= 3) {
+                    return 135;
+                } else {
+                    return 190;
+                }
+            }
+            
+            // Función para obtener el texto del rango de peso
+            function getRangoPesoTexto(pesoValue) {
+                const peso = parseFloat(pesoValue);
+                
+                if (peso <= 1) {
+                    return '0-1 kg';
+                } else if (peso <= 3) {
+                    return '1-3 kg';
+                } else {
+                    return '3-5 kg';
+                }
+            }
+
+            // Función para formatear número
+            function formatNumberWithCommas(value) {
+                return value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            // Función para validar precio mínimo
+            function validarPrecio() {
+                let precio = parseFloat(precioInput.value) || 0;
+                
+                if (precio < PRECIO_MINIMO) {
+                    precioErrorMsg.style.display = 'flex';
+                    precioInput.classList.add('error');
+                    
+                    envioSiOption.classList.add('disabled');
+                    envioSiOption.classList.remove('active');
+                    envioNoOption.classList.add('active');
+                    envioIncluido = false;
+                    
+                    return false;
+                } else {
+                    precioErrorMsg.style.display = 'none';
+                    precioInput.classList.remove('error');
+                    
+                    envioSiOption.classList.remove('disabled');
+                    
+                    return true;
+                }
+            }
+
+            // Toggle de envío
+            toggleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    if (this.dataset.value === 'si' && this.classList.contains('disabled')) {
+                        return;
+                    }
+                    
+                    toggleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    envioIncluido = this.dataset.value === 'si';
+                    
+                    if (envioIncluido) {
+                        pesoGroup.style.display = 'block';
+                    } else {
+                        pesoGroup.style.display = 'none';
+                    }
+                    
+                    actualizarCalculosProductoActual();
+                });
+            });
+
+            // Event listeners del formulario
+            precioInput.addEventListener('input', function() {
+                validarPrecio();
+                actualizarCalculosProductoActual();
+            });
+            
+            precioInput.addEventListener('change', function() {
+                validarPrecio();
+                actualizarCalculosProductoActual();
+            });
+
+            ventasInput.addEventListener('input', function() {
+                ventasBadge.textContent = this.value + ' ventas';
+                actualizarCalculosProductoActual();
+                actualizarTotales();
+            });
+            
+            ventasInput.addEventListener('change', actualizarCalculosProductoActual);
+            
+            pesoSelector.addEventListener('change', actualizarCalculosProductoActual);
+
+            // Función para determinar comisión base por volumen
+            function getComisionBase(ventas) {
+                if (ventas <= 10) return 18;
+                if (ventas <= 25) return 15;
+                if (ventas <= 100) return 15;
+                return 25;
+            }
+
+            // Función para determinar ajuste por precio
+            function getAjustePorPrecio(precio) {
+                if (precio <= 299) return 0;
+                if (precio <= 799) return 3;
+                if (precio <= 1999) return 7;
+                return 10;
+            }
+
+            // Función para calcular ganancia de un producto específico
+            function calcularGananciaProducto(precio, pesoValue, ventas, envioIncluido) {
+                const comisionBase = getComisionBase(ventas);
+                const ajustePrecio = getAjustePorPrecio(precio);
+                const comisionTotal = comisionBase + ajustePrecio;
+                const montoComision = precio * (comisionTotal / 100);
+                
+                let costoEnvio = 0;
+                if (envioIncluido && precio >= PRECIO_MINIMO) {
+                    costoEnvio = getCostoEnvioPorPeso(pesoValue);
+                }
+                
+                const ganancia = precio - montoComision - costoEnvio;
+                
+                return {
+                    comisionTotal,
+                    montoComision,
+                    costoEnvio,
+                    ganancia
+                };
+            }
+
+            // Función para actualizar cálculos del producto actual
+            function actualizarCalculosProductoActual() {
+                const precio = parseFloat(precioInput.value) || 0;
+                const ventas = parseInt(ventasInput.value) || 18;
+                const pesoValue = pesoSelector.value;
+                
+                validarPrecio();
+                
+                const calculos = calcularGananciaProducto(precio, pesoValue, ventas, envioIncluido);
+                
+                // Actualizar displays
+                comisionBadge.innerHTML = `<i class="fas fa-percent"></i> ${calculos.comisionTotal}%`;
+                
+                precioDisplay.textContent = `$${formatNumberWithCommas(precio)}`;
+                comisionMontoDisplay.textContent = `$${formatNumberWithCommas(calculos.montoComision)}`;
+                envioDisplay.textContent = calculos.costoEnvio > 0 ? `$${formatNumberWithCommas(calculos.costoEnvio)}` : '$0.00';
+                pesoDisplay.textContent = envioIncluido ? getRangoPesoTexto(pesoValue) : 'Sin envío';
+                gananciaPorVenta.textContent = `$${formatNumberWithCommas(calculos.ganancia)}`;
+            }
+
+            // Función para guardar el producto actual
+            function guardarProductoActual() {
+                if (productosGuardados.length >= MAX_PRODUCTOS) {
+                    alert(`¡Has alcanzado el máximo de ${MAX_PRODUCTOS} productos!`);
+                    return false;
+                }
+                
+                const precio = parseFloat(precioInput.value) || 0;
+                const ventas = parseInt(ventasInput.value) || 18;
+                const pesoValue = pesoSelector.value;
+                const pesoTexto = getRangoPesoTexto(pesoValue);
+                
+                if (precio <= 0) {
+                    alert('Por favor ingresa un precio válido');
+                    return false;
+                }
+                
+                const calculos = calcularGananciaProducto(precio, pesoValue, ventas, envioIncluido);
+                
+                const nuevoProducto = {
+                    id: Date.now(),
+                    nombre: `Producto ${productosGuardados.length + 1}`,
+                    precio,
+                    precioFormateado: `$${formatNumberWithCommas(precio)}`,
+                    peso: pesoTexto,
+                    pesoValue,
+                    comision: `${calculos.comisionTotal}%`,
+                    montoComision: calculos.montoComision,
+                    costoEnvio: calculos.costoEnvio,
+                    ganancia: calculos.ganancia,
+                    gananciaFormateada: `$${formatNumberWithCommas(calculos.ganancia)}`,
+                    envioIncluido
+                };
+                
+                productosGuardados.push(nuevoProducto);
+                actualizarListaProductos();
+                actualizarTotales();
+                
+                // Limpiar formulario para nuevo producto
+                precioInput.value = 500;
+                pesoSelector.value = "2";
+                if (!envioIncluido) {
+                    envioSiOption.click();
+                }
+                
+                return true;
+            }
+
+            // Función para eliminar un producto guardado
+            window.eliminarProductoGuardado = function(id) {
+                productosGuardados = productosGuardados.filter(p => p.id !== id);
+                actualizarListaProductos();
+                actualizarTotales();
+            };
+
+            // Función para actualizar la lista visual de productos guardados
+            function actualizarListaProductos() {
+                if (productosGuardados.length > 0) {
+                    productosGuardadosContainer.style.display = 'block';
+                    
+                    let html = '';
+                    productosGuardados.forEach(producto => {
+                        html += `
+                            <div class="producto-guardado-item">
+                                <div class="producto-guardado-info">
+                                    <span class="producto-guardado-nombre">${producto.nombre}</span>
+                                    <div class="producto-guardado-detalle">
+                                        <span><i class="fas fa-tag"></i> ${producto.precioFormateado}</span>
+                                        <span><i class="fas fa-weight-scale"></i> ${producto.peso}</span>
+                                        <span><i class="fas fa-percent"></i> ${producto.comision}</span>
+                                        <span><i class="fas fa-truck"></i> $${formatNumberWithCommas(producto.costoEnvio)}</span>
+                                        <span style="color: var(--success);"><i class="fas fa-wallet"></i> ${producto.gananciaFormateada}</span>
+                                    </div>
+                                </div>
+                                <button class="producto-guardado-eliminar" onclick="eliminarProductoGuardado(${producto.id})">
+                                    <i class="fas fa-times-circle"></i>
+                                </button>
+                            </div>
+                        `;
+                    });
+                    
+                    productosLista.innerHTML = html;
+                    contadorProductos.textContent = `${productosGuardados.length}/${MAX_PRODUCTOS}`;
+                    totalProductosCount.textContent = `${productosGuardados.length} producto${productosGuardados.length !== 1 ? 's' : ''}`;
+                } else {
+                    productosGuardadosContainer.style.display = 'none';
+                    totalProductosCount.textContent = '0 productos';
+                }
+            }
+
+            // Función para actualizar los totales de todos los productos
+            function actualizarTotales() {
+                const ventas = parseInt(ventasInput.value) || 18;
+                
+                let totalPrecio = 0;
+                let totalComision = 0;
+                let totalEnvio = 0;
+                let totalGanancia = 0;
+                
+                productosGuardados.forEach(producto => {
+                    totalPrecio += producto.precio;
+                    totalComision += producto.montoComision;
+                    totalEnvio += producto.costoEnvio;
+                    totalGanancia += producto.ganancia;
+                });
+                
+                const gananciaMensual = totalGanancia * ventas;
+                
+                totalPreciosDisplay.textContent = `$${formatNumberWithCommas(totalPrecio)}`;
+                totalComisionesDisplay.textContent = `$${formatNumberWithCommas(totalComision)}`;
+                totalEnviosDisplay.textContent = `$${formatNumberWithCommas(totalEnvio)}`;
+                totalGananciaDisplay.textContent = `$${formatNumberWithCommas(totalGanancia)}`;
+                totalGananciaMensualDisplay.textContent = `$${formatNumberWithCommas(gananciaMensual)}`;
+            }
+
+            // Event listener para el botón de agregar producto
+            addProductBtn.addEventListener('click', guardarProductoActual);
+
+            // Función para generar PDF - CON LIFETIMES MAMÁLONES EN DIAGONAL + UNO EN MEDIO
+            function generarPDFFactura() {
+                if (productosGuardados.length === 0) {
+                    alert('Agrega al menos un producto antes de descargar la factura');
+                    return;
+                }
+                
+                const ventas = parseInt(ventasInput.value) || 18;
+                
+                // Calcular totales
+                let totalPrecio = 0;
+                let totalComision = 0;
+                let totalEnvio = 0;
+                let totalGanancia = 0;
+                
+                productosGuardados.forEach(p => {
+                    totalPrecio += p.precio;
+                    totalComision += p.montoComision;
+                    totalEnvio += p.costoEnvio;
+                    totalGanancia += p.ganancia;
+                });
+                
+                const gananciaMensual = totalGanancia * ventas;
+                
+                // Formatear fecha
+                const fecha = new Date();
+                const fechaFormateada = fecha.toLocaleDateString('es-MX', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                const horaFormateada = fecha.toLocaleTimeString('es-MX', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                const numFactura = 'FAC-' + fecha.getFullYear() + '-' + 
+                                  (fecha.getMonth() + 1).toString().padStart(2, '0') + 
+                                  fecha.getDate().toString().padStart(2, '0') + '-' +
+                                  Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                
+                // Crear PDF
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                const primaryColor = [15, 82, 201];
+                const secondaryColor = [100, 100, 100];
+                
+                // ===== MARCA DE AGUA LIFETIMES MAMÁLONA CON UNO EN MEDIO =====
+                // Configurar texto de marca de agua
+                doc.setTextColor(200, 200, 200); // Gris muy claro
+                doc.setFontSize(45); // TAMAÑO GIGANTE
+                doc.setFont('helvetica', 'bold');
+                
+                // Guardar estado gráfico para aplicar opacidad
+                doc.saveGraphicsState();
+                doc.setGState(new doc.GState({ opacity: 0.2 })); // 20% de opacidad
+                
+                // TODOS APUNTANDO A LA MISMA DIAGONAL (izquierda a derecha)
+                doc.text('LIFETIMES', 20, 90, { angle: 30 });  // Superior izquierda
+                doc.text('LIFETIMES', 130, 90, { angle: 30 }); // Superior derecha
+                doc.text('LIFETIMES', 20, 220, { angle: 30 }); // Inferior izquierda
+                doc.text('LIFETIMES', 130, 220, { angle: 30 }); // Inferior derecha
+                
+                // ===== LIFETIMES EN MEDIO (EL TOQUE FINAL) =====
+                doc.text('LIFETIMES', 80, 155, { angle: 30 }); // Justo en el centro
+                
+                doc.restoreGraphicsState();
+                
+                // ===== ENCABEZADO =====
+                doc.setFillColor(...primaryColor);
+                doc.rect(0, 0, 210, 35, 'F');
+                
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(24);
+                doc.setFont('helvetica', 'bold');
+                doc.text('LIFETIMES', 15, 20);
+                
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'normal');
+                doc.text('Factura Múltiple - Calculadora de Ganancias', 15, 28);
+                
+                doc.setFontSize(10);
+                doc.text(`Factura: ${numFactura}`, 150, 18);
+                doc.text(`Fecha: ${fechaFormateada}`, 150, 24);
+                doc.text(`Hora: ${horaFormateada}`, 150, 30);
+                
+                // Info empresa
+                doc.setTextColor(0, 0, 0);
+                doc.setFontSize(10);
+                doc.text('LIFETIMES S.A. de C.V.', 15, 45);
+                doc.text('RFC: LIF123456789', 15, 50);
+                
+                // Línea
+                doc.setDrawColor(...primaryColor);
+                doc.setLineWidth(0.5);
+                doc.line(15, 60, 195, 60);
+                
+                // Datos
+                doc.setFontSize(11);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Cliente:', 15, 70);
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(10);
+                doc.text('Microempresario - Vendedor en Comercio', 15, 76);
+                doc.text(`Ventas mensuales estimadas por producto: ${ventas}`, 15, 82);
+                doc.text(`Total de productos en factura: ${productosGuardados.length}`, 15, 88);
+                
+                // Tabla de productos
+                const startY = 100;
+                
+                doc.autoTable({
+                    startY: startY,
+                    head: [['Producto', 'Precio', 'Comisión', 'Envío', 'Ganancia']],
+                    body: productosGuardados.map(p => [
+                        p.nombre,
+                        p.precioFormateado,
+                        `${p.comision} ($${formatNumberWithCommas(p.montoComision)})`,
+                        `$${formatNumberWithCommas(p.costoEnvio)}`,
+                        p.gananciaFormateada
+                    ]),
+                    theme: 'grid',
+                    headStyles: {
+                        fillColor: primaryColor,
+                        textColor: 255,
+                        fontStyle: 'bold'
+                    },
+                    columnStyles: {
+                        0: { cellWidth: 50 },
+                        1: { cellWidth: 30, halign: 'right' },
+                        2: { cellWidth: 40, halign: 'right' },
+                        3: { cellWidth: 30, halign: 'right' },
+                        4: { cellWidth: 30, halign: 'right' }
+                    },
+                    margin: { left: 15, right: 15 }
+                });
+                
+                const finalY = doc.lastAutoTable.finalY + 10;
+                
+                // ===== SECCIÓN DE TOTALES =====
+                // Rectángulo gris para los totales
+                doc.setFillColor(240, 240, 240);
+                doc.rect(15, finalY, 180, 30, 'F');
+                
+                // Línea divisoria vertical
+                doc.setDrawColor(200, 200, 200);
+                doc.setLineWidth(0.2);
+                doc.line(105, finalY + 2, 105, finalY + 28);
+                
+                // Columna izquierda - Totales parciales
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                
+                doc.text('Totales parciales:', 18, finalY + 7);
+                
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(9);
+                doc.text(`Total productos: $${formatNumberWithCommas(totalPrecio)}`, 18, finalY + 13);
+                doc.text(`Total comisiones: $${formatNumberWithCommas(totalComision)}`, 18, finalY + 18);
+                doc.text(`Total envíos: $${formatNumberWithCommas(totalEnvio)}`, 18, finalY + 23);
+                
+                // Columna derecha - Ganancias totales
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.text('Ganancias totales:', 110, finalY + 7);
+                
+                doc.setFontSize(10);
+                doc.setTextColor(...primaryColor);
+                doc.text(`$${formatNumberWithCommas(totalGanancia)}`, 185, finalY + 13, { align: 'right' });
+                
+                doc.setFontSize(9);
+                doc.setTextColor(0, 0, 0);
+                doc.text('GANANCIA POR VENTA:', 110, finalY + 13);
+                
+                doc.setFontSize(10);
+                doc.setTextColor(...primaryColor);
+                doc.text(`$${formatNumberWithCommas(gananciaMensual)}`, 185, finalY + 20, { align: 'right' });
+                
+                doc.setFontSize(9);
+                doc.setTextColor(0, 0, 0);
+                doc.text('GANANCIA MENSUAL:', 110, finalY + 20);
+                
+                // Pie de página
+                const pageHeight = doc.internal.pageSize.height;
+                
+                doc.setDrawColor(...primaryColor);
+                doc.setLineWidth(0.3);
+                doc.line(15, pageHeight - 25, 195, pageHeight - 25);
+                
+                doc.setFontSize(8);
+                doc.setTextColor(...secondaryColor);
+                doc.text('Este documento es una estimación de ganancias generada por LIFETIMES.', 15, pageHeight - 18);
+                doc.text('Los valores mostrados son aproximados y pueden variar según el comercio.', 15, pageHeight - 14);
+                doc.text(`Documento generado el ${fechaFormateada} a las ${horaFormateada} - ${productosGuardados.length} producto(s) incluido(s).`, 15, pageHeight - 10);
+                
+                // Guardar
+                const nombreArchivo = `LIFETIMES-Factura-${fecha.getFullYear()}-${(fecha.getMonth()+1).toString().padStart(2,'0')}-${fecha.getDate().toString().padStart(2,'0')}.pdf`;
+                doc.save(nombreArchivo);
+                
+                // Feedback
+                const btnText = downloadPDFBtn.querySelector('span');
+                const originalText = btnText.textContent;
+                btnText.textContent = '¡PDF generado!';
+                downloadPDFBtn.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    btnText.textContent = originalText;
+                    downloadPDFBtn.style.background = '#0f52c9';
+                }, 2000);
+            }
+
+            // Event listener para botón de descarga PDF
+            downloadPDFBtn.addEventListener('click', generarPDFFactura);
+
+            // Validar inicialmente
+            validarPrecio();
+            
+            // Calcular inicialmente
+            actualizarCalculosProductoActual();
+            
+            // Prevenir envío del formulario
+            document.getElementById('profitForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+            });
+        });
+        
+    </script>
+</body>
+</html>

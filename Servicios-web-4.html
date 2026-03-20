@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARBERÍA · CORTESÍA · ÉPICA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --negro: #0a0a0a;
+            --negro-suave: #1a1a1a;
+            --dorado: #d4af37;
+            --dorado-oscuro: #b8860b;
+            --platino: #e5e5e5;
+            --bg: #121212;
+            --transition-rapida: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-lenta: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--platino);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* ===== BRILLITOS BLANCOS CAYENDO ===== */
+        .brillitos-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .brillito {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px white, 0 0 30px rgba(255, 255, 255, 0.8);
+            animation: caidaBrillito linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes caidaBrillito {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(110vh) translateX(20px) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== SPLASH CON IMAGEN DE FONDO ===== */
+        .splash-epic {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 10000;
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=2000&auto=format');
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
+        }
+
+        .splash-epic.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .splash-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+
+        .splash-content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .splash-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(4rem, 15vw, 9rem);
+            font-weight: 900;
+            color: white;
+            letter-spacing: 8px;
+            line-height: 1;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(50px) rotate(-2deg) scale(0.8);
+            animation: titleBrutal 1.2s 0.4s forwards;
+        }
+
+        .splash-title span {
+            font-family: 'Bebas Neue', sans-serif;
+            color: white;
+        }
+
+        .splash-sub {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: var(--dorado);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: subCabron 1s 1.2s forwards;
+        }
+
+        @keyframes titleBrutal {
+            to { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+        }
+
+        @keyframes subCabron {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Calaveritas voladoras */
+        .splash-sparkles {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 3;
+        }
+        .sparkle {
+            position: absolute; 
+            font-size: 24px;
+            color: var(--dorado);
+            filter: drop-shadow(0 0 20px var(--dorado));
+            animation: sparkleFallFast linear infinite;
+            opacity: 0.7;
+        }
+        @keyframes sparkleFallFast {
+            0% { transform: translateY(-120vh) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 1; scale: 1.5; }
+            90% { opacity: 0.8; scale: 1; }
+            100% { transform: translateY(120vh) rotate(1080deg) scale(0.2); opacity: 0; }
+        }
+
+        /* ===== HEADER / NAVBAR ===== */
+        .header {
+            background: var(--negro-suave);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 2px solid var(--dorado);
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between; height: 90px;
+        }
+        .logo {
+            display: flex; align-items: baseline; gap: 8px;
+            font-family: 'Anton', sans-serif;
+        }
+        .logo-glow {
+            font-size: 2.5rem; color: var(--dorado); text-shadow: 0 0 15px var(--dorado);
+        }
+        .logo-x {
+            font-size: 2.8rem; color: white; text-shadow: 0 0 10px var(--dorado);
+        }
+        .logo-lifetimes {
+            font-size: 2.2rem; color: var(--platino); letter-spacing: 2px;
+        }
+        .nav { display: flex; gap: 2rem; align-items: center; }
+        .nav a {
+            text-decoration: none; color: var(--platino); font-weight: 700; font-size: 1rem;
+            text-transform: uppercase; padding: 8px 0; transition: 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav a:hover { border-bottom-color: var(--dorado); color: var(--dorado); transform: scale(1.05); }
+        .back-link {
+            background: var(--dorado); color: var(--negro) !important; padding: 10px 22px;
+            border-radius: 40px; font-weight: 800; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 0 30px var(--dorado); transition: 0.3s;
+        }
+        .back-link:hover { background: white; box-shadow: 0 0 50px gold; transform: translateY(-3px); }
+        .mobile-toggle { display: none; background: var(--dorado); color: black; border: none; width: 50px; height: 50px; font-size: 1.5rem; border-radius: 10px; }
+        @media (max-width: 900px) { .nav { display: none; } .mobile-toggle { display: flex; align-items: center; justify-content: center; } }
+
+        .mobile-menu {
+            position: fixed; top: 90px; left: 0; right: 0; background: var(--negro-suave); z-index: 998;
+            border-top: 3px solid var(--dorado); display: none;
+        }
+        .mobile-menu.open { display: block; }
+        .mobile-menu a {
+            display: block; padding: 20px 30px; color: var(--platino); border-bottom: 1px solid #333;
+            text-decoration: none; font-weight: 700; text-transform: uppercase;
+        }
+        .mobile-menu .back-link-mobile { background: var(--dorado); color: black; margin: 15px; border-radius: 40px; text-align: center; }
+
+        /* ===== PRESENTACIÓN DEL NEGOCIO (IMAGEN DERECHA, TEXTO IZQUIERDA) ===== */
+        .presentacion {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--negro) 0%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .presentacion::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+            animation: rotarFondo 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotarFondo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .presentacion-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .presentacion-texto {
+            flex: 1;
+        }
+
+        .presentacion-texto h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 4rem;
+            color: var(--dorado);
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 white;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: aparecerIzquierda 1s forwards;
+        }
+
+        .presentacion-texto h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 30px;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: aparecerIzquierda 1s 0.3s forwards;
+        }
+
+        .presentacion-texto p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: aparecerIzquierda 1s 0.6s forwards;
+        }
+
+        .presentacion-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: aparecerIzquierda 1s 0.9s forwards;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dorado);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .presentacion-imagen {
+            flex: 1;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 4px solid var(--dorado);
+            box-shadow: 0 0 50px rgba(212,175,55,0.5);
+            opacity: 0;
+            transform: translateX(30px);
+            animation: aparecerDerecha 1s 0.3s forwards;
+            height: 500px;
+        }
+
+        .presentacion-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .presentacion-imagen:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes aparecerIzquierda {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes aparecerDerecha {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ===== SECCIÓN DE 6 CORTES (CORREGIDA) ===== */
+        .cortes-section {
+            padding: 80px 0;
+            background: var(--negro-suave);
+        }
+
+        .cortes-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .cortes-header h2 {
+            font-family: 'Anton', sans-serif;
+            font-size: 4rem;
+            color: var(--dorado);
+            text-shadow: 0 0 30px var(--dorado);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .cortes-header p {
+            font-size: 1.3rem;
+            color: #aaa;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cortes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .corte-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 350px;
+            cursor: pointer;
+            border: 3px solid var(--dorado);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.4s;
+        }
+
+        .corte-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px var(--dorado);
+            border-color: white;
+        }
+
+        .corte-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+            filter: grayscale(50%);
+            display: block;
+        }
+
+        .corte-item:hover img {
+            transform: scale(1.2);
+            filter: grayscale(0%);
+        }
+
+        .corte-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 30px 20px 20px;
+            text-align: center;
+            transform: translateY(100%);
+            transition: 0.4s;
+        }
+
+        .corte-item:hover .corte-info {
+            transform: translateY(0);
+        }
+
+        .corte-info h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.8rem;
+            color: var(--dorado);
+            margin-bottom: 10px;
+        }
+
+        .corte-info p {
+            color: white;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .cortes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cortes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== SERVICIOS ===== */
+        .services-section { 
+            padding: 80px 0; 
+            background: var(--negro); 
+            position: relative; 
+            z-index: 2; 
+        }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 {
+            font-family: 'Anton', sans-serif; font-size: 4rem; color: var(--dorado);
+            text-shadow: 0 0 30px var(--dorado); letter-spacing: 4px;
+        }
+        .section-title p { color: #aaa; font-size: 1.3rem; }
+        .services-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;
+        }
+        .service-card {
+            background: #1e1e1e; border-radius: 30px; padding: 40px 25px;
+            text-align: center; transition: 0.4s; border: 1px solid #333;
+            box-shadow: 0 20px 30px -10px black; position: relative; overflow: hidden;
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212,175,55,0.1), transparent);
+            transform: rotate(45deg); transition: 0.8s; opacity: 0;
+        }
+        .service-card:hover::before { opacity: 1; transform: rotate(45deg) translate(20%, 20%); }
+        .service-card:hover { transform: translateY(-20px) scale(1.02); border-color: var(--dorado); box-shadow: 0 0 50px var(--dorado); }
+        .service-icon {
+            width: 100px; height: 100px; background: var(--dorado); color: black; font-size: 3rem;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;
+            box-shadow: 0 0 40px var(--dorado); transition: 0.4s;
+        }
+        .service-card:hover .service-icon { transform: rotate(360deg) scale(1.1); background: white; }
+        .service-card h3 { font-family: 'Anton', sans-serif; font-size: 2.5rem; color: white; margin-bottom: 10px; }
+        .service-desc { color: #bbb; margin-bottom: 20px; font-size: 1rem; }
+        .service-price { font-size: 2.8rem; font-weight: 900; color: var(--dorado); margin: 20px 0; text-shadow: 0 0 30px gold; }
+        .btn-service {
+            background: transparent; border: 2px solid var(--dorado); color: var(--dorado);
+            padding: 12px 40px; border-radius: 40px; font-weight: 800; text-transform: uppercase;
+            transition: 0.3s; display: inline-block; cursor: pointer; font-size: 1rem;
+        }
+        .btn-service:hover { background: var(--dorado); color: black; transform: scale(1.1); box-shadow: 0 0 40px gold; }
+
+        /* ===== MAPA CON DIRECCIÓN ===== */
+        .map-section { padding: 80px 0; background: var(--negro-suave); position: relative; z-index: 2; }
+        .map-wrapper {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        .map-container {
+            border-radius: 50px; 
+            overflow: hidden; 
+            height: 550px;
+            flex: 2;
+            border: 4px solid var(--dorado); 
+            box-shadow: 0 0 70px rgba(212,175,55,0.7);
+            transition: 0.5s;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+        .map-container:hover { transform: scale(1.01); box-shadow: 0 0 100px gold; }
+        
+        .address-card {
+            flex: 1;
+            background: #1e1e1e;
+            padding: 40px 30px;
+            border-radius: 50px;
+            border: 2px solid var(--dorado);
+            text-align: center;
+            box-shadow: 0 0 50px rgba(212,175,55,0.3);
+            transition: 0.3s;
+        }
+        .address-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 70px gold;
+        }
+        .address-icon {
+            font-size: 4rem;
+            color: var(--dorado);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px gold);
+        }
+        .address-card h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dorado);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px gold;
+        }
+        .address-card p {
+            font-size: 1.4rem;
+            color: white;
+            line-height: 1.8;
+            font-weight: 600;
+        }
+        .address-card .small-text {
+            font-size: 1.1rem;
+            color: #aaa;
+            margin-top: 20px;
+        }
+        @media (max-width: 900px) {
+            .map-wrapper { flex-direction: column; }
+            .map-container, .address-card { width: 100%; }
+        }
+
+        /* Espaciado final */
+        .spacer {
+            height: 50px;
+        }
+
+        /* Responsive para presentación */
+        @media (max-width: 900px) {
+            .presentacion-wrapper {
+                flex-direction: column-reverse;
+            }
+            
+            .presentacion-texto h1 {
+                font-size: 3rem;
+            }
+            
+            .presentacion-texto h2 {
+                font-size: 1.5rem;
+            }
+            
+            .presentacion-stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BRILLITOS BLANCOS CAYENDO -->
+    <div class="brillitos-container" id="brillitosContainer"></div>
+
+    <!-- SPLASH CON IMAGEN DE FONDO -->
+    <div class="splash-epic" id="splash">
+        <div class="splash-overlay"></div>
+        <div class="splash-sparkles" id="sparkles"></div>
+        <div class="splash-content">
+            <div class="splash-title">BARBER <span>X</span></div>
+            <div class="splash-sub">ESTILO QUE MATA · PURO ORO</div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="container header-inner">
+                <button class="mobile-toggle" id="menuBtn"><i class="fas fa-bars"></i></button>
+                <div class="logo"><span class="logo-glow">BARBER</span><span class="logo-x">X</span><span class="logo-lifetimes">FACTORY</span></div>
+                <nav class="nav">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#servicios">Servicios</a>
+                    <a href="#cortes">Cortes</a>
+                    <a href="#ubicacion">Ubicación</a>
+                    <a href="#contacto">Contacto</a>
+                </nav>
+            </div>
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="#inicio">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#cortes">Cortes</a>
+                <a href="#ubicacion">Ubicación</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </header>
+
+        <!-- PRESENTACIÓN DEL NEGOCIO (IMAGEN DERECHA, TEXTO IZQUIERDA) -->
+        <section class="presentacion" id="inicio">
+            <div class="container presentacion-wrapper">
+                <div class="presentacion-texto">
+                    <h1>BARBER X FACTORY</h1>
+                    <h2>Más que una barbería, una experiencia</h2>
+                    <p>Desde 1998 refinando el arte de la barbería en México. Nos enorgullece ofrecer un servicio de excelencia donde la tradición se encuentra con la vanguardia. Nuestros maestros barberos tienen más de 15 años de experiencia y dominan técnicas clásicas y modernas para realzar tu estilo.</p>
+                    <p>En Barber X no solo te cortamos el cabello, creamos una experiencia única con ambiente exclusivo, bebida de cortesía y la mejor atención. Somos la barbería más perrona de Polanco, donde cada cliente es tratado como rey.</p>
+                    <div class="presentacion-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">27</span>
+                            <span class="stat-label">AÑOS</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15K+</span>
+                            <span class="stat-label">CLIENTES</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">6</span>
+                            <span class="stat-label">BARBEROS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="presentacion-imagen">
+                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800&auto=format" alt="Barbería">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE 6 CORTES (CORREGIDA) -->
+        <section class="cortes-section" id="cortes">
+            <div class="container">
+                <div class="cortes-header">
+                    <h2>EL ANTRO</h2>
+                    <p>6 cortes que te harán brillar. Estilo que mata.</p>
+                </div>
+                <div class="cortes-grid">
+                    <!-- Corte 1 -->
+                    <div class="corte-item">
+                        <img src="https://images.unsplash.com/photo-1622286342621-84bd003cc3c5?q=80&w=800&auto=format&fit=crop" alt="Undercut">
+                        <div class="corte-info">
+                            <h3>UNDERCUT</h3>
+                            <p>El clásico moderno</p>
+                        </div>
+                    </div>
+                    <!-- Corte 2 -->
+                    <div class="corte-item">
+                        <img src="https://images.unsplash.com/photo-1532710093736-6e3c5f5f7a5a?q=80&w=800&auto=format&fit=crop" alt="Pompadour">
+                        <div class="corte-info">
+                            <h3>POMPADOUR</h3>
+                            <p>Elegancia retro</p>
+                        </div>
+                    </div>
+                    <!-- Corte 3 -->
+                    <div class="corte-item">
+                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800&auto=format&fit=crop" alt="French Crop">
+                        <div class="corte-info">
+                            <h3>FRENCH CROP</h3>
+                            <p>Estilo europeo</p>
+                        </div>
+                    </div>
+                    <!-- Corte 4 -->
+                    <div class="corte-item">
+                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=800&auto=format&fit=crop" alt="Muletazo">
+                        <div class="corte-info">
+                            <h3>MULETAZO</h3>
+                            <p>Para los atrevidos</p>
+                        </div>
+                    </div>
+                    <!-- Corte 5 -->
+                    <div class="corte-item">
+                        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800&auto=format&fit=crop" alt="Taper Fade">
+                        <div class="corte-info">
+                            <h3>TAPER FADE</h3>
+                            <p>Degradado perfecto</p>
+                        </div>
+                    </div>
+                    <!-- Corte 6 -->
+                    <div class="corte-item">
+                        <img src="https://images.unsplash.com/photo-1622286342621-84bd003cc3c5?q=80&w=800&auto=format&fit=crop" alt="Rock & Roll">
+                        <div class="corte-info">
+                            <h3>ROCK & ROLL</h3>
+                            <p>Diseños con navaja</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS (con botones a WhatsApp) -->
+        <section class="services-section" id="servicios">
+            <div class="container">
+                <div class="section-title">
+                    <h2>SERVICIOS DE PELUZA</h2>
+                    <p>Lo que hacemos, pero bien hecho</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-cut"></i></div>
+                        <h3>CORTE CLÁSICO</h3>
+                        <p class="service-desc">Tijera, navaja, toalla caliente y styling. Pura elegancia.</p>
+                        <div class="service-price">$550</div>
+                        <button class="btn-service" data-servicio="CORTE CLÁSICO">RESERVAR</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-razor"></i></div>
+                        <h3>BARBA DE ORO</h3>
+                        <p class="service-desc">Perfilado con navaja, aceite artesanal y masaje.</p>
+                        <div class="service-price">$380</div>
+                        <button class="btn-service" data-servicio="BARBA DE ORO">RESERVAR</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-hot-tub"></i></div>
+                        <h3>AFEITADO TOTAL</h3>
+                        <p class="service-desc">Espuma natural, navaja, loción. Como en los 50's.</p>
+                        <div class="service-price">$450</div>
+                        <button class="btn-service" data-servicio="AFEITADO TOTAL">RESERVAR</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-crown"></i></div>
+                        <h3>COMBO VIP</h3>
+                        <p class="service-desc">Corte + barba + afeitado + bebida premium.</p>
+                        <div class="service-price">$950</div>
+                        <button class="btn-service" data-servicio="COMBO VIP">RESERVAR</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-child"></i></div>
+                        <h3>CHAVALILLO</h3>
+                        <p class="service-desc">Corte para los pequeños reyes de la casa.</p>
+                        <div class="service-price">$320</div>
+                        <button class="btn-service" data-servicio="CHAVALILLO">RESERVAR</button>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon"><i class="fas fa-skull"></i></div>
+                        <h3>ROCK & ROLL</h3>
+                        <p class="service-desc">Diseños con navaja, patrones y tintes.</p>
+                        <div class="service-price">$600</div>
+                        <button class="btn-service" data-servicio="ROCK & ROLL">RESERVAR</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAPA CON DIRECCIÓN -->
+        <section class="map-section" id="ubicacion">
+            <div class="container">
+                <div class="section-title">
+                    <h2>CAE AL LOCAL</h2>
+                    <p>Te espera una cheve</p>
+                </div>
+                <div class="map-wrapper">
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.622748023483!2d-99.19564768457927!3d19.42724404524605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d201f5f5c5c5c5%3A0x3b3b3b3b3b3b3b!2sPolanco%2C%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1620000000000!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <div class="address-card" id="contacto">
+                        <div class="address-icon"><i class="fas fa-map-pin"></i></div>
+                        <h3>DIRECCIÓN EXACTA</h3>
+                        <p>
+                            Av. Presidente Masaryk 123<br>
+                            Local 5 - Planta Baja<br>
+                            Col. Polanco, 11550<br>
+                            Ciudad de México
+                        </p>
+                        <p style="margin-top: 20px; font-size: 1.2rem;">
+                            <i class="fas fa-phone-alt" style="color: var(--dorado);"></i> 55 2345 6789
+                        </p>
+                        <p class="small-text">
+                            <i class="fas fa-clock" style="color: var(--dorado);"></i> Abierto hoy 10am - 9pm
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Espaciado final -->
+        <div class="spacer"></div>
+    </div>
+
+    <script>
+        // WhatsApp configuration - REEMPLAZA CON TU NÚMERO
+        const TELEFONO_WHATSAPP = '525523456789'; // Ejemplo: 52 (México) + 5523456789
+
+        // Esperar a que la página cargue completamente
+        window.addEventListener('load', function() {
+            // Ocultar el splash después de 4 segundos
+            setTimeout(function() {
+                document.getElementById('splash').classList.add('hidden');
+            }, 4000);
+
+            // Generar calaveritas voladoras
+            const sparklesContainer = document.getElementById('sparkles');
+            for (let i = 0; i < 30; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.innerHTML = '💀';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                sparkle.style.fontSize = (Math.random() * 30 + 15) + 'px';
+                sparkle.style.opacity = Math.random() * 0.7 + 0.3;
+                sparklesContainer.appendChild(sparkle);
+            }
+
+            // Generar brillitos blancos cayendo
+            const brillitosContainer = document.getElementById('brillitosContainer');
+            for (let i = 0; i < 150; i++) {
+                const brillito = document.createElement('div');
+                brillito.className = 'brillito';
+                brillito.style.left = Math.random() * 100 + '%';
+                brillito.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                brillito.style.animationDelay = (Math.random() * 5) + 's';
+                const size = Math.random() * 4 + 2;
+                brillito.style.width = size + 'px';
+                brillito.style.height = size + 'px';
+                if (Math.random() > 0.7) {
+                    brillito.style.boxShadow = '0 0 20px white, 0 0 40px rgba(255, 255, 255, 0.9)';
+                }
+                brillitosContainer.appendChild(brillito);
+            }
+        });
+
+        // Menú móvil
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', ()=>mobileMenu.classList.toggle('open'));
+        document.querySelectorAll('.mobile-menu a').forEach(l=>l.addEventListener('click', ()=>mobileMenu.classList.remove('open')));
+
+        // Botones de servicio - Redirigen a WhatsApp
+        document.querySelectorAll('.btn-service').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const servicio = btn.getAttribute('data-servicio') || 'servicio';
+                const mensaje = encodeURIComponent(`Hola, me interesa reservar el servicio de ${servicio}. ¿Tienen disponibilidad?`);
+                window.open(`https://wa.me/${TELEFONO_WHATSAPP}?text=${mensaje}`, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

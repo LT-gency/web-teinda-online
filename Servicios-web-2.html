@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLOW X LIFETIMES · Estudio de Estética</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Añadida fuente Inter para LIFETIMES más gruesa -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c1a4d;        /* Púrpura oscuro elegante */
+            --primary-light: #4a2d7a;
+            --accent: #ff6b9d;          /* Rosa vibrante */
+            --accent-light: #ffa5c3;
+            --accent-dark: #e54b7e;
+            --bg: #fff9fb;              /* Fondo rosa muy suave */
+            --fg: #2d2d2d;
+            --white: #ffffff;
+            --gray-light: #faf0f5;
+            --gray: #f0e2ea;
+            --shadow: 0 15px 35px rgba(108, 14, 88, 0.08);
+            --shadow-hover: 0 20px 40px rgba(255, 107, 157, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 20px;
+            --border-radius-lg: 30px;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--fg);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* ===== ANIMACIÓN DE INICIO ÉPICA CON 4 IMÁGENES ===== */
+        .splash-epic {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 10000;
+            overflow: hidden;
+            transition: opacity 1.5s cubic-bezier(0.7, 0, 0.3, 1), visibility 1.5s ease;
+        }
+
+        .splash-epic.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Carrusel de imágenes de fondo - AHORA CON 4 IMÁGENES */
+        .splash-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 400%; /* Cambiado de 500% a 400% para 4 imágenes */
+            height: 100%;
+            display: flex;
+            animation: carouselMove 16s cubic-bezier(0.4, 0, 0.2, 1) infinite; /* Ajustado el tiempo */
+        }
+
+        .splash-slide {
+            width: 25%; /* Cambiado de 20% a 25% para 4 imágenes */
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7) saturate(1.2);
+            transform: scale(1.05);
+            animation: slideBreath 8s ease-in-out infinite;
+        }
+
+        /* SOLO 4 IMÁGENES - Eliminada la segunda imagen */
+        .splash-slide:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+        .splash-slide:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+        .splash-slide:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1512496015851-a90fb38ba796?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+        .splash-slide:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1611085583191-a3b181a88401?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); }
+
+        @keyframes carouselMove {
+            0% { transform: translateX(0); }
+            18% { transform: translateX(0); }      /* Primera imagen */
+            20% { transform: translateX(-25%); }    /* Segunda imagen */
+            43% { transform: translateX(-25%); }
+            45% { transform: translateX(-50%); }    /* Tercera imagen */
+            68% { transform: translateX(-50%); }
+            70% { transform: translateX(-75%); }    /* Cuarta imagen */
+            93% { transform: translateX(-75%); }
+            95% { transform: translateX(-100%); }    /* Vuelve al inicio */
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes slideBreath {
+            0%, 100% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Overlay con gradiente para mejorar legibilidad */
+        .splash-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(44, 26, 77, 0.7) 100%);
+            z-index: 1;
+        }
+
+        /* Contenido principal de la animación */
+        .splash-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+            max-width: 900px;
+            animation: contentAppear 2s ease-out forwards;
+        }
+
+        .splash-icon {
+            font-size: 5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.8));
+            animation: iconEpic 3s infinite ease-in-out;
+        }
+
+        .splash-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 8px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 4px 4px 0 var(--accent), 8px 8px 20px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            animation: titleEpic 1.2s 0.5s forwards;
+        }
+
+        /* Título modificado - solo GLOW sin X LIFETIMES en la animación */
+        .splash-title span {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--accent);
+            text-shadow: 2px 2px 0 white, 0 0 30px var(--accent);
+        }
+
+        .splash-sub {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.95);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: subEpic 1s 1.2s forwards;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .splash-sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent-light);
+            animation: sparkleFall linear infinite;
+        }
+
+        @keyframes contentAppear {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes iconEpic {
+            0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.8)); }
+            33% { transform: scale(1.1) rotate(-5deg); filter: drop-shadow(0 0 50px rgba(255, 107, 157, 1)); }
+            66% { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 50px rgba(255, 107, 157, 1)); }
+        }
+
+        @keyframes titleEpic {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes subEpic {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes sparkleFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Generar 30 partículas con diferentes posiciones y delays */
+        .sparkle:nth-child(1) { left: 5%; animation-duration: 4s; animation-delay: 0s; }
+        .sparkle:nth-child(2) { left: 15%; animation-duration: 6s; animation-delay: 0.5s; }
+        .sparkle:nth-child(3) { left: 25%; animation-duration: 5s; animation-delay: 1s; }
+        .sparkle:nth-child(4) { left: 35%; animation-duration: 7s; animation-delay: 0.2s; }
+        .sparkle:nth-child(5) { left: 45%; animation-duration: 4.5s; animation-delay: 1.5s; }
+        .sparkle:nth-child(6) { left: 55%; animation-duration: 6.5s; animation-delay: 0.8s; }
+        .sparkle:nth-child(7) { left: 65%; animation-duration: 5.5s; animation-delay: 2s; }
+        .sparkle:nth-child(8) { left: 75%; animation-duration: 4.2s; animation-delay: 0.3s; }
+        .sparkle:nth-child(9) { left: 85%; animation-duration: 6.2s; animation-delay: 1.2s; }
+        .sparkle:nth-child(10) { left: 95%; animation-duration: 5.8s; animation-delay: 0.7s; }
+        .sparkle:nth-child(11) { left: 10%; animation-duration: 5.2s; animation-delay: 2.2s; }
+        .sparkle:nth-child(12) { left: 20%; animation-duration: 4.8s; animation-delay: 1.8s; }
+        .sparkle:nth-child(13) { left: 30%; animation-duration: 6.8s; animation-delay: 0.1s; }
+        .sparkle:nth-child(14) { left: 40%; animation-duration: 5.4s; animation-delay: 2.5s; }
+        .sparkle:nth-child(15) { left: 50%; animation-duration: 7.2s; animation-delay: 0.4s; }
+        .sparkle:nth-child(16) { left: 60%; animation-duration: 4.6s; animation-delay: 1.4s; }
+        .sparkle:nth-child(17) { left: 70%; animation-duration: 6.4s; animation-delay: 2.8s; }
+        .sparkle:nth-child(18) { left: 80%; animation-duration: 5.6s; animation-delay: 0.9s; }
+        .sparkle:nth-child(19) { left: 90%; animation-duration: 4.4s; animation-delay: 1.9s; }
+        .sparkle:nth-child(20) { left: 2%; animation-duration: 7.5s; animation-delay: 2.3s; }
+        .sparkle:nth-child(21) { left: 98%; animation-duration: 5.1s; animation-delay: 0.6s; }
+        .sparkle:nth-child(22) { left: 12%; animation-duration: 6.1s; animation-delay: 1.1s; }
+        .sparkle:nth-child(23) { left: 22%; animation-duration: 4.9s; animation-delay: 2.6s; }
+        .sparkle:nth-child(24) { left: 32%; animation-duration: 5.9s; animation-delay: 0.2s; }
+        .sparkle:nth-child(25) { left: 42%; animation-duration: 6.9s; animation-delay: 1.6s; }
+        .sparkle:nth-child(26) { left: 52%; animation-duration: 4.7s; animation-delay: 2.1s; }
+        .sparkle:nth-child(27) { left: 62%; animation-duration: 5.3s; animation-delay: 0.8s; }
+        .sparkle:nth-child(28) { left: 72%; animation-duration: 7.1s; animation-delay: 1.3s; }
+        .sparkle:nth-child(29) { left: 82%; animation-duration: 4.3s; animation-delay: 2.4s; }
+        .sparkle:nth-child(30) { left: 92%; animation-duration: 6.3s; animation-delay: 0.5s; }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: var(--primary);
+            color: var(--white);
+            padding: 10px 0;
+            font-size: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar span i {
+            color: var(--accent);
+            margin-right: 5px;
+        }
+
+        /* ===== HEADER / NAVBAR ===== */
+        .header {
+            background: var(--white);
+            position: sticky;
+            top: 38px;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        /* Logo: GLOW X LIFETIMES - LIFETIMES con Inter y más grueso */
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .logo-glow {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-x {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin: 0 2px;
+        }
+
+        /* LIFETIMES ahora con Inter, más grueso (900) */
+        .logo-lifetimes {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--fg);
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Botón Volver - MODIFICADO: más grande y texto rosa */
+        .back-link {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem; /* Aumentado de 1.1rem a 1.3rem */
+            font-weight: 400;
+            color: var(--accent) !important; /* Texto rosa forzado */
+            background: var(--primary);
+            padding: 10px 22px; /* Aumentado el padding (antes 6px 15px) */
+            border-radius: 30px; /* Un poco más redondeado */
+            display: inline-flex;
+            align-items: center;
+            gap: 10px; /* Aumentado el gap */
+            text-transform: uppercase;
+            letter-spacing: 1.5px; /* Aumentado ligeramente */
+            box-shadow: 0 5px 15px rgba(44, 26, 77, 0.4);
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            background: var(--accent);
+            color: var(--primary) !important; /* Texto morado al hacer hover */
+            transform: translateY(-3px); /* Efecto más pronunciado */
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.5);
+        }
+
+        .back-link i {
+            font-size: 1.1rem; /* Icono más grande */
+            color: var(--accent); /* Icono rosa */
+        }
+
+        .back-link:hover i {
+            color: var(--primary); /* Icono morado al hacer hover */
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .nav {
+                display: none;
+            }
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 118px;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 2px solid var(--accent);
+            display: none;
+            z-index: 998;
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--gray);
+            text-decoration: none;
+            color: var(--fg);
+            font-weight: 500;
+        }
+
+        /* Botón móvil también más grande y texto rosa */
+        .mobile-menu .back-link-mobile {
+            background: var(--primary);
+            color: var(--accent) !important;
+            margin: 15px 20px;
+            padding: 15px 25px; /* Más padding */
+            border-radius: 35px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem; /* Más grande */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            width: calc(100% - 40px);
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(44, 26, 77, 0.3);
+        }
+
+        .mobile-menu .back-link-mobile i {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .mobile-menu .back-link-mobile:hover {
+            background: var(--accent);
+            color: var(--primary) !important;
+        }
+
+        .mobile-menu .back-link-mobile:hover i {
+            color: var(--primary);
+        }
+
+        /* ===== HERO (NUEVO: Enfoque en servicios de estética) ===== */
+        .hero {
+            padding: 80px 0 60px;
+            background: linear-gradient(145deg, #faf0f5 0%, #fff9fb 100%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .hero-content h1 span {
+            color: var(--accent);
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--gray);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--primary);
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            transform: rotate(2deg);
+            transition: var(--transition);
+        }
+
+        .hero-image:hover img {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* ===== SECCIÓN SOBRE EL NEGOCIO ===== */
+        .about-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .about-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .about-content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .features-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .features-list i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            width: 25px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== SECCIÓN DE SERVICIOS (reemplaza a productos) ===== */
+        .services-section {
+            padding: 80px 0;
+            background: var(--bg);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 30px;
+        }
+
+        @media (min-width: 576px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .service-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--gray);
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--accent);
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .service-image {
+            height: 220px;
+            overflow: hidden;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.08);
+        }
+
+        .service-content {
+            padding: 25px 20px;
+        }
+
+        .service-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .service-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .service-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .service-price span {
+            font-size: 0.9rem;
+            color: #999;
+            font-weight: normal;
+        }
+
+        .btn-service {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-service:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* ===== SECCIÓN DEL MAPA (NUEVO) ===== */
+        .map-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .map-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .map-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .map-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .map-info p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .contact-details {
+            background: var(--gray-light);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .contact-details h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item i {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-item span {
+            color: #444;
+        }
+
+        .hours {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .hours div {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .map-embed {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            height: 350px;
+        }
+
+        .map-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Estilos para la notificación */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 2001;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .notification i {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ANIMACIÓN ÉPICA CON 4 IMÁGENES - Eliminada la segunda imagen -->
+    <div class="splash-epic" id="splash">
+        <div class="splash-carousel">
+            <div class="splash-slide"></div>
+            <div class="splash-slide"></div>
+            <div class="splash-slide"></div>
+            <div class="splash-slide"></div>
+        </div>
+        <div class="splash-overlay"></div>
+        <div class="splash-sparkles">
+            <!-- 30 partículas (se mantienen) -->
+            <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
+            <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
+            <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
+            <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
+            <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
+            <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
+        </div>
+        <div class="splash-content">
+            <div class="splash-icon">
+                <i class="fas fa-sparkles"></i>
+            </div>
+            <div class="splash-title">
+                GLOW
+            </div>
+            <div class="splash-sub">
+                estudio de estética
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP BAR (modificado para el negocio) -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <span><i class="fas fa-calendar-check"></i> Reserva tu cita online</span>
+            <span><i class="fas fa-certificate"></i> Expertos en belleza · 10 años de experiencia</span>
+        </div>
+    </div>
+
+    <!-- HEADER CON NAVBAR (actualizado) -->
+    <header class="header">
+        <div class="container header-inner">
+            <button class="mobile-toggle" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="logo">
+                <span class="logo-glow">GLOW</span>
+                <span class="logo-x">X</span>
+                <span class="logo-lifetimes">LIFETIMES</span>
+            </div>
+
+            <nav class="nav">
+                <a href="#inicio">Inicio</a>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#ubicacion">Ubicación</a>
+                <a href="#contacto">Contacto</a>
+                <!-- BOTÓN MODIFICADO: Más grande y texto rosa -->
+                <a href="Servicios-general.html" class="back-link" id="backBtn">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </nav>
+
+            <div class="header-actions">
+                <!-- Eliminado el carrito -->
+            </div>
+        </div>
+
+        <!-- MENÚ MÓVIL (actualizado) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#inicio">Inicio</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#ubicacion">Ubicación</a>
+            <a href="#contacto">Contacto</a>
+            <!-- Botón móvil también más grande y texto rosa -->
+            <a href="Servicios-general.html" class="back-link-mobile" id="backBtnMobile">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION (rediseñado para el negocio) -->
+    <section class="hero" id="inicio">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>Belleza que <span>trasciende el tiempo</span></h1>
+                <p>En GLOW X LIFETIMES combinamos técnicas avanzadas con productos premium para realzar tu belleza natural. Un espacio diseñado para tu bienestar y cuidado personal.</p>
+                <div class="hero-buttons">
+                    <a href="#servicios" class="btn btn-primary">DESCUBRE SERVICIOS <i class="fas fa-arrow-right"></i></a>
+                    <a href="#nosotros" class="btn btn-secondary">CONÓCENOS</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Estudio de estética">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN SOBRE EL NEGOCIO (NUEVA) -->
+    <section class="about-section" id="nosotros">
+        <div class="container about-grid">
+            <div class="about-content">
+                <h2>Más que un centro de estética</h2>
+                <p>En GLOW X LIFETIMES creemos que la verdadera belleza nace del cuidado y la autenticidad. Nuestro espacio fue creado para ofrecerte una experiencia única, donde cada tratamiento está diseñado para resaltar lo mejor de ti.</p>
+                <p>Con más de una década de experiencia, nuestro equipo de profesionales utiliza las técnicas más innovadoras y productos de la más alta calidad para garantizar resultados excepcionales en un ambiente relajante y exclusivo.</p>
+                
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> Productos hipoalergénicos y cruelty-free</li>
+                    <li><i class="fas fa-check-circle"></i> Profesionales certificados internacionalmente</li>
+                    <li><i class="fas fa-check-circle"></i> Instalaciones con los más altos estándares</li>
+                    <li><i class="fas fa-check-circle"></i> Asesoría personalizada para cada cliente</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Nuestro estudio">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE SERVICIOS (reemplaza a los productos) -->
+    <section class="services-section" id="servicios">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros servicios</h2>
+                <p>Tratamientos exclusivos diseñados para cuidar cada detalle de tu belleza</p>
+            </div>
+            <div class="services-grid" id="servicesContainer"></div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DEL MAPA (NUEVA) -->
+    <section class="map-section" id="ubicacion">
+        <div class="container map-container">
+            <div class="map-info">
+                <h2>Visítanos</h2>
+                <p>Te esperamos en nuestro estudio, un espacio pensado para tu comodidad y relax. Contamos con fácil acceso y estacionamiento.</p>
+                
+                <div class="contact-details">
+                    <h3>Información de contacto</h3>
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Av. Reforma 245, Col. Juárez, CDMX</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+52 (55) 8765-4321</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>hola@glowxlifetimes.com</span>
+                    </div>
+                    <div class="hours">
+                        <h4>Horario de atención</h4>
+                        <div><span>Lunes a Viernes</span> <span>10:00 - 20:00</span></div>
+                        <div><span>Sábados</span> <span>10:00 - 18:00</span></div>
+                        <div><span>Domingos</span> <span>Cerrado</span></div>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn btn-primary" id="directionBtn">
+                    <i class="fas fa-directions"></i> Cómo llegar
+                </a>
+            </div>
+            <div class="map-embed">
+                <!-- Google Maps integrado -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.865637348769!2d-99.16276682467834!3d19.42708108185584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff35d1c5b1b9%3A0x7f1d3c3b9c1c8c1c!2s%C3%81ngel%20de%20la%20Independencia!5e0!3m2!1ses!2smx!4v1699999999999!5m2!1ses!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (actualizado) -->
+    <footer class="footer" id="contacto">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>GLOW X LIFETIMES</h4>
+                    <p>Estudio de estética premium donde la belleza y el bienestar se encuentran.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#ubicacion">Ubicación</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> (55) 8765-4321</li>
+                        <li><i class="fas fa-envelope"></i> hola@glowxlifetimes.com</li>
+                        <li><i class="fas fa-clock"></i> Lun-Vie: 10am-8pm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 GLOW X LIFETIMES · Estudio de Estética · Todos los derechos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notificación (para feedback al usuario) -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationMessage"></span>
+    </div>
+
+    <script>
+        // === MINI SPLASH (se oculta después de 4 segundos) ===
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('splash').classList.add('hidden');
+            }, 4000);
+        });
+
+        // === DATOS DE SERVICIOS (reemplazan a los productos) ===
+        const services = [
+            {
+                id: "serv001",
+                name: "Limpieza Facial Profunda",
+                desc: "Eliminación de impurezas, exfoliación y extracción. Incluye mascarilla revitalizante.",
+                price: 1200,
+                badge: "MÁS SOLICITADO",
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800"
+            },
+            {
+                id: "serv002",
+                name: "Masaje Relajante Corporal",
+                desc: "60 minutos de masaje descontracturante con aceites esenciales. Alivia tensiones.",
+                price: 950,
+                badge: "NUEVO",
+                image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800"
+            },
+            {
+                id: "serv003",
+                name: "Diseño de Cejas",
+                desc: "Técnica de microblading o perfilado con henna según tu tipo de rostro.",
+                price: 800,
+                badge: "DESTACADO",
+                image: "https://images.unsplash.com/photo-1583001934017-5f5e60c6b2a3?w=800"
+            },
+            {
+                id: "serv004",
+                name: "Maquillaje Profesional",
+                desc: "Maquillaje social o de novia. Incluye prueba de parche y asesoría.",
+                price: 1500,
+                badge: "TOP",
+                image: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800"
+            },
+            {
+                id: "serv005",
+                name: "Tratamiento Antiedad",
+                desc: "Radiofrecuencia y microcorrientes para reafirmar el rostro. Resultados visibles.",
+                price: 2200,
+                badge: "LIMITADO",
+                image: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=800"
+            },
+            {
+                id: "serv006",
+                name: "Manicura y Pedicura Spa",
+                desc: "Tratamiento completo con exfoliación, hidratación y esmaltado semipermanente.",
+                price: 1100,
+                badge: "PAREJA",
+                image: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=800"
+            }
+        ];
+
+        // === ELEMENTOS DOM ===
+        const servicesContainer = document.getElementById('servicesContainer');
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const directionBtn = document.getElementById('directionBtn');
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notificationMessage');
+
+        // === NÚMERO DE WHATSAPP (cámbialo por el número real) ===
+        const WHATSAPP_NUMBER = "5215512345678"; // Formato: código de país + número sin espacios ni símbolos
+        const WHATSAPP_MESSAGE = "Hola%2C%20quiero%20reservar%20una%20cita%20en%20GLOW%20X%20LIFETIMES"; // Mensaje predefinido (URL encoded)
+
+        // === FUNCIÓN PARA ABRIR WHATSAPP ===
+        function openWhatsApp() {
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`, '_blank');
+        }
+
+        // === RENDER SERVICIOS ===
+        function renderServices() {
+            servicesContainer.innerHTML = '';
+            services.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.innerHTML = `
+                    ${service.badge ? `<div class="service-badge">${service.badge}</div>` : ''}
+                    <div class="service-image">
+                        <img src="${service.image}" alt="${service.name}" loading="lazy">
+                    </div>
+                    <div class="service-content">
+                        <div class="service-title">${service.name}</div>
+                        <div class="service-desc">${service.desc}</div>
+                        <div class="service-footer">
+                            <div class="service-price">
+                                $${service.price.toFixed(2)} <span>MXN</span>
+                            </div>
+                            <button class="btn-service" data-id="${service.id}">
+                                Reservar
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Los botones de servicio también abren WhatsApp
+                card.querySelector('.btn-service').addEventListener('click', () => {
+                    openWhatsApp();
+                });
+                
+                servicesContainer.appendChild(card);
+            });
+        }
+
+        // === FUNCIÓN PARA MOSTRAR NOTIFICACIÓN (ya no se usa para reservas pero la mantenemos) ===
+        function showNotification(message) {
+            notificationMessage.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // === EVENTOS ===
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // Botón de dirección (simulado)
+        directionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotification('Abrir en Google Maps (simulado)');
+        });
+
+        // Smooth scroll para los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // === INICIALIZAR ===
+        renderServices();
+    </script>
+</body>
+</html>
