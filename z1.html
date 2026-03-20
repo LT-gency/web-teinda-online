@@ -1,0 +1,4694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES · Constructor Visual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;700;900&family=Oswald:wght@300;400;700&family=Open+Sans:wght@400;600;800&family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@400;600;900&family=Raleway:wght@300;400;700;900&display=swap">
+    <style>
+        /* ====== VARIABLES ====== */
+        :root {
+            --primary: #0f52c9;
+            --primary-dark: #0a3a99;
+            --primary-light: rgba(15, 82, 201, 0.12);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --gray-raton: #f5f5f5;
+            --success: #2a9d8f;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #128C7E;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            
+            /* Variables para el menú lateral */
+            --bg-sidebar: #ffffff;
+            /* ANCHO MODIFICADO: de 25% a 20% (más angosto) */
+            --sidebar-width: 20%;
+            --text-light: #333333;
+            --text-muted-sidebar: #666666;
+            --border-sidebar: #e0e0e0;
+            
+            /* Variable para tipografía del título */
+            --hero-font: 'Inter', sans-serif;
+
+            /* Color de fondo para la sección Sobre Nosotros */
+            --about-bg-color: #ffffff;
+
+            /* Color crema para servicios en moderno */
+            --service-cream-bg: #fdf8f2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.3s ease;
+        }
+        
+        /* ====== NAVBAR PRINCIPAL ====== */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,.98);
+            backdrop-filter: saturate(180%) blur(10px);
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .menu-toggle {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .menu-toggle:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .logo {
+            font-weight: 900;
+            letter-spacing: .02em;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .nav-cta {
+            display: flex;
+            gap: .8rem;
+            align-items: center;
+        }
+        
+        .btn-services {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+            text-decoration: none;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .btn-services:hover {
+            background: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+        
+        /* ====== SIDEBAR - MENÚ LATERAL ====== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .config-sidebar {
+            position: fixed;
+            top: 0;
+            /* Inicialmente oculto fuera de la pantalla a la izquierda */
+            /* ANCHO MODIFICADO: ahora es 20% en lugar de 25% */
+            left: -20%;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--bg-sidebar);
+            z-index: 2001;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            color: var(--text-light);
+            padding: 20px 0;
+        }
+        
+        .config-sidebar.open {
+            left: 0;
+        }
+        
+        .config-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .config-sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .config-sidebar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        
+        .sidebar-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #333;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        
+        .sidebar-close:hover {
+            background: #e0e0e0;
+            transform: rotate(90deg);
+        }
+        
+        /* ====== HEADER DEL SIDEBAR ====== */
+        .config-sidebar-header {
+            padding: 30px 24px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 1px solid var(--border-sidebar);
+        }
+        
+        .sidebar-header-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+        }
+        
+        .sidebar-title-box {
+            background-color: #0f52c9;
+            padding: 8px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-title-box h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin: 0;
+            color: #ffffff;
+        }
+        
+        .sidebar-title-box h2 span {
+            color: #ffffff;
+        }
+        
+        .config-sidebar-header p {
+            color: var(--text-muted-sidebar);
+            font-size: 0.9rem;
+        }
+        
+        .user-info-sidebar {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-sidebar);
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .user-details h4 {
+            color: var(--dark);
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+        
+        .user-details span {
+            color: var(--text-muted-sidebar);
+            font-size: 0.8rem;
+        }
+        
+        .nav-menu {
+            padding: 16px;
+        }
+        
+        .config-category {
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--border-sidebar);
+        }
+        
+        .config-category:last-child {
+            border-bottom: none;
+        }
+        
+        .config-category-header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.2s;
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+        
+        .config-category-header:hover {
+            background: #f5f5f5;
+            color: var(--primary);
+        }
+        
+        .config-category-header.active {
+            background: #f5f5f5;
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .config-category-header i:first-child {
+            color: var(--text-muted-sidebar);
+            margin-right: 0;
+            width: 22px;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+        
+        .config-category-header.active i:first-child {
+            color: var(--primary);
+        }
+        
+        .config-category-header .category-title {
+            flex: 1;
+            text-align: left;
+            font-size: 1rem;
+            color: inherit;
+        }
+        
+        .config-category-header .toggle-icon {
+            color: var(--text-muted-sidebar);
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .config-category-header.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+        
+        .config-category-content {
+            padding: 20px 24px;
+            display: none;
+            background: #ffffff;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .config-category-content.active {
+            display: block;
+        }
+        
+        .config-form-group {
+            margin-bottom: 24px;
+        }
+        
+        .config-form-group label {
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .config-form-group label i {
+            color: var(--primary);
+            margin-right: 8px;
+            font-size: 0.95rem;
+        }
+        
+        /* Estilos para inputs */
+        .config-form-group input[type="text"],
+        .config-form-group input[type="email"],
+        .config-form-group input[type="number"],
+        .config-form-group textarea,
+        .config-form-group select,
+        .hero-text-input,
+        .font-search-input,
+        .name-input-field,
+        .about-image-description-input,
+        #whatsappNumberInput,
+        #sidebarAddressInput {
+            width: 100%;
+            padding: 12px 16px;
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .config-form-group input[type="text"]:focus,
+        .config-form-group textarea:focus,
+        .hero-text-input:focus,
+        .font-search-input:focus,
+        .name-input-field:focus,
+        .about-image-description-input:focus,
+        #whatsappNumberInput:focus,
+        #sidebarAddressInput:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .config-form-group select,
+        .font-selector {
+            width: 100%;
+            padding: 12px 16px;
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 0.95rem;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 48px;
+        }
+        
+        .config-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+        
+        .custom-image-upload {
+            background: #f9f9f9;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+        
+        .custom-image-upload:hover {
+            border-color: var(--primary);
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+        
+        .custom-image-upload i {
+            font-size: 2.5rem;
+            color: var(--primary) !important;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+        
+        .image-preview-container {
+            position: relative;
+            margin-top: 16px;
+            display: none;
+        }
+        
+        .image-preview-container.show {
+            display: block;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #ddd;
+            color: var(--danger);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .remove-image:hover {
+            transform: scale(1.1);
+            background: var(--danger);
+            color: white;
+        }
+        
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .toggle-switch input[type="checkbox"] {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: #ccc;
+            border-radius: 30px;
+            border: 1px solid #bbb;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch input[type="checkbox"]:checked {
+            background: var(--primary);
+        }
+        
+        .toggle-switch input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 1px;
+            left: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch input[type="checkbox"]:checked::before {
+            left: 25px;
+        }
+        
+        .name-input-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-add-name,
+        .service-input-group button,
+        #saveScheduleBtn,
+        #saveWhatsappBtn,
+        #sidebarUpdateMapBtn,
+        .about-gallery-save-btn {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-add-name:hover:not(:disabled),
+        .service-input-group button:hover:not(:disabled),
+        #saveScheduleBtn:hover,
+        #saveWhatsappBtn:hover,
+        #sidebarUpdateMapBtn:hover,
+        .about-gallery-save-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 82, 201, 0.2);
+        }
+        
+        .btn-add-name:disabled,
+        .service-input-group button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .name-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 0;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        
+        .name-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .name-list-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .name-list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .name-list-item span {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .remove-name-btn {
+            background: none;
+            border: none;
+            color: #dc3545 !important;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+        }
+        
+        .remove-name-btn:hover {
+            color: #b02a37 !important;
+            transform: scale(1.1);
+        }
+        
+        .name-counter {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 12px;
+            padding: 8px 0;
+        }
+        
+        .font-search-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        
+        .font-search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            z-index: 1;
+        }
+        
+        .font-search-input {
+            padding-left: 44px !important;
+        }
+        
+        .font-search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 4px;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .font-search-results.show {
+            display: block;
+        }
+        
+        .font-result-item {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .font-result-item:hover {
+            background: #f5f5f5;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .color-option {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+        
+        .color-option.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(15,82,201,0.3);
+        }
+        
+        .custom-color-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            color: var(--dark);
+            margin-top: 8px;
+            height: 50px;
+            cursor: pointer;
+        }
+        
+        .reset-container {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-sidebar);
+            margin-top: 20px;
+        }
+        
+        .btn-reset {
+            background: #f0f0f0;
+            color: var(--dark);
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+        
+        .btn-reset:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+            border-color: #ccc;
+        }
+        
+        /* ====== SELECTOR DE ESTILOS WEB ====== */
+        .web-styles-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .web-style-card {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px 20px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .web-style-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .web-style-card.active {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(15,82,201,0.15);
+        }
+        
+        .web-style-card.active::before {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .web-style-icon {
+            font-size: 2rem;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .web-style-info {
+            flex: 1;
+        }
+        
+        .web-style-name {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+            color: var(--dark);
+        }
+        
+        .web-style-desc {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* Colores específicos para cada estilo */
+        .style-moderno .web-style-icon { color: #4361ee; }
+        .style-minimalista .web-style-icon { color: #2b2d42; }
+        .style-creativo .web-style-icon { color: #f77f00; }
+        
+        /* ====== ESTILOS DE WEB - TEMAS COMPLETOS ====== */
+        
+        /* TEMA MODERNO - Tecnológico, colores vibrantes, sombras marcadas */
+        body.theme-moderno {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: rgba(67, 97, 238, 0.15);
+            --secondary: #f72585;
+            --hero-font: 'Poppins', sans-serif;
+        }
+        
+        /* El clip-path ha sido eliminado */
+        
+        body.theme-moderno .services-image-column {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            box-shadow: 25px 25px 40px rgba(67, 97, 238, 0.3);
+        }
+        
+        /* NUEVO ESTILO PARA SERVICIOS EN MODERNO - FONDO CREMA */
+        body.theme-moderno .services-section {
+            background: var(--service-cream-bg) !important;
+            padding: 6rem 2rem;
+            position: relative;
+            min-height: auto;
+        }
+        body.theme-moderno .services-section::before {
+            display: none;
+        }
+        body.theme-moderno .services-container .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        body.theme-moderno .services-container .section-header h2 {
+            color: var(--dark);
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            text-shadow: none;
+        }
+        body.theme-moderno .services-container .section-header p {
+            color: var(--gray);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* Ocultar la cuadrícula original (imagen + texto) */
+        body.theme-moderno .services-grid {
+            display: none;
+        }
+        /* Mostrar y estilizar la nueva cuadrícula de tarjetas */
+        body.theme-moderno .services-minimal-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        body.theme-moderno .service-minimal-box {
+            display: block !important;
+            background: #ffffff;
+            padding: 2.5rem 1.8rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+        body.theme-moderno .service-minimal-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(67, 97, 238, 0.15);
+            border-color: var(--primary);
+        }
+        /* Eliminar iconos de las tarjetas en Moderno */
+        body.theme-moderno .service-minimal-box i {
+            display: none;
+        }
+        body.theme-moderno .service-minimal-box h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        body.theme-moderno .service-minimal-box p {
+            font-size: 1rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        /* TEMA MINIMALISTA - Blanco y negro, líneas finas, sin sombras */
+        body.theme-minimalista {
+            --primary: #2b2d42;
+            --primary-dark: #1e1f2e;
+            --primary-light: #edf2f4;
+            --secondary: #8d99ae;
+            --hero-font: 'Inter', sans-serif;
+        }
+
+        /* NUEVO ESTILO PARA LA PRESENTACIÓN (HERO) EN MINIMALISTA */
+        body.theme-minimalista .hero-section {
+            background-image: none !important;
+            background: #f8f9fa !important;
+            height: auto;
+            min-height: 600px;
+            padding: 4rem 2rem;
+        }
+        body.theme-minimalista .hero-overlay {
+            display: none;
+        }
+        body.theme-minimalista .hero-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            text-align: left;
+            color: var(--dark);
+            padding: 0;
+            animation: none;
+        }
+        body.theme-minimalista .hero-text {
+            grid-column: 1;
+        }
+        body.theme-minimalista .hero-title {
+            font-weight: 700; /* Más grande y con más peso */
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #000;
+            text-shadow: none;
+            font-size: 4rem; /* Más grande */
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        body.theme-minimalista .hero-subtitle {
+            color: #333;
+            text-shadow: none;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            font-size: 1.5rem; /* Descripción más grande (antes 1.3rem) */
+            line-height: 1.6;
+        }
+        body.theme-minimalista .hero-whatsapp-btn {
+            background: var(--whatsapp-green); /* Verde */
+            color: #fff;
+            border: none;
+            box-shadow: none;
+            animation: none;
+            border-radius: 8px; /* Un poco redondeado */
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            margin-top: 0;
+        }
+        body.theme-minimalista .hero-whatsapp-btn:hover {
+            background: var(--whatsapp-dark);
+            transform: translateY(-3px);
+        }
+        body.theme-minimalista .hero-image-col {
+            grid-column: 2;
+            width: 100%;
+            height: 500px; /* Tamaño más grande */
+            background: #ddd;
+            /* ELIMINADOS: border y border-radius para que la imagen ocupe todo el espacio */
+            overflow: hidden;
+        }
+        body.theme-minimalista .hero-image-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        body.theme-minimalista .services-image-column {
+            border-radius: 0;
+            box-shadow: none;
+            border: 1px solid #000;
+        }
+        
+        body.theme-minimalista .schedule-minimal-card {
+            border-radius: 0;
+            border: 1px solid #000;
+            box-shadow: none;
+        }
+        
+        body.theme-minimalista .btn,
+        body.theme-minimalista .btn-services {
+            border-radius: 0;
+        }
+        
+        /* Estilos específicos para minimalista - Sobre Nosotros (solo una imagen) */
+        body.theme-minimalista .about-grid {
+            display: block;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        body.theme-minimalista .about-images-full {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        
+        /* Ocultar la segunda fila (instalaciones) en minimalista */
+        body.theme-minimalista .about-image-row:last-child {
+            display: none !important;
+        }
+
+        /* Mostrar y centrar la primera fila con una sola imagen y descripción */
+        body.theme-minimalista .about-image-row:first-child {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 3rem !important;
+            align-items: center !important;
+        }
+        
+        body.theme-minimalista .about-image-row:first-child .about-image-description {
+            grid-column: 1;
+            text-align: left;
+        }
+        
+        body.theme-minimalista .about-image-row:first-child .about-image-item {
+            grid-column: 2;
+        }
+        
+        body.theme-minimalista .about-image-description h4 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: #000;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        body.theme-minimalista .about-image-description h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #000;
+        }
+        
+        body.theme-minimalista .about-image-description p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            max-width: 500px;
+        }
+        
+        body.theme-minimalista .about-image-item {
+            aspect-ratio: 4/3;
+            border: 2px solid #000;
+            border-radius: 0;
+            box-shadow: none;
+            width: 100%;
+        }
+        
+        /* Estilos para servicios en minimalista - 6 boxes 2x3 */
+        body.theme-minimalista .services-section {
+            background: #ffffff !important;
+            padding: 4rem 2rem;
+        }
+        
+        body.theme-minimalista .services-section::before {
+            display: none;
+        }
+        
+        body.theme-minimalista .services-container .section-header h2 {
+            color: #000;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        body.theme-minimalista .services-container .section-header p {
+            color: #333;
+        }
+        
+        body.theme-minimalista .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 2rem !important;
+            margin-top: 3rem;
+        }
+        
+        body.theme-minimalista .services-content {
+            display: none;
+        }
+        
+        body.theme-minimalista .services-image-column {
+            display: none;
+        }
+        
+        body.theme-minimalista .service-minimal-box {
+            display: block !important;
+            background: #ffffff;
+            border: 2px solid #000;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        body.theme-minimalista .service-minimal-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        body.theme-minimalista .service-minimal-box i {
+            font-size: 2.5rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        body.theme-minimalista .service-minimal-box h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        body.theme-minimalista .service-minimal-box p {
+            font-size: 0.9rem;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        /* TEMA CREATIVO - Colores llamativos, formas asimétricas, dinámico */
+        body.theme-creativo {
+            --primary: #f77f00;
+            --primary-dark: #e56b00;
+            --primary-light: rgba(247, 127, 0, 0.2);
+            --secondary: #d62828;
+            --hero-font: 'Montserrat', sans-serif;
+        }
+        
+        body.theme-creativo .hero-title {
+            font-weight: 900;
+            text-transform: uppercase;
+            -webkit-text-stroke: 2px white;
+            color: transparent;
+        }
+
+        /* --- NUEVOS ESTILOS PARA LA PRESENTACIÓN EN CREATIVO --- */
+        body.theme-creativo .hero-section {
+            min-height: 600px;
+        }
+        body.theme-creativo .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            text-align: left;
+            max-width: 1300px;
+        }
+        body.theme-creativo .hero-text {
+            grid-column: 1;
+        }
+        body.theme-creativo .hero-image-col {
+            grid-column: 2;
+            display: block;
+            width: 100%;
+            height: 450px;
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+        body.theme-creativo .hero-image-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        body.theme-creativo .hero-subtitle {
+            display: none; /* Ocultar subtítulo */
+        }
+        body.theme-creativo .hero-whatsapp-btn {
+            margin-top: 1rem;
+        }
+        
+        body.theme-creativo .services-image-column {
+            transform: rotate(3deg) scale(0.95);
+            border: 5px solid white;
+        }
+        
+        body.theme-creativo .schedule-minimal-card {
+            background: linear-gradient(135deg, #f77f00 0%, #f9c74f 100%);
+            color: white;
+        }
+        
+        body.theme-creativo .schedule-minimal-card h2,
+        body.theme-creativo .schedule-minimal-item .minimal-day {
+            color: white;
+        }
+
+        /* ====== ESTILOS RADICALES PARA SERVICIOS EN CREATIVO ====== */
+        body.theme-creativo .services-section {
+            background: linear-gradient(135deg, #2b2d42 0%, #1e1f2e 100%) !important;
+            padding: 8rem 2rem !important;
+            position: relative;
+            overflow: hidden;
+            min-height: auto;
+        }
+
+        body.theme-creativo .services-section::before {
+            display: none;
+        }
+
+        body.theme-creativo .services-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(247, 127, 0, 0.03) 0px,
+                rgba(247, 127, 0, 0.03) 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            pointer-events: none;
+            z-index: 1;
+            animation: bgMove 60s linear infinite;
+        }
+
+        @keyframes bgMove {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        body.theme-creativo .services-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        body.theme-creativo .services-container .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        body.theme-creativo .services-container .section-header h2 {
+            color: #ffffff;
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            text-shadow: 8px 8px 0 rgba(247, 127, 0, 0.5);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            animation: titleGlitch 3s infinite;
+        }
+
+        @keyframes titleGlitch {
+            0%, 100% { transform: skew(0deg); }
+            95% { transform: skew(0deg); }
+            96% { transform: skew(5deg); }
+            97% { transform: skew(-5deg); }
+            98% { transform: skew(3deg); }
+            99% { transform: skew(-3deg); }
+        }
+
+        body.theme-creativo .services-container .section-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.4rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Ocultar la grid original en creativo */
+        body.theme-creativo .services-grid {
+            display: none;
+        }
+
+        /* Grid de servicios en creativo - DISEÑO RADICAL */
+        body.theme-creativo .services-minimal-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        /* Tarjetas en forma de diamante/rombo */
+        body.theme-creativo .service-minimal-box {
+            display: block !important;
+            background: #ffffff;
+            padding: 3rem 1.8rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg) scale(0.95);
+            animation: float 6s ease-in-out infinite;
+            animation-delay: calc(var(--i, 0) * 0.2s);
+            box-shadow: 0 30px 40px -20px rgba(0,0,0,0.5);
+        }
+
+        body.theme-creativo .service-minimal-box:nth-child(1) { --i: 1; background: linear-gradient(135deg, #f77f00, #f9a826); }
+        body.theme-creativo .service-minimal-box:nth-child(2) { --i: 2; background: linear-gradient(135deg, #d62828, #f77f00); }
+        body.theme-creativo .service-minimal-box:nth-child(3) { --i: 3; background: linear-gradient(135deg, #f9c74f, #f77f00); }
+        body.theme-creativo .service-minimal-box:nth-child(4) { --i: 4; background: linear-gradient(135deg, #e56b00, #f77f00); }
+        body.theme-creativo .service-minimal-box:nth-child(5) { --i: 5; background: linear-gradient(135deg, #f9844a, #f77f00); }
+        body.theme-creativo .service-minimal-box:nth-child(6) { --i: 6; background: linear-gradient(135deg, #f9a826, #f77f00); }
+
+        @keyframes float {
+            0%, 100% { transform: rotateX(0deg) rotateY(0deg) translateY(0) scale(0.95); }
+            50% { transform: rotateX(2deg) rotateY(2deg) translateY(-15px) scale(1); }
+        }
+
+        body.theme-creativo .service-minimal-box:hover {
+            transform: rotateX(5deg) rotateY(5deg) scale(1.1) translateY(-20px);
+            z-index: 10;
+            box-shadow: 0 50px 60px -20px rgba(247, 127, 0, 0.8);
+            filter: brightness(1.1);
+            transition: all 0.4s ease;
+        }
+
+        body.theme-creativo .service-minimal-box i {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: block;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        body.theme-creativo .service-minimal-box:hover i {
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        body.theme-creativo .service-minimal-box h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+        }
+
+        body.theme-creativo .service-minimal-box p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+            font-weight: 500;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+        }
+
+        /* Estilos generales */
+        .service-preview-list,
+        .schedule-badge-preview,
+        .whatsapp-preview,
+        .current-address,
+        .service-image-preview,
+        .schedule-control-card,
+        .whatsapp-control-card,
+        .maps-control-card,
+        .about-gallery-control {
+            background: transparent;
+            padding: 0;
+            margin-top: 8px;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .service-preview-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: var(--dark);
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .service-preview-item i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        
+        .service-image-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+        }
+        
+        .service-image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .schedule-input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .schedule-input-row label {
+            min-width: 120px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        .schedule-input-row input {
+            flex: 1;
+            padding: 10px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .schedule-input-row input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .whatsapp-button-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--whatsapp-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+            margin: 16px 0 8px;
+        }
+        
+        .whatsapp-button-preview:hover {
+            background: var(--whatsapp-dark);
+            transform: translateY(-2px);
+        }
+        
+        .about-gallery-item {
+            margin-bottom: 24px;
+        }
+        
+        .about-gallery-item h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .about-gallery-item h5 i {
+            color: var(--primary);
+        }
+        
+        /* ====== BARRA TRANSPORTADORA DE NOMBRES ====== */
+        .name-carrier-section {
+            width: 100%;
+            background-color: #000000;
+            border-top: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            padding: 0.75rem 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .name-carrier-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+        
+        .name-carrier-track {
+            display: inline-flex;
+            animation: scrollNames 25s linear infinite;
+            gap: 3rem;
+        }
+        
+        .name-carrier-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.25rem 0;
+            color: #ffffff;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            opacity: 0.9;
+            transition: opacity 0.2s ease;
+        }
+        
+        .name-carrier-item:hover {
+            opacity: 1;
+        }
+        
+        .name-carrier-item i {
+            color: #ffffff;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        @keyframes scrollNames {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .name-carrier-container {
+            width: 100%;
+            display: block;
+        }
+        
+        .name-carrier-container.hidden {
+            display: none;
+        }
+        
+        /* ====== ESTILOS PARA LAS SECCIONES ====== */
+        .services-section {
+            padding: 6rem 2rem;
+            background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+        
+        .services-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+        
+        .services-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: white;
+            width: 100%;
+        }
+        
+        .services-container .section-header {
+            text-align: left;
+            margin-bottom: 4rem;
+        }
+        
+        .services-container .section-header h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .services-container .section-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 2rem;
+            transition: all 0.5s ease;
+        }
+        
+        .services-content {
+            color: white;
+        }
+        
+        .services-content h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .service-list {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .service-list-item {
+            display: list-item;
+            padding: 0.6rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .service-list-item span[contenteditable="true"] {
+            display: inline-block;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            transition: background 0.2s, box-shadow 0.2s;
+            outline: none;
+            color: white;
+        }
+        
+        .service-list-item span[contenteditable="true"]:hover {
+            background: rgba(15, 82, 201, 0.3);
+        }
+        
+        .service-list-item span[contenteditable="true"]:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        
+        .service-list-remove {
+            display: inline-block;
+            margin-left: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+            opacity: 0;
+        }
+        
+        .service-list-item:hover .service-list-remove {
+            opacity: 1;
+        }
+        
+        .service-list-remove:hover {
+            color: var(--danger);
+            background: rgba(220, 53, 69, 0.2);
+        }
+        
+        .services-image-column {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            height: 500px;
+            background-color: #f0f0f0;
+            transition: all 0.5s ease;
+        }
+        
+        .services-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .services-image-column:hover .services-image {
+            transform: scale(1.05);
+        }
+        
+        .services-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+        
+        /* ====== SECCIÓN SOBRE NOSOTROS - CONTENEDOR DINÁMICO ====== */
+        .about-section {
+            padding: 6rem 2rem;
+            background-color: var(--about-bg-color);
+            position: relative;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .about-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: var(--dark);
+            width: 100%;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .about-header h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            color: var(--dark);
+        }
+        
+        .about-header h2 i {
+            color: var(--primary);
+            margin-right: 1rem;
+            font-size: 3rem;
+        }
+        
+        .about-header p {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--dark);
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .about-images-full {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .about-image-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .about-image-row.reverse {
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .about-image-row.reverse .about-image-description {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .about-image-row.reverse .about-image-item {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .about-image-description {
+            color: var(--dark);
+            padding: 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .about-image-description h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            letter-spacing: -0.01em;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .about-image-description h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            opacity: 0.8;
+            border-radius: 3px;
+        }
+        
+        .about-image-description p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--dark);
+            font-weight: 400;
+            margin-top: 0.5rem;
+            text-align: justify;
+            letter-spacing: 0.3px;
+        }
+        
+        .about-image-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            cursor: default;
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+        }
+        
+        .about-image-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        
+        .about-image-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Boxes de servicios minimalistas (ocultos por defecto) */
+        .service-minimal-box {
+            display: none;
+        }
+        
+        /* ====== ESTRUCTURAS ESPECÍFICAS POR TEMA ====== */
+        
+        /* MODERNO - 1 imagen (equipo) con descripción, ocultar instalaciones */
+        body.theme-moderno .about-images-full {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+        
+        body.theme-moderno .about-image-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        body.theme-moderno .about-image-row.reverse {
+            display: grid;
+        }
+        /* Ocultar la segunda fila (instalaciones) en moderno */
+        body.theme-moderno .about-image-row:last-child {
+            display: none !important;
+        }
+
+        /* MODERNO - Ajustar el tamaño del título y descripción en Sobre Nosotros */
+        body.theme-moderno .about-image-description h4 {
+            font-size: 3rem; /* Más grande */
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        body.theme-moderno .about-image-description p {
+            font-size: 1.4rem; /* Más grande */
+            line-height: 1.8;
+        }
+
+        /* MINIMALISTA - La imagen de la derecha ocupa la mitad derecha (ya está implementado) */
+        
+        /* MINIMALISTA - Ajuste del botón de WhatsApp */
+        body.theme-minimalista .hero-whatsapp-btn {
+            background: var(--whatsapp-green) !important;
+            border-radius: 8px !important; /* Un poco redondeado */
+        }
+        
+        /* ====== SECCIÓN DE HORARIO + MAPS ====== */
+        .schedule-section {
+            padding: 4rem 2rem;
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .schedule-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+        }
+        
+        .schedule-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: start;
+            transition: all 0.5s ease;
+        }
+        
+        .schedule-minimal-card {
+            background: white;
+            border-radius: 32px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: all 0.5s ease;
+        }
+        
+        .schedule-minimal-card h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #111;
+            margin-bottom: 2rem;
+        }
+        
+        .schedule-minimal-card h2 i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+            font-size: 1.8rem;
+        }
+        
+        .schedule-minimal-list {
+            list-style: none;
+        }
+        
+        .schedule-minimal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .schedule-minimal-item:last-child {
+            border-bottom: none;
+        }
+        
+        .minimal-day {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #374151;
+            font-weight: 450;
+        }
+        
+        .minimal-day i {
+            width: 20px;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+        
+        .minimal-time {
+            font-weight: 500;
+            color: var(--primary);
+            background: #eff6ff;
+            padding: 0.35rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+        
+        .minimal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.25rem;
+            background: #f9fafb;
+            border-radius: 50px;
+            color: #4b5563;
+            font-size: 0.85rem;
+        }
+        
+        .minimal-badge i {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .map-minimal-card {
+            background: #f8fafc;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            height: 100%;
+            min-height: 400px;
+            transition: all 0.5s ease;
+        }
+        
+        .map-minimal-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+        }
+        
+        .map-minimal-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        
+        /* ====== SECCIÓN DE OPINIONES ====== */
+        .testimonials-section {
+            padding: 6rem 2rem;
+            background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+        }
+        
+        .testimonials-section.hidden {
+            display: none;
+        }
+        
+        .testimonials-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+        
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .testimonials-header h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .testimonials-header h2 i {
+            color: #ffc107;
+            margin-right: 0.5rem;
+            font-size: 3rem;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+            transition: all 0.5s ease;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            color: white;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .testimonial-rating {
+            color: #ffc107;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 2px;
+        }
+        
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 1.2rem;
+        }
+        
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+        
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .testimonial-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.2rem;
+        }
+        
+        .testimonial-info p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+        }
+        
+        /* ====== BOTÓN DE WHATSAPP EN HERO ====== */
+        .hero-whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background-color: var(--whatsapp-green);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse-hero-whatsapp 2.5s infinite;
+        }
+        
+        .hero-whatsapp-btn:hover {
+            background-color: var(--whatsapp-dark);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: none;
+        }
+        
+        .hero-whatsapp-btn i {
+            font-size: 1.8rem;
+        }
+        
+        @keyframes pulse-hero-whatsapp {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7), 0 15px 30px rgba(0, 0, 0, 0.3); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0), 0 15px 30px rgba(0, 0, 0, 0.3); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 15px 30px rgba(0, 0, 0, 0.3); }
+        }
+        
+        /* Modal para editar opinión */
+        .testimonial-edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 8001;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .testimonial-edit-modal.active {
+            display: flex;
+        }
+        
+        .testimonial-edit-content {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            animation: modalZoomIn 0.3s ease;
+            position: relative;
+        }
+        
+        .testimonial-edit-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .testimonial-edit-close:hover {
+            color: var(--danger);
+        }
+        
+        .testimonial-edit-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .testimonial-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .testimonial-form-group input,
+        .testimonial-form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            color: var(--dark);
+        }
+        
+        .testimonial-form-group input:focus,
+        .testimonial-form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        .rating-selector {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            color: #ffc107;
+            cursor: pointer;
+        }
+        
+        .btn-update-testimonial {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+        
+        .btn-update-testimonial:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            transition: background 0.5s ease;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900;
+        }
+        
+        /* Botón guardar flotante */
+        .btn-save-bottom {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(15, 82, 201, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            margin-top: 2rem;
+        }
+        
+        .btn-save-bottom:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(15, 82, 201, 0.4);
+        }
+        
+        .save-bottom-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        /* ====== HERO SECTION ====== */
+        .hero-section {
+            position: relative;
+            height: 700px;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.5);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            font-family: var(--hero-font);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Columna de imagen para el hero minimalista */
+        .hero-image-col {
+            display: none; /* Oculto por defecto, se muestra solo en minimalista y creativo */
+        }
+        
+        /* ====== SECCIÓN DE BIENVENIDA ====== */
+        .welcome-section {
+            background-color: #ffffff;
+            padding: 5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .welcome-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .image-box {
+            background-color: #f8f9fa;
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: var(--shadow-hover);
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid #eaeaea;
+        }
+        
+        .image-box img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-image-row {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-image-row.reverse {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-image-row.reverse .about-image-description {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            
+            .about-image-row.reverse .about-image-item {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .schedule-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            body.theme-minimalista .services-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            body.theme-moderno .services-minimal-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            body.theme-minimalista .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            body.theme-minimalista .hero-text {
+                grid-column: 1;
+            }
+            body.theme-minimalista .hero-image-col {
+                grid-column: 1;
+            }
+
+            body.theme-creativo .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            body.theme-creativo .hero-text {
+                grid-column: 1;
+            }
+            body.theme-creativo .hero-image-col {
+                grid-column: 1;
+                clip-path: none;
+                border-radius: 12px;
+            }
+
+            body.theme-creativo .services-minimal-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* En móvil, el sidebar ocupa el 40% de la pantalla - ANTES ERA 50% */
+            .config-sidebar {
+                width: 40%;
+                left: -40%; /* Oculto a la izquierda */
+            }
+            
+            .hero-section {
+                height: 500px;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .services-container .section-header h2 {
+                font-size: 3rem;
+            }
+            
+            .services-content h3 {
+                font-size: 2rem;
+            }
+            
+            .about-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-whatsapp-btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            body.theme-minimalista .services-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            body.theme-minimalista .about-image-row {
+                grid-template-columns: 1fr !important;
+            }
+            
+            body.theme-minimalista .about-image-row .about-image-description {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            
+            body.theme-minimalista .about-image-row .about-image-item {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            
+            body.theme-moderno .services-minimal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body.theme-creativo .services-minimal-grid {
+                grid-template-columns: 1fr !important;
+            }
+            body.theme-creativo .service-minimal-box {
+                clip-path: polygon(50% 0%, 100% 10%, 100% 90%, 50% 100%, 0% 90%, 0% 10%);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .services-container .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .about-header h2 {
+                font-size: 2rem;
+            }
+            
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+        }
+        
+        .sidebar-toggle-mobile {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #000000;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: none;
+            box-shadow: var(--shadow-hover);
+            cursor: pointer;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-toggle-mobile:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+        }
+        
+        .main-content {
+            min-height: 100vh;
+            background: #ffffff;
+            transition: filter 0.3s ease;
+        }
+        
+        .main-content.blur {
+            filter: blur(2px);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-toggle-mobile {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body class="theme-moderno">
+    <!-- ====== NAVBAR PRINCIPAL ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de configuración">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a class="logo" href="#" aria-label="Inicio">
+                    LIFETIMES
+                </a>
+            </div>
+            <div class="nav-cta">
+                <a href="#servicios" class="btn-services" id="servicesNavBtn">
+                    Ver más Servicios
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay para el sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ====== SIDEBAR DE CONFIGURACIÓN ====== -->
+    <aside class="config-sidebar" id="configSidebar">
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="config-sidebar-header">
+            <div class="sidebar-header-image">
+                <i class="fas fa-store"></i>
+            </div>
+            <div class="sidebar-title-box">
+                <h2>LIFE<span>TIMES</span></h2>
+            </div>
+            <p>Configura tu página</p>
+        </div>
+        
+        <div class="user-info-sidebar">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-details">
+                <h4>Administrador</h4>
+                <span>Configuración visual</span>
+            </div>
+        </div>
+        
+        <div class="nav-menu">
+            <!-- ====== CATEGORÍA: ESTILOS DE WEB ====== -->
+            <div class="config-category">
+                <div class="config-category-header active" id="categoryWebStyles">
+                    <i class="fas fa-paint-brush"></i>
+                    <span class="category-title">🎨 ESTILOS DE WEB</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content active" id="webStylesContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-palette"></i> Elige un estilo para tu negocio</label>
+                        <p style="color: #666; font-size: 0.85rem; margin-bottom: 1rem;">Cada estilo tiene su propia estructura y personalidad</p>
+                        
+                        <div class="web-styles-grid">
+                            <!-- MODERNO - Primero en la lista -->
+                            <div class="web-style-card active style-moderno" data-style="moderno">
+                                <div class="web-style-icon"><i class="fas fa-cubes"></i></div>
+                                <div class="web-style-info">
+                                    <div class="web-style-name">MODERNO</div>
+                                    <div class="web-style-desc">Tecnológico • Sombras • Formas geométricas</div>
+                                </div>
+                            </div>
+                            
+                            <!-- MINIMALISTA - Segundo en la lista -->
+                            <div class="web-style-card style-minimalista" data-style="minimalista">
+                                <div class="web-style-icon"><i class="fas fa-circle"></i></div>
+                                <div class="web-style-info">
+                                    <div class="web-style-name">MINIMALISTA</div>
+                                    <div class="web-style-desc">Blanco y negro • Líneas finas • Sin adornos</div>
+                                </div>
+                            </div>
+                            
+                            <!-- CREATIVO - Tercero en la lista -->
+                            <div class="web-style-card style-creativo" data-style="creativo">
+                                <div class="web-style-icon"><i class="fas fa-lightbulb"></i></div>
+                                <div class="web-style-info">
+                                    <div class="web-style-name">CREATIVO</div>
+                                    <div class="web-style-desc">Colores llamativos • Formas asimétricas</div>
+                                </div>
+                            </div>
+                            <!-- ELEGANTE ha sido eliminado -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: PRESENTACIÓN ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryPresentation">
+                    <i class="fas fa-paint-brush"></i>
+                    <span class="category-title">Presentación</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="presentationContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-heading"></i> Personalizar presentación</label>
+                        
+                        <div class="custom-image-upload" id="customHeroUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para cambiar la imagen de fondo</p>
+                            <div class="file-name" id="heroFileName"></div>
+                        </div>
+                        <input type="file" id="heroImageFile" class="image-file-input" accept="image/*" style="display: none;">
+                        
+                        <div class="image-preview-container" id="heroImagePreviewContainer">
+                            <div class="image-preview">
+                                <img src="" alt="Vista previa" id="heroImagePreview">
+                            </div>
+                            <button class="remove-image" id="removeHeroImage" title="Eliminar imagen personalizada">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <label>Título principal:</label>
+                        <input type="text" class="hero-text-input" id="heroTitleInput" value="Bienvenido a LIFETIMES">
+                        
+                        <label>Subtítulo / Descripción:</label>
+                        <textarea class="hero-text-input" id="heroSubtitleInput" rows="3">Descubre productos exclusivos que marcarán la diferencia en tu día a día. Trabajamos con las mejores marcas para ofrecerte una experiencia única y personalizada que se adapta a tu estilo de vida.</textarea>
+
+                        <label>Nombre del propietario/negocio:</label>
+                        <input type="text" class="hero-text-input" id="navbarNameInput" value="Tu Negocio">
+                    </div>
+
+                    <div class="config-form-group">
+                        <label><i class="fas fa-search"></i> Buscar tipografía</label>
+                        <div class="font-search-container">
+                            <i class="fas fa-search font-search-icon"></i>
+                            <input type="text" class="font-search-input" id="fontSearchInput" placeholder="Ej: Arial, Roboto, Montserrat...">
+                            <div class="font-search-results" id="fontSearchResults"></div>
+                        </div>
+                        
+                        <select class="font-selector" id="fontSelector">
+                            <option value="'Inter', sans-serif">Inter (Moderna)</option>
+                            <option value="'Montserrat', sans-serif">Montserrat (Elegante)</option>
+                            <option value="'Poppins', sans-serif">Poppins (Geométrica)</option>
+                            <option value="'Playfair Display', serif">Playfair Display (Clásica)</option>
+                            <option value="'Roboto', sans-serif">Roboto (Versátil)</option>
+                            <option value="'Oswald', sans-serif">Oswald (Impactante)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- CONTROL PARA AGREGAR SERVICIOS -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-concierge-bell"></i> Gestionar servicios</label>
+                        
+                        <div class="service-add-control-sidebar">
+                            <div class="service-input-group" style="display: flex; gap: 8px; margin-bottom: 16px;">
+                                <input type="text" id="newServiceSidebarInput" placeholder="Ej: Consultoría estratégica" class="hero-text-input" style="flex: 1;">
+                                <button id="addServiceSidebarBtn" disabled>
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="service-preview-list" id="servicePreviewList">
+                                <p style="color: #666; font-size: 0.8rem; margin-bottom: 0.5rem;">Servicios actuales:</p>
+                                <div id="servicePreviewItems"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CONTROL PARA LA IMAGEN DE SERVICIOS -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-image"></i> Imagen de servicios</label>
+                        
+                        <div class="service-image-control">
+                            <div class="custom-image-upload" id="customServiceImageUpload">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Haz clic para cambiar la imagen</p>
+                                <div class="file-name" id="serviceImageFileName"></div>
+                            </div>
+                            <input type="file" id="serviceImageFile" class="image-file-input" accept="image/*" style="display: none;">
+                            
+                            <div class="service-image-preview" id="serviceImagePreviewContainer">
+                                <img src="" alt="Vista previa" id="serviceImagePreview" style="display: none;">
+                                <div class="no-image" id="serviceNoImageText">No hay imagen seleccionada</div>
+                            </div>
+                            
+                            <button id="removeServiceImageBtn" style="background: var(--danger); margin-top: 0.5rem; color: white; border: none; border-radius: 8px; padding: 10px; font-weight: 600; cursor: pointer; width: 100%;">
+                                <i class="fas fa-trash"></i> Eliminar imagen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ====== CATEGORÍA: FONDOS DE SECCIONES ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categorySections">
+                    <i class="fas fa-images"></i>
+                    <span class="category-title">Fondos de secciones</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="sectionsContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-palette"></i> Color principal</label>
+                        <input type="color" id="primaryColorPicker" value="#0f52c9" style="width: 100%; height: 50px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                    </div>
+
+                    <!-- SECCIÓN: SOBRE NOSOTROS -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-building"></i> Fondo para SOBRE NOSOTROS</label>
+                        
+                        <div class="about-bg-color-control">
+                            <div class="color-palette" id="aboutColorPalette">
+                                <div class="color-option" style="background-color: #ffffff;" data-color="#ffffff" title="Blanco"></div>
+                                <div class="color-option" style="background-color: #f8f9fa;" data-color="#f8f9fa" title="Gris muy claro"></div>
+                                <div class="color-option" style="background-color: #e9ecef;" data-color="#e9ecef" title="Gris claro"></div>
+                                <div class="color-option" style="background-color: #dee2e6;" data-color="#dee2e6" title="Gris"></div>
+                                <div class="color-option" style="background-color: #ced4da;" data-color="#ced4da" title="Gris medio"></div>
+                                <div class="color-option" style="background-color: #adb5bd;" data-color="#adb5bd" title="Gris oscuro"></div>
+                                <div class="color-option" style="background-color: #6c757d;" data-color="#6c757d" title="Gris más oscuro"></div>
+                                <div class="color-option" style="background-color: #495057;" data-color="#495057" title="Casi negro"></div>
+                            </div>
+                            
+                            <label>Color personalizado:</label>
+                            <input type="color" id="aboutBgColorPicker" value="#ffffff" class="custom-color-input">
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN: HORARIO -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-clock"></i> Fondo para HORARIO</label>
+                        
+                        <div class="custom-image-upload" id="customScheduleUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para cambiar la imagen de fondo</p>
+                            <div class="file-name" id="scheduleFileName"></div>
+                        </div>
+                        <input type="file" id="scheduleImageFile" class="image-file-input" accept="image/*" style="display: none;">
+                        
+                        <div class="image-preview-container" id="scheduleImagePreviewContainer">
+                            <div class="image-preview">
+                                <img src="" alt="Vista previa" id="scheduleImagePreview">
+                            </div>
+                            <button class="remove-image" id="removeScheduleImage" title="Eliminar imagen personalizada">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN: OPINIONES -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-star"></i> Fondo para OPINIONES</label>
+                        
+                        <div class="custom-image-upload" id="customTestimonialsUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para cambiar la imagen de fondo</p>
+                            <div class="file-name" id="testimonialsFileName"></div>
+                        </div>
+                        <input type="file" id="testimonialsImageFile" class="image-file-input" accept="image/*" style="display: none;">
+                        
+                        <div class="image-preview-container" id="testimonialsImagePreviewContainer">
+                            <div class="image-preview">
+                                <img src="" alt="Vista previa" id="testimonialsImagePreview">
+                            </div>
+                            <button class="remove-image" id="removeTestimonialsImage" title="Eliminar imagen personalizada">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: HORARIO ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categorySchedule">
+                    <i class="fas fa-clock"></i>
+                    <span class="category-title">Horario de atención</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="scheduleContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-clock"></i> Configurar horarios</label>
+                        
+                        <div class="schedule-control-card">
+                            <div class="schedule-input-row">
+                                <label>Lunes a Viernes:</label>
+                                <input type="text" id="weekdaySchedule" value="9:00 – 19:00">
+                            </div>
+                            
+                            <div class="schedule-input-row">
+                                <label>Sábados:</label>
+                                <input type="text" id="saturdaySchedule" value="10:00 – 14:00">
+                            </div>
+                            
+                            <div class="schedule-input-row">
+                                <label>Domingos:</label>
+                                <input type="text" id="sundaySchedule" value="Cerrado">
+                            </div>
+                            
+                            <div class="schedule-input-row">
+                                <label>Atención telefónica:</label>
+                                <input type="text" id="phoneSchedule" value="24/7">
+                            </div>
+                            
+                            <button id="saveScheduleBtn" style="width: 100%; margin-top: 1rem;">
+                                <i class="fas fa-save"></i> Guardar horarios
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: GALERÍA SOBRE NOSOTROS ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryGallery">
+                    <i class="fas fa-images"></i>
+                    <span class="category-title">📸 Galería Sobre Nosotros</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="galleryContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-images"></i> Gestiona las 2 imágenes y sus descripciones</label>
+                        
+                        <div class="about-gallery-control">
+                            <!-- Imagen 1 - Equipo -->
+                            <div class="about-gallery-item">
+                                <h5><i class="fas fa-image"></i> Imagen 1 - Equipo</h5>
+                                <div class="custom-image-upload" id="customAboutImage1Upload">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Cambiar imagen 1</p>
+                                    <div class="file-name" id="aboutImage1FileName"></div>
+                                </div>
+                                <input type="file" id="aboutImage1File" class="image-file-input" accept="image/*" style="display: none;">
+                                <div class="image-preview-container" id="aboutImage1PreviewContainer">
+                                    <div class="image-preview">
+                                        <img src="" alt="Vista previa" id="aboutImage1Preview">
+                                    </div>
+                                    <button class="remove-image" id="removeAboutImage1" title="Eliminar imagen">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <label>Descripción:</label>
+                                <input type="text" class="about-image-description-input" id="aboutImage1Description" value="Nuestro equipo está formado por profesionales altamente capacitados y con amplia experiencia en el sector.">
+                            </div>
+                            
+                            <!-- Imagen 2 - Instalaciones -->
+                            <div class="about-gallery-item">
+                                <h5><i class="fas fa-image"></i> Imagen 2 - Instalaciones</h5>
+                                <div class="custom-image-upload" id="customAboutImage2Upload">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Cambiar imagen 2</p>
+                                    <div class="file-name" id="aboutImage2FileName"></div>
+                                </div>
+                                <input type="file" id="aboutImage2File" class="image-file-input" accept="image/*" style="display: none;">
+                                <div class="image-preview-container" id="aboutImage2PreviewContainer">
+                                    <div class="image-preview">
+                                        <img src="" alt="Vista previa" id="aboutImage2Preview">
+                                    </div>
+                                    <button class="remove-image" id="removeAboutImage2" title="Eliminar imagen">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <label>Descripción:</label>
+                                <input type="text" class="about-image-description-input" id="aboutImage2Description" value="Nuestras instalaciones han sido diseñadas pensando en tu comodidad y bienestar.">
+                            </div>
+                            
+                            <button class="about-gallery-save-btn" id="saveGalleryBtn" style="width: 100%; margin-top: 1rem;">
+                                <i class="fas fa-save"></i> GUARDAR CAMBIOS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: WHATSAPP ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryWhatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="category-title">Contacto WhatsApp</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="whatsappContent">
+                    <div class="config-form-group">
+                        <label><i class="fab fa-whatsapp"></i> Configurar número</label>
+                        
+                        <div class="whatsapp-control-card">
+                            <input type="text" id="whatsappNumberInput" placeholder="Ej: 521234567890" value="521234567890" class="hero-text-input">
+                            <small style="color: #666; display: block; margin: 8px 0;">Formato: Código de país + número</small>
+                            
+                            <button id="saveWhatsappBtn" style="width: 100%;">
+                                <i class="fas fa-save"></i> Guardar número
+                            </button>
+                            
+                            <div class="whatsapp-preview">
+                                <p style="color: var(--dark); margin-top: 16px;">Vista previa:</p>
+                                <div class="whatsapp-button-preview" id="whatsappPreviewBtn">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                                <div class="whatsapp-number-display" id="whatsappNumberDisplay">
+                                    521234567890
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: MAPS ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryMaps">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span class="category-title">Configurar ubicación</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="mapsContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-map-pin"></i> Ubicación en el mapa</label>
+                        
+                        <div class="maps-control-card">
+                            <input type="text" id="sidebarAddressInput" placeholder="Ej: Av. Corrientes 1234, CABA" value="Av. Corrientes 1234, CABA" class="hero-text-input">
+                            
+                            <button id="sidebarUpdateMapBtn" style="width: 100%; margin-top: 1rem;">
+                                <i class="fas fa-sync-alt"></i> Actualizar mapa
+                            </button>
+                            
+                            <div class="current-address" id="currentAddressDisplay" style="margin-top: 16px;">
+                                <i class="fas fa-map-marker-alt" style="color: var(--primary);"></i>
+                                <span id="currentAddressText" style="color: var(--dark);">Av. Corrientes 1234, CABA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: BARRA DE NOMBRES ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryNames">
+                    <i class="fas fa-people-arrows"></i>
+                    <span class="category-title">Barra de nombres</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="namesContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-people-arrows"></i> Barra transportadora</label>
+                        
+                        <div class="name-carrier-control">
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggleNameCarrier" checked>
+                                <span>Activar barra de nombres</span>
+                            </div>
+                            
+                            <div class="name-input-container">
+                                <input type="text" class="name-input-field" id="newNameInput" placeholder="Ingresa un nombre" maxlength="30">
+                                <button class="btn-add-name" id="addNameBtn" disabled>
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            
+                            <div id="nameListContainer">
+                                <ul class="name-list" id="nameList"></ul>
+                                <div class="name-counter" id="nameCounter">0/5 nombres</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ====== CATEGORÍA: OPINIONES ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryTestimonials">
+                    <i class="fas fa-star"></i>
+                    <span class="category-title">Opiniones</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="testimonialsContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-star"></i> Visibilidad</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="toggleTestimonials" checked>
+                            <span id="toggleTestimonialsText">Mostrar opiniones</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de resetear -->
+        <div class="reset-container">
+            <button class="btn-reset" id="resetBtn">
+                <i class="fas fa-undo-alt"></i> Resetear todo
+            </button>
+        </div>
+    </aside>
+
+    <!-- Botón toggle para móvil -->
+    <button class="sidebar-toggle-mobile" id="sidebarToggleMobile">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- ====== MAIN CONTENT ====== -->
+    <main class="main-content" id="mainContent">
+        <!-- Barra superior con nombre -->
+        <div style="background: white; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; text-align: center;">
+            <span style="font-weight: 900; font-size: 1.2rem;">
+                <i class="fas fa-store" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                <span id="navbarName">Tu Negocio</span>
+                <span style="font-weight: 300; color: var(--gray); margin: 0 0.5rem;">×</span>
+                <strong class="lifetimes-bold" style="color: var(--primary);">LIFETIMES</strong>
+            </span>
+        </div>
+
+        <!-- SECCIÓN DE BIENVENIDA -->
+        <section class="welcome-section">
+            <div class="welcome-container">
+                <h2 class="welcome-title">Bienvenido a Nuestra Tienda Online</h2>
+                <p class="welcome-subtitle">Descubre los productos que tenemos para ti, diseñados para ofrecerte la mejor experiencia.</p>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&auto=format&fit=crop" alt="Imagen de bienvenida">
+                </div>
+            </div>
+        </section>
+
+        <!-- HERO SECTION -->
+        <section class="hero-section" id="heroSection">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <!-- Texto a la izquierda en minimalista -->
+                <div class="hero-text">
+                    <h1 class="hero-title" id="heroTitle">Bienvenido a LIFETIMES</h1>
+                    <!-- DESCRIPCIÓN AGRANDADA: el tamaño se controla con CSS, pero el texto aquí es el mismo -->
+                    <p class="hero-subtitle" id="heroSubtitle">Descubre productos exclusivos que marcarán la diferencia en tu día a día. Trabajamos con las mejores marcas para ofrecerte una experiencia única y personalizada que se adapta a tu estilo de vida.</p>
+                    
+                    <a href="https://wa.me/521234567890" class="hero-whatsapp-btn" id="heroWhatsappBtn" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Contáctanos por WhatsApp
+                    </a>
+                </div>
+                <!-- Columna de imagen para minimalista y creativo - AHORA OCUPA TODO EL ESPACIO SIN BORDES -->
+                <div class="hero-image-col">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="Hero Minimalista">
+                </div>
+            </div>
+        </section>
+
+        <!-- BARRA TRANSPORTADORA DE NOMBRES -->
+        <div class="name-carrier-container" id="nameCarrierContainer">
+            <div class="name-carrier-section">
+                <div class="name-carrier-wrapper">
+                    <div class="name-carrier-track" id="nameCarrierTrack"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN SERVICIOS -->
+        <section class="services-section" id="servicios">
+            <div class="services-container">
+                <div class="section-header">
+                    <h2>SERVICIOS</h2>
+                    <p>Descubre todo lo que podemos ofrecerte</p>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="services-content">
+                        <h3 contenteditable="true" id="serviceTitle">Consultoría Estratégica</h3>
+                        
+                        <ul class="service-list" id="serviceList"></ul>
+                    </div>
+                    
+                    <div class="services-image-column">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800" alt="Servicios" class="services-image" id="serviceImage">
+                        <div class="services-image-overlay">
+                            <h4>Calidad garantizada</h4>
+                            <p>Más de 10 años de experiencia</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Boxes minimalistas de servicios (6 en 2x3) - Se mostrarán según el tema -->
+                <div class="services-minimal-grid">
+                    <div class="service-minimal-box">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Consultoría</h3>
+                        <p>Asesoramiento estratégico para tu negocio con análisis de mercado y planes de acción personalizados.</p>
+                    </div>
+                    <div class="service-minimal-box">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Marketing</h3>
+                        <p>Estrategias digitales efectivas para aumentar tu visibilidad y conectar con tu audiencia objetivo.</p>
+                    </div>
+                    <div class="service-minimal-box">
+                        <i class="fas fa-code"></i>
+                        <h3>Desarrollo</h3>
+                        <p>Soluciones web personalizadas, desde landing pages hasta plataformas de comercio electrónico.</p>
+                    </div>
+                    <div class="service-minimal-box">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>Diseño</h3>
+                        <p>Identidad corporativa y branding que reflejan la esencia de tu marca y la hacen memorable.</p>
+                    </div>
+                    <div class="service-minimal-box">
+                        <i class="fas fa-search"></i>
+                        <h3>SEO</h3>
+                        <p>Posicionamiento en buscadores para que tu negocio sea encontrado por clientes potenciales.</p>
+                    </div>
+                    <div class="service-minimal-box">
+                        <i class="fas fa-headset"></i>
+                        <h3>Soporte</h3>
+                        <p>Atención personalizada 24/7 para resolver cualquier duda o incidencia que puedas tener.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN SOBRE NOSOTROS -->
+        <section class="about-section" id="aboutSection">
+            <div class="about-container">
+                <div class="about-header">
+                    <h2><i class="fas fa-building"></i> Sobre Nosotros</h2>
+                    <p>Conoce nuestro equipo e instalaciones</p>
+                </div>
+                
+                <div class="about-grid">
+                    <div class="about-images-full">
+                        <!-- Fila 1: Texto izquierda, imagen derecha (única visible en moderno/minimalista) -->
+                        <div class="about-image-row">
+                            <div class="about-image-description">
+                                <h4>Equipo Profesional</h4>
+                                <p id="aboutDescription1">Nuestro equipo está formado por profesionales altamente capacitados y con amplia experiencia en el sector.</p>
+                            </div>
+                            <div class="about-image-item">
+                                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="Equipo" id="aboutImage1">
+                            </div>
+                        </div>
+                        
+                        <!-- Fila 2: Imagen izquierda, texto derecha (oculta en moderno y minimalista) -->
+                        <div class="about-image-row reverse">
+                            <div class="about-image-item">
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop" alt="Instalaciones" id="aboutImage2">
+                            </div>
+                            <div class="about-image-description">
+                                <h4>Instalaciones</h4>
+                                <p id="aboutDescription2">Nuestras instalaciones han sido diseñadas pensando en tu comodidad y bienestar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN HORARIO + MAPS -->
+        <section class="schedule-section" id="horario">
+            <div class="schedule-container">
+                <div class="schedule-grid">
+                    <div class="schedule-minimal-card">
+                        <h2><i class="fas fa-clock"></i> Horario</h2>
+                        
+                        <ul class="schedule-minimal-list">
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day"><i class="fas fa-calendar-alt"></i> Lunes a Viernes</span>
+                                <span class="minimal-time" id="weekdayDisplay">9:00 – 19:00</span>
+                            </li>
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day"><i class="fas fa-calendar-alt"></i> Sábados</span>
+                                <span class="minimal-time" id="saturdayDisplay">10:00 – 14:00</span>
+                            </li>
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day"><i class="fas fa-calendar-alt"></i> Domingos</span>
+                                <span class="minimal-time" id="sundayDisplay">Cerrado</span>
+                            </li>
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day"><i class="fas fa-phone-alt"></i> Atención telefónica</span>
+                                <span class="minimal-time" id="phoneDisplay">24/7</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="minimal-badge">
+                            <i class="fas fa-calendar-check"></i> Cita previa disponible
+                        </div>
+                    </div>
+                    
+                    <div class="map-minimal-card">
+                        <div class="map-minimal-container" id="mapContainer">
+                            <iframe
+                                id="googleMap"
+                                src="https://maps.google.com/maps?q=Av.%20Corrientes%201234%2C%20CABA&output=embed"
+                                allowfullscreen
+                                loading="lazy"
+                                title="Ubicación">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN OPINIONES -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="testimonials-container">
+                <div class="testimonials-header">
+                    <h2><i class="fas fa-star"></i> Lo que dicen nuestros clientes</h2>
+                </div>
+                
+                <div class="testimonials-grid" id="testimonialsGrid"></div>
+                
+                <div class="save-bottom-container">
+                    <button class="btn-save-bottom" id="saveBottomBtn">
+                        <i class="fas fa-save"></i> Crear mi Web
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-bottom">
+                    <p>© <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- MODAL PARA EDITAR OPINIÓN -->
+    <div class="testimonial-edit-modal" id="testimonialEditModal">
+        <div class="testimonial-edit-content">
+            <button class="testimonial-edit-close" id="closeTestimonialEdit">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3><i class="fas fa-edit"></i> Editar opinión</h3>
+            <form id="testimonialEditForm">
+                <input type="hidden" id="editTestimonialId">
+                <div class="testimonial-form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="editTestimonialName" required>
+                </div>
+                <div class="testimonial-form-group">
+                    <label>Profesión / Rol</label>
+                    <input type="text" id="editTestimonialRole" required>
+                </div>
+                <div class="testimonial-form-group">
+                    <label>Calificación</label>
+                    <div class="rating-selector" id="editRatingSelector">
+                        <i class="fas fa-star" data-rating="1"></i>
+                        <i class="fas fa-star" data-rating="2"></i>
+                        <i class="fas fa-star" data-rating="3"></i>
+                        <i class="fas fa-star" data-rating="4"></i>
+                        <i class="fas fa-star" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="editTestimonialRating" value="5">
+                </div>
+                <div class="testimonial-form-group">
+                    <label>Opinión</label>
+                    <textarea id="editTestimonialText" required></textarea>
+                </div>
+                <button type="submit" class="btn-update-testimonial">
+                    <i class="fas fa-save"></i> Guardar cambios
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Año en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // ====== SIDEBAR ======
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('configSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sidebarClose = document.getElementById('sidebarClose');
+            const sidebarToggleMobile = document.getElementById('sidebarToggleMobile');
+            const mainContent = document.getElementById('mainContent');
+            
+            function openSidebar() {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('active');
+                mainContent.classList.add('blur');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+                mainContent.classList.remove('blur');
+                document.body.style.overflow = '';
+            }
+            
+            if (menuToggle) menuToggle.addEventListener('click', openSidebar);
+            if (sidebarToggleMobile) sidebarToggleMobile.addEventListener('click', openSidebar);
+            if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+            });
+            
+            // ====== CATEGORÍAS DESPLEGABLES ======
+            const categories = [
+                { header: 'categoryWebStyles', content: 'webStylesContent' },
+                { header: 'categoryPresentation', content: 'presentationContent' },
+                { header: 'categorySections', content: 'sectionsContent' },
+                { header: 'categorySchedule', content: 'scheduleContent' },
+                { header: 'categoryGallery', content: 'galleryContent' },
+                { header: 'categoryWhatsapp', content: 'whatsappContent' },
+                { header: 'categoryMaps', content: 'mapsContent' },
+                { header: 'categoryNames', content: 'namesContent' },
+                { header: 'categoryTestimonials', content: 'testimonialsContent' }
+            ];
+            
+            categories.forEach(cat => {
+                const header = document.getElementById(cat.header);
+                const content = document.getElementById(cat.content);
+                if (header && content) {
+                    if (cat.header === 'categoryWebStyles') {
+                        content.classList.add('active');
+                        header.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                    
+                    header.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        content.classList.toggle('active');
+                    });
+                }
+            });
+            
+            // ====== SELECTOR DE ESTILOS ======
+            const webStyleCards = document.querySelectorAll('.web-style-card');
+            const body = document.body;
+            const servicesMinimalGrid = document.querySelector('.services-minimal-grid');
+            const heroImageCol = document.querySelector('.hero-image-col');
+            const heroOverlay = document.querySelector('.hero-overlay');
+            
+            // Función para actualizar la estructura según el estilo seleccionado
+            function updateStructureByStyle(style) {
+                const aboutRows = document.querySelectorAll('.about-image-row');
+                const servicesGrid = document.querySelector('.services-grid');
+                const servicesContent = document.querySelector('.services-content');
+                const servicesImageColumn = document.querySelector('.services-image-column');
+                const heroSection = document.getElementById('heroSection');
+                
+                // Aplicar clases según el estilo
+                switch(style) {
+                    case 'minimalista':
+                        // Minimalista: mostrar solo la primera fila con imagen a la derecha
+                        if (aboutRows.length >= 2) {
+                            aboutRows[0].style.display = 'grid';
+                            aboutRows[1].style.display = 'none';
+                        }
+                        // Mostrar la imagen en el hero
+                        if (heroImageCol) heroImageCol.style.display = 'block';
+                        if (heroOverlay) heroOverlay.style.display = 'none';
+                        // Ocultar la grid original de servicios y mostrar los boxes
+                        if (servicesGrid) servicesGrid.style.display = 'grid';
+                        if (servicesMinimalGrid) {
+                            servicesMinimalGrid.style.display = 'grid';
+                            servicesMinimalGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                            servicesMinimalGrid.style.gap = '2rem';
+                            servicesMinimalGrid.style.marginTop = '3rem';
+                        }
+                        break;
+                    case 'moderno':
+                         // Moderno: mostrar solo la primera imagen (equipo) y ocultar la segunda
+                        if (aboutRows.length >= 2) {
+                            aboutRows[0].style.display = 'grid';
+                            aboutRows[1].style.display = 'none';
+                        }
+                        // Ocultar la imagen del hero minimalista
+                        if (heroImageCol) heroImageCol.style.display = 'none';
+                        if (heroOverlay) heroOverlay.style.display = 'block';
+                        if (servicesGrid) servicesGrid.style.display = 'none'; // Ocultar la original
+                        if (servicesMinimalGrid) {
+                            servicesMinimalGrid.style.display = 'grid'; // Mostrar la nueva
+                            servicesMinimalGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                            servicesMinimalGrid.style.gap = '2rem';
+                            servicesMinimalGrid.style.marginTop = '3rem';
+                        }
+                        break;
+                    case 'creativo':
+                        // Creativo: mostrar solo la primera imagen y ocultar la segunda
+                        if (aboutRows.length >= 2) {
+                            aboutRows[0].style.display = 'grid';
+                            aboutRows[1].style.display = 'none';
+                        }
+                        // Mostrar la imagen en el hero con forma de triángulo
+                        if (heroImageCol) heroImageCol.style.display = 'block';
+                        if (heroOverlay) heroOverlay.style.display = 'none';
+                        if (servicesGrid) servicesGrid.style.display = 'none'; // Ocultar original
+                        if (servicesMinimalGrid) {
+                            servicesMinimalGrid.style.display = 'grid'; // Mostrar la nueva
+                            servicesMinimalGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                            servicesMinimalGrid.style.gap = '2rem';
+                            servicesMinimalGrid.style.marginTop = '3rem';
+                        }
+                        break;
+                    default:
+                        // Por defecto mostrar ambas imágenes y la grid original
+                        aboutRows.forEach(row => {
+                            row.style.display = 'grid';
+                        });
+                        if (heroImageCol) heroImageCol.style.display = 'none';
+                        if (heroOverlay) heroOverlay.style.display = 'block';
+                        if (servicesGrid) servicesGrid.style.display = 'grid';
+                        if (servicesMinimalGrid) servicesMinimalGrid.style.display = 'none';
+                }
+                
+                // Notificar cambio
+                showNotification(`🎨 Estilo ${style} aplicado`, true);
+            }
+            
+            const savedStyle = localStorage.getItem('webStyle') || 'moderno';
+            webStyleCards.forEach(card => {
+                if (card.dataset.style === savedStyle) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+            body.className = `theme-${savedStyle}`;
+            updateStructureByStyle(savedStyle);
+            
+            webStyleCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const selectedStyle = this.dataset.style;
+                    
+                    webStyleCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    body.className = `theme-${selectedStyle}`;
+                    
+                    // Actualizar estructura según el estilo seleccionado
+                    updateStructureByStyle(selectedStyle);
+                    
+                    localStorage.setItem('webStyle', selectedStyle);
+                    
+                    showNotification(`✅ Estilo ${selectedStyle.toUpperCase()} aplicado`, true);
+                });
+            });
+            
+            // ====== NOTIFICACIONES ======
+            function showNotification(message, isSuccess = true) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed; top: 80px; right: 20px;
+                    background: ${isSuccess ? '#2a9d8f' : '#0f52c9'};
+                    color: white; padding: 1rem 2rem; border-radius: 12px;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.12); z-index: 7000;
+                    animation: slideIn 0.3s ease;
+                `;
+                notification.innerHTML = `<i class="fas ${isSuccess ? 'fa-check-circle' : 'fa-save'}"></i> ${message}`;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+            
+            // ====== ELEMENTOS DEL HERO ======
+            const heroTitle = document.getElementById('heroTitle');
+            const heroSubtitle = document.getElementById('heroSubtitle');
+            const heroTitleInput = document.getElementById('heroTitleInput');
+            const heroSubtitleInput = document.getElementById('heroSubtitleInput');
+            const navbarName = document.getElementById('navbarName');
+            const navbarNameInput = document.getElementById('navbarNameInput');
+            
+            const savedHeroTitle = localStorage.getItem('heroTitle');
+            const savedHeroSubtitle = localStorage.getItem('heroSubtitle');
+            const savedNavbarName = localStorage.getItem('navbarName');
+            
+            if (savedHeroTitle) {
+                heroTitle.textContent = savedHeroTitle;
+                heroTitleInput.value = savedHeroTitle;
+            }
+            
+            if (savedHeroSubtitle) {
+                heroSubtitle.textContent = savedHeroSubtitle;
+                heroSubtitleInput.value = savedHeroSubtitle;
+            }
+            
+            if (savedNavbarName) {
+                navbarName.textContent = savedNavbarName;
+                navbarNameInput.value = savedNavbarName;
+            }
+            
+            heroTitleInput.addEventListener('input', function() {
+                heroTitle.textContent = this.value || 'Bienvenido a LIFETIMES';
+                localStorage.setItem('heroTitle', this.value);
+            });
+            
+            heroSubtitleInput.addEventListener('input', function() {
+                heroSubtitle.textContent = this.value || 'Descubre productos exclusivos';
+                localStorage.setItem('heroSubtitle', this.value);
+            });
+            
+            navbarNameInput.addEventListener('input', function() {
+                navbarName.textContent = this.value || 'Tu Negocio';
+                localStorage.setItem('navbarName', this.value);
+            });
+            
+            // ====== SUBIR IMÁGENES DE FONDO ======
+            const imageConfigs = [
+                { upload: 'customHeroUpload', file: 'heroImageFile', previewContainer: 'heroImagePreviewContainer', preview: 'heroImagePreview', fileName: 'heroFileName', remove: 'removeHeroImage', section: document.getElementById('heroSection'), storageKey: 'customHeroImage', defaultBg: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8' },
+                { upload: 'customScheduleUpload', file: 'scheduleImageFile', previewContainer: 'scheduleImagePreviewContainer', preview: 'scheduleImagePreview', fileName: 'scheduleFileName', remove: 'removeScheduleImage', section: document.getElementById('horario'), storageKey: 'customScheduleImage', defaultBg: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4' },
+                { upload: 'customTestimonialsUpload', file: 'testimonialsImageFile', previewContainer: 'testimonialsImagePreviewContainer', preview: 'testimonialsImagePreview', fileName: 'testimonialsFileName', remove: 'removeTestimonialsImage', section: document.getElementById('testimonials'), storageKey: 'customTestimonialsImage', defaultBg: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c' }
+            ];
+            
+            function setupImageUpload(config) {
+                const uploadElement = document.getElementById(config.upload);
+                const fileInput = document.getElementById(config.file);
+                const previewContainer = document.getElementById(config.previewContainer);
+                const previewImg = document.getElementById(config.preview);
+                const fileNameSpan = document.getElementById(config.fileName);
+                const removeBtn = document.getElementById(config.remove);
+                const section = config.section;
+                const storageKey = config.storageKey;
+                const defaultBg = config.defaultBg;
+                
+                const savedImage = localStorage.getItem(storageKey);
+                if (savedImage && section) {
+                    section.style.backgroundImage = `url('${savedImage}')`;
+                    if (previewImg && previewContainer) {
+                        previewImg.src = savedImage;
+                        previewContainer.classList.add('show');
+                    }
+                }
+                
+                if (uploadElement) {
+                    uploadElement.addEventListener('click', () => fileInput.click());
+                }
+                
+                if (fileInput) {
+                    fileInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        
+                        if (!file.type.startsWith('image/')) {
+                            alert('Por favor selecciona una imagen válida');
+                            return;
+                        }
+                        
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert('La imagen no debe superar los 5MB');
+                            return;
+                        }
+                        
+                        fileNameSpan.textContent = file.name;
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const imageData = event.target.result;
+                            localStorage.setItem(storageKey, imageData);
+                            if (section) section.style.backgroundImage = `url('${imageData}')`;
+                            previewImg.src = imageData;
+                            previewContainer.classList.add('show');
+                            showNotification('Imagen cargada correctamente', true);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        localStorage.removeItem(storageKey);
+                        if (section) section.style.backgroundImage = `url('${defaultBg}?w=2070')`;
+                        previewContainer.classList.remove('show');
+                        previewImg.src = '';
+                        fileNameSpan.textContent = '';
+                        fileInput.value = '';
+                        showNotification('Imagen eliminada', true);
+                    });
+                }
+            }
+            
+            imageConfigs.forEach(config => setupImageUpload(config));
+            
+            // ====== HORARIO ======
+            const weekdaySchedule = document.getElementById('weekdaySchedule');
+            const saturdaySchedule = document.getElementById('saturdaySchedule');
+            const sundaySchedule = document.getElementById('sundaySchedule');
+            const phoneSchedule = document.getElementById('phoneSchedule');
+            const saveScheduleBtn = document.getElementById('saveScheduleBtn');
+            
+            const weekdayDisplay = document.getElementById('weekdayDisplay');
+            const saturdayDisplay = document.getElementById('saturdayDisplay');
+            const sundayDisplay = document.getElementById('sundayDisplay');
+            const phoneDisplay = document.getElementById('phoneDisplay');
+            
+            const savedWeekday = localStorage.getItem('weekdaySchedule');
+            const savedSaturday = localStorage.getItem('saturdaySchedule');
+            const savedSunday = localStorage.getItem('sundaySchedule');
+            const savedPhone = localStorage.getItem('phoneSchedule');
+            
+            if (savedWeekday) {
+                weekdaySchedule.value = savedWeekday;
+                weekdayDisplay.textContent = savedWeekday;
+            }
+            
+            if (savedSaturday) {
+                saturdaySchedule.value = savedSaturday;
+                saturdayDisplay.textContent = savedSaturday;
+            }
+            
+            if (savedSunday) {
+                sundaySchedule.value = savedSunday;
+                sundayDisplay.textContent = savedSunday;
+            }
+            
+            if (savedPhone) {
+                phoneSchedule.value = savedPhone;
+                phoneDisplay.textContent = savedPhone;
+            }
+            
+            function saveSchedule() {
+                const weekday = weekdaySchedule.value.trim() || '9:00 – 19:00';
+                const saturday = saturdaySchedule.value.trim() || '10:00 – 14:00';
+                const sunday = sundaySchedule.value.trim() || 'Cerrado';
+                const phone = phoneSchedule.value.trim() || '24/7';
+                
+                localStorage.setItem('weekdaySchedule', weekday);
+                localStorage.setItem('saturdaySchedule', saturday);
+                localStorage.setItem('sundaySchedule', sunday);
+                localStorage.setItem('phoneSchedule', phone);
+                
+                weekdayDisplay.textContent = weekday;
+                saturdayDisplay.textContent = saturday;
+                sundayDisplay.textContent = sunday;
+                phoneDisplay.textContent = phone;
+                
+                showNotification('Horarios actualizados', true);
+            }
+            
+            if (saveScheduleBtn) {
+                saveScheduleBtn.addEventListener('click', saveSchedule);
+            }
+            
+            // ====== COLOR DE FONDO PARA SOBRE NOSOTROS ======
+            const aboutSection = document.getElementById('aboutSection');
+            const aboutBgColorPicker = document.getElementById('aboutBgColorPicker');
+            const colorOptions = document.querySelectorAll('#aboutColorPalette .color-option');
+            
+            function applyAboutBgColor(color) {
+                aboutSection.style.backgroundColor = color;
+                document.documentElement.style.setProperty('--about-bg-color', color);
+                localStorage.setItem('aboutBgColor', color);
+                aboutBgColorPicker.value = color;
+                
+                colorOptions.forEach(opt => {
+                    if (opt.dataset.color === color) {
+                        opt.classList.add('selected');
+                    } else {
+                        opt.classList.remove('selected');
+                    }
+                });
+            }
+            
+            const savedAboutBgColor = localStorage.getItem('aboutBgColor') || '#ffffff';
+            applyAboutBgColor(savedAboutBgColor);
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const color = this.dataset.color;
+                    applyAboutBgColor(color);
+                    showNotification('Color de fondo actualizado', true);
+                });
+            });
+            
+            aboutBgColorPicker.addEventListener('input', function() {
+                applyAboutBgColor(this.value);
+            });
+            
+            // ====== GALERÍA SOBRE NOSOTROS ======
+            const aboutImage1 = document.getElementById('aboutImage1');
+            const aboutImage2 = document.getElementById('aboutImage2');
+            const aboutDescription1 = document.getElementById('aboutDescription1');
+            const aboutDescription2 = document.getElementById('aboutDescription2');
+            const aboutImage1Description = document.getElementById('aboutImage1Description');
+            const aboutImage2Description = document.getElementById('aboutImage2Description');
+            
+            const aboutImageConfigs = [
+                { upload: 'customAboutImage1Upload', file: 'aboutImage1File', previewContainer: 'aboutImage1PreviewContainer', preview: 'aboutImage1Preview', fileName: 'aboutImage1FileName', remove: 'removeAboutImage1', image: aboutImage1, storageKey: 'aboutImage1', defaultSrc: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800' },
+                { upload: 'customAboutImage2Upload', file: 'aboutImage2File', previewContainer: 'aboutImage2PreviewContainer', preview: 'aboutImage2Preview', fileName: 'aboutImage2FileName', remove: 'removeAboutImage2', image: aboutImage2, storageKey: 'aboutImage2', defaultSrc: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800' }
+            ];
+            
+            aboutImageConfigs.forEach(config => {
+                const savedImage = localStorage.getItem(config.storageKey);
+                if (savedImage) {
+                    config.image.src = savedImage;
+                    const previewImg = document.getElementById(config.preview);
+                    const previewContainer = document.getElementById(config.previewContainer);
+                    if (previewImg && previewContainer) {
+                        previewImg.src = savedImage;
+                        previewContainer.classList.add('show');
+                    }
+                }
+                
+                const uploadElement = document.getElementById(config.upload);
+                const fileInput = document.getElementById(config.file);
+                const previewContainer = document.getElementById(config.previewContainer);
+                const previewImg = document.getElementById(config.preview);
+                const fileNameSpan = document.getElementById(config.fileName);
+                const removeBtn = document.getElementById(config.remove);
+                const image = config.image;
+                const storageKey = config.storageKey;
+                const defaultSrc = config.defaultSrc;
+                
+                if (uploadElement) {
+                    uploadElement.addEventListener('click', () => fileInput.click());
+                }
+                
+                if (fileInput) {
+                    fileInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        
+                        if (!file.type.startsWith('image/')) {
+                            alert('Por favor selecciona una imagen válida');
+                            return;
+                        }
+                        
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert('La imagen no debe superar los 5MB');
+                            return;
+                        }
+                        
+                        fileNameSpan.textContent = file.name;
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const imageData = event.target.result;
+                            localStorage.setItem(storageKey, imageData);
+                            image.src = imageData;
+                            previewImg.src = imageData;
+                            previewContainer.classList.add('show');
+                            showNotification('Imagen actualizada', true);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        localStorage.removeItem(storageKey);
+                        image.src = defaultSrc;
+                        previewContainer.classList.remove('show');
+                        previewImg.src = '';
+                        fileNameSpan.textContent = '';
+                        fileInput.value = '';
+                        showNotification('Imagen restaurada', true);
+                    });
+                }
+            });
+            
+            const savedDesc1 = localStorage.getItem('aboutDescription1');
+            const savedDesc2 = localStorage.getItem('aboutDescription2');
+            
+            if (savedDesc1) {
+                aboutDescription1.textContent = savedDesc1;
+                aboutImage1Description.value = savedDesc1;
+            }
+            if (savedDesc2) {
+                aboutDescription2.textContent = savedDesc2;
+                aboutImage2Description.value = savedDesc2;
+            }
+            
+            aboutImage1Description.addEventListener('input', function() {
+                aboutDescription1.textContent = this.value || 'Descripción de la imagen 1';
+                localStorage.setItem('aboutDescription1', this.value);
+            });
+            
+            aboutImage2Description.addEventListener('input', function() {
+                aboutDescription2.textContent = this.value || 'Descripción de la imagen 2';
+                localStorage.setItem('aboutDescription2', this.value);
+            });
+            
+            const saveGalleryBtn = document.getElementById('saveGalleryBtn');
+            if (saveGalleryBtn) {
+                saveGalleryBtn.addEventListener('click', function() {
+                    showNotification('Galería guardada correctamente', true);
+                });
+            }
+            
+            // ====== WHATSAPP ======
+            const whatsappNumberInput = document.getElementById('whatsappNumberInput');
+            const saveWhatsappBtn = document.getElementById('saveWhatsappBtn');
+            const heroWhatsappBtn = document.getElementById('heroWhatsappBtn');
+            const whatsappNumberDisplay = document.getElementById('whatsappNumberDisplay');
+            const whatsappPreviewBtn = document.getElementById('whatsappPreviewBtn');
+            
+            const savedWhatsAppNumber = localStorage.getItem('whatsappNumber') || '521234567890';
+            whatsappNumberInput.value = savedWhatsAppNumber;
+            whatsappNumberDisplay.textContent = savedWhatsAppNumber;
+            heroWhatsappBtn.href = `https://wa.me/${savedWhatsAppNumber}`;
+            
+            function saveWhatsAppNumber() {
+                let number = whatsappNumberInput.value.trim().replace(/[\s\-\(\)\+]/g, '');
+                if (number === '') {
+                    alert('Por favor ingresa un número válido');
+                    return;
+                }
+                localStorage.setItem('whatsappNumber', number);
+                heroWhatsappBtn.href = `https://wa.me/${number}`;
+                whatsappNumberDisplay.textContent = number;
+                showNotification('Número de WhatsApp guardado', true);
+            }
+            
+            if (saveWhatsappBtn) saveWhatsappBtn.addEventListener('click', saveWhatsAppNumber);
+            
+            if (whatsappPreviewBtn) {
+                whatsappPreviewBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const number = localStorage.getItem('whatsappNumber') || '521234567890';
+                    window.open(`https://wa.me/${number}`, '_blank');
+                });
+            }
+            
+            // ====== MAPS ======
+            const sidebarAddressInput = document.getElementById('sidebarAddressInput');
+            const sidebarUpdateMapBtn = document.getElementById('sidebarUpdateMapBtn');
+            const googleMap = document.getElementById('googleMap');
+            
+            function updateMapFromSidebar() {
+                const address = encodeURIComponent(sidebarAddressInput.value.trim() || 'Av. Corrientes 1234, CABA');
+                googleMap.src = `https://maps.google.com/maps?q=${address}&output=embed`;
+                const currentAddressText = document.getElementById('currentAddressText');
+                if (currentAddressText) currentAddressText.textContent = sidebarAddressInput.value.trim() || 'Av. Corrientes 1234, CABA';
+                localStorage.setItem('mapAddress', sidebarAddressInput.value.trim());
+                showNotification('Mapa actualizado', true);
+            }
+            
+            if (sidebarUpdateMapBtn) sidebarUpdateMapBtn.addEventListener('click', updateMapFromSidebar);
+            
+            const savedAddress = localStorage.getItem('mapAddress');
+            if (savedAddress) {
+                sidebarAddressInput.value = savedAddress;
+                document.getElementById('currentAddressText').textContent = savedAddress;
+                setTimeout(() => {
+                    googleMap.src = `https://maps.google.com/maps?q=${encodeURIComponent(savedAddress)}&output=embed`;
+                }, 500);
+            }
+            
+            // ====== TIPOGRAFÍA ======
+            const fontSearchInput = document.getElementById('fontSearchInput');
+            const fontSearchResults = document.getElementById('fontSearchResults');
+            const fontSelector = document.getElementById('fontSelector');
+            
+            const popularFonts = ['Inter', 'Montserrat', 'Poppins', 'Playfair Display', 'Roboto', 'Oswald'];
+            
+            const savedFont = localStorage.getItem('heroFont');
+            if (savedFont) {
+                document.documentElement.style.setProperty('--hero-font', savedFont);
+                heroTitle.style.fontFamily = savedFont;
+                for (let i = 0; i < fontSelector.options.length; i++) {
+                    if (fontSelector.options[i].value === savedFont) fontSelector.selectedIndex = i;
+                }
+            }
+            
+            function searchFonts(query) {
+                if (!query || query.length < 2) {
+                    fontSearchResults.classList.remove('show');
+                    return;
+                }
+                const matches = popularFonts.filter(font => font.toLowerCase().includes(query.toLowerCase())).slice(0, 8);
+                fontSearchResults.innerHTML = '';
+                matches.forEach(font => {
+                    const item = document.createElement('div');
+                    item.className = 'font-result-item';
+                    item.innerHTML = `<span class="font-name">${font}</span><span class="font-preview-small">The quick brown fox</span>`;
+                    item.addEventListener('click', () => {
+                        const fontValue = `'${font}', sans-serif`;
+                        document.documentElement.style.setProperty('--hero-font', fontValue);
+                        heroTitle.style.fontFamily = fontValue;
+                        localStorage.setItem('heroFont', fontValue);
+                        fontSearchResults.classList.remove('show');
+                        fontSearchInput.value = '';
+                        showNotification(`Tipografía "${font}" aplicada`, true);
+                    });
+                    fontSearchResults.appendChild(item);
+                });
+                fontSearchResults.classList.add('show');
+            }
+            
+            fontSearchInput.addEventListener('input', function() { searchFonts(this.value); });
+            
+            document.addEventListener('click', function(e) {
+                if (!fontSearchInput.contains(e.target) && !fontSearchResults.contains(e.target)) {
+                    fontSearchResults.classList.remove('show');
+                }
+            });
+            
+            fontSelector.addEventListener('change', function() {
+                document.documentElement.style.setProperty('--hero-font', this.value);
+                heroTitle.style.fontFamily = this.value;
+                localStorage.setItem('heroFont', this.value);
+                showNotification('Tipografía actualizada', true);
+            });
+            
+            // ====== COLOR PRINCIPAL ======
+            const primaryColorPicker = document.getElementById('primaryColorPicker');
+            
+            function applyPrimaryColor(color) {
+                document.documentElement.style.setProperty('--primary', color);
+                localStorage.setItem('primaryColor', color);
+            }
+            
+            const savedPrimaryColor = localStorage.getItem('primaryColor');
+            if (savedPrimaryColor) {
+                primaryColorPicker.value = savedPrimaryColor;
+                applyPrimaryColor(savedPrimaryColor);
+            }
+            
+            primaryColorPicker.addEventListener('input', function() {
+                applyPrimaryColor(this.value);
+            });
+            
+            // ====== BARRA DE NOMBRES ======
+            const toggleNameCarrier = document.getElementById('toggleNameCarrier');
+            const nameCarrierContainer = document.getElementById('nameCarrierContainer');
+            const nameCarrierTrack = document.getElementById('nameCarrierTrack');
+            const newNameInput = document.getElementById('newNameInput');
+            const addNameBtn = document.getElementById('addNameBtn');
+            const nameList = document.getElementById('nameList');
+            const nameCounter = document.getElementById('nameCounter');
+            
+            let nameCarrierList = JSON.parse(localStorage.getItem('nameCarrierList')) || ['Cliente Satisfecho', 'Profesional', 'Experiencia', 'Calidad', 'Confianza'];
+            
+            const nameCarrierEnabled = localStorage.getItem('nameCarrierEnabled') !== 'false';
+            toggleNameCarrier.checked = nameCarrierEnabled;
+            if (!nameCarrierEnabled) nameCarrierContainer.classList.add('hidden');
+            
+            function renderNameList() {
+                nameList.innerHTML = '';
+                nameCarrierList.forEach((name, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'name-list-item';
+                    li.innerHTML = `<span>${name}</span><button class="remove-name-btn" data-index="${index}"><i class="fas fa-times"></i></button>`;
+                    nameList.appendChild(li);
+                });
+                nameCounter.textContent = `${nameCarrierList.length}/5 nombres`;
+                newNameInput.disabled = nameCarrierList.length >= 5;
+                addNameBtn.disabled = nameCarrierList.length >= 5 || newNameInput.value.trim() === '';
+                
+                document.querySelectorAll('.remove-name-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const index = parseInt(this.dataset.index);
+                        nameCarrierList.splice(index, 1);
+                        renderNameList();
+                        renderNameCarrier();
+                        localStorage.setItem('nameCarrierList', JSON.stringify(nameCarrierList));
+                        showNotification('Nombre eliminado', true);
+                    });
+                });
+                localStorage.setItem('nameCarrierList', JSON.stringify(nameCarrierList));
+            }
+            
+            function renderNameCarrier() {
+                if (nameCarrierList.length === 0) {
+                    nameCarrierTrack.innerHTML = '';
+                    return;
+                }
+                let namesHtml = '';
+                for (let i = 0; i < 2; i++) {
+                    nameCarrierList.forEach(name => {
+                        namesHtml += `<div class="name-carrier-item"><i class="fas fa-user-circle"></i><span>${name}</span></div>`;
+                    });
+                }
+                nameCarrierTrack.innerHTML = namesHtml;
+            }
+            
+            function addName() {
+                const newName = newNameInput.value.trim();
+                if (newName && nameCarrierList.length < 5) {
+                    nameCarrierList.push(newName);
+                    renderNameList();
+                    renderNameCarrier();
+                    newNameInput.value = '';
+                    addNameBtn.disabled = true;
+                    localStorage.setItem('nameCarrierList', JSON.stringify(nameCarrierList));
+                    showNotification(`Nombre "${newName}" agregado`, true);
+                }
+            }
+            
+            newNameInput.addEventListener('input', function() {
+                addNameBtn.disabled = this.value.trim() === '' || nameCarrierList.length >= 5;
+            });
+            
+            newNameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !addNameBtn.disabled) addName();
+            });
+            
+            addNameBtn.addEventListener('click', addName);
+            
+            toggleNameCarrier.addEventListener('change', function() {
+                if (this.checked) {
+                    nameCarrierContainer.classList.remove('hidden');
+                    localStorage.setItem('nameCarrierEnabled', 'true');
+                } else {
+                    nameCarrierContainer.classList.add('hidden');
+                    localStorage.setItem('nameCarrierEnabled', 'false');
+                }
+            });
+            
+            renderNameList();
+            renderNameCarrier();
+            
+            // ====== SERVICIOS ======
+            const serviceTitle = document.getElementById('serviceTitle');
+            const serviceList = document.getElementById('serviceList');
+            const serviceImage = document.getElementById('serviceImage');
+            const serviceImageUpload = document.getElementById('customServiceImageUpload');
+            const serviceImageFile = document.getElementById('serviceImageFile');
+            const serviceImagePreview = document.getElementById('serviceImagePreview');
+            const serviceNoImageText = document.getElementById('serviceNoImageText');
+            const serviceImageFileName = document.getElementById('serviceImageFileName');
+            const removeServiceImageBtn = document.getElementById('removeServiceImageBtn');
+            const newServiceSidebarInput = document.getElementById('newServiceSidebarInput');
+            const addServiceSidebarBtn = document.getElementById('addServiceSidebarBtn');
+            const servicePreviewItems = document.getElementById('servicePreviewItems');
+            
+            let servicesList = JSON.parse(localStorage.getItem('servicesList')) || [
+                "Asesoramiento personalizado para tu negocio",
+                "Estrategias probadas de crecimiento",
+                "Identificación de oportunidades de mercado",
+                "Implementación de soluciones efectivas"
+            ];
+            
+            const savedServiceImage = localStorage.getItem('serviceImage');
+            if (savedServiceImage) {
+                serviceImage.src = savedServiceImage;
+                serviceImagePreview.src = savedServiceImage;
+                serviceImagePreview.style.display = 'block';
+                serviceNoImageText.style.display = 'none';
+            }
+            
+            if (serviceImageUpload) {
+                serviceImageUpload.addEventListener('click', () => serviceImageFile.click());
+            }
+            
+            if (serviceImageFile) {
+                serviceImageFile.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    if (!file.type.startsWith('image/')) {
+                        alert('Por favor selecciona una imagen válida');
+                        return;
+                    }
+                    
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('La imagen no debe superar los 5MB');
+                        return;
+                    }
+                    
+                    serviceImageFileName.textContent = file.name;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        localStorage.setItem('serviceImage', imageData);
+                        serviceImage.src = imageData;
+                        serviceImagePreview.src = imageData;
+                        serviceImagePreview.style.display = 'block';
+                        serviceNoImageText.style.display = 'none';
+                        showNotification('Imagen de servicios actualizada', true);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            if (removeServiceImageBtn) {
+                removeServiceImageBtn.addEventListener('click', function() {
+                    localStorage.removeItem('serviceImage');
+                    serviceImage.src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800';
+                    serviceImagePreview.src = '';
+                    serviceImagePreview.style.display = 'none';
+                    serviceNoImageText.style.display = 'block';
+                    serviceImageFileName.textContent = '';
+                    serviceImageFile.value = '';
+                    showNotification('Imagen de servicios eliminada', true);
+                });
+            }
+            
+            const savedServiceTitle = localStorage.getItem('serviceTitle');
+            if (savedServiceTitle) serviceTitle.textContent = savedServiceTitle;
+            
+            serviceTitle.addEventListener('blur', function() {
+                localStorage.setItem('serviceTitle', this.textContent);
+                showNotification('Título actualizado', true);
+            });
+            
+            function renderServiceList() {
+                serviceList.innerHTML = '';
+                servicesList.forEach((service, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'service-list-item';
+                    li.innerHTML = `
+                        <span contenteditable="true" data-index="${index}">${service}</span>
+                        <button class="service-list-remove" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    const span = li.querySelector('span');
+                    span.addEventListener('blur', function() {
+                        const idx = parseInt(this.dataset.index);
+                        servicesList[idx] = this.textContent;
+                        localStorage.setItem('servicesList', JSON.stringify(servicesList));
+                        renderServicePreview();
+                        showNotification('Servicio actualizado', true);
+                    });
+                    
+                    span.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.blur();
+                        }
+                    });
+                    
+                    const removeBtn = li.querySelector('.service-list-remove');
+                    removeBtn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        servicesList.splice(idx, 1);
+                        localStorage.setItem('servicesList', JSON.stringify(servicesList));
+                        renderServiceList();
+                        renderServicePreview();
+                        showNotification('Servicio eliminado', true);
+                    });
+                    
+                    serviceList.appendChild(li);
+                });
+            }
+            
+            function renderServicePreview() {
+                if (!servicePreviewItems) return;
+                servicePreviewItems.innerHTML = '';
+                servicesList.forEach((service, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'service-preview-item';
+                    div.innerHTML = `<i class="fas fa-check-circle"></i> <span>${service}</span>`;
+                    servicePreviewItems.appendChild(div);
+                });
+            }
+            
+            function addServiceFromSidebar() {
+                const newService = newServiceSidebarInput.value.trim();
+                if (newService) {
+                    servicesList.push(newService);
+                    localStorage.setItem('servicesList', JSON.stringify(servicesList));
+                    renderServiceList();
+                    renderServicePreview();
+                    newServiceSidebarInput.value = '';
+                    addServiceSidebarBtn.disabled = true;
+                    showNotification(`Servicio "${newService}" agregado`, true);
+                }
+            }
+            
+            if (newServiceSidebarInput) {
+                newServiceSidebarInput.addEventListener('input', function() {
+                    addServiceSidebarBtn.disabled = this.value.trim() === '';
+                });
+                
+                newServiceSidebarInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !addServiceSidebarBtn.disabled) {
+                        addServiceFromSidebar();
+                    }
+                });
+            }
+            
+            if (addServiceSidebarBtn) {
+                addServiceSidebarBtn.addEventListener('click', addServiceFromSidebar);
+            }
+            
+            renderServiceList();
+            renderServicePreview();
+            
+            // ====== OPINIONES ======
+            let testimonials = JSON.parse(localStorage.getItem('testimonials')) || [
+                { 
+                    id: 1, 
+                    name: "Ana Martínez", 
+                    role: "Cliente", 
+                    rating: 5, 
+                    text: "Excelente atención y calidad. Sin duda volveré a elegirlos.",
+                    avatar: "https://images.unsplash.com/photo-1494790108777-466d5e8e3e3b?w=150&h=150&fit=crop&crop=face"
+                },
+                { 
+                    id: 2, 
+                    name: "Carlos Rodríguez", 
+                    role: "Cliente frecuente", 
+                    rating: 5, 
+                    text: "Recomiendo totalmente sus servicios. Profesionales y confiables.",
+                    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face"
+                },
+                { 
+                    id: 3, 
+                    name: "Laura González", 
+                    role: "Cliente", 
+                    rating: 4, 
+                    text: "Muy buena experiencia, cumplen con lo que prometen.",
+                    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+                }
+            ];
+            
+            const testimonialEditModal = document.getElementById('testimonialEditModal');
+            const closeTestimonialEdit = document.getElementById('closeTestimonialEdit');
+            const testimonialEditForm = document.getElementById('testimonialEditForm');
+            const editTestimonialId = document.getElementById('editTestimonialId');
+            const editTestimonialName = document.getElementById('editTestimonialName');
+            const editTestimonialRole = document.getElementById('editTestimonialRole');
+            const editTestimonialText = document.getElementById('editTestimonialText');
+            const editRatingStars = document.querySelectorAll('#editRatingSelector i');
+            const editTestimonialRating = document.getElementById('editTestimonialRating');
+            let currentEditRating = 5;
+            
+            const toggleTestimonials = document.getElementById('toggleTestimonials');
+            const toggleTestimonialsText = document.getElementById('toggleTestimonialsText');
+            const testimonialsSection = document.getElementById('testimonials');
+            
+            const savedTestimonialsVisible = localStorage.getItem('testimonialsVisible');
+            if (savedTestimonialsVisible === 'false') {
+                toggleTestimonials.checked = false;
+                testimonialsSection.classList.add('hidden');
+                toggleTestimonialsText.textContent = 'Mostrar opiniones (oculto)';
+            } else {
+                toggleTestimonials.checked = true;
+                testimonialsSection.classList.remove('hidden');
+                toggleTestimonialsText.textContent = 'Mostrar opiniones';
+            }
+            
+            toggleTestimonials.addEventListener('change', function() {
+                if (this.checked) {
+                    testimonialsSection.classList.remove('hidden');
+                    localStorage.setItem('testimonialsVisible', 'true');
+                    toggleTestimonialsText.textContent = 'Mostrar opiniones';
+                } else {
+                    testimonialsSection.classList.add('hidden');
+                    localStorage.setItem('testimonialsVisible', 'false');
+                    toggleTestimonialsText.textContent = 'Mostrar opiniones (oculto)';
+                }
+            });
+            
+            function renderTestimonials() {
+                const testimonialsGrid = document.getElementById('testimonialsGrid');
+                if (!testimonialsGrid) return;
+                testimonialsGrid.innerHTML = '';
+                
+                testimonials.forEach(testimonial => {
+                    const card = document.createElement('div');
+                    card.className = 'testimonial-card';
+                    card.dataset.id = testimonial.id;
+                    
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        starsHtml += `<i class="fas fa-star" style="color: ${i <= testimonial.rating ? '#ffc107' : 'rgba(255,255,255,0.3)'};"></i>`;
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="testimonial-rating">${starsHtml}</div>
+                        <p class="testimonial-text">"${testimonial.text}"</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="${testimonial.avatar}" alt="${testimonial.name}">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>${testimonial.name}</h4>
+                                <p>${testimonial.role}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    card.addEventListener('click', function() {
+                        openEditTestimonial(testimonial.id);
+                    });
+                    
+                    testimonialsGrid.appendChild(card);
+                });
+            }
+            
+            function openEditTestimonial(id) {
+                const testimonial = testimonials.find(t => t.id === id);
+                if (!testimonial) return;
+                
+                editTestimonialId.value = testimonial.id;
+                editTestimonialName.value = testimonial.name;
+                editTestimonialRole.value = testimonial.role;
+                editTestimonialText.value = testimonial.text;
+                currentEditRating = testimonial.rating;
+                editTestimonialRating.value = testimonial.rating;
+                
+                editRatingStars.forEach((star, index) => {
+                    star.style.color = index < testimonial.rating ? '#ffc107' : '#e9ecef';
+                });
+                
+                testimonialEditModal.classList.add('active');
+            }
+            
+            editRatingStars.forEach(star => {
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    editRatingStars.forEach((s, index) => {
+                        s.style.color = index < rating ? '#ffc107' : '#e9ecef';
+                    });
+                });
+                
+                star.addEventListener('mouseleave', function() {
+                    editRatingStars.forEach((s, index) => {
+                        s.style.color = index < currentEditRating ? '#ffc107' : '#e9ecef';
+                    });
+                });
+                
+                star.addEventListener('click', function() {
+                    currentEditRating = parseInt(this.dataset.rating);
+                    editTestimonialRating.value = currentEditRating;
+                    editRatingStars.forEach((s, index) => {
+                        s.style.color = index < currentEditRating ? '#ffc107' : '#e9ecef';
+                    });
+                });
+            });
+            
+            closeTestimonialEdit.addEventListener('click', () => {
+                testimonialEditModal.classList.remove('active');
+            });
+            
+            testimonialEditModal.addEventListener('click', (e) => {
+                if (e.target === testimonialEditModal) testimonialEditModal.classList.remove('active');
+            });
+            
+            testimonialEditForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const id = parseInt(editTestimonialId.value);
+                const index = testimonials.findIndex(t => t.id === id);
+                if (index !== -1) {
+                    testimonials[index].name = editTestimonialName.value;
+                    testimonials[index].role = editTestimonialRole.value;
+                    testimonials[index].rating = currentEditRating;
+                    testimonials[index].text = editTestimonialText.value;
+                    localStorage.setItem('testimonials', JSON.stringify(testimonials));
+                    renderTestimonials();
+                    testimonialEditModal.classList.remove('active');
+                    showNotification('Opinión actualizada', true);
+                }
+            });
+            
+            // ====== RESETEAR ======
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que deseas resetear todas las personalizaciones?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            });
+            
+            document.getElementById('saveBottomBtn').addEventListener('click', () => {
+                localStorage.setItem('testimonials', JSON.stringify(testimonials));
+                showNotification('¡Tu web ha sido creada con éxito!', true);
+            });
+            
+            renderTestimonials();
+        });
+    </script>
+</body>
+</html>

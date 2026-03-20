@@ -1,0 +1,4169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFETIMES · Constructor Visual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;700;900&family=Oswald:wght@300;400;700&family=Open+Sans:wght@400;600;800&family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@400;600;900&family=Raleway:wght@300;400;700;900&display=swap">
+    <style>
+        /* ====== VARIABLES ====== */
+        :root {
+            --primary: #0f52c9;
+            --primary-dark: #0a3a99;
+            --primary-light: rgba(15, 82, 201, 0.12);
+            --secondary: #ff9e00;
+            --secondary-light: rgba(255, 158, 0, 0.1);
+            --light: #f8f9fa;
+            --dark: #212529;
+            --dark-light: #2d3748;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --gray-raton: #f5f5f5;
+            --success: #2a9d8f;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #128C7E;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, #3d7ef2 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9e00 0%, #ffd166 100%);
+            
+            /* Variables para el menú lateral - AHORA EN BLANCO */
+            --bg-sidebar: #ffffff;
+            --sidebar-width: 380px;
+            --sidebar-mobile-peek: 80px;
+            --text-light: #333333;
+            --text-muted-sidebar: #666666;
+            --border-sidebar: #e0e0e0;
+            
+            /* Variable para tipografía del título */
+            --hero-font: 'Inter', sans-serif;
+
+            /* Color de fondo para la sección Sobre Nosotros */
+            --about-bg-color: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* ====== NAVBAR PRINCIPAL ====== */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,.98);
+            backdrop-filter: saturate(180%) blur(10px);
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .menu-toggle {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .menu-toggle:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .logo {
+            font-weight: 900;
+            letter-spacing: .02em;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-cta {
+            display: flex;
+            gap: .8rem;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            gap: .6rem;
+            align-items: center;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            padding: .85rem 1.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(12, 107, 160, 0.2);
+        }
+        
+        .btn.fill {
+            background: var(--primary);
+            color: #fff;
+        }
+        
+        .btn.fill:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn.portal-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        
+        .btn.portal-btn i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn.portal-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-3px);
+            box-shadow: 0 5px 15px rgba(12, 107, 160, 0.2);
+        }
+        
+        .btn.portal-btn:hover i {
+            transform: translateX(-3px);
+        }
+        
+        .btn.ghost {
+            background: transparent;
+            color: #000000;
+            border: 2px solid #000000;
+        }
+        
+        .btn.ghost:hover {
+            background: #000000;
+            color: #fff;
+            border-color: #000000;
+        }
+        
+        /* ====== SIDEBAR - MENÚ LATERAL EN BLANCO (SIN CAJAS DE FONDO) ====== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .config-sidebar {
+            position: fixed;
+            top: 0;
+            left: -380px;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--bg-sidebar);
+            z-index: 2001;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            color: var(--text-light);
+            padding: 20px 0;
+        }
+        
+        .config-sidebar.open {
+            left: 0;
+        }
+        
+        .config-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .config-sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .config-sidebar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        
+        .sidebar-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #333;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        
+        .sidebar-close:hover {
+            background: #e0e0e0;
+            transform: rotate(90deg);
+        }
+        
+        /* ====== HEADER DEL SIDEBAR ====== */
+        .config-sidebar-header {
+            padding: 30px 24px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 1px solid var(--border-sidebar);
+        }
+        
+        .sidebar-header-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+        }
+        
+        .config-sidebar-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .config-sidebar-header p {
+            color: var(--text-muted-sidebar);
+            font-size: 0.9rem;
+        }
+        
+        .user-info-sidebar {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-sidebar);
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .user-details h4 {
+            color: var(--dark);
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+        
+        .user-details span {
+            color: var(--text-muted-sidebar);
+            font-size: 0.8rem;
+        }
+        
+        .nav-menu {
+            padding: 16px;
+        }
+        
+        .config-category {
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--border-sidebar);
+        }
+        
+        .config-category:last-child {
+            border-bottom: none;
+        }
+        
+        .config-category-header {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.2s;
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+        
+        .config-category-header:hover {
+            background: #f5f5f5;
+            color: var(--primary);
+        }
+        
+        .config-category-header:hover i {
+            color: var(--primary);
+        }
+        
+        .config-category-header.active {
+            background: #f5f5f5;
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .config-category-header i:first-child {
+            color: var(--text-muted-sidebar);
+            margin-right: 0;
+            width: 22px;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+        
+        .config-category-header.active i:first-child {
+            color: var(--primary);
+        }
+        
+        .config-category-header .category-title {
+            flex: 1;
+            text-align: left;
+            font-size: 1rem;
+            color: inherit;
+        }
+        
+        .config-category-header .toggle-icon {
+            color: var(--text-muted-sidebar);
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .config-category-header.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+        
+        .config-category-content {
+            padding: 20px 24px;
+            display: none;
+            background: #ffffff;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .config-category-content.active {
+            display: block;
+        }
+        
+        .config-form-group {
+            margin-bottom: 24px;
+        }
+        
+        .config-form-group label {
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .config-form-group label i {
+            color: var(--primary);
+            margin-right: 8px;
+            font-size: 0.95rem;
+        }
+        
+        /* Estilos para inputs - ahora en blanco con bordes grises */
+        .config-form-group input[type="text"],
+        .config-form-group input[type="email"],
+        .config-form-group input[type="number"],
+        .config-form-group textarea,
+        .config-form-group select,
+        .hero-text-input,
+        .font-search-input,
+        .name-input-field,
+        .about-image-description-input,
+        #whatsappNumberInput,
+        #sidebarAddressInput {
+            width: 100%;
+            padding: 12px 16px;
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .config-form-group input[type="text"]:hover,
+        .config-form-group textarea:hover,
+        .hero-text-input:hover,
+        .font-search-input:hover,
+        .name-input-field:hover,
+        .about-image-description-input:hover,
+        #whatsappNumberInput:hover,
+        #sidebarAddressInput:hover {
+            border-color: #999;
+        }
+        
+        .config-form-group input[type="text"]:focus,
+        .config-form-group textarea:focus,
+        .hero-text-input:focus,
+        .font-search-input:focus,
+        .name-input-field:focus,
+        .about-image-description-input:focus,
+        #whatsappNumberInput:focus,
+        #sidebarAddressInput:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .config-form-group input[type="text"]::placeholder,
+        .config-form-group textarea::placeholder,
+        .hero-text-input::placeholder,
+        .font-search-input::placeholder,
+        .name-input-field::placeholder,
+        .about-image-description-input::placeholder,
+        #whatsappNumberInput::placeholder,
+        #sidebarAddressInput::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+        
+        .config-form-group select,
+        .font-selector {
+            width: 100%;
+            padding: 12px 16px;
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 0.95rem;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 48px;
+        }
+        
+        .config-form-group select:hover,
+        .font-selector:hover {
+            border-color: #999;
+        }
+        
+        .config-form-group select:focus,
+        .font-selector:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .config-form-group select option,
+        .font-selector option {
+            background: white;
+            color: var(--dark);
+            padding: 12px;
+        }
+        
+        .config-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+        
+        .custom-image-upload {
+            background: #f9f9f9;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+        
+        .custom-image-upload:hover {
+            border-color: var(--primary);
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+        
+        .custom-image-upload i {
+            font-size: 2.5rem;
+            color: var(--primary) !important;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+        
+        .custom-image-upload p {
+            color: var(--dark);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .custom-image-upload .file-name {
+            background: #f0f0f0;
+            padding: 8px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            color: #333;
+        }
+        
+        .image-preview-container {
+            position: relative;
+            margin-top: 16px;
+            display: none;
+        }
+        
+        .image-preview-container.show {
+            display: block;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #ddd;
+            color: var(--danger);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .remove-image:hover {
+            transform: scale(1.1);
+            background: var(--danger);
+            color: white;
+        }
+        
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .toggle-switch input[type="checkbox"] {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: #ccc;
+            border-radius: 30px;
+            border: 1px solid #bbb;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch input[type="checkbox"]:checked {
+            background: var(--primary);
+        }
+        
+        .toggle-switch input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 1px;
+            left: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch input[type="checkbox"]:checked::before {
+            left: 25px;
+            background: white;
+        }
+        
+        .toggle-switch span {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+        
+        .name-input-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-add-name,
+        .service-input-group button,
+        #saveScheduleBtn,
+        #saveWhatsappBtn,
+        #sidebarUpdateMapBtn,
+        .about-gallery-save-btn {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-add-name:hover:not(:disabled),
+        .service-input-group button:hover:not(:disabled),
+        #saveScheduleBtn:hover,
+        #saveWhatsappBtn:hover,
+        #sidebarUpdateMapBtn:hover,
+        .about-gallery-save-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 82, 201, 0.2);
+        }
+        
+        .btn-add-name:disabled,
+        .service-input-group button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .name-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 0;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        
+        .name-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .name-list-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .name-list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .name-list-item span {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .remove-name-btn {
+            background: none;
+            border: none;
+            color: #dc3545 !important;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+        }
+        
+        .remove-name-btn:hover {
+            color: #b02a37 !important;
+            transform: scale(1.1);
+        }
+        
+        .name-counter {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 12px;
+            padding: 8px 0;
+        }
+        
+        .font-search-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        
+        .font-search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            z-index: 1;
+        }
+        
+        .font-search-input {
+            padding-left: 44px !important;
+        }
+        
+        .font-search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 4px;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .font-search-results.show {
+            display: block;
+        }
+        
+        .font-result-item {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .font-result-item:hover {
+            background: #f5f5f5;
+        }
+        
+        .font-result-item .font-name {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+        
+        .font-result-item .font-preview-small {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .color-palette-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .color-option {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+        
+        .color-option.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(15,82,201,0.3);
+        }
+        
+        .custom-color-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            color: var(--dark);
+            margin-top: 8px;
+            height: 50px;
+            cursor: pointer;
+        }
+        
+        .reset-container {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-sidebar);
+            margin-top: 20px;
+        }
+        
+        .btn-reset {
+            background: #f0f0f0;
+            color: var(--dark);
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+        
+        .btn-reset:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+            border-color: #ccc;
+        }
+        
+        .btn-reset i {
+            color: var(--dark);
+        }
+        
+        /* Eliminados los fondos de las cajas de previsualización */
+        .service-preview-list,
+        .schedule-badge-preview,
+        .whatsapp-preview,
+        .current-address,
+        .service-image-preview,
+        .schedule-control-card,
+        .whatsapp-control-card,
+        .maps-control-card,
+        .about-gallery-control {
+            background: transparent;
+            padding: 0;
+            margin-top: 8px;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .service-preview-list p,
+        .schedule-badge-preview p,
+        .whatsapp-preview p,
+        .current-address p {
+            color: var(--dark);
+        }
+        
+        .service-preview-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 0.9rem;
+            color: var(--dark);
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .service-preview-item:last-child {
+            border-bottom: none;
+        }
+        
+        .service-preview-item i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        
+        .service-image-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+        }
+        
+        .service-image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .service-image-preview .no-image {
+            color: #666;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .schedule-input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        
+        .schedule-input-row label {
+            min-width: 120px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        .schedule-input-row input {
+            flex: 1;
+            padding: 10px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .schedule-input-row input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .whatsapp-button-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--whatsapp-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+            margin: 16px 0 8px;
+        }
+        
+        .whatsapp-button-preview:hover {
+            background: var(--whatsapp-dark);
+            transform: translateY(-2px);
+        }
+        
+        .whatsapp-number-display {
+            font-weight: 600;
+            color: var(--primary);
+            padding: 4px 0;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        
+        .about-gallery-item {
+            margin-bottom: 24px;
+        }
+        
+        .about-gallery-item h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .about-gallery-item h5 i {
+            color: var(--primary);
+        }
+        
+        /* ====== BARRA TRANSPORTADORA DE NOMBRES - ESTILO ORIGINAL (FONDO NEGRO) ====== */
+        .name-carrier-section {
+            width: 100%;
+            background-color: #000000;
+            border-top: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            padding: 0.75rem 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .name-carrier-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .name-carrier-track {
+            display: inline-flex;
+            animation: scrollNames 25s linear infinite;
+            gap: 3rem;
+        }
+
+        .name-carrier-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.25rem 0;
+            color: #ffffff;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            opacity: 0.9;
+            transition: opacity 0.2s ease;
+        }
+
+        .name-carrier-item:hover {
+            opacity: 1;
+        }
+
+        .name-carrier-item i {
+            color: #ffffff;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .name-carrier-item span {
+            color: #ffffff;
+        }
+
+        @keyframes scrollNames {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .name-carrier-container {
+            width: 100%;
+            display: block;
+        }
+
+        .name-carrier-container.hidden {
+            display: none;
+        }
+        
+        /* ====== ESTILOS PARA LAS SECCIONES CON IMAGEN DE FONDO ====== */
+        .services-section {
+            padding: 6rem 2rem;
+            background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+        
+        .services-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+        }
+        
+        .services-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: white;
+            width: 100%;
+        }
+        
+        .services-container .section-header {
+            text-align: left;
+            margin-bottom: 4rem;
+        }
+        
+        .services-container .section-header h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .services-container .section-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0;
+        }
+        
+        /* Grid de servicios - AHORA CON DOS COLUMNAS (texto + imagen) */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        
+        /* Columna izquierda - Contenido de servicios (SIN CAJA) */
+        .services-content {
+            color: white;
+        }
+        
+        .services-content h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* Estilo para la lista de servicios - FORMATO LISTA CON VIÑETAS */
+        .service-list {
+            list-style: disc;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .service-list-item {
+            display: list-item;
+            padding: 0.6rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .service-list-item span[contenteditable="true"] {
+            display: inline-block;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            transition: background 0.2s, box-shadow 0.2s;
+            outline: none;
+            color: white;
+        }
+        
+        .service-list-item span[contenteditable="true"]:hover {
+            background: rgba(15, 82, 201, 0.3);
+        }
+        
+        .service-list-item span[contenteditable="true"]:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        
+        .service-list-remove {
+            display: inline-block;
+            margin-left: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+            opacity: 0;
+        }
+        
+        .service-list-item:hover .service-list-remove {
+            opacity: 1;
+        }
+        
+        .service-list-remove:hover {
+            color: var(--danger);
+            background: rgba(220, 53, 69, 0.2);
+        }
+        
+        /* Columna derecha - Imagen de servicios */
+        .services-image-column {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            height: 500px;
+            background-color: #f0f0f0;
+        }
+        
+        .services-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .services-image-column:hover .services-image {
+            transform: scale(1.05);
+        }
+        
+        .services-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+        
+        .services-image-overlay h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .services-image-overlay p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .service-card-large .editable-hint {
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-top: 1.5rem;
+            border-top: 1px dashed rgba(15, 82, 201, 0.5);
+            padding-top: 1rem;
+            text-align: center;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .service-card-large:hover .editable-hint {
+            opacity: 1;
+        }
+        
+        /* ====== NUEVA SECCIÓN SOBRE NOSOTROS - SIN IMAGEN DE FONDO ====== */
+        .about-section {
+            padding: 6rem 2rem;
+            background-color: var(--about-bg-color);
+            position: relative;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .about-section::before {
+            display: none;
+        }
+        
+        .about-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: var(--dark);
+            width: 100%;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .about-header h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            color: var(--dark);
+        }
+        
+        .about-header h2 i {
+            color: var(--primary);
+            margin-right: 1rem;
+            font-size: 3rem;
+        }
+        
+        .about-header p {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--dark);
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .about-info-empty {
+            display: none;
+        }
+        
+        .about-images-full {
+            grid-column: span 2;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .about-image-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .about-image-row.reverse {
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .about-image-row.reverse .about-image-description {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .about-image-row.reverse .about-image-item {
+            grid-column: 2;
+            grid-row: 1;
+        }
+        
+        .about-image-description {
+            color: var(--dark);
+            padding: 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .about-image-description h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            letter-spacing: -0.01em;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .about-image-description h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            opacity: 0.8;
+            border-radius: 3px;
+        }
+        
+        .about-image-row.reverse .about-image-description h4::after {
+            left: 0;
+            right: auto;
+        }
+        
+        .about-image-description p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--dark);
+            font-weight: 400;
+            margin-top: 0.5rem;
+            text-align: justify;
+            hyphens: auto;
+            letter-spacing: 0.3px;
+        }
+        
+        .about-image-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            cursor: default;
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+        }
+        
+        .about-image-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-image-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(15, 82, 201, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .about-image-item:hover::after {
+            opacity: 1;
+        }
+        
+        .about-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        
+        .about-image-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* ====== SECCIÓN DE HORARIO + GOOGLE MAPS ====== */
+        .schedule-section {
+            padding: 4rem 2rem;
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .schedule-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+        }
+        
+        .schedule-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        .schedule-minimal-card {
+            background: white;
+            border-radius: 32px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .schedule-minimal-card h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #111;
+            margin-bottom: 2rem;
+        }
+        
+        .schedule-minimal-card h2 i {
+            color: var(--primary);
+            margin-right: 0.75rem;
+            font-size: 1.8rem;
+        }
+        
+        .schedule-minimal-list {
+            list-style: none;
+        }
+        
+        .schedule-minimal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .schedule-minimal-item:last-child {
+            border-bottom: none;
+        }
+        
+        .minimal-day {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #374151;
+            font-weight: 450;
+        }
+        
+        .minimal-day i {
+            width: 20px;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+        
+        .minimal-time {
+            font-weight: 500;
+            color: var(--primary);
+            background: #eff6ff;
+            padding: 0.35rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+        
+        .minimal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.25rem;
+            background: #f9fafb;
+            border-radius: 50px;
+            color: #4b5563;
+            font-size: 0.85rem;
+        }
+        
+        .minimal-badge i {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .map-minimal-card {
+            background: #f8fafc;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            height: 100%;
+            min-height: 400px;
+        }
+        
+        .map-minimal-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+        }
+        
+        .map-minimal-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            filter: grayscale(0.2) contrast(1.05);
+        }
+        
+        /* ====== SECCIÓN DE OPINIONES ====== */
+        .testimonials-section {
+            padding: 6rem 2rem;
+            background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+        }
+        
+        .testimonials-section.hidden {
+            display: none;
+        }
+        
+        .testimonials-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+        
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .testimonials-header h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .testimonials-header h2 i {
+            color: #ffc107;
+            margin-right: 0.5rem;
+            font-size: 3rem;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+            color: white;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .testimonial-card::after {
+            content: '✎';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            color: rgba(255,255,255,0.3);
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0;
+            transition: opacity 0.2s, color 0.2s;
+        }
+        
+        .testimonial-card:hover::after {
+            opacity: 1;
+            color: white;
+        }
+        
+        .testimonial-rating {
+            color: #ffc107;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 2px;
+        }
+        
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 1.2rem;
+        }
+        
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+        
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .testimonial-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.2rem;
+        }
+        
+        .testimonial-info p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+        }
+        
+        /* ====== BOTÓN DE WHATSAPP EN HERO ====== */
+        .hero-whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background-color: var(--whatsapp-green);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            animation: pulse-hero-whatsapp 2.5s infinite;
+        }
+        
+        .hero-whatsapp-btn:hover {
+            background-color: var(--whatsapp-dark);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.8);
+            animation: none;
+        }
+        
+        .hero-whatsapp-btn i {
+            font-size: 1.8rem;
+        }
+        
+        @keyframes pulse-hero-whatsapp {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7), 0 15px 30px rgba(0, 0, 0, 0.3);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0), 0 15px 30px rgba(0, 0, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 15px 30px rgba(0, 0, 0, 0.3);
+            }
+        }
+        
+        /* Modal para editar opinión */
+        .testimonial-edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 8001;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .testimonial-edit-modal.active {
+            display: flex;
+        }
+        
+        .testimonial-edit-content {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+            animation: modalZoomIn 0.3s ease;
+            position: relative;
+        }
+        
+        .testimonial-edit-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .testimonial-edit-close:hover {
+            color: var(--danger);
+        }
+        
+        .testimonial-edit-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .testimonial-edit-content h3 i {
+            color: var(--primary);
+        }
+        
+        .testimonial-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .testimonial-form-group input,
+        .testimonial-form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            color: var(--dark);
+        }
+        
+        .testimonial-form-group input:focus,
+        .testimonial-form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        
+        .testimonial-form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .rating-selector {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            color: #ffc107;
+            cursor: pointer;
+        }
+        
+        .rating-selector i:hover {
+            transform: scale(1.2);
+        }
+        
+        .btn-update-testimonial {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn-update-testimonial:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* ====== FOOTER ====== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .lifetimes-bold {
+            font-weight: 900;
+        }
+        
+        /* Botón guardar flotante */
+        .btn-save-bottom {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(15, 82, 201, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            margin-top: 2rem;
+        }
+        
+        .btn-save-bottom:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(15, 82, 201, 0.4);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .save-bottom-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        /* ====== HERO SECTION ====== */
+        .hero-section {
+            position: relative;
+            height: 700px;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.5);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            font-family: var(--hero-font);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-image-row {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-image-row.reverse {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-image-row.reverse .about-image-description {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            
+            .about-image-row.reverse .about-image-item {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            
+            .about-image-item {
+                max-width: 600px;
+                margin: 0 auto !important;
+            }
+            
+            .about-image-description {
+                text-align: center;
+            }
+            
+            .about-image-description h4::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .schedule-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .services-image-column {
+                height: 400px;
+            }
+            
+            .about-mission-vision {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .config-sidebar {
+                width: 85%;
+                max-width: 320px;
+            }
+            
+            .sidebar-toggle-mobile {
+                display: flex;
+            }
+            
+            .hero-section {
+                height: 500px;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .services-container .section-header h2 {
+                font-size: 3rem;
+            }
+            
+            .services-content h3 {
+                font-size: 2rem;
+            }
+            
+            .about-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .about-image-row {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .about-image-item {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 4/3;
+            }
+            
+            .about-image-description h4 {
+                font-size: 1.8rem;
+            }
+            
+            .about-image-description p {
+                font-size: 1.1rem;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .btn-save-bottom {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .schedule-minimal-card {
+                padding: 1.5rem;
+            }
+            
+            .hero-whatsapp-btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            .hero-whatsapp-btn i {
+                font-size: 1.3rem;
+            }
+            
+            .schedule-input-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .schedule-input-row label {
+                min-width: auto;
+                margin-bottom: 0.2rem;
+            }
+            
+            .about-values-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .services-container .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .services-content h3 {
+                font-size: 1.8rem;
+            }
+            
+            .about-header h2 {
+                font-size: 2rem;
+            }
+            
+            .color-palette-selector {
+                justify-content: center;
+            }
+            
+            .hero-whatsapp-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .schedule-minimal-card h2 {
+                font-size: 1.6rem;
+            }
+            
+            .minimal-day {
+                font-size: 0.9rem;
+            }
+            
+            .minimal-time {
+                font-size: 0.8rem;
+                padding: 0.25rem 0.75rem;
+            }
+            
+            .testimonials-header h2 {
+                font-size: 2rem;
+            }
+            
+            .about-info {
+                padding: 0;
+            }
+        }
+        
+        .sidebar-toggle-mobile {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #000000;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: none;
+            box-shadow: var(--shadow-hover);
+            cursor: pointer;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar-toggle-mobile:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+        }
+        
+        .main-content {
+            min-height: 100vh;
+            background: #ffffff;
+            transition: filter 0.3s ease;
+        }
+        
+        .main-content.blur {
+            filter: blur(2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- ====== NAVBAR PRINCIPAL ====== -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de configuración">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a class="logo" href="#" aria-label="Inicio" title="Inicio">
+                    LIFETIMES
+                </a>
+            </div>
+            <div class="nav-cta"></div>
+        </div>
+    </header>
+
+    <!-- Overlay para el sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ====== SIDEBAR DE CONFIGURACIÓN EN BLANCO (SIN CAJAS) ====== -->
+    <aside class="config-sidebar" id="configSidebar">
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="config-sidebar-header">
+            <div class="sidebar-header-image">
+                <i class="fas fa-store"></i>
+            </div>
+            <h2>LIFE TIMES</h2>
+            <p>Configura tu página</p>
+        </div>
+        
+        <div class="user-info-sidebar">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="user-details">
+                <h4>Administrador</h4>
+                <span>Configuración visual</span>
+            </div>
+        </div>
+        
+        <div class="nav-menu">
+            <!-- ====== CATEGORÍA: PRESENTACIÓN ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryPresentation">
+                    <i class="fas fa-paint-brush"></i>
+                    <span class="category-title">Presentación</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="presentationContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-heading"></i> Personalizar presentación</label>
+                        
+                        <div class="custom-image-upload" id="customHeroUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para cambiar la imagen de fondo</p>
+                            <p class="hint">Formatos: JPG, PNG, GIF (max 5MB)</p>
+                            <div class="file-name" id="heroFileName"></div>
+                        </div>
+                        <input type="file" id="heroImageFile" class="image-file-input" accept="image/*">
+                        
+                        <div class="image-preview-container" id="heroImagePreviewContainer">
+                            <div class="image-preview">
+                                <img src="" alt="Vista previa" id="heroImagePreview">
+                            </div>
+                            <button class="remove-image" id="removeHeroImage" title="Eliminar imagen personalizada">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="hero-text-input-label">
+                            <i class="fas fa-title"></i>
+                            <span>Título principal:</span>
+                        </div>
+                        <input type="text" class="hero-text-input" id="heroTitleInput" value="Bienvenido a LIFETIMES" placeholder="Escribe el título...">
+                        
+                        <div class="hero-text-input-label">
+                            <i class="fas fa-subscript"></i>
+                            <span>Subtítulo / Descripción:</span>
+                        </div>
+                        <textarea class="hero-text-input" id="heroSubtitleInput" rows="2" placeholder="Escribe la descripción...">Descubre productos exclusivos que marcarán la diferencia en tu día a día</textarea>
+
+                        <div class="hero-text-input-label">
+                            <i class="fas fa-user"></i>
+                            <span>Nombre del propietario/negocio:</span>
+                        </div>
+                        <input type="text" class="hero-text-input" id="navbarNameInput" value="Tu Negocio" placeholder="Ej: Mi Empresa">
+                    </div>
+
+                    <div class="config-form-group">
+                        <label><i class="fas fa-search"></i> Buscar tipografía</label>
+                        <div class="font-search-container">
+                            <i class="fas fa-search font-search-icon"></i>
+                            <input type="text" class="font-search-input" id="fontSearchInput" placeholder="Ej: Arial, Roboto, Montserrat...">
+                            <div class="font-search-results" id="fontSearchResults"></div>
+                        </div>
+                        
+                        <select class="font-selector" id="fontSelector">
+                            <option value="'Inter', sans-serif">Inter (Moderna)</option>
+                            <option value="'Montserrat', sans-serif">Montserrat (Elegante)</option>
+                            <option value="'Poppins', sans-serif">Poppins (Geométrica)</option>
+                            <option value="'Playfair Display', serif">Playfair Display (Clásica)</option>
+                            <option value="'Roboto', sans-serif">Roboto (Versátil)</option>
+                            <option value="'Oswald', sans-serif">Oswald (Impactante)</option>
+                            <option value="'Open Sans', sans-serif">Open Sans (Legible)</option>
+                            <option value="'Lato', sans-serif">Lato (Profesional)</option>
+                            <option value="'Source Sans Pro', sans-serif">Source Sans Pro (Moderna)</option>
+                            <option value="'Raleway', sans-serif">Raleway (Elegante)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- CONTROL PARA AGREGAR SERVICIOS -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-concierge-bell"></i> Gestionar servicios</label>
+                        
+                        <div class="service-add-control-sidebar">
+                            <h4 style="color: var(--dark); display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; font-size: 1rem;">
+                                <i class="fas fa-plus-circle" style="color: var(--primary);"></i>
+                                Agregar nuevo servicio
+                            </h4>
+                            
+                            <div class="service-input-group">
+                                <input type="text" id="newServiceSidebarInput" placeholder="Ej: Consultoría estratégica" class="hero-text-input">
+                                <button id="addServiceSidebarBtn" disabled>
+                                    <i class="fas fa-plus"></i>
+                                    Agregar a la lista
+                                </button>
+                            </div>
+                            
+                            <div class="service-preview-list" id="servicePreviewList">
+                                <p style="color: #666; font-size: 0.8rem; margin-bottom: 0.5rem;">Servicios actuales:</p>
+                                <div id="servicePreviewItems"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CONTROL PARA LA IMAGEN DE SERVICIOS -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-image"></i> Imagen de servicios (derecha)</label>
+                        
+                        <div class="service-image-control">
+                            <h4 style="color: var(--dark); display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; font-size: 1rem;">
+                                <i class="fas fa-camera" style="color: var(--primary);"></i>
+                                Cambiar imagen de la derecha
+                            </h4>
+                            
+                            <div class="service-input-group">
+                                <div class="custom-image-upload" id="customServiceImageUpload">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Haz clic para cambiar la imagen</p>
+                                    <p class="hint">Formatos: JPG, PNG, GIF (max 5MB)</p>
+                                    <div class="file-name" id="serviceImageFileName"></div>
+                                </div>
+                                <input type="file" id="serviceImageFile" class="image-file-input" accept="image/*">
+                                
+                                <div class="service-image-preview" id="serviceImagePreviewContainer">
+                                    <img src="" alt="Vista previa" id="serviceImagePreview" style="display: none;">
+                                    <div class="no-image" id="serviceNoImageText">No hay imagen seleccionada</div>
+                                </div>
+                                
+                                <button id="removeServiceImageBtn" style="background: var(--danger); margin-top: 0.5rem; color: white; border: none; border-radius: 8px; padding: 10px; font-weight: 600; cursor: pointer;">
+                                    <i class="fas fa-trash"></i>
+                                    Eliminar imagen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ====== CATEGORÍA: SECCIONES (IMÁGENES DE FONDO) ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categorySections">
+                    <i class="fas fa-images"></i>
+                    <span class="category-title">Fondos de secciones</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="sectionsContent">
+                    <!-- Selector de color principal -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-palette"></i> Color de acento</label>
+                        <div class="color-palette-selector">
+                            <input type="color" id="primaryColorPicker" value="#0f52c9" style="width: 60px; height: 60px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer;">
+                            <span style="color: var(--dark);">Selecciona un color</span>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN: SOBRE NOSOTROS - SELECCIONAR COLOR DE FONDO CON PALETA -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-building"></i> Fondo para SOBRE NOSOTROS</label>
+                        
+                        <div class="about-bg-color-control">
+                            <label style="color: var(--dark);">Elige un color de fondo:</label>
+                            
+                            <div class="color-palette" id="aboutColorPalette">
+                                <div class="color-option" style="background-color: #ffffff;" data-color="#ffffff" title="Blanco"></div>
+                                <div class="color-option" style="background-color: #f8f9fa;" data-color="#f8f9fa" title="Gris muy claro"></div>
+                                <div class="color-option" style="background-color: #e9ecef;" data-color="#e9ecef" title="Gris claro"></div>
+                                <div class="color-option" style="background-color: #dee2e6;" data-color="#dee2e6" title="Gris"></div>
+                                <div class="color-option" style="background-color: #ced4da;" data-color="#ced4da" title="Gris medio"></div>
+                                <div class="color-option" style="background-color: #adb5bd;" data-color="#adb5bd" title="Gris oscuro"></div>
+                                <div class="color-option" style="background-color: #6c757d;" data-color="#6c757d" title="Gris más oscuro"></div>
+                                <div class="color-option" style="background-color: #495057;" data-color="#495057" title="Casi negro"></div>
+                            </div>
+                            
+                            <label style="margin-top: 0.5rem; display: block; color: var(--dark);">O elige uno personalizado:</label>
+                            <input type="color" id="aboutBgColorPicker" value="#ffffff" class="custom-color-input">
+                            
+                            <small style="color: #666; display: block; margin-top: 0.5rem;">Haz clic en un color de la paleta o usa el selector</small>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN: HORARIO - SUBIR IMAGEN -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-clock"></i> Fondo para HORARIO</label>
+                        
+                        <div class="custom-image-upload" id="customScheduleUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para cambiar la imagen de fondo</p>
+                            <div class="file-name" id="scheduleFileName"></div>
+                        </div>
+                        <input type="file" id="scheduleImageFile" class="image-file-input" accept="image/*">
+                        
+                        <div class="image-preview-container" id="scheduleImagePreviewContainer">
+                            <div class="image-preview">
+                                <img src="" alt="Vista previa" id="scheduleImagePreview">
+                            </div>
+                            <button class="remove-image" id="removeScheduleImage" title="Eliminar imagen personalizada">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN: OPINIONES - SUBIR IMAGEN -->
+                    <div class="config-form-group">
+                        <label><i class="fas fa-star"></i> Fondo para OPINIONES</label>
+                        
+                        <div class="custom-image-upload" id="customTestimonialsUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para cambiar la imagen de fondo</p>
+                            <div class="file-name" id="testimonialsFileName"></div>
+                        </div>
+                        <input type="file" id="testimonialsImageFile" class="image-file-input" accept="image/*">
+                        
+                        <div class="image-preview-container" id="testimonialsImagePreviewContainer">
+                            <div class="image-preview">
+                                <img src="" alt="Vista previa" id="testimonialsImagePreview">
+                            </div>
+                            <button class="remove-image" id="removeTestimonialsImage" title="Eliminar imagen personalizada">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: HORARIO ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categorySchedule">
+                    <i class="fas fa-clock"></i>
+                    <span class="category-title">Horario de atención</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="scheduleContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-clock"></i> Configurar horarios</label>
+                        
+                        <div class="schedule-control-card">
+                            <h4 style="color: var(--dark); display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; font-size: 1rem;">
+                                <i class="fas fa-calendar-alt" style="color: var(--primary);"></i>
+                                Edita los horarios
+                            </h4>
+                            
+                            <div class="schedule-input-group">
+                                <div class="schedule-input-row">
+                                    <label>Lunes a Viernes:</label>
+                                    <input type="text" id="weekdaySchedule" value="9:00 – 19:00" placeholder="Ej: 9:00 – 19:00">
+                                </div>
+                                
+                                <div class="schedule-input-row">
+                                    <label>Sábados:</label>
+                                    <input type="text" id="saturdaySchedule" value="10:00 – 14:00" placeholder="Ej: 10:00 – 14:00">
+                                </div>
+                                
+                                <div class="schedule-input-row">
+                                    <label>Domingos:</label>
+                                    <input type="text" id="sundaySchedule" value="Cerrado" placeholder="Ej: Cerrado">
+                                </div>
+                                
+                                <div class="schedule-input-row">
+                                    <label>Atención telefónica:</label>
+                                    <input type="text" id="phoneSchedule" value="24/7" placeholder="Ej: 24/7">
+                                </div>
+                                
+                                <button id="saveScheduleBtn" style="width: 100%; margin-top: 1rem;">
+                                    <i class="fas fa-save"></i>
+                                    Guardar horarios
+                                </button>
+                            </div>
+                            
+                            <div class="schedule-badge-preview">
+                                <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                                <span style="color: var(--dark);">Los cambios se aplicarán automáticamente en la sección de horario</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== NUEVA CATEGORÍA: GALERÍA SOBRE NOSOTROS ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryGallery">
+                    <i class="fas fa-images"></i>
+                    <span class="category-title">📸 Galería Sobre Nosotros</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="galleryContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-images"></i> Gestiona las 2 imágenes y sus descripciones</label>
+                        
+                        <div class="about-gallery-control">
+                            <h4 style="color: var(--dark); display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; font-size: 1rem;"><i class="fas fa-camera" style="color: var(--primary);"></i> Contenido de la galería</h4>
+                            
+                            <!-- Imagen 1 - Equipo -->
+                            <div class="about-gallery-item">
+                                <h5 style="color: var(--dark); display: flex; align-items: center; gap: 8px;"><i class="fas fa-image" style="color: var(--primary);"></i> Imagen 1 - Equipo</h5>
+                                <div class="custom-image-upload" id="customAboutImage1Upload">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Cambiar imagen 1</p>
+                                    <div class="file-name" id="aboutImage1FileName"></div>
+                                </div>
+                                <input type="file" id="aboutImage1File" class="image-file-input" accept="image/*">
+                                <div class="image-preview-container" id="aboutImage1PreviewContainer">
+                                    <div class="image-preview">
+                                        <img src="" alt="Vista previa" id="aboutImage1Preview">
+                                    </div>
+                                    <button class="remove-image" id="removeAboutImage1" title="Eliminar imagen">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <label style="color: var(--dark);">Descripción de la imagen:</label>
+                                <input type="text" class="about-image-description-input" id="aboutImage1Description" placeholder="Ej: Nuestro talentoso equipo" value="Nuestro equipo está formado por profesionales altamente capacitados y con amplia experiencia en el sector. Cada miembro aporta su conocimiento y pasión para garantizar que recibas un servicio de excelencia, personalizado y cercano. Creemos en el trabajo colaborativo y en la mejora continua para ofrecerte siempre lo mejor.">
+                            </div>
+                            
+                            <!-- Imagen 2 - Instalaciones -->
+                            <div class="about-gallery-item">
+                                <h5 style="color: var(--dark); display: flex; align-items: center; gap: 8px;"><i class="fas fa-image" style="color: var(--primary);"></i> Imagen 2 - Instalaciones</h5>
+                                <div class="custom-image-upload" id="customAboutImage2Upload">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Cambiar imagen 2</p>
+                                    <div class="file-name" id="aboutImage2FileName"></div>
+                                </div>
+                                <input type="file" id="aboutImage2File" class="image-file-input" accept="image/*">
+                                <div class="image-preview-container" id="aboutImage2PreviewContainer">
+                                    <div class="image-preview">
+                                        <img src="" alt="Vista previa" id="aboutImage2Preview">
+                                    </div>
+                                    <button class="remove-image" id="removeAboutImage2" title="Eliminar imagen">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <label style="color: var(--dark);">Descripción de la imagen:</label>
+                                <input type="text" class="about-image-description-input" id="aboutImage2Description" placeholder="Ej: Nuestras modernas oficinas" value="Nuestras instalaciones han sido diseñadas pensando en tu comodidad y bienestar. Contamos con espacios modernos, luminosos y totalmente equipados con la última tecnología para ofrecerte un ambiente acogedor y funcional. Cada detalle está cuidado para que tu experiencia con nosotros sea inolvidable desde el primer momento.">
+                            </div>
+                            
+                            <button class="about-gallery-save-btn" id="saveGalleryBtn" style="width: 100%; margin-top: 1rem;">
+                                <i class="fas fa-save"></i>
+                                GUARDAR TODOS LOS CAMBIOS DE LA GALERÍA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: CONTACTO / WHATSAPP ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryWhatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="category-title">Contacto WhatsApp</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="whatsappContent">
+                    <div class="config-form-group">
+                        <label><i class="fab fa-whatsapp"></i> Configurar número de WhatsApp</label>
+                        
+                        <div class="whatsapp-control-card">
+                            <h4 style="color: var(--dark); display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; font-size: 1rem;">
+                                <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                                Tu número de WhatsApp
+                            </h4>
+                            
+                            <div class="whatsapp-input-group">
+                                <input type="text" id="whatsappNumberInput" placeholder="Ej: 521234567890" value="521234567890" class="hero-text-input">
+                                <small style="color: #666; display: block; margin: 8px 0;">Formato: Código de país + número (sin espacios ni +)</small>
+                                
+                                <button id="saveWhatsappBtn" style="width: 100%;">
+                                    <i class="fas fa-save"></i>
+                                    Guardar número
+                                </button>
+                            </div>
+                            
+                            <div class="whatsapp-preview">
+                                <p style="color: var(--dark);">Vista previa del botón en la web:</p>
+                                <div class="whatsapp-button-preview" id="whatsappPreviewBtn">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                                <div class="whatsapp-number-display" id="whatsappNumberDisplay">
+                                    521234567890
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: MAPS ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryMaps">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span class="category-title">Configurar ubicación (Maps)</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="mapsContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-map-pin"></i> Ubicación en el mapa</label>
+                        
+                        <div class="maps-control-card">
+                            <h4 style="color: var(--dark); display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; font-size: 1rem;">
+                                <i class="fas fa-location-dot" style="color: var(--primary);"></i>
+                                Ingresa tu dirección
+                            </h4>
+                            
+                            <div class="maps-input-group">
+                                <input type="text" id="sidebarAddressInput" placeholder="Ej: Av. Corrientes 1234, CABA" value="Av. Corrientes 1234, CABA" class="hero-text-input">
+                                
+                                <button id="sidebarUpdateMapBtn" style="width: 100%; margin-top: 1rem;">
+                                    <i class="fas fa-sync-alt"></i>
+                                    Actualizar mapa en la web
+                                </button>
+                            </div>
+                            
+                            <div class="current-address" id="currentAddressDisplay">
+                                <i class="fas fa-map-marker-alt" style="color: var(--primary);"></i>
+                                <span id="currentAddressText" style="color: var(--dark);">Av. Corrientes 1234, CABA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== CATEGORÍA: BARRA DE NOMBRES ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryNames">
+                    <i class="fas fa-people-arrows"></i>
+                    <span class="category-title">Barra de nombres</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="namesContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-people-arrows"></i> Barra transportadora de nombres</label>
+                        
+                        <div class="name-carrier-control">
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggleNameCarrier" checked>
+                                <span>Activar barra de nombres</span>
+                            </div>
+                            
+                            <div class="name-input-container">
+                                <input type="text" class="name-input-field" id="newNameInput" placeholder="Ingresa un nombre" maxlength="30">
+                                <button class="btn-add-name" id="addNameBtn" disabled>
+                                    <i class="fas fa-plus"></i> Agregar
+                                </button>
+                            </div>
+                            
+                            <div id="nameListContainer">
+                                <p style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-info-circle" style="color: var(--primary);"></i> Máximo 5 nombres.
+                                </p>
+                                <ul class="name-list" id="nameList"></ul>
+                                <div class="name-counter" id="nameCounter">0/5 nombres</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ====== CATEGORÍA: OPINIONES ====== -->
+            <div class="config-category">
+                <div class="config-category-header" id="categoryTestimonials">
+                    <i class="fas fa-star"></i>
+                    <span class="category-title">Opiniones</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="config-category-content" id="testimonialsContent">
+                    <div class="config-form-group">
+                        <label><i class="fas fa-star"></i> Visibilidad de opiniones</label>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem 0;">
+                            <span style="font-weight: 600; color: var(--dark); font-size: 0.9rem;">Mostrar sección:</span>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" id="toggleTestimonials" checked style="width: 16px; height: 16px; cursor: pointer;">
+                                <span style="color: #666; font-size: 0.85rem;">
+                                    <span id="toggleTestimonialsText">Activado (mostrando 3 opiniones)</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de resetear personalizaciones -->
+        <div class="reset-container">
+            <button class="btn-reset" id="resetBtn">
+                <i class="fas fa-undo-alt"></i>
+                Resetear personalizaciones
+            </button>
+        </div>
+    </aside>
+
+    <!-- Botón toggle para móvil -->
+    <button class="sidebar-toggle-mobile" id="sidebarToggleMobile">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- ====== MAIN CONTENT ====== -->
+    <main class="main-content" id="mainContent">
+        <!-- ====== BARRA SUPERIOR CON NOMBRE ====== -->
+        <div style="background: white; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; text-align: center;">
+            <span style="font-weight: 900; font-size: 1.2rem;">
+                <i class="fas fa-store" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                <span id="navbarName">Tu Negocio</span>
+                <span style="font-weight: 300; color: var(--gray); margin: 0 0.5rem;">×</span>
+                <strong class="lifetimes-bold" style="color: var(--primary);">LIFETIMES</strong>
+            </span>
+        </div>
+
+        <!-- ====== HERO SECTION CON WHATSAPP ====== -->
+        <section class="hero-section" id="heroSection">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title" id="heroTitle">Bienvenido a LIFETIMES</h1>
+                <p class="hero-subtitle" id="heroSubtitle">Descubre productos exclusivos que marcarán la diferencia en tu día a día</p>
+                
+                <a href="https://wa.me/521234567890" class="hero-whatsapp-btn" id="heroWhatsappBtn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Contáctanos por WhatsApp
+                </a>
+            </div>
+        </section>
+
+        <!-- ====== BARRA TRANSPORTADORA DE NOMBRES - ESTILO ORIGINAL ====== -->
+        <div class="name-carrier-container" id="nameCarrierContainer">
+            <div class="name-carrier-section">
+                <div class="name-carrier-wrapper">
+                    <div class="name-carrier-track" id="nameCarrierTrack"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SECCIÓN 1: SERVICIOS ====== -->
+        <section class="services-section" id="servicios">
+            <div class="services-container">
+                <div class="section-header">
+                    <h2>SERVICIOS</h2>
+                    <p>Descubre todo lo que podemos ofrecerte</p>
+                </div>
+                
+                <div class="services-grid">
+                    <!-- Columna izquierda - Contenido de servicios -->
+                    <div class="services-content">
+                        <h3 contenteditable="true" id="serviceTitle">Consultoría Estratégica</h3>
+                        
+                        <ul class="service-list" id="serviceList"></ul>
+                        
+                        <div class="editable-hint">
+                            <i class="fas fa-pencil-alt"></i> Haz clic en los servicios para editarlos
+                        </div>
+                    </div>
+                    
+                    <!-- Columna derecha - Imagen de servicios -->
+                    <div class="services-image-column">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800" alt="Servicios" class="services-image" id="serviceImage">
+                        <div class="services-image-overlay">
+                            <h4>Calidad garantizada</h4>
+                            <p>Más de 10 años de experiencia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== SECCIÓN 2: SOBRE NOSOTROS ====== -->
+        <section class="about-section" id="aboutSection">
+            <div class="about-container">
+                <div class="about-header">
+                    <h2 id="aboutTitle"><i class="fas fa-building"></i> Sobre Nosotros</h2>
+                    <p id="aboutSubtitle">Conoce nuestro equipo e instalaciones</p>
+                </div>
+                
+                <div class="about-grid">
+                    <div class="about-info-empty"></div>
+                    
+                    <div class="about-images-full">
+                        <!-- Fila 1: Imagen a la izquierda, descripción a la derecha (Equipo) -->
+                        <div class="about-image-row">
+                            <div class="about-image-item">
+                                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="Equipo" id="aboutImage1">
+                            </div>
+                            <div class="about-image-description">
+                                <h4>Equipo Profesional</h4>
+                                <p id="aboutDescription1">Nuestro equipo está formado por profesionales altamente capacitados y con amplia experiencia en el sector. Cada miembro aporta su conocimiento y pasión para garantizar que recibas un servicio de excelencia, personalizado y cercano. Creemos en el trabajo colaborativo y en la mejora continua para ofrecerte siempre lo mejor.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Fila 2: Descripción a la izquierda, imagen a la derecha (Instalaciones) -->
+                        <div class="about-image-row reverse">
+                            <div class="about-image-description">
+                                <h4>Instalaciones</h4>
+                                <p id="aboutDescription2">Nuestras instalaciones han sido diseñadas pensando en tu comodidad y bienestar. Contamos con espacios modernos, luminosos y totalmente equipados con la última tecnología para ofrecerte un ambiente acogedor y funcional. Cada detalle está cuidado para que tu experiencia con nosotros sea inolvidable desde el primer momento.</p>
+                            </div>
+                            <div class="about-image-item">
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop" alt="Instalaciones" id="aboutImage2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== SECCIÓN 3: HORARIO + MAPS ====== -->
+        <section class="schedule-section" id="horario">
+            <div class="schedule-container">
+                <div class="schedule-grid">
+                    <div class="schedule-minimal-card">
+                        <h2>
+                            <i class="fas fa-clock"></i>
+                            Horario
+                        </h2>
+                        
+                        <ul class="schedule-minimal-list">
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Lunes a Viernes
+                                </span>
+                                <span class="minimal-time" id="weekdayDisplay">9:00 – 19:00</span>
+                            </li>
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Sábados
+                                </span>
+                                <span class="minimal-time" id="saturdayDisplay">10:00 – 14:00</span>
+                            </li>
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Domingos
+                                </span>
+                                <span class="minimal-time" id="sundayDisplay">Cerrado</span>
+                            </li>
+                            <li class="schedule-minimal-item">
+                                <span class="minimal-day">
+                                    <i class="fas fa-phone-alt"></i>
+                                    Atención telefónica
+                                </span>
+                                <span class="minimal-time" id="phoneDisplay">24/7</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="minimal-badge">
+                            <i class="fas fa-calendar-check"></i>
+                            Cita previa disponible
+                        </div>
+                    </div>
+                    
+                    <div class="map-minimal-card">
+                        <div class="map-minimal-container" id="mapContainer">
+                            <iframe
+                                id="googleMap"
+                                src="https://maps.google.com/maps?q=Av.%20Corrientes%201234%2C%20CABA&output=embed"
+                                allowfullscreen
+                                loading="lazy"
+                                title="Ubicación">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== SECCIÓN 4: OPINIONES ====== -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="testimonials-container">
+                <div class="testimonials-header">
+                    <h2><i class="fas fa-star"></i> Lo que dicen nuestros clientes</h2>
+                </div>
+                
+                <div class="testimonials-grid" id="testimonialsGrid"></div>
+                
+                <div class="save-bottom-container">
+                    <button class="btn-save-bottom" id="saveBottomBtn">
+                        <i class="fas fa-save"></i>
+                        GUARDAR TODOS LOS CAMBIOS
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== FOOTER ====== -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-bottom">
+                    <p>© <span id="year"></span> <strong class="lifetimes-bold">LIFETIMES</strong>. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ====== MODAL PARA EDITAR OPINIÓN ====== -->
+    <div class="testimonial-edit-modal" id="testimonialEditModal">
+        <div class="testimonial-edit-content">
+            <button class="testimonial-edit-close" id="closeTestimonialEdit">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3><i class="fas fa-edit"></i> Editar opinión</h3>
+            <form id="testimonialEditForm">
+                <input type="hidden" id="editTestimonialId">
+                <div class="testimonial-form-group">
+                    <label>Nombre completo</label>
+                    <input type="text" id="editTestimonialName" required>
+                </div>
+                <div class="testimonial-form-group">
+                    <label>Profesión / Rol</label>
+                    <input type="text" id="editTestimonialRole" required>
+                </div>
+                <div class="testimonial-form-group">
+                    <label>Calificación</label>
+                    <div class="rating-selector" id="editRatingSelector">
+                        <i class="fas fa-star" data-rating="1"></i>
+                        <i class="fas fa-star" data-rating="2"></i>
+                        <i class="fas fa-star" data-rating="3"></i>
+                        <i class="fas fa-star" data-rating="4"></i>
+                        <i class="fas fa-star" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="editTestimonialRating" value="5">
+                </div>
+                <div class="testimonial-form-group">
+                    <label>Tu opinión</label>
+                    <textarea id="editTestimonialText" required></textarea>
+                </div>
+                <button type="submit" class="btn-update-testimonial">
+                    <i class="fas fa-save"></i>
+                    Guardar cambios
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Año en footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // ====== SIDEBAR - MENÚ LATERAL ======
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('configSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sidebarClose = document.getElementById('sidebarClose');
+            const sidebarToggleMobile = document.getElementById('sidebarToggleMobile');
+            const mainContent = document.getElementById('mainContent');
+            
+            function openSidebar() {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('active');
+                mainContent.classList.add('blur');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+                mainContent.classList.remove('blur');
+                document.body.style.overflow = '';
+            }
+            
+            if (menuToggle) menuToggle.addEventListener('click', openSidebar);
+            if (sidebarToggleMobile) sidebarToggleMobile.addEventListener('click', openSidebar);
+            if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+            });
+            
+            // ====== FUNCIONALIDAD PARA CATEGORÍAS DESPLEGABLES ======
+            const categories = [
+                { header: 'categoryPresentation', content: 'presentationContent' },
+                { header: 'categorySections', content: 'sectionsContent' },
+                { header: 'categorySchedule', content: 'scheduleContent' },
+                { header: 'categoryGallery', content: 'galleryContent' },
+                { header: 'categoryWhatsapp', content: 'whatsappContent' },
+                { header: 'categoryMaps', content: 'mapsContent' },
+                { header: 'categoryNames', content: 'namesContent' },
+                { header: 'categoryTestimonials', content: 'testimonialsContent' }
+            ];
+            
+            categories.forEach(cat => {
+                const header = document.getElementById(cat.header);
+                const content = document.getElementById(cat.content);
+                if (header && content) {
+                    content.classList.remove('active');
+                    header.addEventListener('click', function() {
+                        this.classList.toggle('active');
+                        content.classList.toggle('active');
+                    });
+                }
+            });
+            
+            // ====== ELEMENTOS DEL HERO ======
+            const heroSection = document.getElementById('heroSection');
+            const heroTitle = document.getElementById('heroTitle');
+            const heroSubtitle = document.getElementById('heroSubtitle');
+            const heroTitleInput = document.getElementById('heroTitleInput');
+            const heroSubtitleInput = document.getElementById('heroSubtitleInput');
+            const navbarName = document.getElementById('navbarName');
+            const navbarNameInput = document.getElementById('navbarNameInput');
+            
+            // ====== ELEMENTOS PARA SUBIR IMAGEN PERSONALIZADA (FONDOS) ======
+            const imageConfigs = [
+                { upload: 'customHeroUpload', file: 'heroImageFile', previewContainer: 'heroImagePreviewContainer', preview: 'heroImagePreview', fileName: 'heroFileName', remove: 'removeHeroImage', section: heroSection, storageKey: 'customHeroImage', defaultBg: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8' },
+                { upload: 'customScheduleUpload', file: 'scheduleImageFile', previewContainer: 'scheduleImagePreviewContainer', preview: 'scheduleImagePreview', fileName: 'scheduleFileName', remove: 'removeScheduleImage', section: document.getElementById('horario'), storageKey: 'customScheduleImage', defaultBg: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4' },
+                { upload: 'customTestimonialsUpload', file: 'testimonialsImageFile', previewContainer: 'testimonialsImagePreviewContainer', preview: 'testimonialsImagePreview', fileName: 'testimonialsFileName', remove: 'removeTestimonialsImage', section: document.getElementById('testimonials'), storageKey: 'customTestimonialsImage', defaultBg: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c' }
+            ];
+            
+            // Cargar imágenes guardadas
+            imageConfigs.forEach(config => {
+                const savedImage = localStorage.getItem(config.storageKey);
+                if (savedImage && config.section) {
+                    config.section.style.backgroundImage = `url('${savedImage}')`;
+                    const previewImg = document.getElementById(config.preview);
+                    const previewContainer = document.getElementById(config.previewContainer);
+                    if (previewImg && previewContainer) {
+                        previewImg.src = savedImage;
+                        previewContainer.classList.add('show');
+                    }
+                }
+            });
+            
+            // Función para setup de subida de imágenes (fondos)
+            function setupImageUpload(config) {
+                const uploadElement = document.getElementById(config.upload);
+                const fileInput = document.getElementById(config.file);
+                const previewContainer = document.getElementById(config.previewContainer);
+                const previewImg = document.getElementById(config.preview);
+                const fileNameSpan = document.getElementById(config.fileName);
+                const removeBtn = document.getElementById(config.remove);
+                const section = config.section;
+                const storageKey = config.storageKey;
+                const defaultBg = config.defaultBg;
+                
+                if (uploadElement) {
+                    uploadElement.addEventListener('click', () => fileInput.click());
+                }
+                
+                if (fileInput) {
+                    fileInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        
+                        if (!file.type.startsWith('image/')) {
+                            alert('Por favor selecciona una imagen válida');
+                            return;
+                        }
+                        
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert('La imagen no debe superar los 5MB');
+                            return;
+                        }
+                        
+                        fileNameSpan.textContent = file.name;
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const imageData = event.target.result;
+                            localStorage.setItem(storageKey, imageData);
+                            if (section) section.style.backgroundImage = `url('${imageData}')`;
+                            previewImg.src = imageData;
+                            previewContainer.classList.add('show');
+                            // showNotification('Imagen cargada correctamente', true); // COMENTADO
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        localStorage.removeItem(storageKey);
+                        if (section) section.style.backgroundImage = `url('${defaultBg}?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')`;
+                        previewContainer.classList.remove('show');
+                        previewImg.src = '';
+                        fileNameSpan.textContent = '';
+                        fileInput.value = '';
+                        // showNotification('Imagen eliminada', true); // COMENTADO
+                    });
+                }
+            }
+            
+            imageConfigs.forEach(config => setupImageUpload(config));
+            
+            // ====== CARGAR CONFIGURACIÓN GUARDADA (TEXTOS) ======
+            const savedHeroTitle = localStorage.getItem('heroTitle');
+            const savedHeroSubtitle = localStorage.getItem('heroSubtitle');
+            const savedNavbarName = localStorage.getItem('navbarName');
+            
+            if (savedHeroTitle) {
+                heroTitle.textContent = savedHeroTitle;
+                heroTitleInput.value = savedHeroTitle;
+            }
+            
+            if (savedHeroSubtitle) {
+                heroSubtitle.textContent = savedHeroSubtitle;
+                heroSubtitleInput.value = savedHeroSubtitle;
+            }
+            
+            if (savedNavbarName) {
+                navbarName.textContent = savedNavbarName;
+                navbarNameInput.value = savedNavbarName;
+            }
+            
+            // Eventos para actualizar textos
+            heroTitleInput.addEventListener('input', function() {
+                heroTitle.textContent = this.value || 'Bienvenido a LIFETIMES';
+                localStorage.setItem('heroTitle', this.value);
+            });
+            
+            heroSubtitleInput.addEventListener('input', function() {
+                heroSubtitle.textContent = this.value || 'Descubre productos exclusivos';
+                localStorage.setItem('heroSubtitle', this.value);
+            });
+            
+            navbarNameInput.addEventListener('input', function() {
+                navbarName.textContent = this.value || 'Tu Negocio';
+                localStorage.setItem('navbarName', this.value);
+            });
+            
+            // ====== HORARIO ======
+            const weekdaySchedule = document.getElementById('weekdaySchedule');
+            const saturdaySchedule = document.getElementById('saturdaySchedule');
+            const sundaySchedule = document.getElementById('sundaySchedule');
+            const phoneSchedule = document.getElementById('phoneSchedule');
+            const saveScheduleBtn = document.getElementById('saveScheduleBtn');
+            
+            const weekdayDisplay = document.getElementById('weekdayDisplay');
+            const saturdayDisplay = document.getElementById('saturdayDisplay');
+            const sundayDisplay = document.getElementById('sundayDisplay');
+            const phoneDisplay = document.getElementById('phoneDisplay');
+            
+            // Cargar horarios guardados
+            const savedWeekday = localStorage.getItem('weekdaySchedule');
+            const savedSaturday = localStorage.getItem('saturdaySchedule');
+            const savedSunday = localStorage.getItem('sundaySchedule');
+            const savedPhone = localStorage.getItem('phoneSchedule');
+            
+            if (savedWeekday) {
+                weekdaySchedule.value = savedWeekday;
+                weekdayDisplay.textContent = savedWeekday;
+            }
+            
+            if (savedSaturday) {
+                saturdaySchedule.value = savedSaturday;
+                saturdayDisplay.textContent = savedSaturday;
+            }
+            
+            if (savedSunday) {
+                sundaySchedule.value = savedSunday;
+                sundayDisplay.textContent = savedSunday;
+            }
+            
+            if (savedPhone) {
+                phoneSchedule.value = savedPhone;
+                phoneDisplay.textContent = savedPhone;
+            }
+            
+            function saveSchedule() {
+                const weekday = weekdaySchedule.value.trim() || '9:00 – 19:00';
+                const saturday = saturdaySchedule.value.trim() || '10:00 – 14:00';
+                const sunday = sundaySchedule.value.trim() || 'Cerrado';
+                const phone = phoneSchedule.value.trim() || '24/7';
+                
+                localStorage.setItem('weekdaySchedule', weekday);
+                localStorage.setItem('saturdaySchedule', saturday);
+                localStorage.setItem('sundaySchedule', sunday);
+                localStorage.setItem('phoneSchedule', phone);
+                
+                weekdayDisplay.textContent = weekday;
+                saturdayDisplay.textContent = saturday;
+                sundayDisplay.textContent = sunday;
+                phoneDisplay.textContent = phone;
+                
+                // showNotification('Horarios actualizados correctamente', true); // COMENTADO
+            }
+            
+            if (saveScheduleBtn) {
+                saveScheduleBtn.addEventListener('click', saveSchedule);
+            }
+            
+            [weekdaySchedule, saturdaySchedule, sundaySchedule, phoneSchedule].forEach(input => {
+                if (input) {
+                    input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') saveSchedule();
+                    });
+                }
+            });
+            
+            // ====== CONTROL DE COLOR DE FONDO PARA SOBRE NOSOTROS CON PALETA ======
+            const aboutSection = document.getElementById('aboutSection');
+            const aboutBgColorPicker = document.getElementById('aboutBgColorPicker');
+            const colorOptions = document.querySelectorAll('#aboutColorPalette .color-option');
+            
+            function applyAboutBgColor(color) {
+                aboutSection.style.backgroundColor = color;
+                document.documentElement.style.setProperty('--about-bg-color', color);
+                localStorage.setItem('aboutBgColor', color);
+                aboutBgColorPicker.value = color;
+                
+                colorOptions.forEach(opt => {
+                    if (opt.dataset.color === color) {
+                        opt.classList.add('selected');
+                    } else {
+                        opt.classList.remove('selected');
+                    }
+                });
+            }
+            
+            const savedAboutBgColor = localStorage.getItem('aboutBgColor') || '#ffffff';
+            applyAboutBgColor(savedAboutBgColor);
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const color = this.dataset.color;
+                    applyAboutBgColor(color);
+                    // showNotification('Color de fondo actualizado', true); // COMENTADO
+                });
+            });
+            
+            aboutBgColorPicker.addEventListener('input', function() {
+                applyAboutBgColor(this.value);
+                // showNotification('Color de fondo actualizado', true); // COMENTADO
+            });
+            
+            // ====== NUEVA CONFIGURACIÓN PARA LA GALERÍA DE SOBRE NOSOTROS ======
+            const aboutImage1 = document.getElementById('aboutImage1');
+            const aboutImage2 = document.getElementById('aboutImage2');
+            const aboutDescription1 = document.getElementById('aboutDescription1');
+            const aboutDescription2 = document.getElementById('aboutDescription2');
+            const aboutImage1Description = document.getElementById('aboutImage1Description');
+            const aboutImage2Description = document.getElementById('aboutImage2Description');
+            
+            const aboutImageConfigs = [
+                { upload: 'customAboutImage1Upload', file: 'aboutImage1File', previewContainer: 'aboutImage1PreviewContainer', preview: 'aboutImage1Preview', fileName: 'aboutImage1FileName', remove: 'removeAboutImage1', image: aboutImage1, storageKey: 'aboutImage1', defaultSrc: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop' },
+                { upload: 'customAboutImage2Upload', file: 'aboutImage2File', previewContainer: 'aboutImage2PreviewContainer', preview: 'aboutImage2Preview', fileName: 'aboutImage2FileName', remove: 'removeAboutImage2', image: aboutImage2, storageKey: 'aboutImage2', defaultSrc: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop' }
+            ];
+            
+            aboutImageConfigs.forEach(config => {
+                const savedImage = localStorage.getItem(config.storageKey);
+                if (savedImage) {
+                    config.image.src = savedImage;
+                    const previewImg = document.getElementById(config.preview);
+                    const previewContainer = document.getElementById(config.previewContainer);
+                    if (previewImg && previewContainer) {
+                        previewImg.src = savedImage;
+                        previewContainer.classList.add('show');
+                    }
+                }
+            });
+            
+            aboutImageConfigs.forEach(config => {
+                const uploadElement = document.getElementById(config.upload);
+                const fileInput = document.getElementById(config.file);
+                const previewContainer = document.getElementById(config.previewContainer);
+                const previewImg = document.getElementById(config.preview);
+                const fileNameSpan = document.getElementById(config.fileName);
+                const removeBtn = document.getElementById(config.remove);
+                const image = config.image;
+                const storageKey = config.storageKey;
+                const defaultSrc = config.defaultSrc;
+                
+                if (uploadElement) {
+                    uploadElement.addEventListener('click', () => fileInput.click());
+                }
+                
+                if (fileInput) {
+                    fileInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        
+                        if (!file.type.startsWith('image/')) {
+                            alert('Por favor selecciona una imagen válida');
+                            return;
+                        }
+                        
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert('La imagen no debe superar los 5MB');
+                            return;
+                        }
+                        
+                        fileNameSpan.textContent = file.name;
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const imageData = event.target.result;
+                            localStorage.setItem(storageKey, imageData);
+                            image.src = imageData;
+                            previewImg.src = imageData;
+                            previewContainer.classList.add('show');
+                            // showNotification('Imagen actualizada', true); // COMENTADO
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function() {
+                        localStorage.removeItem(storageKey);
+                        image.src = defaultSrc;
+                        previewContainer.classList.remove('show');
+                        previewImg.src = '';
+                        fileNameSpan.textContent = '';
+                        fileInput.value = '';
+                        // showNotification('Imagen restaurada a la original', true); // COMENTADO
+                    });
+                }
+            });
+            
+            const savedDesc1 = localStorage.getItem('aboutDescription1');
+            const savedDesc2 = localStorage.getItem('aboutDescription2');
+            
+            if (savedDesc1) {
+                aboutDescription1.textContent = savedDesc1;
+                aboutImage1Description.value = savedDesc1;
+            }
+            if (savedDesc2) {
+                aboutDescription2.textContent = savedDesc2;
+                aboutImage2Description.value = savedDesc2;
+            }
+            
+            aboutImage1Description.addEventListener('input', function() {
+                aboutDescription1.textContent = this.value || 'Descripción de la imagen 1';
+                localStorage.setItem('aboutDescription1', this.value);
+            });
+            
+            aboutImage2Description.addEventListener('input', function() {
+                aboutDescription2.textContent = this.value || 'Descripción de la imagen 2';
+                localStorage.setItem('aboutDescription2', this.value);
+            });
+            
+            const saveGalleryBtn = document.getElementById('saveGalleryBtn');
+            if (saveGalleryBtn) {
+                saveGalleryBtn.addEventListener('click', function() {
+                    // showNotification('Galería de Sobre Nosotros guardada correctamente', true); // COMENTADO
+                });
+            }
+            
+            // ====== WHATSAPP ======
+            const whatsappNumberInput = document.getElementById('whatsappNumberInput');
+            const saveWhatsappBtn = document.getElementById('saveWhatsappBtn');
+            const heroWhatsappBtn = document.getElementById('heroWhatsappBtn');
+            const whatsappNumberDisplay = document.getElementById('whatsappNumberDisplay');
+            const whatsappPreviewBtn = document.getElementById('whatsappPreviewBtn');
+            
+            const savedWhatsAppNumber = localStorage.getItem('whatsappNumber') || '521234567890';
+            whatsappNumberInput.value = savedWhatsAppNumber;
+            whatsappNumberDisplay.textContent = savedWhatsAppNumber;
+            heroWhatsappBtn.href = `https://wa.me/${savedWhatsAppNumber}`;
+            
+            function saveWhatsAppNumber() {
+                let number = whatsappNumberInput.value.trim().replace(/[\s\-\(\)\+]/g, '');
+                if (number === '') {
+                    alert('Por favor ingresa un número válido');
+                    return;
+                }
+                localStorage.setItem('whatsappNumber', number);
+                heroWhatsappBtn.href = `https://wa.me/${number}`;
+                whatsappNumberDisplay.textContent = number;
+                // showNotification('Número de WhatsApp guardado', true); // COMENTADO
+            }
+            
+            if (saveWhatsappBtn) saveWhatsappBtn.addEventListener('click', saveWhatsAppNumber);
+            if (whatsappNumberInput) {
+                whatsappNumberInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') saveWhatsAppNumber();
+                });
+            }
+            
+            if (whatsappPreviewBtn) {
+                whatsappPreviewBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const number = localStorage.getItem('whatsappNumber') || '521234567890';
+                    window.open(`https://wa.me/${number}`, '_blank');
+                });
+            }
+            
+            // ====== MAPS ======
+            const sidebarAddressInput = document.getElementById('sidebarAddressInput');
+            const sidebarUpdateMapBtn = document.getElementById('sidebarUpdateMapBtn');
+            const googleMap = document.getElementById('googleMap');
+            
+            function updateMapFromSidebar() {
+                const address = encodeURIComponent(sidebarAddressInput.value.trim() || 'Av. Corrientes 1234, CABA');
+                googleMap.src = `https://maps.google.com/maps?q=${address}&output=embed`;
+                const currentAddressText = document.getElementById('currentAddressText');
+                if (currentAddressText) currentAddressText.textContent = sidebarAddressInput.value.trim() || 'Av. Corrientes 1234, CABA';
+                localStorage.setItem('mapAddress', sidebarAddressInput.value.trim());
+                // showNotification('Mapa actualizado', true); // COMENTADO
+            }
+            
+            if (sidebarUpdateMapBtn) sidebarUpdateMapBtn.addEventListener('click', updateMapFromSidebar);
+            if (sidebarAddressInput) {
+                sidebarAddressInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') updateMapFromSidebar();
+                });
+            }
+            
+            const savedAddress = localStorage.getItem('mapAddress');
+            if (savedAddress) {
+                sidebarAddressInput.value = savedAddress;
+                document.getElementById('currentAddressText').textContent = savedAddress;
+                setTimeout(() => {
+                    googleMap.src = `https://maps.google.com/maps?q=${encodeURIComponent(savedAddress)}&output=embed`;
+                }, 500);
+            }
+            
+            // ====== BUSCADOR DE TIPOGRAFÍAS ======
+            const fontSearchInput = document.getElementById('fontSearchInput');
+            const fontSearchResults = document.getElementById('fontSearchResults');
+            const fontSelector = document.getElementById('fontSelector');
+            
+            const popularFonts = ['Inter', 'Montserrat', 'Poppins', 'Playfair Display', 'Roboto', 'Oswald', 'Open Sans', 'Lato', 'Raleway'];
+            
+            const savedFont = localStorage.getItem('heroFont');
+            if (savedFont) {
+                document.documentElement.style.setProperty('--hero-font', savedFont);
+                heroTitle.style.fontFamily = savedFont;
+                for (let i = 0; i < fontSelector.options.length; i++) {
+                    if (fontSelector.options[i].value === savedFont) fontSelector.selectedIndex = i;
+                }
+            }
+            
+            function searchFonts(query) {
+                if (!query || query.length < 2) {
+                    fontSearchResults.classList.remove('show');
+                    return;
+                }
+                const matches = popularFonts.filter(font => font.toLowerCase().includes(query.toLowerCase())).slice(0, 8);
+                fontSearchResults.innerHTML = '';
+                matches.forEach(font => {
+                    const item = document.createElement('div');
+                    item.className = 'font-result-item';
+                    item.innerHTML = `<span class="font-name">${font}</span><span class="font-preview-small">The quick brown fox</span>`;
+                    item.addEventListener('click', () => {
+                        const fontValue = `'${font}', sans-serif`;
+                        document.documentElement.style.setProperty('--hero-font', fontValue);
+                        heroTitle.style.fontFamily = fontValue;
+                        localStorage.setItem('heroFont', fontValue);
+                        fontSearchResults.classList.remove('show');
+                        fontSearchInput.value = '';
+                        // showNotification(`Tipografía "${font}" aplicada`, true); // COMENTADO
+                    });
+                    fontSearchResults.appendChild(item);
+                });
+                fontSearchResults.classList.add('show');
+            }
+            
+            fontSearchInput.addEventListener('input', function() { searchFonts(this.value); });
+            
+            document.addEventListener('click', function(e) {
+                if (!fontSearchInput.contains(e.target) && !fontSearchResults.contains(e.target)) {
+                    fontSearchResults.classList.remove('show');
+                }
+            });
+            
+            fontSelector.addEventListener('change', function() {
+                document.documentElement.style.setProperty('--hero-font', this.value);
+                heroTitle.style.fontFamily = this.value;
+                localStorage.setItem('heroFont', this.value);
+                // showNotification('Tipografía actualizada', true); // COMENTADO
+            });
+            
+            // ====== SELECTOR DE COLOR ======
+            const primaryColorPicker = document.getElementById('primaryColorPicker');
+            
+            function applyPrimaryColor(color) {
+                document.documentElement.style.setProperty('--primary', color);
+                localStorage.setItem('primaryColor', color);
+            }
+            
+            const savedPrimaryColor = localStorage.getItem('primaryColor');
+            if (savedPrimaryColor) {
+                primaryColorPicker.value = savedPrimaryColor;
+                applyPrimaryColor(savedPrimaryColor);
+            }
+            
+            primaryColorPicker.addEventListener('input', function() {
+                applyPrimaryColor(this.value);
+                // showNotification('Color actualizado', true); // COMENTADO
+            });
+            
+            // ====== BARRA DE NOMBRES ======
+            const toggleNameCarrier = document.getElementById('toggleNameCarrier');
+            const nameCarrierContainer = document.getElementById('nameCarrierContainer');
+            const nameCarrierTrack = document.getElementById('nameCarrierTrack');
+            const newNameInput = document.getElementById('newNameInput');
+            const addNameBtn = document.getElementById('addNameBtn');
+            const nameList = document.getElementById('nameList');
+            const nameCounter = document.getElementById('nameCounter');
+            
+            let nameCarrierList = JSON.parse(localStorage.getItem('nameCarrierList')) || ['Cliente Satisfecho', 'Profesional', 'Experiencia', 'Calidad', 'Confianza'];
+            
+            const nameCarrierEnabled = localStorage.getItem('nameCarrierEnabled') !== 'false';
+            toggleNameCarrier.checked = nameCarrierEnabled;
+            if (!nameCarrierEnabled) nameCarrierContainer.classList.add('hidden');
+            
+            function renderNameList() {
+                nameList.innerHTML = '';
+                nameCarrierList.forEach((name, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'name-list-item';
+                    li.innerHTML = `<span>${name}</span><button class="remove-name-btn" data-index="${index}"><i class="fas fa-times"></i></button>`;
+                    nameList.appendChild(li);
+                });
+                nameCounter.textContent = `${nameCarrierList.length}/5 nombres`;
+                newNameInput.disabled = nameCarrierList.length >= 5;
+                addNameBtn.disabled = nameCarrierList.length >= 5 || newNameInput.value.trim() === '';
+                
+                document.querySelectorAll('.remove-name-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const index = parseInt(this.dataset.index);
+                        nameCarrierList.splice(index, 1);
+                        renderNameList();
+                        renderNameCarrier();
+                        localStorage.setItem('nameCarrierList', JSON.stringify(nameCarrierList));
+                        // showNotification('Nombre eliminado', true); // COMENTADO
+                    });
+                });
+                localStorage.setItem('nameCarrierList', JSON.stringify(nameCarrierList));
+            }
+            
+            function renderNameCarrier() {
+                if (nameCarrierList.length === 0) {
+                    nameCarrierTrack.innerHTML = '';
+                    return;
+                }
+                let namesHtml = '';
+                for (let i = 0; i < 2; i++) {
+                    nameCarrierList.forEach(name => {
+                        namesHtml += `<div class="name-carrier-item"><i class="fas fa-user-circle"></i><span>${name}</span></div>`;
+                    });
+                }
+                nameCarrierTrack.innerHTML = namesHtml;
+            }
+            
+            function addName() {
+                const newName = newNameInput.value.trim();
+                if (newName && nameCarrierList.length < 5) {
+                    nameCarrierList.push(newName);
+                    renderNameList();
+                    renderNameCarrier();
+                    newNameInput.value = '';
+                    addNameBtn.disabled = true;
+                    localStorage.setItem('nameCarrierList', JSON.stringify(nameCarrierList));
+                    // showNotification(`Nombre "${newName}" agregado`, true); // COMENTADO
+                }
+            }
+            
+            newNameInput.addEventListener('input', function() {
+                addNameBtn.disabled = this.value.trim() === '' || nameCarrierList.length >= 5;
+            });
+            
+            newNameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !addNameBtn.disabled) addName();
+            });
+            
+            addNameBtn.addEventListener('click', addName);
+            
+            toggleNameCarrier.addEventListener('change', function() {
+                if (this.checked) {
+                    nameCarrierContainer.classList.remove('hidden');
+                    localStorage.setItem('nameCarrierEnabled', 'true');
+                } else {
+                    nameCarrierContainer.classList.add('hidden');
+                    localStorage.setItem('nameCarrierEnabled', 'false');
+                }
+            });
+            
+            renderNameList();
+            renderNameCarrier();
+            
+            // ====== ELEMENTOS EDITABLES DE LA TARJETA DE SERVICIO ======
+            const serviceTitle = document.getElementById('serviceTitle');
+            const serviceList = document.getElementById('serviceList');
+            
+            const serviceImage = document.getElementById('serviceImage');
+            const serviceImageUpload = document.getElementById('customServiceImageUpload');
+            const serviceImageFile = document.getElementById('serviceImageFile');
+            const serviceImagePreview = document.getElementById('serviceImagePreview');
+            const serviceNoImageText = document.getElementById('serviceNoImageText');
+            const serviceImageFileName = document.getElementById('serviceImageFileName');
+            const removeServiceImageBtn = document.getElementById('removeServiceImageBtn');
+            
+            const newServiceSidebarInput = document.getElementById('newServiceSidebarInput');
+            const addServiceSidebarBtn = document.getElementById('addServiceSidebarBtn');
+            const servicePreviewItems = document.getElementById('servicePreviewItems');
+            
+            let servicesList = JSON.parse(localStorage.getItem('servicesList')) || [
+                "Asesoramiento personalizado para tu negocio",
+                "Estrategias probadas de crecimiento",
+                "Identificación de oportunidades de mercado",
+                "Implementación de soluciones efectivas"
+            ];
+            
+            const savedServiceImage = localStorage.getItem('serviceImage');
+            if (savedServiceImage) {
+                serviceImage.src = savedServiceImage;
+                serviceImagePreview.src = savedServiceImage;
+                serviceImagePreview.style.display = 'block';
+                serviceNoImageText.style.display = 'none';
+            }
+            
+            if (serviceImageUpload) {
+                serviceImageUpload.addEventListener('click', () => serviceImageFile.click());
+            }
+            
+            if (serviceImageFile) {
+                serviceImageFile.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    if (!file.type.startsWith('image/')) {
+                        alert('Por favor selecciona una imagen válida');
+                        return;
+                    }
+                    
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('La imagen no debe superar los 5MB');
+                        return;
+                    }
+                    
+                    serviceImageFileName.textContent = file.name;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        localStorage.setItem('serviceImage', imageData);
+                        serviceImage.src = imageData;
+                        serviceImagePreview.src = imageData;
+                        serviceImagePreview.style.display = 'block';
+                        serviceNoImageText.style.display = 'none';
+                        // showNotification('Imagen de servicios actualizada', true); // COMENTADO
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            if (removeServiceImageBtn) {
+                removeServiceImageBtn.addEventListener('click', function() {
+                    localStorage.removeItem('serviceImage');
+                    serviceImage.src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800';
+                    serviceImagePreview.src = '';
+                    serviceImagePreview.style.display = 'none';
+                    serviceNoImageText.style.display = 'block';
+                    serviceImageFileName.textContent = '';
+                    serviceImageFile.value = '';
+                    // showNotification('Imagen de servicios eliminada', true); // COMENTADO
+                });
+            }
+            
+            const savedServiceTitle = localStorage.getItem('serviceTitle');
+            if (savedServiceTitle) serviceTitle.textContent = savedServiceTitle;
+            
+            serviceTitle.addEventListener('blur', function() {
+                localStorage.setItem('serviceTitle', this.textContent);
+                // showNotification('Título actualizado', true); // COMENTADO
+            });
+            
+            function renderServiceList() {
+                serviceList.innerHTML = '';
+                servicesList.forEach((service, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'service-list-item';
+                    li.innerHTML = `
+                        <span contenteditable="true" data-index="${index}">${service}</span>
+                        <button class="service-list-remove" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    const span = li.querySelector('span');
+                    span.addEventListener('blur', function() {
+                        const idx = parseInt(this.dataset.index);
+                        servicesList[idx] = this.textContent;
+                        localStorage.setItem('servicesList', JSON.stringify(servicesList));
+                        renderServicePreview();
+                        // showNotification('Servicio actualizado', true); // COMENTADO
+                    });
+                    
+                    span.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.blur();
+                        }
+                    });
+                    
+                    const removeBtn = li.querySelector('.service-list-remove');
+                    removeBtn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        servicesList.splice(idx, 1);
+                        localStorage.setItem('servicesList', JSON.stringify(servicesList));
+                        renderServiceList();
+                        renderServicePreview();
+                        // showNotification('Servicio eliminado', true); // COMENTADO
+                    });
+                    
+                    serviceList.appendChild(li);
+                });
+            }
+            
+            function renderServicePreview() {
+                if (!servicePreviewItems) return;
+                servicePreviewItems.innerHTML = '';
+                servicesList.forEach((service, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'service-preview-item';
+                    div.innerHTML = `<i class="fas fa-check-circle"></i> <span>${service}</span>`;
+                    servicePreviewItems.appendChild(div);
+                });
+            }
+            
+            function addServiceFromSidebar() {
+                const newService = newServiceSidebarInput.value.trim();
+                if (newService) {
+                    servicesList.push(newService);
+                    localStorage.setItem('servicesList', JSON.stringify(servicesList));
+                    renderServiceList();
+                    renderServicePreview();
+                    newServiceSidebarInput.value = '';
+                    addServiceSidebarBtn.disabled = true;
+                    // showNotification(`Servicio "${newService}" agregado`, true); // COMENTADO
+                }
+            }
+            
+            if (newServiceSidebarInput) {
+                newServiceSidebarInput.addEventListener('input', function() {
+                    addServiceSidebarBtn.disabled = this.value.trim() === '';
+                });
+                
+                newServiceSidebarInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !addServiceSidebarBtn.disabled) {
+                        addServiceFromSidebar();
+                    }
+                });
+            }
+            
+            if (addServiceSidebarBtn) {
+                addServiceSidebarBtn.addEventListener('click', addServiceFromSidebar);
+            }
+            
+            renderServiceList();
+            renderServicePreview();
+            
+            // ====== OPINIONES ======
+            let testimonials = JSON.parse(localStorage.getItem('testimonials')) || [
+                { 
+                    id: 1, 
+                    name: "Ana Martínez", 
+                    role: "Cliente", 
+                    rating: 5, 
+                    text: "Excelente atención y calidad. Sin duda volveré a elegirlos.",
+                    avatar: "https://images.unsplash.com/photo-1494790108777-466d5e8e3e3b?w=150&h=150&fit=crop&crop=face"
+                },
+                { 
+                    id: 2, 
+                    name: "Carlos Rodríguez", 
+                    role: "Cliente frecuente", 
+                    rating: 5, 
+                    text: "Recomiendo totalmente sus servicios. Profesionales y confiables.",
+                    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face"
+                },
+                { 
+                    id: 3, 
+                    name: "Laura González", 
+                    role: "Cliente", 
+                    rating: 4, 
+                    text: "Muy buena experiencia, cumplen con lo que prometen.",
+                    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+                }
+            ];
+            
+            const testimonialEditModal = document.getElementById('testimonialEditModal');
+            const closeTestimonialEdit = document.getElementById('closeTestimonialEdit');
+            const testimonialEditForm = document.getElementById('testimonialEditForm');
+            const editTestimonialId = document.getElementById('editTestimonialId');
+            const editTestimonialName = document.getElementById('editTestimonialName');
+            const editTestimonialRole = document.getElementById('editTestimonialRole');
+            const editTestimonialText = document.getElementById('editTestimonialText');
+            const editRatingStars = document.querySelectorAll('#editRatingSelector i');
+            const editTestimonialRating = document.getElementById('editTestimonialRating');
+            let currentEditRating = 5;
+            
+            const toggleTestimonials = document.getElementById('toggleTestimonials');
+            const toggleTestimonialsText = document.getElementById('toggleTestimonialsText');
+            const testimonialsSection = document.getElementById('testimonials');
+            
+            const savedTestimonialsVisible = localStorage.getItem('testimonialsVisible');
+            if (savedTestimonialsVisible === 'false') {
+                toggleTestimonials.checked = false;
+                testimonialsSection.classList.add('hidden');
+                toggleTestimonialsText.textContent = 'Desactivado (opiniones ocultas)';
+            } else {
+                toggleTestimonials.checked = true;
+                testimonialsSection.classList.remove('hidden');
+                toggleTestimonialsText.textContent = 'Activado (mostrando 3 opiniones)';
+            }
+            
+            toggleTestimonials.addEventListener('change', function() {
+                if (this.checked) {
+                    testimonialsSection.classList.remove('hidden');
+                    localStorage.setItem('testimonialsVisible', 'true');
+                    toggleTestimonialsText.textContent = 'Activado (mostrando 3 opiniones)';
+                } else {
+                    testimonialsSection.classList.add('hidden');
+                    localStorage.setItem('testimonialsVisible', 'false');
+                    toggleTestimonialsText.textContent = 'Desactivado (opiniones ocultas)';
+                }
+            });
+            
+            function renderTestimonials() {
+                const testimonialsGrid = document.getElementById('testimonialsGrid');
+                if (!testimonialsGrid) return;
+                testimonialsGrid.innerHTML = '';
+                
+                testimonials.forEach(testimonial => {
+                    const card = document.createElement('div');
+                    card.className = 'testimonial-card';
+                    card.dataset.id = testimonial.id;
+                    
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        starsHtml += `<i class="fas fa-star" style="color: ${i <= testimonial.rating ? '#ffc107' : 'rgba(255,255,255,0.3)'};"></i>`;
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="testimonial-rating">${starsHtml}</div>
+                        <p class="testimonial-text">"${testimonial.text}"</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="${testimonial.avatar}" alt="${testimonial.name}">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>${testimonial.name}</h4>
+                                <p>${testimonial.role}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    card.addEventListener('click', function() {
+                        openEditTestimonial(testimonial.id);
+                    });
+                    
+                    testimonialsGrid.appendChild(card);
+                });
+            }
+            
+            function openEditTestimonial(id) {
+                const testimonial = testimonials.find(t => t.id === id);
+                if (!testimonial) return;
+                
+                editTestimonialId.value = testimonial.id;
+                editTestimonialName.value = testimonial.name;
+                editTestimonialRole.value = testimonial.role;
+                editTestimonialText.value = testimonial.text;
+                currentEditRating = testimonial.rating;
+                editTestimonialRating.value = testimonial.rating;
+                
+                editRatingStars.forEach((star, index) => {
+                    star.style.color = index < testimonial.rating ? '#ffc107' : '#e9ecef';
+                });
+                
+                testimonialEditModal.classList.add('active');
+            }
+            
+            editRatingStars.forEach(star => {
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    editRatingStars.forEach((s, index) => {
+                        s.style.color = index < rating ? '#ffc107' : '#e9ecef';
+                    });
+                });
+                
+                star.addEventListener('mouseleave', function() {
+                    editRatingStars.forEach((s, index) => {
+                        s.style.color = index < currentEditRating ? '#ffc107' : '#e9ecef';
+                    });
+                });
+                
+                star.addEventListener('click', function() {
+                    currentEditRating = parseInt(this.dataset.rating);
+                    editTestimonialRating.value = currentEditRating;
+                    editRatingStars.forEach((s, index) => {
+                        s.style.color = index < currentEditRating ? '#ffc107' : '#e9ecef';
+                    });
+                });
+            });
+            
+            closeTestimonialEdit.addEventListener('click', () => {
+                testimonialEditModal.classList.remove('active');
+            });
+            
+            testimonialEditModal.addEventListener('click', (e) => {
+                if (e.target === testimonialEditModal) testimonialEditModal.classList.remove('active');
+            });
+            
+            testimonialEditForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const id = parseInt(editTestimonialId.value);
+                const index = testimonials.findIndex(t => t.id === id);
+                if (index !== -1) {
+                    testimonials[index].name = editTestimonialName.value;
+                    testimonials[index].role = editTestimonialRole.value;
+                    testimonials[index].rating = currentEditRating;
+                    testimonials[index].text = editTestimonialText.value;
+                    localStorage.setItem('testimonials', JSON.stringify(testimonials));
+                    renderTestimonials();
+                    testimonialEditModal.classList.remove('active');
+                    // showNotification('Opinión actualizada', true); // COMENTADO
+                }
+            });
+            
+            // ====== NOTIFICACIONES - FUNCIÓN ELIMINADA (SOLO SE COMENTAN LAS LLAMADAS) ======
+            // function showNotification(message, isSuccess = true) { ... } - ELIMINADA
+            
+            // ====== RESETEAR ======
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que deseas resetear todas las personalizaciones?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            });
+            
+            document.getElementById('saveBottomBtn').addEventListener('click', () => {
+                localStorage.setItem('testimonials', JSON.stringify(testimonials));
+                // showNotification('¡Todos los cambios han sido guardados!', true); // COMENTADO
+            });
+            
+            // ====== INICIALIZACIÓN ======
+            renderTestimonials();
+        });
+    </script>
+</body>
+</html>
