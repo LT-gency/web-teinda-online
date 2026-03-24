@@ -18,9 +18,10 @@
             background-color: #f5f7fa;
             color: #333;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Barra lateral con menú fijo */
+        /* Barra lateral con menú fijo - ESTILOS ACTUALIZADOS */
         .sidebar {
             width: 280px;
             background: linear-gradient(to bottom, #0C6BA0, #0A5A88);
@@ -32,6 +33,7 @@
             z-index: 100;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s ease;
         }
 
         .logo {
@@ -51,6 +53,11 @@
 
         .logo h1:hover {
             transform: scale(1.05);
+        }
+
+        .logo h1 a {
+            color: white;
+            text-decoration: none;
         }
 
         .logo span {
@@ -78,6 +85,7 @@
             font-weight: 500;
             text-decoration: none;
             color: white;
+            font-size: 16px;
         }
 
         .categoria-item:hover {
@@ -94,15 +102,63 @@
             margin-right: 12px;
             width: 24px;
             text-align: center;
+            font-size: 18px;
+        }
+
+        /* Contenedor para el menú con subcategorías */
+        .categoria-menu-container {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        /* Estilo para el item que tiene submenú */
+        .categoria-item-parent {
+            padding: 15px;
+            margin-bottom: 0;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 500;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .categoria-item-parent:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .categoria-item-parent i:first-child {
+            margin-right: 12px;
+            width: 24px;
+            font-size: 18px;
+        }
+
+        .categoria-item-parent .menu-arrow {
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+
+        .categoria-item-parent .menu-arrow.rotated {
+            transform: rotate(180deg);
         }
 
         .subcategorias {
-            max-height: 300px;
+            max-height: 0;
             overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
             background-color: rgba(0, 0, 0, 0.1);
             border-radius: 0 0 8px 8px;
-            margin-top: -8px;
-            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        .subcategorias.show {
+            max-height: 300px;
+            opacity: 1;
+            padding: 10px 0;
         }
 
         .subcategoria-item {
@@ -131,6 +187,7 @@
         .subcategoria-item i {
             margin-right: 10px;
             font-size: 12px;
+            width: 20px;
         }
 
         .botones-lateral {
@@ -156,6 +213,7 @@
             justify-content: center;
             gap: 10px;
             width: 100%;
+            text-decoration: none;
         }
 
         .btn-subir-negocio:hover {
@@ -198,12 +256,192 @@
             font-weight: 500;
             transition: color 0.3s;
             padding: 5px 0;
+            font-size: 16px;
         }
 
         .nav-links a:hover {
             color: #0C6BA0;
         }
 
+        /* ===== BOTÓN HAMBURGUESA PARA MÓVIL ===== */
+        .menu-toggle-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: #0C6BA0;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle-btn:hover {
+            background: #0A5A88;
+            transform: scale(1.05);
+        }
+
+        /* Overlay para cerrar menú al hacer clic fuera */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ===== RESPONSIVIDAD MÓVIL ===== */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                display: block;
+            }
+            
+            /* Sidebar oculto por defecto en móvil */
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 280px;
+                height: 100vh;
+                transform: translateX(-100%);
+                z-index: 200;
+                transition: transform 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            }
+            
+            /* Sidebar abierto */
+            .sidebar.menu-open {
+                transform: translateX(0);
+            }
+            
+            /* Botón hamburguesa visible en móvil */
+            .menu-toggle-btn {
+                display: flex;
+            }
+            
+            /* Overlay visible cuando menú está abierto */
+            .menu-overlay.active {
+                display: block;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .top-nav {
+                display: none;
+            }
+            
+            .titulo-banner {
+                padding: 20px;
+                min-height: 120px;
+                margin-top: 70px;
+            }
+
+            .titulo-banner h2 {
+                font-size: 24px;
+            }
+
+            .menu-desplazamiento {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .desktop-view {
+                display: none;
+            }
+            
+            .mobile-view {
+                display: block;
+            }
+
+            .mobile-view .negocios-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .scroll-btn {
+                display: none !important;
+            }
+
+            .modal-galeria {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            .modal-header {
+                grid-column: 1;
+                padding: 15px 20px;
+            }
+
+            .galeria-container {
+                grid-column: 1;
+                grid-row: 2;
+                padding: 20px;
+            }
+
+            .descripcion-container {
+                grid-column: 1;
+                grid-row: 3;
+                border-left: none;
+                border-top: 1px solid #eee;
+                padding: 20px;
+            }
+
+            .imagen-grande-container {
+                height: 300px;
+            }
+
+            .grid-imagenes-modal {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-view .negocios-grid {
+                gap: 10px;
+            }
+
+            .mobile-view .card-categoria-flotante {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+
+            .pagina-btn {
+                min-width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+
+            .pagina-actual-info {
+                font-size: 12px;
+                margin-right: 5px;
+                padding-right: 5px;
+            }
+        }
+
+        /* Resto de estilos originales (negocios-container, tarjetas, modal, etc.) */
         .negocios-container {
             padding: 30px;
             flex: 1;
@@ -299,55 +537,6 @@
             padding-right: 10px;
             border-right: 1px solid #e0e0e0;
             white-space: nowrap;
-        }
-
-        /* ============================================ */
-        /* ESTILO DE ESCRITORIO - Botones minimalistas */
-        /* ============================================ */
-        
-        .fila-contenedor {
-            position: relative;
-            margin-bottom: 30px;
-        }
-
-        .scroll-btn {
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background-color: #f0f0f0;
-            color: #0C6BA0;
-            border: 1px solid #ddd;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-            z-index: 20;
-        }
-
-        .scroll-btn.visible {
-            display: flex;
-        }
-
-        .scroll-btn:hover {
-            background-color: #e0e0e0;
-            color: #0A5A88;
-            border-color: #ccc;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .scroll-btn:active {
-            transform: translateY(-50%) scale(0.95);
-        }
-
-        .scroll-btn i {
-            pointer-events: none;
         }
 
         .desktop-view .fila-1, 
@@ -789,132 +978,18 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
         }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
-            
-            body {
-                flex-direction: column;
-            }
-            
-            .top-nav {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
-            }
-            
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-
-            .titulo-banner {
-                padding: 20px;
-                min-height: 120px;
-            }
-
-            .titulo-banner h2 {
-                font-size: 24px;
-            }
-
-            .menu-desplazamiento {
-                position: relative;
-                bottom: auto;
-                right: auto;
-                margin-top: 15px;
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .desktop-view {
-                display: none;
-            }
-            
-            .mobile-view {
-                display: block;
-            }
-
-            .mobile-view .negocios-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .scroll-btn {
-                display: none !important;
-            }
-
-            .modal-galeria {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
-                max-height: 95vh;
-                overflow-y: auto;
-            }
-
-            .modal-header {
-                grid-column: 1;
-                padding: 15px 20px;
-            }
-
-            .galeria-container {
-                grid-column: 1;
-                grid-row: 2;
-                padding: 20px;
-            }
-
-            .descripcion-container {
-                grid-column: 1;
-                grid-row: 3;
-                border-left: none;
-                border-top: 1px solid #eee;
-                padding: 20px;
-            }
-
-            .imagen-grande-container {
-                height: 300px;
-            }
-
-            .grid-imagenes-modal {
-                height: 150px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .mobile-view .negocios-grid {
-                gap: 10px;
-            }
-
-            .mobile-view .card-categoria-flotante {
-                font-size: 10px;
-                padding: 3px 8px;
-            }
-
-            .pagina-btn {
-                min-width: 30px;
-                height: 30px;
-                font-size: 12px;
-            }
-
-            .pagina-actual-info {
-                font-size: 12px;
-                margin-right: 5px;
-                padding-right: 5px;
-            }
-        }
     </style>
 </head>
 <body>
-    <aside class="sidebar">
+    <!-- BOTÓN HAMBURGUESA PARA MÓVIL -->
+    <button class="menu-toggle-btn" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- OVERLAY PARA CERRAR MENÚ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <a href="index.html" style="text-decoration: none; color: inherit;">
                 <h1>LIFE <span>TIMES</span></h1>
@@ -929,13 +1004,15 @@
             </a>
             
             <div class="categoria-menu-container">
-                <a href="Servicio Minoritario.html" class="categoria-item">
-                    <i class="fas fa-handshake"></i>
-                    <span>Servicio minoritario</span>
-                    <i class="fas fa-chevron-down" style="margin-left: auto; margin-right: 0; font-size: 12px; transform: rotate(180deg);"></i>
-                </a>
+                <div class="categoria-item-parent" id="servicioMinoritarioParent">
+                    <div>
+                        <i class="fas fa-handshake"></i>
+                        <span>Servicio minoritario</span>
+                    </div>
+                    <i class="fas fa-chevron-down menu-arrow" id="submenuArrow"></i>
+                </div>
                 
-                <div class="subcategorias">
+                <div class="subcategorias" id="submenuServicioMinoritario">
                     <a href="Accesorios-minoritario.html" class="subcategoria-item">
                         <i class="fas fa-gem"></i>
                         <span>Accesorios</span>
@@ -1060,6 +1137,89 @@
     </div>
 
     <script>
+        // ============================================
+        // MENÚ DESPLEGABLE PARA MÓVIL
+        // ============================================
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        function openMenu() {
+            sidebar.classList.add('menu-open');
+            menuOverlay.classList.add('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        
+        function closeMenu() {
+            sidebar.classList.remove('menu-open');
+            menuOverlay.classList.remove('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        function toggleMenu() {
+            if (sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+        
+        if (menuToggleBtn) {
+            menuToggleBtn.addEventListener('click', toggleMenu);
+        }
+        
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        // ============ CORRECCIÓN: Cerrar menú SOLO en enlaces que navegan ============
+        const navigationLinks = document.querySelectorAll('.categoria-item[href], .subcategoria-item, .btn-subir-negocio');
+        
+        navigationLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
+                    setTimeout(closeMenu, 100);
+                }
+            });
+        });
+        
+        // El elemento "Servicio minoritario" (con submenú) NO debe cerrar el menú principal
+        const servicioMinoritarioParent = document.getElementById('servicioMinoritarioParent');
+        const submenuServicioMinoritario = document.getElementById('submenuServicioMinoritario');
+        const submenuArrow = document.getElementById('submenuArrow');
+        
+        if (servicioMinoritarioParent && submenuServicioMinoritario) {
+            servicioMinoritarioParent.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                submenuServicioMinoritario.classList.toggle('show');
+                if (submenuArrow) submenuArrow.classList.toggle('rotated');
+            });
+            
+            document.addEventListener('click', function(e) {
+                const container = document.querySelector('.categoria-menu-container');
+                if (container && !container.contains(e.target)) {
+                    submenuServicioMinoritario.classList.remove('show');
+                    if (submenuArrow) submenuArrow.classList.remove('rotated');
+                }
+            });
+            
+            submenuServicioMinoritario.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+        
+        // Ajustar al cambiar tamaño de ventana
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            }
+        });
+
+        // ============================================
+        // DATOS Y FUNCIONALIDAD ORIGINAL
+        // ============================================
         const negociosArtesanias = [
             {
                 nombre: "Cerámica Tradicional Mexicana",
