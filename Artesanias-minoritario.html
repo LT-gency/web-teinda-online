@@ -385,7 +385,7 @@
                 display: none !important;
             }
 
-            /* Estilos para modal en móvil */
+            /* Estilos para modal en móvil - MEJORADOS */
             .modal-galeria {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto auto auto;
@@ -413,11 +413,12 @@
             }
 
             .imagen-grande-container {
-                height: 300px;
+                height: 250px;
             }
 
             .grid-imagenes-modal {
-                height: 150px;
+                height: 120px;
+                gap: 8px;
             }
         }
 
@@ -778,7 +779,7 @@
             font-size: 14px;
         }
 
-        /* ===== ESTILOS DEL MODAL CORREGIDOS - MISMO QUE EL SEGUNDO CÓDIGO ===== */
+        /* ===== ESTILOS DEL MODAL MEJORADOS - MINI BOX CON 3 IMÁGENES ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -804,9 +805,9 @@
 
         .modal-galeria {
             background-color: white;
-            border-radius: 12px;
+            border-radius: 20px;
             width: 100%;
-            max-width: 1400px;
+            max-width: 1200px;
             position: relative;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -816,6 +817,7 @@
             transition: transform 0.3s ease;
             max-height: 90vh;
             overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
         }
 
         .modal-header {
@@ -832,7 +834,7 @@
         .modal-header h2 {
             color: #000000;
             font-size: 28px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .modal-categoria {
@@ -842,6 +844,7 @@
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 14px;
+            font-weight: 500;
         }
 
         .btn-cerrar-modal {
@@ -850,15 +853,19 @@
             font-size: 28px;
             color: #888;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.3s;
             width: 40px;
             height: 40px;
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-cerrar-modal:hover {
             color: #0C6BA0;
             background-color: #f5f5f5;
+            transform: rotate(90deg);
         }
 
         .galeria-container {
@@ -868,46 +875,54 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            background: #fafafa;
         }
 
         .imagen-grande-container {
             width: 100%;
             height: 400px;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            background-color: #f8f9fa;
+            background-color: #f0f0f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .imagen-grande-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .imagen-grande-container img:hover {
+            transform: scale(1.02);
         }
 
         .grid-imagenes-modal {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
             gap: 12px;
-            height: 200px;
+            height: 120px;
         }
 
         .imagen-modal-mini {
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
-            background-color: #f0f0f0;
+            background-color: #e0e0e0;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            position: relative;
         }
 
         .imagen-modal-mini:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .imagen-modal-mini.active {
             border-color: #0C6BA0;
+            transform: scale(1.02);
         }
 
         .imagen-modal-mini img {
@@ -920,37 +935,52 @@
             padding: 30px;
             grid-column: 2;
             grid-row: 2;
-            background-color: #fafafa;
+            background-color: white;
             border-left: 1px solid #eee;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .descripcion-titulo {
             color: #000000;
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #0C6BA0;
+            display: inline-block;
         }
 
         .descripcion-texto {
-            color: #333;
+            color: #555;
             line-height: 1.8;
             font-size: 16px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            text-align: justify;
         }
 
         .modal-precio {
-            font-size: 1.5rem;
+            font-size: 28px;
             font-weight: 700;
-            color: #000000;
+            color: #0C6BA0;
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f0f8 100%);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .modal-precio span {
+            font-size: 16px;
+            color: #666;
+            font-weight: 400;
         }
 
         .btn-whatsapp-modal {
             background-color: #25D366;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 14px 25px;
             font-size: 16px;
             font-weight: 600;
@@ -969,6 +999,19 @@
             background-color: #128C7E;
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .info-adicional {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .info-adicional i {
+            color: #0C6BA0;
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -1207,34 +1250,34 @@
         });
 
         // ============================================
-        // DATOS Y FUNCIONALIDAD
+        // DATOS DE NEGOCIOS CON MÁS IMÁGENES
         // ============================================
         const negociosArtesanias = [
             {
                 nombre: "Cerámica Tradicional Mexicana",
                 categoria: "Cerámica y Alfarería",
                 descripcion: "Piezas únicas de barro cocido con técnicas ancestrales y diseños tradicionales mexicanos.",
-                descripcion_larga: "Taller especializado en cerámica tradicional mexicana. Creamos piezas únicas utilizando técnicas ancestrales transmitidas por generaciones: barro negro de Oaxaca, talavera poblana, mayólica y cerámica de alta temperatura. Cada pieza es elaborada a mano, pintada con pigmentos naturales y cocida en horno de leña. Ofrecemos desde vajillas completas hasta piezas decorativas y esculturas.",
-                whatsapp: "+15551112233",
+                descripcion_larga: "Taller especializado en cerámica tradicional mexicana. Creamos piezas únicas utilizando técnicas ancestrales transmitidas por generaciones: barro negro de Oaxaca, talavera poblana, mayólica y cerámica de alta temperatura. Cada pieza es elaborada a mano, pintada con pigmentos naturales y cocida en horno de leña. Ofrecemos desde vajillas completas hasta piezas decorativas y esculturas. Nuestro compromiso es preservar las tradiciones alfareras de México mientras innovamos en diseños contemporáneos.",
+                whatsapp: "+5215551112233",
                 precio: "250 MXN",
                 precio_unidad: "/pieza",
                 imagen: "https://images.unsplash.com/photo-1574732011388-7d9b8c9b8b8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                 imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1574732011388-7d9b8c9b8b8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://images.unsplash.com/photo-1545243421-6b61cc4e3fd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    "https://images.unsplash.com/photo-1545243421-6b61cc4e3fd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe35e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 ]
             },
             {
                 nombre: "Textiles Andinos a Mano",
                 categoria: "Tejidos y Textilería",
                 descripcion: "Tejidos tradicionales peruanos, bolivianos y ecuatorianos elaborados con lana de alpaca y técnicas ancestrales.",
-                descripcion_larga: "Taller especializado en textiles andinos elaborados completamente a mano. Utilizamos lana de alpaca, vicuña y oveja teñida con colorantes naturales extraídos de plantas, minerales e insectos. Técnicas: telar de cintura, telar de pedal, tejido a palillo y bordado tradicional. Productos: ponchos, chales, mantas, alfombras, bolsos y prendas de vestir con diseños simbólicos andinos.",
-                whatsapp: "+15552223344",
+                descripcion_larga: "Taller especializado en textiles andinos elaborados completamente a mano. Utilizamos lana de alpaca, vicuña y oveja teñida con colorantes naturales extraídos de plantas, minerales e insectos. Técnicas: telar de cintura, telar de pedal, tejido a palillo y bordado tradicional. Productos: ponchos, chales, mantas, alfombras, bolsos y prendas de vestir con diseños simbólicos andinos que representan la cosmovisión de los pueblos originarios.",
+                whatsapp: "+5215552223344",
                 precio: "180 MXN",
                 precio_unidad: "/metro",
                 imagen: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                 imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1533228100845-08145b01de14?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                     "https://images.unsplash.com/photo-1574732011388-7d9b8c9b8b8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 ]
             },
@@ -1242,13 +1285,13 @@
                 nombre: "Taller de Cestería Indígena",
                 categoria: "Cestería y Fibra Natural",
                 descripcion: "Cestas, canastos y objetos utilitarios tejidos con fibras naturales de palma, junco y bejuco.",
-                descripcion_larga: "Taller dedicado a la cestería tradicional indígena. Utilizamos fibras naturales recolectadas de manera sostenible: palma, junco, bejuco, mimbre y carrizo. Cada pieza es tejida a mano utilizando técnicas ancestrales de diferentes grupos indígenas. Productos: cestas de diferentes tamaños y formas, canastos para pan, bandejas, tapetes, sombreros y objetos decorativos. Trabajamos por encargo y restauración de piezas antiguas.",
-                whatsapp: "+15553334455",
+                descripcion_larga: "Taller dedicado a la cestería tradicional indígena. Utilizamos fibras naturales recolectadas de manera sostenible: palma, junco, bejuco, mimbre y carrizo. Cada pieza es tejida a mano utilizando técnicas ancestrales de diferentes grupos indígenas. Productos: cestas de diferentes tamaños y formas, canastos para pan, bandejas, tapetes, sombreros y objetos decorativos. Trabajamos por encargo y restauración de piezas antiguas. Promovemos el comercio justo y la preservación de estas técnicas milenarias.",
+                whatsapp: "+5215553334455",
                 precio: "75 MXN",
                 precio_unidad: "/unidad",
                 imagen: "https://images.unsplash.com/photo-1565638428465-7c2c1f60e5cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                 imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1565638428465-7c2c1f60e5cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1545243421-6b61cc4e3fd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                     "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 ]
             },
@@ -1256,13 +1299,13 @@
                 nombre: "Orfebrería Precolombina",
                 categoria: "Metalistería y Joyería",
                 descripcion: "Joyas y objetos rituales en oro, plata y cobre con técnicas prehispánicas de fundición y martillado.",
-                descripcion_larga: "Taller especializado en orfebrería precolombina. Recuperamos técnicas ancestrales de fundición a la cera perdida, martillado, repujado y filigrana utilizadas por culturas prehispánicas. Trabajamos con metales nobles: oro, plata, cobre y tumbaga (aleación de oro y cobre). Creamos reproducciones de piezas museísticas y diseños contemporáneos inspirados en iconografía precolombina: collares, pectorales, narigueras, orejeras y objetos rituales.",
-                whatsapp: "+15554445566",
+                descripcion_larga: "Taller especializado en orfebrería precolombina. Recuperamos técnicas ancestrales de fundición a la cera perdida, martillado, repujado y filigrana utilizadas por culturas prehispánicas. Trabajamos con metales nobles: oro, plata, cobre y tumbaga (aleación de oro y cobre). Creamos reproducciones de piezas museísticas y diseños contemporáneos inspirados en iconografía precolombina: collares, pectorales, narigueras, orejeras y objetos rituales. Cada pieza es única y certificada.",
+                whatsapp: "+5215554445566",
                 precio: "450 MXN",
                 precio_unidad: "/pieza",
                 imagen: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                 imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1589674781759-21c379d1d0d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
                     "https://images.unsplash.com/photo-1565638428465-7c2c1f60e5cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 ]
             }
@@ -1334,7 +1377,8 @@
 
         function crearGridImagenesModal(imagenes, imagenPrincipal) {
             gridImagenesModal.innerHTML = '';
-            const todasImagenes = [imagenPrincipal, ...imagenes].slice(0, 6);
+            // Mostrar máximo 3 imágenes en la cuadrícula (más la principal)
+            const todasImagenes = [imagenPrincipal, ...imagenes].slice(0, 4);
             
             todasImagenes.forEach((imagen, index) => {
                 const imagenDiv = document.createElement('div');
@@ -1344,6 +1388,7 @@
                 const img = document.createElement('img');
                 img.src = imagen;
                 img.alt = `Imagen ${index + 1}`;
+                img.loading = "lazy";
                 
                 imagenDiv.appendChild(img);
                 
@@ -1448,7 +1493,7 @@
             
             modalNombre.textContent = negocio.nombre;
             modalCategoria.textContent = negocio.categoria;
-            modalPrecio.innerHTML = `${negocio.precio}<span>${negocio.precio_unidad}</span>`;
+            modalPrecio.innerHTML = `${negocio.precio}<span> ${negocio.precio_unidad}</span>`;
             imagenGrande.src = negocio.imagen;
             descripcionTexto.textContent = negocio.descripcion_larga;
             
@@ -1459,6 +1504,10 @@
                 <a href="${enlaceWhatsapp}" target="_blank" class="btn-whatsapp-modal">
                     <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
                 </a>
+                <div class="info-adicional">
+                    <i class="fas fa-clock"></i> Respuesta rápida<br>
+                    <i class="fas fa-truck"></i> Envíos a todo el país
+                </div>
             `;
             
             modalOverlay.classList.add('active');
