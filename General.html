@@ -6,8 +6,6 @@
     <title>LIFE TIMES - General</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== MISMOS ESTILOS QUE EN COMERCIO ===== */
-        /* Copia todos los estilos de la versión de Comercio aquí */
         * {
             margin: 0;
             padding: 0;
@@ -35,6 +33,7 @@
             z-index: 100;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s ease;
         }
 
         .logo {
@@ -78,7 +77,7 @@
             flex-direction: column;
         }
 
-        /* Estilo base para todos los items del menú - ADAPTADO DEL PRIMER CÓDIGO */
+        /* Estilo base para todos los items del menú */
         .categoria-item {
             display: flex;
             align-items: center;
@@ -90,7 +89,7 @@
             color: white;
             width: 100%;
             font-size: 16px;
-            font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+            font-weight: 500;
         }
 
         .categoria-item:hover {
@@ -131,7 +130,7 @@
             transform: translateX(5px);
         }
 
-        /* Enlace de Alimentos - ADAPTADO DEL PRIMER CÓDIGO */
+        /* Enlace de Alimentos */
         .alimentos-link {
             flex: 1;
             display: flex;
@@ -140,7 +139,7 @@
             text-decoration: none;
             color: white;
             font-size: 16px;
-            font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+            font-weight: 500;
             border-radius: 8px 0 0 8px;
         }
 
@@ -153,7 +152,7 @@
 
         /* Botón de la flecha */
         .alimentos-toggle {
-            width: 50px;
+            width: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -216,7 +215,7 @@
             font-size: 16px;
         }
 
-        /* Botones laterales - ADAPTADOS DEL PRIMER CÓDIGO */
+        /* Botones laterales */
         .botones-lateral {
             display: flex;
             flex-direction: column;
@@ -251,8 +250,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .btn-subir-negocio i,
-        .btn-incrementar-ventas i {
+        .btn-subir-negocio i {
             font-size: 18px;
         }
 
@@ -292,7 +290,7 @@
             font-weight: 500;
             transition: color 0.3s;
             padding: 5px 0;
-            font-size: 16px; /* AJUSTADO DEL PRIMER CÓDIGO */
+            font-size: 16px;
         }
 
         .nav-links a:hover {
@@ -572,7 +570,46 @@
             text-transform: uppercase;
         }
 
-        /* ===== NUEVO NAVBAR INFERIOR PARA MÓVIL ===== */
+        /* ===== BOTÓN HAMBURGUESA PARA MÓVIL ===== */
+        .menu-toggle-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: #C90F0F;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle-btn:hover {
+            background: #A00C0C;
+            transform: scale(1.05);
+        }
+
+        /* Overlay para cerrar menú al hacer clic fuera */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ===== NAVBAR INFERIOR PARA MÓVIL ===== */
         .mobile-bottom-nav {
             display: none;
             position: fixed;
@@ -622,22 +659,43 @@
             opacity: 0.8;
         }
 
-        /* ===== VERSIÓN MÓVIL ===== */
+        /* ===== VERSIÓN MÓVIL - MENÚ DESPLEGABLE ===== */
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
                 overflow-y: auto;
                 height: auto;
                 min-height: 100vh;
-                padding-bottom: 60px; /* Espacio para el navbar inferior */
+                padding-bottom: 60px;
+                display: block;
             }
             
+            /* Sidebar oculto por defecto en móvil */
             .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-                overflow-y: visible;
-                flex-shrink: 0;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 280px;
+                height: 100vh;
+                transform: translateX(-100%);
+                z-index: 200;
+                transition: transform 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            }
+            
+            /* Sidebar abierto */
+            .sidebar.menu-open {
+                transform: translateX(0);
+            }
+            
+            /* Botón hamburguesa visible en móvil */
+            .menu-toggle-btn {
+                display: flex;
+            }
+            
+            /* Overlay visible cuando menú está abierto */
+            .menu-overlay.active {
+                display: block;
             }
             
             .logo {
@@ -662,7 +720,7 @@
                 padding: 16px 18px;
                 margin: 0 0 8px 0;
                 font-size: 17px;
-                font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+                font-weight: 500;
             }
             
             .categoria-item i {
@@ -677,7 +735,7 @@
             .alimentos-link {
                 padding: 16px 18px;
                 font-size: 17px;
-                font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+                font-weight: 500;
             }
             
             .alimentos-link i {
@@ -687,6 +745,7 @@
             
             .alimentos-toggle {
                 padding: 16px 0;
+                width: 50px;
             }
             
             .submenu-zonas {
@@ -716,7 +775,7 @@
             .btn-subir-negocio {
                 padding: 16px;
                 font-size: 16px;
-                font-weight: 600; /* AÑADIDO DEL PRIMER CÓDIGO */
+                font-weight: 600;
             }
             
             .main-content {
@@ -815,7 +874,7 @@
             .categoria-item, .alimentos-link {
                 padding: 15px 16px;
                 font-size: 16px;
-                font-weight: 500; /* AÑADIDO DEL PRIMER CÓDIGO */
+                font-weight: 500;
             }
             
             .negocio-titulo {
@@ -840,7 +899,7 @@
             .btn-subir-negocio {
                 padding: 15px;
                 font-size: 15px;
-                font-weight: 600; /* AÑADIDO DEL PRIMER CÓDIGO */
+                font-weight: 600;
             }
             
             .btn-mirar-mas {
@@ -868,8 +927,16 @@
     </style>
 </head>
 <body>
+    <!-- BOTÓN HAMBURGUESA PARA MÓVIL -->
+    <button class="menu-toggle-btn" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- OVERLAY PARA CERRAR MENÚ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
     <!-- MENÚ LATERAL -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <a href="Index.html" style="text-decoration: none; color: inherit;">
                 <h1>LIFE <span>TIMES</span></h1>
@@ -904,7 +971,7 @@
                         <span>Alimentos</span>
                     </a>
                     <button class="alimentos-toggle" id="alimentos-toggle">
-                        <i class="fas fa-chevron-down submenu-arrow"></i>
+                        <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
                 
@@ -932,8 +999,6 @@
                     <span>Cómo publicar</span>
                 </button>
             </a>
-            
-            <!-- Botón Incrementar ventas eliminado -->
         </div>
     </aside>
 
@@ -969,23 +1034,64 @@
 
     <script>
         // ============================================
-        // CONFIGURACIÓN DEL SUBMENÚ DE ALIMENTOS
+        // MENÚ DESPLEGABLE PARA MÓVIL
         // ============================================
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        function openMenu() {
+            sidebar.classList.add('menu-open');
+            menuOverlay.classList.add('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        
+        function closeMenu() {
+            sidebar.classList.remove('menu-open');
+            menuOverlay.classList.remove('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        function toggleMenu() {
+            if (sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+        
+        if (menuToggleBtn) {
+            menuToggleBtn.addEventListener('click', toggleMenu);
+        }
+        
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        // ============ CORRECCIÓN: Cerrar menú SOLO en enlaces que navegan ============
+        const navigationLinks = document.querySelectorAll('.categoria-item[href], .alimentos-link, .submenu-item, .btn-subir-negocio');
+        
+        navigationLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
+                    setTimeout(closeMenu, 100);
+                }
+            });
+        });
+        
+        // El elemento "Alimentos" (con submenú) NO debe cerrar el menú principal
         const alimentosToggle = document.getElementById('alimentos-toggle');
         const submenuZonas = document.getElementById('submenu-zonas');
         
         if (alimentosToggle && submenuZonas) {
-            // Al hacer clic en el botón de la flecha, se abre/cierra el submenú
             alimentosToggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Alternar clases active
                 submenuZonas.classList.toggle('active');
                 alimentosToggle.classList.toggle('active');
             });
             
-            // Cerrar el submenú si se hace clic fuera de él
             document.addEventListener('click', function(e) {
                 const alimentosContainer = document.querySelector('.alimentos-container');
                 if (alimentosContainer && !alimentosContainer.contains(e.target)) {
@@ -994,6 +1100,13 @@
                 }
             });
         }
+        
+        // Ajustar al cambiar tamaño de ventana
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            }
+        });
 
         // ============================================
         // DATOS DE LOS NEGOCIOS - SOLO UN NEGOCIO
@@ -1004,8 +1117,6 @@
                 categoria: "Mobiliario",
                 descripcion: "Diseño, calidad y comodidad para tu hogar",
                 imagenes: [
-                    "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-                    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
                     "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
                     "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
                 ],
@@ -1028,7 +1139,6 @@
 
         // Función para cargar todos los negocios
         function cargarNegocios() {
-            // Limpiar el contenedor pero conservar el botón
             const botonMirarMas = document.getElementById('btn-mirar-mas');
             visorContainer.innerHTML = '';
             
@@ -1037,11 +1147,9 @@
                 negocioSlide.className = `negocio-slide ${index === 0 ? 'active' : ''}`;
                 negocioSlide.id = `negocio-${index}`;
                 
-                // Crear contenedor de imágenes
                 const imagenesDiv = document.createElement('div');
                 imagenesDiv.className = 'imagenes-negocio';
                 
-                // Añadir cada imagen
                 negocio.imagenes.forEach((imgSrc, imgIndex) => {
                     const img = document.createElement('img');
                     img.src = imgSrc;
@@ -1052,12 +1160,10 @@
                     imagenesDiv.appendChild(img);
                 });
                 
-                // Añadir overlay
                 const overlay = document.createElement('div');
                 overlay.className = 'negocio-overlay';
                 imagenesDiv.appendChild(overlay);
                 
-                // Crear info del negocio
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'negocio-info';
                 infoDiv.innerHTML = `
@@ -1066,7 +1172,6 @@
                     <div class="negocio-categoria"><i class="fas fa-tag"></i> ${negocio.categoria}</div>
                 `;
                 
-                // Crear botón "Ver más"
                 const btnVerMas = document.createElement('a');
                 btnVerMas.href = negocio.url_destino;
                 btnVerMas.className = 'btn-ver-mas-negocio';
@@ -1075,7 +1180,6 @@
                     VER MÁS
                 `;
                 
-                // Ensamblar slide
                 negocioSlide.appendChild(imagenesDiv);
                 negocioSlide.appendChild(infoDiv);
                 negocioSlide.appendChild(btnVerMas);
@@ -1083,7 +1187,6 @@
                 visorContainer.appendChild(negocioSlide);
             });
             
-            // Volvemos a agregar el botón después de los slides
             visorContainer.appendChild(botonMirarMas);
         }
 
@@ -1095,26 +1198,20 @@
             const imagenes = slideActual.querySelectorAll('.imagen-negocio');
             const imagenActualIndex = imagenActualPorNegocio[negocioActual];
             
-            // Quitar clase active de la imagen actual
             imagenes[imagenActualIndex].classList.remove('active');
-            
-            // Calcular siguiente imagen
             const siguienteIndex = (imagenActualIndex + 1) % imagenes.length;
-            
-            // Añadir clase active a la nueva imagen
             imagenes[siguienteIndex].classList.add('active');
-            
-            // Actualizar estado
             imagenActualPorNegocio[negocioActual] = siguienteIndex;
         }
 
         // Event Listeners
-        btnMirarMas.addEventListener('click', (e) => {
-            e.preventDefault();
-            cambiarImagen();
-        });
+        if (btnMirarMas) {
+            btnMirarMas.addEventListener('click', (e) => {
+                e.preventDefault();
+                cambiarImagen();
+            });
+        }
 
-        // Soporte para teclado
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') {
                 e.preventDefault();
@@ -1122,7 +1219,6 @@
             }
         });
 
-        // Inicializar
         document.addEventListener('DOMContentLoaded', cargarNegocios);
     </script>
 </body>
