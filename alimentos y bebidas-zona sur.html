@@ -326,7 +326,7 @@
             align-items: center;
         }
 
-        /* RESTANTES ESTILOS ORIGINALES (sin cambios para las tarjetas) */
+        /* RESTANTES ESTILOS ORIGINALES CON AJUSTES DE TAMAÑO */
         .fila-1, .fila-2, .fila-3, .fila-preferidos {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -341,7 +341,8 @@
             transition: all 0.25s ease;
             display: flex;
             flex-direction: column;
-            aspect-ratio: 2/3;
+            /* === CAMBIO CLAVE: aspect-ratio cambiado de 2/3 a 3/4 para igualar al primer código === */
+            aspect-ratio: 3/4;
             opacity: 0;
             transform: translateY(10px);
             animation: fadeInCard 0.4s ease forwards;
@@ -853,9 +854,10 @@
             }
             
             .alimento-card {
+                /* === AJUSTE: Mismo ancho y proporción que en el primer código para móvil === */
                 width: 260px;
                 min-width: 260px;
-                aspect-ratio: 2/3;
+                aspect-ratio: 3/4; /* Coincide con el cambio de escritorio */
                 scroll-snap-align: start;
                 flex-shrink: 0;
             }
@@ -919,6 +921,7 @@
 
         @media (max-width: 600px) {
             .alimento-card {
+                /* === AJUSTE: Mismo ancho que en el primer código para móviles más pequeños === */
                 width: 240px;
                 min-width: 240px;
             }
@@ -938,6 +941,7 @@
 
         @media (max-width: 480px) {
             .alimento-card {
+                /* === AJUSTE: Mismo ancho que en el primer código para móviles muy pequeños === */
                 width: 220px;
                 min-width: 220px;
             }
