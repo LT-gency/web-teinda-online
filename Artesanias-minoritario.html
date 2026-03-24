@@ -345,24 +345,27 @@
                 display: none;
             }
             
+            /* BANNER MÁS PEQUEÑO EN MÓVIL */
             .titulo-banner {
-                padding: 20px;
-                min-height: 120px;
+                padding: 15px 20px !important;
+                min-height: auto !important;
                 margin-top: 70px;
+                margin-bottom: 20px !important;
             }
 
             .titulo-banner h2 {
-                font-size: 24px;
+                font-size: 20px !important;
+                margin-bottom: 5px !important;
             }
 
+            .titulo-banner p {
+                font-size: 12px !important;
+                display: none; /* Ocultamos el subtítulo en móvil para más compactación */
+            }
+
+            /* Ocultamos el menú de paginación en móvil (ya no se muestra "Página 1 de 1") */
             .menu-desplazamiento {
-                position: relative;
-                bottom: auto;
-                right: auto;
-                margin-top: 15px;
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
+                display: none !important;
             }
 
             .desktop-view {
@@ -426,18 +429,6 @@
             .mobile-view .card-categoria-flotante {
                 font-size: 10px;
                 padding: 3px 8px;
-            }
-
-            .pagina-btn {
-                min-width: 30px;
-                height: 30px;
-                font-size: 12px;
-            }
-
-            .pagina-actual-info {
-                font-size: 12px;
-                margin-right: 5px;
-                padding-right: 5px;
             }
         }
 
@@ -1453,10 +1444,11 @@
                 negociosGrid.appendChild(crearTarjeta(negocio));
             });
             
-            actualizarMenuPaginacion(pagina);
+            // Ya no mostramos la paginación en móvil
         }
 
         function actualizarMenuPaginacion(pagina) {
+            // Esta función ya no se usa en móvil, pero la mantenemos para escritorio
             let menuHTML = `<span class="pagina-actual-info">Página ${pagina} de ${totalPaginas}</span>`;
             
             menuHTML += `<button class="pagina-btn ${pagina === 1 ? 'disabled' : ''}" data-pagina="${pagina - 1}" ${pagina === 1 ? 'disabled' : ''}>‹</button>`;
