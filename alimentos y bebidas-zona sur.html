@@ -188,35 +188,34 @@
 
         /* BANNER */
         .titulo-banner {
-            background-color: #c90f0f;
-            padding: 35px 40px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 20px rgba(201, 15, 15, 0.3);
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 25px 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eaeaea;
             position: relative;
-            min-height: 160px;
+            min-height: 140px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .titulo-banner h2 {
-            color: #ffffff;
-            font-size: 34px;
-            margin-bottom: 12px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            color: #000000;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .titulo-banner p {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 18px;
+            color: #555;
+            font-size: 16px;
             font-weight: 500;
             padding-left: 5px;
-            max-width: 80%;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         /* ===== BOTÓN HAMBURGUESA PARA MÓVIL ===== */
@@ -326,13 +325,12 @@
             align-items: center;
         }
 
-        /* RESTANTES ESTILOS ORIGINALES CON AJUSTES DE TAMAÑO */
-        /* === CAMBIO CLAVE 1: Aspect-ratio cambiado de 2/3 a 3/4 para igualar al primer código === */
+        /* ESTILOS DE TARJETAS - IGUAL AL PRIMER CÓDIGO */
         .fila-1, .fila-2, .fila-3, .fila-preferidos {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .alimento-card {
@@ -342,17 +340,12 @@
             transition: all 0.25s ease;
             display: flex;
             flex-direction: column;
-            /* === CAMBIO CLAVE: aspect-ratio cambiado de 2/3 a 3/4 para igualar al primer código === */
             aspect-ratio: 3/4;
             opacity: 0;
             transform: translateY(10px);
             animation: fadeInCard 0.4s ease forwards;
             cursor: pointer;
             position: relative;
-        }
-
-        .alimento-card:hover {
-            transform: translateY(-2px);
         }
 
         @keyframes fadeInCard {
@@ -391,7 +384,6 @@
             object-fit: cover;
             transition: transform 0.4s ease;
             opacity: 0;
-            transition: opacity 0.3s ease, transform 0.4s ease;
         }
 
         .card-imagen img.loaded {
@@ -400,18 +392,16 @@
 
         .card-categoria-flotante {
             position: absolute;
-            top: 12px;
-            left: 12px;
-            background-color: #c90f0f;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(201, 15, 15, 0.9);
             color: white;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 30px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
             z-index: 5;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(201,15,15,0.3);
-            text-transform: uppercase;
+            backdrop-filter: blur(4px);
         }
 
         .card-content {
@@ -423,15 +413,11 @@
             background: transparent;
         }
 
-        .card-header {
-            margin-bottom: 10px;
-        }
-
         .card-header h3 {
             color: #000000;
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             line-height: 1.3;
             display: -webkit-box;
             -webkit-line-clamp: 1;
@@ -443,20 +429,12 @@
             color: #555;
             line-height: 1.5;
             font-size: 14px;
-            margin-bottom: 16px;
+            margin-bottom: 15px;
             display: -webkit-box;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
             flex: 1;
-            font-weight: 400;
-        }
-
-        .card-footer {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
         }
 
         .btn-ver-mas-card {
@@ -464,9 +442,9 @@
             color: white;
             border: none;
             border-radius: 30px;
-            padding: 12px 0;
-            font-size: 15px;
-            font-weight: 700;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
@@ -474,14 +452,6 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            letter-spacing: 0.3px;
-            box-shadow: 0 4px 10px rgba(201, 15, 15, 0.2);
-        }
-
-        .btn-ver-mas-card:hover {
-            background-color: #a00c0c;
-            transform: scale(1.02);
-            box-shadow: 0 6px 16px rgba(201, 15, 15, 0.4);
         }
 
         .card-ubicacion {
@@ -489,75 +459,57 @@
             align-items: center;
             gap: 8px;
             padding: 8px 0 4px;
+            border-top: 1px solid #e0e0e0;
             color: #666;
             font-size: 13px;
-            border-top: 1px solid #e0e0e0;
         }
 
         .card-ubicacion i {
             color: #c90f0f;
-            font-size: 14px;
-            width: 16px;
-        }
-
-        .card-ubicacion span {
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         /* Títulos de sección */
         .fila-titulo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            color: #333;
-            margin: 30px 0 20px 0;
-            padding-left: 0;
+            color: #c90f0f;
+            margin: 30px 0 15px 0;
+            padding-left: 15px;
+            border-left: 5px solid #c90f0f;
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 12px 0;
-            border-bottom: 3px solid #c90f0f;
+            gap: 12px;
+            background: linear-gradient(to right, rgba(201, 15, 15, 0.05), transparent);
+            padding: 12px 20px;
+            border-radius: 0 8px 8px 0;
         }
 
         .fila-titulo i {
-            font-size: 26px;
+            font-size: 24px;
             color: #c90f0f;
             background: white;
-            width: 48px;
-            height: 48px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(201, 15, 15, 0.2);
         }
 
         .fila-titulo span {
-            font-size: 22px;
+            font-size: 20px;
             color: #333;
         }
 
-        .fila-titulo strong {
-            color: #c90f0f;
-            font-weight: 800;
-        }
-
         .fila-titulo.preferidos {
-            border-bottom-color: #ffd700;
+            border-left-color: #ffd700;
         }
         
         .fila-titulo.preferidos i {
             color: #ffd700;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
-        }
-        
-        .fila-titulo.preferidos strong {
-            color: #b8860b;
         }
 
-        /* MODAL - mantener igual */
+        /* MODAL */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -573,7 +525,6 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            overflow-y: auto;
         }
 
         .modal-overlay.active {
@@ -583,19 +534,16 @@
 
         .modal-galeria {
             background-color: white;
-            border-radius: 16px;
+            border-radius: 12px;
             width: 100%;
             max-width: 1400px;
             position: relative;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto 1fr;
-            gap: 0;
             transform: scale(0.95);
             transition: transform 0.3s ease;
             max-height: 90vh;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
         .modal-overlay.active .modal-galeria {
@@ -604,20 +552,17 @@
 
         .modal-header {
             grid-column: 1 / span 2;
-            padding: 25px 30px 15px;
+            padding: 20px 25px;
             background-color: #fff;
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0;
         }
 
         .modal-header h2 {
-            color: #000000;
             font-size: 28px;
             margin-bottom: 5px;
-            line-height: 1.3;
         }
 
         .btn-cerrar-modal {
@@ -626,43 +571,25 @@
             font-size: 28px;
             color: #888;
             cursor: pointer;
-            transition: color 0.3s;
-            padding: 5px;
-            line-height: 1;
             width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .btn-cerrar-modal:hover {
-            color: #c90f0f;
-            background-color: #f5f5f5;
         }
 
         .galeria-container {
-            padding: 30px;
+            padding: 20px;
             grid-column: 1;
-            grid-row: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
         }
 
         .imagen-grande-container {
             width: 100%;
-            height: 450px;
+            height: 350px;
             border-radius: 12px;
             overflow: hidden;
             background-color: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .imagen-grande-container img {
@@ -671,28 +598,24 @@
             object-fit: cover;
         }
 
-        .grid-imagenes-modal {
+        .grid-imagenes-modal-superior,
+        .grid-imagenes-modal-inferior {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 15px;
-            height: 280px;
-            margin-top: 10px;
+            gap: 10px;
+            height: 120px;
+            margin-top: 15px;
         }
 
         .imagen-modal-mini {
             border-radius: 8px;
             overflow: hidden;
-            background-color: #f0f0f0;
             cursor: pointer;
-            transition: all 0.3s ease;
             border: 3px solid transparent;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .imagen-modal-mini.active {
             border-color: #c90f0f;
-            box-shadow: 0 0 0 3px rgba(201, 15, 15, 0.3);
         }
 
         .imagen-modal-mini img {
@@ -702,41 +625,28 @@
         }
 
         .descripcion-container {
-            padding: 30px;
+            padding: 20px;
             grid-column: 2;
-            grid-row: 2;
             background-color: #fafafa;
             border-left: 1px solid #eee;
             overflow-y: auto;
-            max-height: 70vh;
         }
 
         .descripcion-texto {
             color: #333;
-            line-height: 1.8;
+            line-height: 1.7;
             font-size: 16px;
-            margin-bottom: 25px;
-        }
-
-        .info-contacto-section h4 {
-            color: #333;
-            font-size: 18px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
+            margin: 15px 0;
         }
 
         .ubicacion-detalle {
             display: flex;
             align-items: flex-start;
             gap: 15px;
-            padding: 15px;
+            padding: 12px;
             background: white;
             border-radius: 12px;
             border-left: 4px solid #c90f0f;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .ubicacion-icono {
@@ -748,27 +658,38 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .ubicacion-texto .direccion {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 16px;
         }
 
         /* ===== RESPONSIVE CON MENÚ DESPLEGABLE ===== */
         @media (max-width: 1200px) {
-            .fila-1, .fila-2, .fila-3, .fila-preferidos {
+            .fila-preferidos,
+            .fila-1, .fila-2, .fila-3 {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
 
         @media (max-width: 1024px) {
-            .fila-1, .fila-2, .fila-3, .fila-preferidos {
+            .fila-preferidos,
+            .fila-1, .fila-2, .fila-3 {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-galeria {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-header {
+                grid-column: 1;
+            }
+            
+            .galeria-container {
+                grid-column: 1;
+            }
+            
+            .descripcion-container {
+                grid-column: 1;
+                border-left: none;
+                border-top: 1px solid #eee;
             }
         }
 
@@ -810,16 +731,6 @@
                 display: none;
             }
             
-            .botones-lateral {
-                margin: 15px 15px;
-                gap: 12px;
-            }
-            
-            .btn-subir-negocio {
-                padding: 14px;
-                font-size: 15px;
-            }
-            
             .negocios-container {
                 padding-top: 70px;
                 padding-left: 15px;
@@ -827,28 +738,23 @@
             }
             
             .titulo-banner {
-                padding: 25px;
-                min-height: 140px;
+                padding: 20px;
+                min-height: 120px;
             }
             
             .titulo-banner h2 {
-                font-size: 26px;
+                font-size: 24px;
             }
             
-            .titulo-banner p {
-                font-size: 16px;
-                max-width: 100%;
-            }
-            
-            /* === CAMBIO CLAVE 2: Ajuste de scroll horizontal y tamaño de tarjetas para móvil === */
-            .fila-1, .fila-2, .fila-3, .fila-preferidos {
+            .fila-preferidos,
+            .fila-1, .fila-2, .fila-3 {
                 display: flex;
                 flex-direction: row;
-                gap: 16px;
+                gap: 12px;
                 overflow-x: auto;
                 overflow-y: hidden;
                 scroll-snap-type: x mandatory;
-                padding-bottom: 20px;
+                padding-bottom: 15px;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: thin;
                 width: 100%;
@@ -856,112 +762,94 @@
             }
             
             .alimento-card {
-                /* === AJUSTE: Mismo ancho que en el primer código para móvil (260px) === */
-                width: 260px;
-                min-width: 260px;
-                aspect-ratio: 3/4; /* Coincide con el cambio de escritorio */
+                width: 240px;
+                min-width: 240px;
+                aspect-ratio: 3/4;
                 scroll-snap-align: start;
                 flex-shrink: 0;
             }
             
+            .card-imagen {
+                height: 45%;
+            }
+            
+            .card-content {
+                padding: 14px 12px;
+                height: 55%;
+            }
+            
+            .card-header h3 {
+                font-size: 17px;
+            }
+            
+            .card-descripcion {
+                font-size: 13px;
+                -webkit-line-clamp: 3;
+            }
+            
             .fila-titulo {
-                font-size: 20px;
-                margin: 20px 0 15px 0;
-                padding: 10px 0;
+                font-size: 18px;
+                margin: 20px 0 10px 0;
+                padding: 10px 15px;
             }
             
             .fila-titulo i {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-            
-            .fila-titulo span {
+                width: 35px;
+                height: 35px;
                 font-size: 18px;
             }
             
-            .modal-galeria {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
-                max-height: 95vh;
-                overflow-y: auto;
-            }
-            
-            .modal-header {
-                grid-column: 1;
-                grid-row: 1;
-            }
-            
-            .galeria-container {
-                grid-column: 1;
-                grid-row: 2;
-                padding: 20px;
-            }
-            
-            .descripcion-container {
-                grid-column: 1;
-                grid-row: 3;
-                border-left: none;
-                border-top: 1px solid #eee;
-                max-height: none;
-                padding: 20px;
-            }
-            
-            .imagen-grande-container {
-                height: 300px;
-            }
-            
-            .grid-imagenes-modal {
-                height: 200px;
-                gap: 10px;
+            .fila-titulo span {
+                font-size: 16px;
             }
             
             .modal-header h2 {
                 font-size: 20px;
             }
+            
+            .imagen-grande-container {
+                height: 220px;
+            }
+            
+            .grid-imagenes-modal-superior,
+            .grid-imagenes-modal-inferior {
+                height: 80px;
+                gap: 6px;
+            }
         }
 
         @media (max-width: 600px) {
             .alimento-card {
-                /* === AJUSTE: Mismo ancho que en el primer código para móviles más pequeños (240px) === */
-                width: 240px;
-                min-width: 240px;
+                width: 220px;
+                min-width: 220px;
             }
             
             .negocios-container {
                 padding-top: 60px;
             }
-            
-            .titulo-banner h2 {
-                font-size: 22px;
-            }
-            
-            .titulo-banner p {
-                font-size: 15px;
-            }
         }
 
         @media (max-width: 480px) {
             .alimento-card {
-                /* === AJUSTE: Mismo ancho que en el primer código para móviles muy pequeños (220px) === */
-                width: 220px;
-                min-width: 220px;
+                width: 200px;
+                min-width: 200px;
             }
             
             .negocios-container {
                 padding-top: 55px;
             }
             
-            .fila-titulo {
-                font-size: 16px;
-            }
-            
-            .titulo-banner {
-                padding: 20px;
-            }
-            
             .titulo-banner h2 {
                 font-size: 20px;
+            }
+            
+            .imagen-grande-container {
+                height: 170px;
+            }
+            
+            .grid-imagenes-modal-superior,
+            .grid-imagenes-modal-inferior {
+                height: 60px;
             }
         }
     </style>
@@ -1021,7 +909,6 @@
             </a>
         </div>
         
-        <!-- BOTONES LATERALES -->
         <div class="botones-lateral">
             <a href="Subir-negocio.html" style="text-decoration: none;">
                 <button class="btn-subir-negocio">
@@ -1036,46 +923,43 @@
     <main class="main-content">
         <nav class="top-nav">
             <ul class="nav-links">
-                <li><a href="Terminos y condiciones.html" id="terminos-link">Términos y Condiciones</a></li>
-                <li><a href="Index.html" id="historia-link">La Historia</a></li>
-                <li><a href="Servicios.html" id="servicios-link">Servicios</a></li>
+                <li><a href="Terminos y condiciones.html">Términos y Condiciones</a></li>
+                <li><a href="Index.html">La Historia</a></li>
+                <li><a href="Servicios.html">Servicios</a></li>
             </ul>
         </nav>
 
         <section class="negocios-container">
-            <div class="titulo-banner" id="titulo-banner">
-                <h2>Línea de Productos - Zona Sur</h2>
-                <p>Descubre los mejores restaurantes, cafeterías, panaderías y establecimientos de comida en la zona sur de la ciudad</p>
-                
-                <div class="menu-desplazamiento" id="menu-desplazamiento">
-                </div>
+            <div class="titulo-banner">
+                <h2>Sabores y Experiencias Gastronómicas - Zona Sur</h2>
+                <p>Descubre los mejores restaurantes, cafeterías, panaderías y establecimientos de comida en la vibrante Zona Sur de la ciudad</p>
             </div>
             
-            <div class="fila-titulo preferidos" id="titulo-fila-preferidos">
+            <div class="fila-titulo preferidos">
                 <i class="fas fa-star"></i>
                 <span>Nuestros <strong>Preferidos</strong> de la Zona Sur</span>
             </div>
             <div class="fila-preferidos" id="fila-preferidos"></div>
             
-            <div class="fila-titulo" id="titulo-fila-1">
+            <div class="fila-titulo">
                 <i class="fas fa-map-pin"></i>
                 <span>Cerca de Ti: <strong>Coyoacán</strong></span>
             </div>
             <div class="fila-1" id="fila-1"></div>
             
-            <div class="fila-titulo" id="titulo-fila-2">
+            <div class="fila-titulo">
                 <i class="fas fa-map-pin"></i>
                 <span>Cerca de Ti: <strong>Tláhuac y Xochimilco</strong></span>
             </div>
             <div class="fila-2" id="fila-2"></div>
             
-            <div class="fila-titulo" id="titulo-fila-3">
+            <div class="fila-titulo">
                 <i class="fas fa-map-pin"></i>
                 <span>Cerca de Ti: <strong>Milpa Alta y Tlalpan</strong></span>
             </div>
             <div class="fila-3" id="fila-3"></div>
             
-            <div style="text-align: center; color: #666; font-size: 14px; margin-top: 20px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <div style="text-align: center; color: #666; font-size: 14px; margin-top: 20px; padding: 15px; background: white; border-radius: 8px;">
                 <i class="fas fa-store" style="color: #c90f0f; margin-right: 8px;"></i>
                 Mostrando negocios de alimentos y bebidas en la Zona Sur por alcaldías
             </div>
@@ -1086,7 +970,7 @@
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-galeria">
             <div class="modal-header">
-                <div class="modal-header-content">
+                <div>
                     <h2 id="modal-nombre">Nombre del Negocio</h2>
                     <span class="modal-categoria" id="modal-categoria">Categoría</span>
                 </div>
@@ -1099,19 +983,18 @@
                 <div class="imagen-grande-container">
                     <img id="imagen-grande" src="" alt="Imagen principal">
                 </div>
-                <div class="grid-imagenes-modal" id="grid-imagenes-modal"></div>
+                <div class="grid-imagenes-modal-superior" id="grid-imagenes-modal-superior"></div>
+                <div class="grid-imagenes-modal-inferior" id="grid-imagenes-modal-inferior"></div>
             </div>
             
             <div class="descripcion-container">
-                <div class="descripcion-content">
-                    <div>
-                        <h3 class="descripcion-titulo">Descripción del Negocio</h3>
-                        <p class="descripcion-texto" id="descripcion-texto"></p>
-                    </div>
-                    <div class="info-contacto-section">
-                        <h4><i class="fas fa-map-marked-alt"></i> Ubicación</h4>
-                        <div class="ubicacion-detalle" id="ubicacion-detalle"></div>
-                    </div>
+                <div>
+                    <h3 class="descripcion-titulo">Descripción del Negocio</h3>
+                    <p class="descripcion-texto" id="descripcion-texto"></p>
+                </div>
+                <div class="info-contacto-section">
+                    <h4><i class="fas fa-map-marked-alt"></i> Ubicación</h4>
+                    <div class="ubicacion-detalle" id="ubicacion-detalle"></div>
                 </div>
             </div>
         </div>
@@ -1163,7 +1046,6 @@
             });
         });
         
-        // Ajustar al cambiar tamaño de ventana
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
                 closeMenu();
@@ -1171,122 +1053,32 @@
         });
         
         // ============================================
-        // CÓDIGO ORIGINAL DE NEGOCIOS
+        // DATOS DE NEGOCIOS ZONA SUR (CON DESCRIPCIONES)
         // ============================================
         const negociosAlimentosSur = [
-            // FILA 1 - Coyoacán (preferidos y normales)
-            {
-                nombre: "Café El Jardín del Centenario",
-                categoria: "Cafetería",
-                descripcion: "Acogedora cafetería en el corazón de Coyoacán con jardín interior y los mejores granos de especialidad.",
-                descripcion_larga: "Ubicada en una casona histórica, Café El Jardín del Centenario ofrece una experiencia única para los amantes del café. Tostamos nuestros propios granos de Oaxaca y Chiapas, y preparamos bebidas con métodos artesanales. Su jardín interior es el lugar perfecto para una tarde de lectura o conversación.",
-                ubicacion: "Centenario 45, Colonia Del Carmen, Alcaldía Coyoacán",
-                alcaldia: "Coyoacán",
-                imagen: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                ],
-                preferido: true,
-                url_preferido: "Preferidos-sur-1.html"
-            },
-            {
-                nombre: "Taquería Los Parados",
-                categoria: "Taquería",
-                descripcion: "Famosos tacos de suadero y longaniza en una de las esquinas más emblemáticas de Coyoacán.",
-                descripcion_larga: "Desde 1985, Los Parados ha sido el punto de encuentro para los amantes de los tacos al pastor y de suadero. Nuestra salsa verde es legendaria y nuestras tortillas se hacen a mano. Un clásico imperdible de la noche coyoacanense.",
-                ubicacion: "Calle Allende 12, Esquina con Caballocalco, Alcaldía Coyoacán",
-                alcaldia: "Coyoacán",
-                imagen: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://images.unsplash.com/photo-1613514785940-daed07799d9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                ],
-                preferido: false
-            },
-            {
-                nombre: "Corazón de Maguey",
-                categoria: "Restaurante Mexicano",
-                descripcion: "Cocina tradicional mexicana con un enfoque en ingredientes prehispánicos y recetas de Oaxaca.",
-                descripcion_larga: "Corazón de Maguey es un viaje culinario a las raíces de México. Ofrecemos platillos como mole negro, tlayudas, chapulines y una extensa variedad de mezcales. El ambiente es rústico y lleno de color, reflejando la cultura mexicana.",
-                ubicacion: "Avenida México 100, Colonia Santa Catarina, Alcaldía Coyoacán",
-                alcaldia: "Coyoacán",
-                imagen: "https://images.unsplash.com/photo-1534082755706-b0c2621e9546?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                ],
-                preferido: true,
-                url_preferido: "Preferidos-sur-2.html"
-            },
-            {
-                nombre: "Nevería Roxy Coyoacán",
-                categoria: "Heladería",
-                descripcion: "Tradicional nevería con sabores únicos como tuna, zapote y mamey, en el centro de Coyoacán.",
-                descripcion_larga: "Un clásico desde 1946. La Nevería Roxy es famosa por sus helados y nieves de sabores mexicanos difíciles de encontrar en otros lugares. El local conserva su estilo original y es un punto de reunión para familias y amigos.",
-                ubicacion: "Plaza Hidalgo 30, Centro de Coyoacán, Alcaldía Coyoacán",
-                alcaldia: "Coyoacán",
-                imagen: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://images.unsplash.com/photo-1505394033641-40f6adfa0139?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                ],
-                preferido: false
-            },
-            {
-                nombre: "Los Danzantes Coyoacán",
-                categoria: "Restaurante - Mezcalería",
-                descripcion: "Restaurante de alta cocina mexicana con una de las mejores mezcalerías de la ciudad.",
-                descripcion_larga: "En un hermoso patio rodeado de vegetación, Los Danzantes ofrece una experiencia gastronómica que combina técnicas modernas con sabores tradicionales. Su mezcalería cuenta con más de 100 etiquetas. Es ideal para una ocasión especial.",
-                ubicacion: "Plaza Jardín Centenario 12, Alcaldía Coyoacán",
-                alcaldia: "Coyoacán",
-                imagen: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [
-                    "https://images.unsplash.com/photo-1555396273-3a8c2caf7c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                ],
-                preferido: true,
-                url_preferido: "Preferidos-sur-3.html"
-            },
-            // Resto de negocios (mantener los mismos datos del código original)
-            {
-                nombre: "Mercado de Comidas San Bernardino",
-                categoria: "Mercado",
-                descripcion: "Tradicional mercado en Xochimilco con decenas de puestos de antojitos y comida típica.",
-                descripcion_larga: "El Mercado de San Bernardino es el corazón gastronómico de Xochimilco. Aquí encontrarás desde tlacoyos, sopes y quesadillas, hasta carnitas y barbacoa.",
-                ubicacion: "Calle Violeta, Colonia San Bernardino, Alcaldía Xochimilco",
-                alcaldia: "Xochimilco",
-                imagen: "https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [],
-                preferido: false
-            },
-            {
-                nombre: "Restaurante Los Ahuejotes",
-                categoria: "Restaurante Típico",
-                descripcion: "Comida típica de Xochimilco en un entorno campestre junto a los canales.",
-                descripcion_larga: "Los Ahuejotes es famoso por su ambientación rústica y su comida tradicional.",
-                ubicacion: "Embarcadero Nuevo Nativitas, Alcaldía Xochimilco",
-                alcaldia: "Xochimilco",
-                imagen: "https://images.unsplash.com/photo-1511911063855-2bf39afa5b2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [],
-                preferido: true,
-                url_preferido: "Preferidos-sur-4.html"
-            },
-            {
-                nombre: "Restaurante El Lago",
-                categoria: "Alta Cocina",
-                descripcion: "Elegante restaurante dentro de los Viveros de Coyoacán con vista al lago, en Tlalpan.",
-                descripcion_larga: "Ubicado en un entorno natural privilegiado, El Lago ofrece cocina contemporánea mexicana.",
-                ubicacion: "Nuevo León 80, Colonia Peña Pobre, Alcaldía Tlalpan",
-                alcaldia: "Tlalpan",
-                imagen: "https://images.unsplash.com/photo-1555396273-3a8c2caf7c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                imagenes_adicionales: [],
-                preferido: true,
-                url_preferido: "Preferidos-sur-5.html"
-            }
+            // Preferidos Zona Sur
+            { nombre: "Café El Jardín del Centenario", categoria: "Cafetería", descripcion: "Acogedora cafetería en el corazón de Coyoacán con jardín interior y los mejores granos de especialidad.", descripcion_larga: "Ubicada en una casona histórica, Café El Jardín del Centenario ofrece una experiencia única para los amantes del café. Tostamos nuestros propios granos de Oaxaca y Chiapas, y preparamos bebidas con métodos artesanales.", ubicacion: "Centenario 45, Colonia Del Carmen, Alcaldía Coyoacán", alcaldia: "Coyoacán", imagen: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: true },
+            { nombre: "Corazón de Maguey", categoria: "Restaurante Mexicano", descripcion: "Cocina tradicional mexicana con un enfoque en ingredientes prehispánicos y recetas de Oaxaca.", descripcion_larga: "Corazón de Maguey es un viaje culinario a las raíces de México. Ofrecemos platillos como mole negro, tlayudas, chapulines y una extensa variedad de mezcales.", ubicacion: "Avenida México 100, Colonia Santa Catarina, Alcaldía Coyoacán", alcaldia: "Coyoacán", imagen: "https://images.unsplash.com/photo-1534082755706-b0c2621e9546?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: true },
+            { nombre: "Los Danzantes Coyoacán", categoria: "Restaurante - Mezcalería", descripcion: "Restaurante de alta cocina mexicana con una de las mejores mezcalerías de la ciudad.", descripcion_larga: "En un hermoso patio rodeado de vegetación, Los Danzantes ofrece una experiencia gastronómica que combina técnicas modernas con sabores tradicionales.", ubicacion: "Plaza Jardín Centenario 12, Alcaldía Coyoacán", alcaldia: "Coyoacán", imagen: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: true },
+            { nombre: "Restaurante Los Ahuejotes", categoria: "Restaurante Típico", descripcion: "Comida típica de Xochimilco en un entorno campestre junto a los canales.", descripcion_larga: "Los Ahuejotes es famoso por su ambientación rústica y su comida tradicional de Xochimilco, con especialidades como trucha, mixiotes y tlacoyos.", ubicacion: "Embarcadero Nuevo Nativitas, Alcaldía Xochimilco", alcaldia: "Xochimilco", imagen: "https://images.unsplash.com/photo-1511911063855-2bf39afa5b2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: true },
+            { nombre: "Restaurante El Lago", categoria: "Alta Cocina", descripcion: "Elegante restaurante dentro de los Viveros de Coyoacán con vista al lago.", descripcion_larga: "Ubicado en un entorno natural privilegiado, El Lago ofrece cocina contemporánea mexicana con ingredientes de temporada.", ubicacion: "Nuevo León 80, Colonia Peña Pobre, Alcaldía Tlalpan", alcaldia: "Tlalpan", imagen: "https://images.unsplash.com/photo-1555396273-3a8c2caf7c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: true },
+            
+            // Coyoacán
+            { nombre: "Taquería Los Parados", categoria: "Taquería", descripcion: "Famosos tacos de suadero y longaniza en una de las esquinas más emblemáticas de Coyoacán.", descripcion_larga: "Desde 1985, Los Parados ha sido el punto de encuentro para los amantes de los tacos al pastor y de suadero.", ubicacion: "Calle Allende 12, Esquina con Caballocalco, Alcaldía Coyoacán", alcaldia: "Coyoacán", imagen: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false },
+            { nombre: "Nevería Roxy Coyoacán", categoria: "Heladería", descripcion: "Tradicional nevería con sabores únicos como tuna, zapote y mamey, en el centro de Coyoacán.", descripcion_larga: "Un clásico desde 1946. La Nevería Roxy es famosa por sus helados y nieves de sabores mexicanos.", ubicacion: "Plaza Hidalgo 30, Centro de Coyoacán, Alcaldía Coyoacán", alcaldia: "Coyoacán", imagen: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false },
+            { nombre: "El Sazón de Coyoacán", categoria: "Restaurante Mexicano", descripcion: "Comida casera mexicana con recetas familiares de generaciones.", descripcion_larga: "Especialidades como enchiladas suizas, chiles en nogada y mole poblano.", ubicacion: "Avenida Universidad 123, Colonia Del Carmen, Alcaldía Coyoacán", alcaldia: "Coyoacán", imagen: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false },
+            
+            // Xochimilco y Tláhuac
+            { nombre: "Mercado de Comidas San Bernardino", categoria: "Mercado", descripcion: "Tradicional mercado en Xochimilco con decenas de puestos de antojitos y comida típica.", descripcion_larga: "El Mercado de San Bernardino es el corazón gastronómico de Xochimilco. Aquí encontrarás desde tlacoyos, sopes y quesadillas, hasta carnitas y barbacoa.", ubicacion: "Calle Violeta, Colonia San Bernardino, Alcaldía Xochimilco", alcaldia: "Xochimilco", imagen: "https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false },
+            { nombre: "Trajineras La Guadalupana", categoria: "Restaurante Flotante", descripcion: "Experiencia gastronómica única sobre las trajineras de Xochimilco.", descripcion_larga: "Disfruta de comida mexicana mientras navegas por los canales de Xochimilco.", ubicacion: "Embarcadero Cuemanco, Alcaldía Xochimilco", alcaldia: "Xochimilco", imagen: "https://images.unsplash.com/photo-1521203444391-14f5e527c31a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false },
+            { nombre: "Mariscos Tláhuac", categoria: "Marisquería", descripcion: "Los mejores mariscos frescos en la zona de Tláhuac.", descripcion_larga: "Especialidad en cócteles, ceviches y pescados a la talla.", ubicacion: "Avenida Tláhuac 456, Colonia Centro, Alcaldía Tláhuac", alcaldia: "Tláhuac", imagen: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false },
+            
+            // Milpa Alta y Tlalpan
+            { nombre: "Barbacoa de Milpa Alta", categoria: "Barbacoa", descripcion: "Tradicional barbacoa de hoyo estilo Milpa Alta, los fines de semana.", descripcion_larga: "Barbacoa de borrego cocida en horno de tierra con más de 30 años de tradición.", ubicacion: "Carretera a Milpa Alta km 5, Colonia San Antonio, Alcaldía Milpa Alta", alcaldia: "Milpa Alta", imagen: "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false },
+            { nombre: "Casa de la Abuela Tlalpan", categoria: "Restaurante Familiar", descripcion: "Comida casera en una hermosa casona del centro de Tlalpan.", descripcion_larga: "Especialidades como mole, enchiladas y chiles rellenos, preparados como en casa.", ubicacion: "Plaza de la Constitución 78, Centro de Tlalpan, Alcaldía Tlalpan", alcaldia: "Tlalpan", imagen: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", imagenes_adicionales: [], preferido: false }
         ];
 
-        // ELEMENTOS DOM
+        // Elementos DOM
         const filaPreferidos = document.getElementById('fila-preferidos');
         const fila1 = document.getElementById('fila-1');
         const fila2 = document.getElementById('fila-2');
@@ -1296,60 +1088,49 @@
         const modalNombre = document.getElementById('modal-nombre');
         const modalCategoria = document.getElementById('modal-categoria');
         const imagenGrande = document.getElementById('imagen-grande');
-        const gridImagenesModal = document.getElementById('grid-imagenes-modal');
+        const gridSuperior = document.getElementById('grid-imagenes-modal-superior');
+        const gridInferior = document.getElementById('grid-imagenes-modal-inferior');
         const descripcionTexto = document.getElementById('descripcion-texto');
         const ubicacionDetalle = document.getElementById('ubicacion-detalle');
 
-        function crearGridImagenesModal(imagenes, imagenPrincipal) {
-            gridImagenesModal.innerHTML = '';
-            const todasImagenes = [imagenPrincipal, ...imagenes];
-            const imagenesParaMostrar = todasImagenes.slice(0, 6);
+        function crearGridsImagenesModal(imagenes, imagenPrincipal) {
+            gridSuperior.innerHTML = '';
+            gridInferior.innerHTML = '';
+            const todas = [imagenPrincipal, ...imagenes];
+            const sup = todas.slice(0, 3);
+            const inf = todas.length > 3 ? todas.slice(3, 6) : todas.slice(0, 3);
+            while (inf.length < 3) inf.push(todas[0]);
             
-            imagenesParaMostrar.forEach((imagen, index) => {
-                const imagenDiv = document.createElement('div');
-                imagenDiv.className = `imagen-modal-mini ${index === 0 ? 'active' : ''}`;
-                imagenDiv.dataset.imagen = imagen;
-                const img = document.createElement('img');
-                img.src = imagen;
-                imagenDiv.appendChild(img);
-                imagenDiv.addEventListener('click', function() {
-                    imagenGrande.src = this.dataset.imagen;
+            sup.forEach((img, idx) => {
+                const div = document.createElement('div');
+                div.className = `imagen-modal-mini ${idx === 0 ? 'active' : ''}`;
+                div.dataset.imagen = img;
+                div.innerHTML = `<img src="${img}" alt="Imagen">`;
+                div.addEventListener('click', () => {
+                    imagenGrande.src = div.dataset.imagen;
                     document.querySelectorAll('.imagen-modal-mini').forEach(m => m.classList.remove('active'));
-                    this.classList.add('active');
+                    div.classList.add('active');
                 });
-                gridImagenesModal.appendChild(imagenDiv);
+                gridSuperior.appendChild(div);
+            });
+            
+            inf.forEach((img) => {
+                const div = document.createElement('div');
+                div.className = 'imagen-modal-mini';
+                div.dataset.imagen = img;
+                div.innerHTML = `<img src="${img}" alt="Imagen">`;
+                div.addEventListener('click', () => {
+                    imagenGrande.src = div.dataset.imagen;
+                    document.querySelectorAll('.imagen-modal-mini').forEach(m => m.classList.remove('active'));
+                    div.classList.add('active');
+                });
+                gridInferior.appendChild(div);
             });
         }
 
-        function crearTarjetaPreferido(negocio, index) {
+        function crearTarjeta(negocio) {
             const tarjeta = document.createElement('div');
-            tarjeta.className = `alimento-card`;
-            tarjeta.style.animationDelay = `${index * 0.05}s`;
-            tarjeta.innerHTML = `
-                <div class="card-imagen loading">
-                    <img data-src="${negocio.imagen}" alt="${negocio.nombre}">
-                    <span class="card-categoria-flotante">${negocio.categoria}</span>
-                </div>
-                <div class="card-content">
-                    <div class="card-header"><h3>${negocio.nombre}</h3></div>
-                    <p class="card-descripcion">${negocio.descripcion}</p>
-                    <div class="card-footer">
-                        <button class="btn-ver-mas-card" data-url="${negocio.url_preferido}">Ver más <i class="fas fa-arrow-right"></i></button>
-                        <div class="card-ubicacion"><i class="fas fa-map-marker-alt"></i><span>${negocio.ubicacion}</span></div>
-                    </div>
-                </div>
-            `;
-            const imgElement = tarjeta.querySelector('img');
-            setTimeout(() => { imgElement.src = imgElement.dataset.src; imgElement.classList.add('loaded'); imgElement.parentElement.classList.remove('loading'); }, 100);
-            tarjeta.querySelector('.btn-ver-mas-card').addEventListener('click', (e) => { e.stopPropagation(); window.location.href = negocio.url_preferido; });
-            tarjeta.addEventListener('click', () => { window.location.href = negocio.url_preferido; });
-            return tarjeta;
-        }
-
-        function crearTarjetaNormal(negocio, index) {
-            const tarjeta = document.createElement('div');
-            tarjeta.className = `alimento-card`;
-            tarjeta.style.animationDelay = `${index * 0.05}s`;
+            tarjeta.className = 'alimento-card';
             tarjeta.innerHTML = `
                 <div class="card-imagen loading">
                     <img data-src="${negocio.imagen}" alt="${negocio.nombre}">
@@ -1364,20 +1145,23 @@
                     </div>
                 </div>
             `;
-            const imgElement = tarjeta.querySelector('img');
-            setTimeout(() => { imgElement.src = imgElement.dataset.src; imgElement.classList.add('loaded'); imgElement.parentElement.classList.remove('loading'); }, 100);
-            tarjeta.querySelector('.btn-ver-mas-card').addEventListener('click', (e) => { e.stopPropagation(); abrirGaleriaNegocio(negocio); });
-            tarjeta.addEventListener('click', () => { abrirGaleriaNegocio(negocio); });
+            const img = tarjeta.querySelector('img');
+            setTimeout(() => { img.src = img.dataset.src; img.classList.add('loaded'); img.parentElement.classList.remove('loading'); }, 100);
+            tarjeta.querySelector('.btn-ver-mas-card').addEventListener('click', (e) => { e.stopPropagation(); abrirModal(negocio); });
+            tarjeta.addEventListener('click', () => abrirModal(negocio));
             return tarjeta;
         }
 
-        function abrirGaleriaNegocio(negocio) {
+        function abrirModal(negocio) {
             modalNombre.textContent = negocio.nombre;
             modalCategoria.textContent = negocio.categoria;
             imagenGrande.src = negocio.imagen;
-            crearGridImagenesModal(negocio.imagenes_adicionales || [], negocio.imagen);
+            crearGridsImagenesModal(negocio.imagenes_adicionales || [], negocio.imagen);
             descripcionTexto.textContent = negocio.descripcion_larga || negocio.descripcion;
-            ubicacionDetalle.innerHTML = `<div class="ubicacion-icono"><i class="fas fa-map-marker-alt"></i></div><div class="ubicacion-texto"><div class="direccion">${negocio.ubicacion}</div><div class="alcaldia"><i class="fas fa-building"></i> Alcaldía ${negocio.alcaldia}</div></div>`;
+            ubicacionDetalle.innerHTML = `
+                <div class="ubicacion-icono"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="ubicacion-texto"><div class="direccion">${negocio.ubicacion}</div><div class="alcaldia"><i class="fas fa-building"></i> Alcaldía ${negocio.alcaldia}</div></div>
+            `;
             modalOverlayModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1392,16 +1176,20 @@
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
 
         function cargarNegocios() {
-            filaPreferidos.innerHTML = ''; fila1.innerHTML = ''; fila2.innerHTML = ''; fila3.innerHTML = '';
+            filaPreferidos.innerHTML = '';
+            fila1.innerHTML = '';
+            fila2.innerHTML = '';
+            fila3.innerHTML = '';
+            
             const preferidos = negociosAlimentosSur.filter(n => n.preferido === true);
             const coyoacan = negociosAlimentosSur.filter(n => n.alcaldia === "Coyoacán" && !n.preferido);
-            const tlahuacXochimilco = negociosAlimentosSur.filter(n => (n.alcaldia === "Tláhuac" || n.alcaldia === "Xochimilco") && !n.preferido);
-            const milpaAltaTlalpan = negociosAlimentosSur.filter(n => (n.alcaldia === "Milpa Alta" || n.alcaldia === "Tlalpan") && !n.preferido);
+            const xochimilcoTlahuac = negociosAlimentosSur.filter(n => (n.alcaldia === "Xochimilco" || n.alcaldia === "Tláhuac") && !n.preferido);
+            const milpaTlalpan = negociosAlimentosSur.filter(n => (n.alcaldia === "Milpa Alta" || n.alcaldia === "Tlalpan") && !n.preferido);
             
-            preferidos.forEach((n, i) => filaPreferidos.appendChild(crearTarjetaPreferido(n, i)));
-            coyoacan.forEach((n, i) => fila1.appendChild(crearTarjetaNormal(n, i)));
-            tlahuacXochimilco.forEach((n, i) => fila2.appendChild(crearTarjetaNormal(n, i)));
-            milpaAltaTlalpan.forEach((n, i) => fila3.appendChild(crearTarjetaNormal(n, i)));
+            preferidos.forEach(n => filaPreferidos.appendChild(crearTarjeta(n)));
+            coyoacan.forEach(n => fila1.appendChild(crearTarjeta(n)));
+            xochimilcoTlahuac.forEach(n => fila2.appendChild(crearTarjeta(n)));
+            milpaTlalpan.forEach(n => fila3.appendChild(crearTarjeta(n)));
         }
 
         // Submenú
