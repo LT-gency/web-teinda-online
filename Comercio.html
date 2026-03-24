@@ -21,9 +21,9 @@
             overflow: hidden;
         }
 
-        /* SIDEBAR - ESTILO ADAPTATIVO */
+        /* SIDEBAR - ESTILO PC */
         .sidebar {
-            width: 280px;
+            width: 320px;
             background: linear-gradient(to bottom, #0F52C9, #0A3C8C);
             color: white;
             position: fixed;
@@ -33,17 +33,18 @@
             z-index: 100;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s ease;
         }
 
         .logo {
             text-align: center;
-            padding: 20px 15px;
+            padding: 25px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
         }
 
         .logo h1 {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 700;
             letter-spacing: 1px;
             color: #fff;
@@ -64,13 +65,13 @@
         }
 
         .logo p {
-            margin-top: 5px;
-            font-size: 14px;
+            font-size: 16px;
+            margin-top: 8px;
             opacity: 0.9;
         }
 
         .menu-categorias {
-            padding: 0 15px;
+            padding: 0 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -80,20 +81,20 @@
         .categoria-item {
             display: flex;
             align-items: center;
-            padding: 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
             transition: all 0.3s ease;
             text-decoration: none;
             color: white;
             width: 100%;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 600;
         }
 
         .categoria-item:hover {
             background-color: rgba(255, 255, 255, 0.15);
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
         .categoria-item.active {
@@ -102,16 +103,16 @@
         }
 
         .categoria-item i {
-            margin-right: 12px;
-            width: 24px;
+            margin-right: 15px;
+            width: 28px;
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         /* Contenedor especial para Comercio (enlace + botón) */
         .comercio-container {
             width: 100%;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         /* Fila que contiene el enlace y el botón */
@@ -120,13 +121,13 @@
             align-items: center;
             width: 100%;
             background-color: transparent;
-            border-radius: 8px;
+            border-radius: 12px;
             transition: all 0.3s ease;
         }
 
         .comercio-row:hover {
             background-color: rgba(255, 255, 255, 0.15);
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
         /* Estilo cuando la fila completa está activa (seleccionada) */
@@ -139,19 +140,19 @@
             flex: 1;
             display: flex;
             align-items: center;
-            padding: 15px;
+            padding: 18px 20px;
             text-decoration: none;
             color: white;
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: 8px 0 0 8px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 12px 0 0 12px;
         }
 
         .comercio-link i {
-            margin-right: 12px;
-            width: 24px;
+            margin-right: 15px;
+            width: 28px;
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         /* Estilo para el enlace activo (con borde izquierdo) */
@@ -161,25 +162,25 @@
 
         /* Botón de la flecha para Comercio */
         .comercio-toggle {
-            width: 50px;
+            width: 55px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            padding: 15px 0;
-            border-radius: 0 8px 8px 0;
+            padding: 18px 0;
+            border-radius: 0 12px 12px 0;
             transition: all 0.3s ease;
             color: white;
             background-color: transparent;
             border: none;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .comercio-toggle:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Estilo para la flecha cuando está activa (seleccionada) - fondo blanco pero flecha hacia abajo */
+        /* Estilo para la flecha cuando está activa (seleccionada) */
         .comercio-toggle.active {
             background-color: rgba(255, 255, 255, 0.2);
         }
@@ -196,7 +197,7 @@
             transition: max-height 0.3s ease, opacity 0.3s ease;
             opacity: 0;
             background-color: rgba(0, 0, 0, 0.1);
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 12px 12px;
             width: 100%;
             margin-top: 2px;
         }
@@ -204,28 +205,28 @@
         .submenu-zonas-comercio.active {
             max-height: 300px;
             opacity: 1;
-            padding: 10px 0;
+            padding: 12px 0;
         }
 
         .submenu-item {
             display: block;
-            padding: 12px 15px 12px 40px;
+            padding: 14px 20px 14px 48px;
             color: white;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 17px;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .submenu-item:hover {
             background-color: rgba(255, 255, 255, 0.1);
-            padding-left: 45px;
+            padding-left: 53px;
         }
 
         .submenu-item:before {
             content: "-";
             position: absolute;
-            left: 25px;
+            left: 28px;
             color: white;
             font-size: 16px;
         }
@@ -234,20 +235,19 @@
         .botones-lateral {
             display: flex;
             flex-direction: column;
-            margin: 20px 15px;
-            gap: 15px;
-            width: calc(100% - 30px);
+            margin: 25px 20px;
+            gap: 18px;
+            width: calc(100% - 40px);
         }
 
         .btn-subir-negocio {
-            margin: 0;
-            padding: 15px;
+            padding: 18px;
             background-color: #000000;
             color: #ffffff;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -266,13 +266,13 @@
         }
 
         .btn-subir-negocio i {
-            font-size: 18px;
+            font-size: 20px;
         }
 
         /* CONTENIDO PRINCIPAL */
         .main-content {
             flex: 1;
-            margin-left: 280px;
+            margin-left: 320px;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -312,7 +312,7 @@
             color: #0F52C9;
         }
 
-        /* VISOR DE NEGOCIOS - AHORA CON UN SOLO NEGOCIO */
+        /* VISOR DE NEGOCIOS */
         .visor-container {
             flex: 1;
             position: relative;
@@ -504,25 +504,83 @@
             transform: translateX(5px);
         }
 
-        /* EL BOTÓN SIGUIENTE HA SIDO ELIMINADO */
+        /* ===== BOTÓN HAMBURGUESA PARA MÓVIL ===== */
+        .menu-toggle-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: #0F52C9;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
 
-        /* ===== VERSIÓN MÓVIL ===== */
+        .menu-toggle-btn:hover {
+            background: #0A3C8C;
+            transform: scale(1.05);
+        }
+
+        /* Overlay para cerrar menú al hacer clic fuera */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ===== VERSIÓN MÓVIL - MENÚ DESPLEGABLE ===== */
         @media (max-width: 768px) {
             body {
-                flex-direction: column;
                 overflow-y: auto;
                 height: auto;
                 min-height: 100vh;
+                display: block;
             }
             
+            /* Sidebar oculto por defecto en móvil */
             .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-                overflow-y: visible;
-                flex-shrink: 0;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 280px;
+                height: 100vh;
+                transform: translateX(-100%);
+                z-index: 200;
+                transition: transform 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
             }
             
+            /* Sidebar abierto */
+            .sidebar.menu-open {
+                transform: translateX(0);
+            }
+            
+            /* Botón hamburguesa visible en móvil */
+            .menu-toggle-btn {
+                display: flex;
+            }
+            
+            /* Overlay visible cuando menú está abierto */
+            .menu-overlay.active {
+                display: block;
+            }
+            
+            /* Ajustes del menú para móvil (exactamente igual que antes pero ahora desplegable) */
             .logo {
                 padding: 20px 15px;
                 margin-bottom: 10px;
@@ -546,11 +604,13 @@
                 margin: 0 0 8px 0;
                 font-size: 17px;
                 font-weight: 500;
+                border-radius: 8px;
             }
             
             .categoria-item i {
                 margin-right: 12px;
                 font-size: 18px;
+                width: 24px;
             }
             
             .comercio-container {
@@ -566,10 +626,12 @@
             .comercio-link i {
                 margin-right: 12px;
                 font-size: 18px;
+                width: 24px;
             }
             
             .comercio-toggle {
                 padding: 16px 0;
+                width: 50px;
             }
             
             .submenu-zonas-comercio {
@@ -600,8 +662,10 @@
                 padding: 16px;
                 font-size: 16px;
                 font-weight: 600;
+                border-radius: 12px;
             }
             
+            /* Contenido principal en móvil - ocupa toda la pantalla */
             .main-content {
                 margin-left: 0;
                 height: auto;
@@ -642,7 +706,7 @@
             }
             
             .negocio-info {
-                top: 40px;
+                top: 80px;
                 left: 20px;
                 max-width: 85%;
             }
@@ -668,14 +732,8 @@
         }
         
         @media (max-width: 480px) {
-            .logo h1 {
-                font-size: 24px;
-            }
-            
-            .categoria-item, .comercio-link {
-                padding: 15px 16px;
-                font-size: 16px;
-                font-weight: 500;
+            .negocio-info {
+                top: 70px;
             }
             
             .negocio-titulo {
@@ -696,18 +754,20 @@
                 font-size: 18px;
                 min-width: 200px;
             }
-            
-            .btn-subir-negocio {
-                padding: 15px;
-                font-size: 15px;
-                font-weight: 600;
-            }
         }
     </style>
 </head>
 <body>
+    <!-- BOTÓN HAMBURGUESA PARA MÓVIL -->
+    <button class="menu-toggle-btn" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- OVERLAY PARA CERRAR MENÚ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
     <!-- MENÚ LATERAL -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <a href="Index.html" style="text-decoration: none; color: inherit;">
                 <h1>LIFE <span>TIMES</span></h1>
@@ -728,7 +788,7 @@
                 <span>Servicio minoritario</span>
             </a>
             
-            <!-- COMERCIO CON SUBMENÚ (ACTIVO PERO CERRADO) -->
+            <!-- COMERCIO CON SUBMENÚ -->
             <div class="comercio-container">
                 <div class="comercio-row active" id="comercio-row">
                     <a href="Comercio.html" class="comercio-link active">
@@ -745,7 +805,7 @@
                 </div>
             </div>
             
-            <!-- ALIMENTOS Y BEBIDAS (SIN SUBMENÚ) -->
+            <!-- ALIMENTOS Y BEBIDAS -->
             <a href="Alimentos y bebidas.html" class="categoria-item">
                 <i class="fas fa-utensils"></i>
                 <span>Alimentos</span>
@@ -758,7 +818,7 @@
             </a>
         </div>
         
-        <!-- BOTONES LATERALES (AHORA SOLO UNO) -->
+        <!-- BOTONES LATERALES -->
         <div class="botones-lateral">
             <a href="Pre-subir-comercio.html" style="text-decoration: none; width: 100%;">
                 <button class="btn-subir-negocio">
@@ -779,7 +839,7 @@
             </ul>
         </nav>
 
-        <!-- VISOR DE NEGOCIOS - AHORA CON UN SOLO NEGOCIO -->
+        <!-- VISOR DE NEGOCIOS -->
         <div class="visor-container" id="visor-container">
             <!-- Un único negocio estático -->
             <div class="negocio-slide active">
@@ -804,6 +864,55 @@
 
     <script>
         // ============================================
+        // MENÚ DESPLEGABLE PARA MÓVIL
+        // ============================================
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        function openMenu() {
+            sidebar.classList.add('menu-open');
+            menuOverlay.classList.add('active');
+            // Cambiar ícono a X
+            menuToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        
+        function closeMenu() {
+            sidebar.classList.remove('menu-open');
+            menuOverlay.classList.remove('active');
+            // Cambiar ícono a hamburguesa
+            menuToggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        function toggleMenu() {
+            if (sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+        
+        if (menuToggleBtn) {
+            menuToggleBtn.addEventListener('click', toggleMenu);
+        }
+        
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        // Cerrar menú al hacer clic en un enlace del menú (opcional)
+        const menuLinks = document.querySelectorAll('.categoria-item, .comercio-link, .submenu-item, .btn-subir-negocio');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Solo cerrar en móvil (si el menú está visible)
+                if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
+                    // Pequeño delay para permitir la navegación
+                    setTimeout(closeMenu, 100);
+                }
+            });
+        });
+        
+        // ============================================
         // CONFIGURACIÓN DEL SUBMENÚ DE COMERCIO
         // ============================================
         const comercioToggle = document.getElementById('comercio-toggle');
@@ -811,49 +920,44 @@
         const comercioRow = document.getElementById('comercio-row');
         
         if (comercioToggle && submenuZonasComercio) {
-            // Variable para controlar el estado del submenú
             let submenuAbierto = false;
             
-            // Al hacer clic en el botón de la flecha, se abre/cierra el submenú
             comercioToggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Alternar estado
                 submenuAbierto = !submenuAbierto;
                 
                 if (submenuAbierto) {
-                    // Abrir submenú
                     submenuZonasComercio.classList.add('active');
                     comercioToggle.classList.add('rotated');
                 } else {
-                    // Cerrar submenú
                     submenuZonasComercio.classList.remove('active');
                     comercioToggle.classList.remove('rotated');
                 }
                 
-                // La fila y el toggle mantienen la clase active (fondo blanco)
                 comercioRow.classList.add('active');
                 comercioToggle.classList.add('active');
             });
             
-            // Cerrar el submenú si se hace clic fuera de él
             document.addEventListener('click', function(e) {
                 const comercioContainer = document.querySelector('.comercio-container');
                 if (comercioContainer && !comercioContainer.contains(e.target)) {
                     submenuZonasComercio.classList.remove('active');
                     comercioToggle.classList.remove('rotated');
                     submenuAbierto = false;
-                    
-                    // La fila y el toggle siguen activos porque estamos en Comercio
                     comercioRow.classList.add('active');
                     comercioToggle.classList.add('active');
                 }
             });
         }
-
-        // NOTA: Se ha eliminado toda la lógica de múltiples negocios y el botón "SIGUIENTE"
-        // Ahora solo hay un negocio estático en el HTML
+        
+        // Ajustar al cambiar tamaño de ventana (cerrar menú si se vuelve a PC)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            }
+        });
     </script>
 </body>
 </html>
