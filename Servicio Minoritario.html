@@ -624,15 +624,35 @@
             menuOverlay.addEventListener('click', closeMenu);
         }
         
-        // Cerrar menú al hacer clic en un enlace del menú
-        const menuLinks = document.querySelectorAll('.categoria-item, .subcategoria-item');
-        menuLinks.forEach(link => {
+        // ============ CORRECCIÓN: Cerrar menú SOLO en enlaces que navegan ============
+        // Seleccionar solo los enlaces que tienen href (navegación real)
+        const navigationLinks = document.querySelectorAll('.categoria-item[href], .subcategoria-item');
+        
+        navigationLinks.forEach(link => {
             link.addEventListener('click', function(e) {
+                // Solo cerrar el menú en móvil si el enlace realmente navega a otra página
                 if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
+                    // Pequeño delay para permitir que la navegación se inicie
                     setTimeout(closeMenu, 100);
                 }
             });
         });
+        
+        // El elemento "Servicio minoritario" (con submenú) NO debe cerrar el menú principal
+        const servicioMinoritarioBtn = document.getElementById('servicioMinoritarioBtn');
+        if (servicioMinoritarioBtn) {
+            servicioMinoritarioBtn.addEventListener('click', function(e) {
+                // Prevenir que el evento se propague y evitar cierre del menú
+                e.stopPropagation();
+                // Solo toggle del submenú, sin cerrar el menú principal
+                const servicioMinoritarioSubmenu = document.getElementById('servicioMinoritarioSubmenu');
+                const menuArrow = this.querySelector('.menu-arrow');
+                if (servicioMinoritarioSubmenu) {
+                    servicioMinoritarioSubmenu.classList.toggle('show');
+                    if (menuArrow) menuArrow.classList.toggle('rotated');
+                }
+            });
+        }
         
         // Ajustar al cambiar tamaño de ventana
         window.addEventListener('resize', function() {
@@ -642,27 +662,24 @@
         });
         
         // ============================================
-        // CÓDIGO ORIGINAL DEL SUBMENÚ
+        // CÓDIGO ORIGINAL DEL SUBMENÚ (complementario)
         // ============================================
-        const servicioMinoritarioBtn = document.getElementById('servicioMinoritarioBtn');
         const servicioMinoritarioSubmenu = document.getElementById('servicioMinoritarioSubmenu');
         const menuArrow = servicioMinoritarioBtn ? servicioMinoritarioBtn.querySelector('.menu-arrow') : null;
         const mensajeMenu = document.getElementById('mensajeMenu');
 
-        if (servicioMinoritarioBtn && servicioMinoritarioSubmenu) {
-            servicioMinoritarioBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                servicioMinoritarioSubmenu.classList.toggle('show');
-                if (menuArrow) menuArrow.classList.toggle('rotated');
-            });
-
-            document.addEventListener('click', function(e) {
+        // Cerrar submenú al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (servicioMinoritarioBtn && servicioMinoritarioSubmenu) {
                 if (!e.target.closest('.categoria-menu-container')) {
                     servicioMinoritarioSubmenu.classList.remove('show');
                     if (menuArrow) menuArrow.classList.remove('rotated');
                 }
-            });
+            }
+        });
 
+        // Evitar que los clics dentro del submenú cierren el submenú accidentalmente
+        if (servicioMinoritarioSubmenu) {
             servicioMinoritarioSubmenu.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
@@ -671,7 +688,13 @@
         if (mensajeMenu) {
             mensajeMenu.addEventListener('click', function() {
                 if (servicioMinoritarioBtn) {
-                    servicioMinoritarioBtn.click();
+                    // Simular clic en el botón para abrir el submenú
+                    const submenu = document.getElementById('servicioMinoritarioSubmenu');
+                    const arrow = servicioMinoritarioBtn.querySelector('.menu-arrow');
+                    if (submenu) {
+                        submenu.classList.toggle('show');
+                        if (arrow) arrow.classList.toggle('rotated');
+                    }
                 }
                 this.style.transform = 'translateY(-1px) scale(0.98)';
                 setTimeout(() => {
