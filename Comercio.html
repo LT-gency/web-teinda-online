@@ -23,7 +23,7 @@
 
         /* SIDEBAR - ESTILO PC */
         .sidebar {
-            width: 320px;
+            width: 280px;
             background: linear-gradient(to bottom, #0F52C9, #0A3C8C);
             color: white;
             position: fixed;
@@ -38,13 +38,13 @@
 
         .logo {
             text-align: center;
-            padding: 25px 20px;
+            padding: 20px 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
         }
 
         .logo h1 {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
             letter-spacing: 1px;
             color: #fff;
@@ -65,36 +65,36 @@
         }
 
         .logo p {
-            font-size: 16px;
-            margin-top: 8px;
+            margin-top: 5px;
+            font-size: 14px;
             opacity: 0.9;
         }
 
         .menu-categorias {
-            padding: 0 20px;
+            padding: 0 15px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
 
-        /* Estilo base para todos los items del menú */
+        /* Estilo base para todos los items del menú - TAMAÑO ESTANDARIZADO */
         .categoria-item {
             display: flex;
             align-items: center;
-            padding: 18px 20px;
-            margin-bottom: 12px;
-            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
             transition: all 0.3s ease;
             text-decoration: none;
             color: white;
             width: 100%;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 500;
         }
 
         .categoria-item:hover {
             background-color: rgba(255, 255, 255, 0.15);
-            transform: translateX(8px);
+            transform: translateX(5px);
         }
 
         .categoria-item.active {
@@ -103,16 +103,16 @@
         }
 
         .categoria-item i {
-            margin-right: 15px;
-            width: 28px;
+            margin-right: 12px;
+            width: 24px;
             text-align: center;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         /* Contenedor especial para Comercio (enlace + botón) */
         .comercio-container {
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         /* Fila que contiene el enlace y el botón */
@@ -121,13 +121,13 @@
             align-items: center;
             width: 100%;
             background-color: transparent;
-            border-radius: 12px;
+            border-radius: 8px;
             transition: all 0.3s ease;
         }
 
         .comercio-row:hover {
             background-color: rgba(255, 255, 255, 0.15);
-            transform: translateX(8px);
+            transform: translateX(5px);
         }
 
         /* Estilo cuando la fila completa está activa (seleccionada) */
@@ -135,24 +135,24 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Enlace de Comercio */
+        /* Enlace de Comercio - TAMAÑO ESTANDARIZADO */
         .comercio-link {
             flex: 1;
             display: flex;
             align-items: center;
-            padding: 18px 20px;
+            padding: 15px;
             text-decoration: none;
             color: white;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 12px 0 0 12px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px 0 0 8px;
         }
 
         .comercio-link i {
-            margin-right: 15px;
-            width: 28px;
+            margin-right: 12px;
+            width: 24px;
             text-align: center;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         /* Estilo para el enlace activo (con borde izquierdo) */
@@ -162,18 +162,18 @@
 
         /* Botón de la flecha para Comercio */
         .comercio-toggle {
-            width: 55px;
+            width: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            padding: 18px 0;
-            border-radius: 0 12px 12px 0;
+            padding: 15px 0;
+            border-radius: 0 8px 8px 0;
             transition: all 0.3s ease;
             color: white;
             background-color: transparent;
             border: none;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .comercio-toggle:hover {
@@ -197,7 +197,7 @@
             transition: max-height 0.3s ease, opacity 0.3s ease;
             opacity: 0;
             background-color: rgba(0, 0, 0, 0.1);
-            border-radius: 0 0 12px 12px;
+            border-radius: 0 0 8px 8px;
             width: 100%;
             margin-top: 2px;
         }
@@ -205,28 +205,28 @@
         .submenu-zonas-comercio.active {
             max-height: 300px;
             opacity: 1;
-            padding: 12px 0;
+            padding: 10px 0;
         }
 
         .submenu-item {
             display: block;
-            padding: 14px 20px 14px 48px;
+            padding: 12px 15px 12px 40px;
             color: white;
             text-decoration: none;
-            font-size: 17px;
+            font-size: 15px;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .submenu-item:hover {
             background-color: rgba(255, 255, 255, 0.1);
-            padding-left: 53px;
+            padding-left: 45px;
         }
 
         .submenu-item:before {
             content: "-";
             position: absolute;
-            left: 28px;
+            left: 25px;
             color: white;
             font-size: 16px;
         }
@@ -235,19 +235,19 @@
         .botones-lateral {
             display: flex;
             flex-direction: column;
-            margin: 25px 20px;
-            gap: 18px;
-            width: calc(100% - 40px);
+            margin: 20px 15px;
+            gap: 15px;
+            width: calc(100% - 30px);
         }
 
         .btn-subir-negocio {
-            padding: 18px;
+            padding: 15px;
             background-color: #000000;
             color: #ffffff;
             border: none;
-            border-radius: 14px;
-            font-size: 18px;
-            font-weight: 700;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -266,13 +266,13 @@
         }
 
         .btn-subir-negocio i {
-            font-size: 20px;
+            font-size: 18px;
         }
 
         /* CONTENIDO PRINCIPAL */
         .main-content {
             flex: 1;
-            margin-left: 320px;
+            margin-left: 280px;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -580,7 +580,7 @@
                 display: block;
             }
             
-            /* Ajustes del menú para móvil (exactamente igual que antes pero ahora desplegable) */
+            /* Ajustes del menú para móvil */
             .logo {
                 padding: 20px 15px;
                 margin-bottom: 10px;
@@ -873,14 +873,12 @@
         function openMenu() {
             sidebar.classList.add('menu-open');
             menuOverlay.classList.add('active');
-            // Cambiar ícono a X
             menuToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
         }
         
         function closeMenu() {
             sidebar.classList.remove('menu-open');
             menuOverlay.classList.remove('active');
-            // Cambiar ícono a hamburguesa
             menuToggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
         }
         
@@ -900,42 +898,29 @@
             menuOverlay.addEventListener('click', closeMenu);
         }
         
-        // Cerrar menú al hacer clic en un enlace del menú (opcional)
-        const menuLinks = document.querySelectorAll('.categoria-item, .comercio-link, .submenu-item, .btn-subir-negocio');
-        menuLinks.forEach(link => {
+        // ============ CORRECCIÓN: Cerrar menú SOLO en enlaces que navegan ============
+        const navigationLinks = document.querySelectorAll('.categoria-item[href], .comercio-link, .submenu-item, .btn-subir-negocio');
+        
+        navigationLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                // Solo cerrar en móvil (si el menú está visible)
                 if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
-                    // Pequeño delay para permitir la navegación
                     setTimeout(closeMenu, 100);
                 }
             });
         });
         
-        // ============================================
-        // CONFIGURACIÓN DEL SUBMENÚ DE COMERCIO
-        // ============================================
+        // El elemento "Comercio" (con submenú) NO debe cerrar el menú principal
         const comercioToggle = document.getElementById('comercio-toggle');
         const submenuZonasComercio = document.getElementById('submenu-zonas-comercio');
         const comercioRow = document.getElementById('comercio-row');
         
         if (comercioToggle && submenuZonasComercio) {
-            let submenuAbierto = false;
-            
             comercioToggle.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                submenuAbierto = !submenuAbierto;
-                
-                if (submenuAbierto) {
-                    submenuZonasComercio.classList.add('active');
-                    comercioToggle.classList.add('rotated');
-                } else {
-                    submenuZonasComercio.classList.remove('active');
-                    comercioToggle.classList.remove('rotated');
-                }
-                
+                submenuZonasComercio.classList.toggle('active');
+                comercioToggle.classList.toggle('rotated');
                 comercioRow.classList.add('active');
                 comercioToggle.classList.add('active');
             });
@@ -945,14 +930,11 @@
                 if (comercioContainer && !comercioContainer.contains(e.target)) {
                     submenuZonasComercio.classList.remove('active');
                     comercioToggle.classList.remove('rotated');
-                    submenuAbierto = false;
-                    comercioRow.classList.add('active');
-                    comercioToggle.classList.add('active');
                 }
             });
         }
         
-        // Ajustar al cambiar tamaño de ventana (cerrar menú si se vuelve a PC)
+        // Ajustar al cambiar tamaño de ventana
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
                 closeMenu();
