@@ -609,54 +609,62 @@
             transition: opacity 0.3s ease;
         }
 
-        /* ===== NAVBAR INFERIOR PARA MÓVIL ===== */
-        .mobile-bottom-nav {
+        /* ===== NAVBAR SUPERIOR MÓVIL (SUBIDO) ===== */
+        .mobile-top-nav {
             display: none;
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
             background: linear-gradient(to bottom, #C90F0F, #A00C0C);
             color: white;
-            z-index: 200;
-            padding: 8px 0;
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 180;
+            padding: 12px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
         }
 
-        .mobile-nav-links {
+        .mobile-top-links {
             display: flex;
             justify-content: space-around;
             align-items: center;
             list-style: none;
-            padding: 0 10px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
-        .mobile-nav-links li {
+        .mobile-top-links li {
             text-align: center;
             flex: 1;
         }
 
-        .mobile-nav-links a {
+        .mobile-top-links a {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
             color: white;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 500;
-            padding: 5px 0;
+            padding: 6px 0;
             transition: opacity 0.3s;
-            gap: 2px;
+            gap: 4px;
         }
 
-        .mobile-nav-links a i {
-            font-size: 18px;
+        .mobile-top-links a i {
+            font-size: 20px;
             margin-bottom: 2px;
         }
 
-        .mobile-nav-links a:hover {
-            opacity: 0.8;
+        .mobile-top-links a:hover {
+            opacity: 0.85;
+        }
+
+        /* Ajuste para que el contenido no quede tapado por el nuevo navbar móvil superior */
+        body.mobile-nav-active {
+            padding-top: 70px;
         }
 
         /* ===== VERSIÓN MÓVIL - MENÚ DESPLEGABLE ===== */
@@ -666,8 +674,8 @@
                 overflow-y: auto;
                 height: auto;
                 min-height: 100vh;
-                padding-bottom: 60px;
                 display: block;
+                padding-top: 70px;
             }
             
             /* Sidebar oculto por defecto en móvil */
@@ -691,6 +699,9 @@
             /* Botón hamburguesa visible en móvil */
             .menu-toggle-btn {
                 display: flex;
+                top: 15px;
+                left: 15px;
+                z-index: 210;
             }
             
             /* Overlay visible cuando menú está abierto */
@@ -790,35 +801,20 @@
             }
             
             .visor-container {
-                height: 100vh;
-                min-height: 100vh;
-                overflow: visible;
+                height: calc(100vh - 70px);
+                min-height: calc(100vh - 70px);
+                overflow: hidden;
+                position: relative;
             }
             
             .negocio-slide {
-                position: relative;
-                height: 100vh;
-                min-height: 100vh;
-                display: none;
+                position: absolute;
+                height: 100%;
+                min-height: 100%;
             }
             
-            .negocio-slide.active {
-                display: block;
-            }
-            
-            .imagenes-negocio {
-                height: 100vh;
-                min-height: 100vh;
-            }
-            
-            .imagen-negocio {
-                height: 100vh;
-                min-height: 100vh;
-            }
-            
-            .negocio-overlay {
-                height: 100vh;
-                min-height: 100vh;
+            .imagenes-negocio, .imagen-negocio, .negocio-overlay {
+                height: 100%;
             }
             
             .negocio-info {
@@ -860,9 +856,18 @@
                 font-size: 11px;
             }
 
-            /* Mostrar navbar inferior en móvil */
-            .mobile-bottom-nav {
+            /* Mostrar navbar superior móvil (subido) */
+            .mobile-top-nav {
                 display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 180;
+            }
+
+            /* Ajuste extra para que el contenido no quede oculto detrás del navbar */
+            body {
+                padding-top: 70px;
             }
         }
         
@@ -916,12 +921,12 @@
                 font-size: 10px;
             }
 
-            .mobile-nav-links a {
+            .mobile-top-links a {
                 font-size: 10px;
             }
             
-            .mobile-nav-links a i {
-                font-size: 16px;
+            .mobile-top-links a i {
+                font-size: 18px;
             }
         }
     </style>
@@ -934,6 +939,15 @@
     
     <!-- OVERLAY PARA CERRAR MENÚ -->
     <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- NUEVO: NAVBAR SUPERIOR MÓVIL (SUBIDO, CONTIENE TÉRMINOS, P.PRINCIPAL, SOPORTE) -->
+    <nav class="mobile-top-nav" id="mobileTopNav">
+        <ul class="mobile-top-links">
+            <li><a href="Terminos y Condiciones.html"><i class="fas fa-file-contract"></i><span>Términos</span></a></li>
+            <li><a href="Index.html"><i class="fas fa-home"></i><span>P. principal</span></a></li>
+            <li><a href="Soporte y reclamos.html"><i class="fas fa-headset"></i><span>Soporte</span></a></li>
+        </ul>
+    </nav>
     
     <!-- MENÚ LATERAL -->
     <aside class="sidebar" id="sidebar">
@@ -1023,15 +1037,6 @@
         </div>
     </main>
 
-    <!-- NAVBAR INFERIOR PARA MÓVIL -->
-    <nav class="mobile-bottom-nav">
-        <ul class="mobile-nav-links">
-            <li><a href="Terminos y Condiciones.html"><i class="fas fa-file-contract"></i><span>Términos</span></a></li>
-            <li><a href="Index.html"><i class="fas fa-home"></i><span>P. principal</span></a></li>
-            <li><a href="Soporte y reclamos.html"><i class="fas fa-headset"></i><span>Soporte</span></a></li>
-        </ul>
-    </nav>
-
     <script>
         // ============================================
         // MENÚ DESPLEGABLE PARA MÓVIL
@@ -1068,7 +1073,7 @@
             menuOverlay.addEventListener('click', closeMenu);
         }
         
-        // ============ CORRECCIÓN: Cerrar menú SOLO en enlaces que navegan ============
+        // ============ Cerrar menú SOLO en enlaces que navegan ============
         const navigationLinks = document.querySelectorAll('.categoria-item[href], .alimentos-link, .submenu-item, .btn-subir-negocio');
         
         navigationLinks.forEach(link => {
