@@ -965,15 +965,34 @@
             menuOverlay.addEventListener('click', closeMenu);
         }
         
-        // Cerrar menú al hacer clic en un enlace del menú
-        const menuLinks = document.querySelectorAll('.categoria-item, .submenu-item, .btn-subir-negocio');
-        menuLinks.forEach(link => {
+        // ============ CORRECCIÓN: Cerrar menú SOLO en enlaces que navegan ============
+        // Seleccionar solo los enlaces que tienen href y no son el elemento con submenú
+        const navigationLinks = document.querySelectorAll('.categoria-item[href], .submenu-item, .btn-subir-negocio');
+        
+        navigationLinks.forEach(link => {
             link.addEventListener('click', function(e) {
+                // Solo cerrar el menú en móvil si el enlace realmente navega a otra página
                 if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
+                    // Pequeño delay para permitir que la navegación se inicie
                     setTimeout(closeMenu, 100);
                 }
             });
         });
+        
+        // El menú de Alimentos (con submenú) NO debe cerrar el menú principal
+        const alimentosMenu = document.getElementById('alimentos-menu');
+        if (alimentosMenu) {
+            alimentosMenu.addEventListener('click', function(e) {
+                // Prevenir que el evento se propague y evitar cierre del menú
+                e.stopPropagation();
+                // Solo toggle del submenú, sin cerrar el menú principal
+                const submenuZonas = document.getElementById('submenu-zonas');
+                if (submenuZonas) {
+                    submenuZonas.classList.toggle('active');
+                    alimentosMenu.classList.toggle('active');
+                }
+            });
+        }
         
         // Ajustar al cambiar tamaño de ventana
         window.addEventListener('resize', function() {
@@ -1044,25 +1063,7 @@
             visorContainer.appendChild(negocioSlide);
         }
 
-        // Configurar submenú de zonas
-        const alimentosMenu = document.getElementById('alimentos-menu');
-        const submenuZonas = document.getElementById('submenu-zonas');
-        
-        if (alimentosMenu && submenuZonas) {
-            alimentosMenu.addEventListener('click', function(e) {
-                e.stopPropagation();
-                submenuZonas.classList.toggle('active');
-                alimentosMenu.classList.toggle('active');
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!alimentosMenu.contains(e.target) && !submenuZonas.contains(e.target)) {
-                    submenuZonas.classList.remove('active');
-                    alimentosMenu.classList.remove('active');
-                }
-            });
-        }
-
+        // Configurar submenú de zonas (por si acaso, ya lo configuramos arriba)
         // Inicializar
         document.addEventListener('DOMContentLoaded', cargarNegocios);
     </script>
