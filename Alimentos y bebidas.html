@@ -21,7 +21,7 @@
             overflow: hidden;
         }
 
-        /* SIDEBAR - ESTILO ADAPTATIVO */
+        /* SIDEBAR - ESTILO PC */
         .sidebar {
             width: 280px;
             background: linear-gradient(to bottom, #C90F0F, #A00C0C);
@@ -33,6 +33,7 @@
             z-index: 100;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s ease;
         }
 
         .logo {
@@ -198,8 +199,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .btn-subir-negocio i,
-        .btn-incrementar-ventas i {
+        .btn-subir-negocio i {
             font-size: 18px;
         }
 
@@ -462,7 +462,7 @@
             transform: translateX(5px);
         }
 
-        /* +++ BOTÓN EXPLORAR + - MINIMALISTA CON TEXTO +++ */
+        /* BOTÓN EXPLORAR + - MINIMALISTA CON TEXTO */
         .btn-ver-otro-negocio {
             position: absolute;
             right: 30px;
@@ -509,21 +509,81 @@
             transform: translateX(5px);
         }
 
-        /* ===== VERSIÓN MÓVIL - ADAPTATIVA ===== */
+        /* ===== BOTÓN HAMBURGUESA PARA MÓVIL ===== */
+        .menu-toggle-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: #C90F0F;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle-btn:hover {
+            background: #A00C0C;
+            transform: scale(1.05);
+        }
+
+        /* Overlay para cerrar menú al hacer clic fuera */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ===== VERSIÓN MÓVIL - MENÚ DESPLEGABLE ===== */
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
                 overflow-y: auto;
                 height: auto;
                 min-height: 100vh;
+                display: block;
             }
             
+            /* Sidebar oculto por defecto en móvil */
             .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-                overflow-y: visible;
-                flex-shrink: 0;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 280px;
+                height: 100vh;
+                transform: translateX(-100%);
+                z-index: 200;
+                transition: transform 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            }
+            
+            /* Sidebar abierto */
+            .sidebar.menu-open {
+                transform: translateX(0);
+            }
+            
+            /* Botón hamburguesa visible en móvil */
+            .menu-toggle-btn {
+                display: flex;
+            }
+            
+            /* Overlay visible cuando menú está abierto */
+            .menu-overlay.active {
+                display: block;
             }
             
             .logo {
@@ -613,14 +673,6 @@
                 width: 100%;
             }
             
-            .btn-subir-negocio:hover {
-                transform: translateY(-2px);
-            }
-            
-            .btn-subir-negocio i {
-                font-size: 18px;
-            }
-            
             .main-content {
                 margin-left: 0;
                 height: auto;
@@ -669,7 +721,6 @@
                 position: relative;
             }
 
-            /* ETIQUETA DESTACADOS EN MÓVIL */
             .etiqueta-destacados {
                 top: 15px;
                 right: 15px;
@@ -692,7 +743,7 @@
             }
             
             .negocio-info {
-                top: 40px;
+                top: 80px;
                 left: 20px;
                 max-width: 85%;
             }
@@ -718,7 +769,6 @@
                 min-width: 220px;
             }
             
-            /* +++ BOTÓN EXPLORAR + EN MÓVIL +++ */
             .btn-ver-otro-negocio {
                 right: 15px;
                 padding: 10px 20px;
@@ -735,7 +785,6 @@
             }
         }
         
-        /* Ajustes para pantallas muy pequeñas */
         @media (max-width: 480px) {
             .logo h1 {
                 font-size: 24px;
@@ -744,6 +793,10 @@
             .categoria-item {
                 padding: 15px 16px;
                 font-size: 16px;
+            }
+            
+            .negocio-info {
+                top: 70px;
             }
             
             .negocio-titulo {
@@ -770,7 +823,6 @@
                 font-size: 15px;
             }
 
-            /* ETIQUETA DESTACADOS EN PANTALLAS MUY PEQUEÑAS */
             .etiqueta-destacados {
                 top: 10px;
                 right: 10px;
@@ -779,7 +831,6 @@
                 border-radius: 16px;
             }
 
-            /* +++ BOTÓN EXPLORAR + EN PANTALLAS MUY PEQUEÑAS +++ */
             .btn-ver-otro-negocio {
                 padding: 8px 16px;
                 font-size: 13px;
@@ -793,8 +844,16 @@
     </style>
 </head>
 <body>
+    <!-- BOTÓN HAMBURGUESA PARA MÓVIL -->
+    <button class="menu-toggle-btn" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- OVERLAY PARA CERRAR MENÚ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
     <!-- MENÚ LATERAL -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <a href="Index.html" style="text-decoration: none; color: inherit;">
                 <h1>LIFE <span>TIMES</span></h1>
@@ -871,6 +930,58 @@
     </main>
 
     <script>
+        // ============================================
+        // MENÚ DESPLEGABLE PARA MÓVIL
+        // ============================================
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        function openMenu() {
+            sidebar.classList.add('menu-open');
+            menuOverlay.classList.add('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        
+        function closeMenu() {
+            sidebar.classList.remove('menu-open');
+            menuOverlay.classList.remove('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        function toggleMenu() {
+            if (sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+        
+        if (menuToggleBtn) {
+            menuToggleBtn.addEventListener('click', toggleMenu);
+        }
+        
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        // Cerrar menú al hacer clic en un enlace del menú
+        const menuLinks = document.querySelectorAll('.categoria-item, .submenu-item, .btn-subir-negocio');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
+                    setTimeout(closeMenu, 100);
+                }
+            });
+        });
+        
+        // Ajustar al cambiar tamaño de ventana
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            }
+        });
+        
         // DATOS DE LOS NEGOCIOS
         const negocios = [
             {
@@ -901,23 +1012,19 @@
         const visorContainer = document.getElementById('visor-container');
         const btnSiguienteNegocio = document.getElementById('btn-siguiente-negocio');
 
-        // Función para cargar todos los negocios (AHORA CARGA SOLO UNO)
+        // Función para cargar todos los negocios
         function cargarNegocios() {
-            // Limpiar el contenedor
             visorContainer.innerHTML = '';
 
-            // Elegir qué negocio mostrar. Cambia el índice 0 por 1 o 2 para ver los otros.
-            const negocio = negocios[0]; // <--- CAMBIA ESTE ÍNDICE (0, 1, o 2)
+            const negocio = negocios[0];
 
-            // Crear el slide para el negocio seleccionado
             const negocioSlide = document.createElement('div');
-            negocioSlide.className = `negocio-slide active`; // Siempre activo
+            negocioSlide.className = `negocio-slide active`;
             negocioSlide.id = `negocio-unico`;
 
             negocioSlide.innerHTML = `
                 <div class="imagenes-negocio">
                     <img src="${negocio.imagen_principal}" alt="${negocio.nombre}" class="imagen-negocio">
-                    <!-- ETIQUETA DESTACADOS -->
                     <div class="etiqueta-destacados">DESTACADOS</div>
                     <div class="negocio-overlay"></div>
                 </div>
@@ -935,42 +1042,9 @@
             `;
 
             visorContainer.appendChild(negocioSlide);
-            
-            // El botón "Explorar +" ya no es necesario, así que lo ocultamos.
-            // Si en el futuro quisieras usarlo para otra cosa, puedes eliminarlo o mantenerlo oculto.
-            // visorContainer.appendChild(btnSiguienteNegocio); // Esta línea está comentada para no agregar el botón.
         }
 
-        // Función para cambiar de negocio (YA NO ES NECESARIA, PERO LA DEJAMOS COMO COMENTARIO)
-        /*
-        function cambiarNegocio() {
-            const slides = document.querySelectorAll('.negocio-slide');
-            
-            slides[negocioActual].classList.remove('active');
-            negocioActual = (negocioActual + 1) % slides.length;
-            slides[negocioActual].classList.add('active');
-            
-            // Scroll automático al inicio de la imagen
-            window.scrollTo({
-                top: document.querySelector('.main-content').offsetTop,
-                behavior: 'smooth'
-            });
-        }
-        */
-
-        // Event Listeners (EL BOTÓN YA NO TIENE FUNCIÓN, PERO LO DEJAMOS POR SI ACASO)
-        // btnSiguienteNegocio.addEventListener('click', cambiarNegocio);
-
-        // El evento de teclado ya no es necesario, pero lo comentamos para que no genere error.
-        /*
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                cambiarNegocio();
-            }
-        });
-        */
-
-        // Configurar submenú de zonas (ESTA PARTE NO CAMBIA)
+        // Configurar submenú de zonas
         const alimentosMenu = document.getElementById('alimentos-menu');
         const submenuZonas = document.getElementById('submenu-zonas');
         
