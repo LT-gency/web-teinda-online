@@ -360,10 +360,9 @@
 
             .titulo-banner p {
                 font-size: 12px !important;
-                display: none; /* Ocultamos el subtítulo en móvil para más compactación */
+                display: none;
             }
 
-            /* Ocultamos el menú de paginación en móvil (ya no se muestra "Página 1 de 1") */
             .menu-desplazamiento {
                 display: none !important;
             }
@@ -386,6 +385,7 @@
                 display: none !important;
             }
 
+            /* Estilos para modal en móvil */
             .modal-galeria {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto auto auto;
@@ -432,7 +432,7 @@
             }
         }
 
-        /* Resto de estilos originales (negocios-container, tarjetas, modal, etc.) */
+        /* Resto de estilos originales */
         .negocios-container {
             padding: 30px;
             flex: 1;
@@ -778,6 +778,7 @@
             font-size: 14px;
         }
 
+        /* ===== ESTILOS DEL MODAL CORREGIDOS - MISMO QUE EL SEGUNDO CÓDIGO ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -836,7 +837,7 @@
 
         .modal-categoria {
             display: inline-block;
-            background-color: #e1f0fa;
+            background-color: rgba(12, 107, 160, 0.1);
             color: #0C6BA0;
             padding: 5px 15px;
             border-radius: 20px;
@@ -1163,7 +1164,6 @@
             menuOverlay.addEventListener('click', closeMenu);
         }
         
-        // ============ CORRECCIÓN: Cerrar menú SOLO en enlaces que navegan ============
         const navigationLinks = document.querySelectorAll('.categoria-item[href], .subcategoria-item, .btn-subir-negocio');
         
         navigationLinks.forEach(link => {
@@ -1174,7 +1174,6 @@
             });
         });
         
-        // El elemento "Servicio minoritario" (con submenú) NO debe cerrar el menú principal
         const servicioMinoritarioParent = document.getElementById('servicioMinoritarioParent');
         const submenuServicioMinoritario = document.getElementById('submenuServicioMinoritario');
         const submenuArrow = document.getElementById('submenuArrow');
@@ -1201,7 +1200,6 @@
             });
         }
         
-        // Ajustar al cambiar tamaño de ventana
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
                 closeMenu();
@@ -1209,7 +1207,7 @@
         });
 
         // ============================================
-        // DATOS Y FUNCIONALIDAD ORIGINAL
+        // DATOS Y FUNCIONALIDAD
         // ============================================
         const negociosArtesanias = [
             {
@@ -1442,44 +1440,6 @@
             negociosGrid.innerHTML = '';
             negociosPagina.forEach(negocio => {
                 negociosGrid.appendChild(crearTarjeta(negocio));
-            });
-            
-            // Ya no mostramos la paginación en móvil
-        }
-
-        function actualizarMenuPaginacion(pagina) {
-            // Esta función ya no se usa en móvil, pero la mantenemos para escritorio
-            let menuHTML = `<span class="pagina-actual-info">Página ${pagina} de ${totalPaginas}</span>`;
-            
-            menuHTML += `<button class="pagina-btn ${pagina === 1 ? 'disabled' : ''}" data-pagina="${pagina - 1}" ${pagina === 1 ? 'disabled' : ''}>‹</button>`;
-            
-            let inicioMostrar = Math.max(1, pagina - 2);
-            let finMostrar = Math.min(totalPaginas, inicioMostrar + 4);
-            
-            if (finMostrar - inicioMostrar < 4) {
-                inicioMostrar = Math.max(1, finMostrar - 4);
-            }
-            
-            for (let i = inicioMostrar; i <= finMostrar; i++) {
-                menuHTML += `<button class="pagina-btn ${i === pagina ? 'active' : ''}" data-pagina="${i}">${i}</button>`;
-            }
-            
-            menuHTML += `<button class="pagina-btn ${pagina === totalPaginas ? 'disabled' : ''}" data-pagina="${pagina + 1}" ${pagina === totalPaginas ? 'disabled' : ''}>›</button>`;
-            
-            menuDesplazamiento.innerHTML = menuHTML;
-            
-            document.querySelectorAll('.pagina-btn[data-pagina]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const nuevaPagina = parseInt(this.dataset.pagina);
-                    if (!isNaN(nuevaPagina) && nuevaPagina >= 1 && nuevaPagina <= totalPaginas && nuevaPagina !== paginaActual) {
-                        paginaActual = nuevaPagina;
-                        cargarPaginaMobile(paginaActual);
-                        window.scrollTo({
-                            top: document.querySelector('.negocios-container').offsetTop - 20,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
             });
         }
 
