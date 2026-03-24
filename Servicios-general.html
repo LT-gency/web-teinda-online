@@ -20,6 +20,7 @@
             min-height: 100vh;
         }
 
+        /* SIDEBAR - ESTILO PC */
         .sidebar {
             width: 280px;
             background: linear-gradient(to bottom, #3EAA4C, #2D8A3A);
@@ -31,6 +32,7 @@
             z-index: 100;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s ease;
         }
 
         .logo {
@@ -95,9 +97,7 @@
             text-align: center;
         }
 
-        /* ================================ */
         /* CONTENEDOR PARA BOTONES LATERALES */
-        /* ================================ */
         .botones-lateral {
             display: flex;
             flex-direction: column;
@@ -227,62 +227,7 @@
             z-index: 10;
         }
 
-        .pagina-btn {
-            width: 35px;
-            height: 35px;
-            background: #f8f9fa;
-            color: #555;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .pagina-btn:hover {
-            background: #f0f0f0;
-            color: #333;
-            border-color: #ccc;
-        }
-
-        .pagina-btn.active {
-            background: #3EAA4C;
-            color: white;
-            border-color: #3EAA4C;
-        }
-
-        .pagina-btn.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            background: #f8f9fa;
-            border-color: #e0e0e0;
-            color: #999;
-        }
-
-        .pagina-info {
-            font-size: 13px;
-            color: #777;
-            font-weight: 500;
-            margin-left: 8px;
-            padding-left: 8px;
-            border-left: 1px solid #e0e0e0;
-            white-space: nowrap;
-        }
-
-        .pagina-actual {
-            font-size: 14px;
-            font-weight: 600;
-            color: #3EAA4C;
-            margin-right: 5px;
-        }
-
-        /* ================================ */
-        /* TÍTULOS DE SECCIÓN (COMO EN EL PRIMER CÓDIGO) */
-        /* ================================ */
+        /* TÍTULOS DE SECCIÓN */
         .fila-titulo {
             font-size: 22px;
             font-weight: 700;
@@ -325,9 +270,7 @@
             margin-top: 10px;
         }
 
-        /* ================================ */
         /* CONTENEDORES DE SCROLL HORIZONTAL */
-        /* ================================ */
         .servicios-container {
             display: flex;
             flex-direction: row;
@@ -356,9 +299,7 @@
             border-radius: 10px;
         }
 
-        /* ================================ */
         /* TARJETA CON ANCHO FIJO */
-        /* ================================ */
         .servicio-card {
             min-width: 300px;
             width: 300px;
@@ -454,9 +395,6 @@
             flex-direction: column;
         }
 
-        /* ================================ */
-        /* DESCRIPCIÓN CORTA */
-        /* ================================ */
         .card-descripcion-corta {
             color: #555;
             font-size: 14px;
@@ -470,9 +408,6 @@
             text-overflow: ellipsis;
         }
 
-        /* ================================ */
-        /* BOTÓN VER MÁS - VERDE */
-        /* ================================ */
         .btn-ver-mas-container {
             display: flex;
             justify-content: flex-start;
@@ -510,37 +445,82 @@
             font-size: 14px;
         }
 
-        /* ================================ */
-        /* RESPONSIVE */
-        /* ================================ */
-        @media (max-width: 1200px) {            
-            .menu-desplazamiento {
-                flex-wrap: wrap;
-                justify-content: center;
-                width: auto;
-            }
+        /* ===== BOTÓN HAMBURGUESA PARA MÓVIL ===== */
+        .menu-toggle-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 200;
+            background: #3EAA4C;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            align-items: center;
+            justify-content: center;
         }
 
-        @media (max-width: 1024px) {
-            .servicio-card {
-                min-width: 280px;
-                width: 280px;
-            }
+        .menu-toggle-btn:hover {
+            background: #2D8A3A;
+            transform: scale(1.05);
         }
 
+        /* Overlay para cerrar menú al hacer clic fuera */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ===== VERSIÓN MÓVIL - MENÚ DESPLEGABLE ===== */
         @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                display: block;
+            }
+            
+            /* Sidebar oculto por defecto en móvil */
             .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 280px;
+                height: 100vh;
+                transform: translateX(-100%);
+                z-index: 200;
+                transition: transform 0.3s ease;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            }
+            
+            /* Sidebar abierto */
+            .sidebar.menu-open {
+                transform: translateX(0);
+            }
+            
+            /* Botón hamburguesa visible en móvil */
+            .menu-toggle-btn {
+                display: flex;
+            }
+            
+            /* Overlay visible cuando menú está abierto */
+            .menu-overlay.active {
+                display: block;
             }
             
             .main-content {
                 margin-left: 0;
-            }
-            
-            body {
-                flex-direction: column;
             }
             
             /* OCULTAR COMPLETAMENTE LA BARRA SUPERIOR EN MÓVIL */
@@ -566,7 +546,7 @@
             .titulo-banner {
                 padding: 20px;
                 min-height: 120px;
-                margin-top: 0; /* Eliminar cualquier margen superior */
+                margin-top: 0;
             }
 
             .titulo-banner h2 {
@@ -604,7 +584,9 @@
             }
             
             .negocios-container {
-                padding-top: 15px; /* Reducir el padding superior */
+                padding-top: 70px;
+                padding-left: 15px;
+                padding-right: 15px;
             }
         }
 
@@ -618,16 +600,6 @@
                 font-size: 22px;
             }
 
-            .pagina-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 12px;
-            }
-            
-            .pagina-info {
-                font-size: 11px;
-            }
-            
             .card-header h3 {
                 font-size: 16px;
             }
@@ -646,12 +618,24 @@
                 min-width: 240px;
                 width: 240px;
             }
+            
+            .negocios-container {
+                padding-top: 60px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- BOTÓN HAMBURGUESA PARA MÓVIL -->
+    <button class="menu-toggle-btn" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- OVERLAY PARA CERRAR MENÚ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
     <!-- MENÚ LATERAL -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <a href="Index.html" style="text-decoration: none; color: inherit;">
                 <h1>LIFE <span>TIMES</span></h1>
@@ -682,7 +666,7 @@
             </a>
         </div>
         
-        <!-- CONTENEDOR PARA EL BOTÓN LATERAL (AHORA SOLO UNO) -->
+        <!-- CONTENEDOR PARA EL BOTÓN LATERAL -->
         <div class="botones-lateral">
             <a href="Subir-servicio.html" target="_blank" style="text-decoration: none;">
                 <button class="btn-subir-negocio">
@@ -727,6 +711,58 @@
     </main>
 
     <script>
+        // ==============================================
+        // MENÚ DESPLEGABLE PARA MÓVIL
+        // ==============================================
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        function openMenu() {
+            sidebar.classList.add('menu-open');
+            menuOverlay.classList.add('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+        }
+        
+        function closeMenu() {
+            sidebar.classList.remove('menu-open');
+            menuOverlay.classList.remove('active');
+            menuToggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        function toggleMenu() {
+            if (sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+        
+        if (menuToggleBtn) {
+            menuToggleBtn.addEventListener('click', toggleMenu);
+        }
+        
+        if (menuOverlay) {
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        // Cerrar menú al hacer clic en un enlace del menú
+        const menuLinks = document.querySelectorAll('.categoria-item, .btn-subir-negocio');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && sidebar.classList.contains('menu-open')) {
+                    setTimeout(closeMenu, 100);
+                }
+            });
+        });
+        
+        // Ajustar al cambiar tamaño de ventana
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && sidebar.classList.contains('menu-open')) {
+                closeMenu();
+            }
+        });
+        
         // ==============================================
         // DATOS DE NEGOCIOS PARA LA FILA
         // ==============================================
